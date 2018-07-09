@@ -13,6 +13,7 @@
 		0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDC020F3415F00224865 /* Journey.xcdatamodeld */; };
 		0021CDC420F3416000224865 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0021CDC320F3416000224865 /* Assets.xcassets */; };
 		0021CDC720F3416000224865 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021CDC520F3416000224865 /* LaunchScreen.storyboard */; };
+		3ACA2421FA7082AA2AAEF419 /* libPods-Journey.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3328BB239CE760700C9361E /* libPods-Journey.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,9 @@
 		0021CDC320F3416000224865 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0021CDC620F3416000224865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0021CDC820F3416000224865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.debug.xcconfig"; sourceTree = "<group>"; };
+		B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.release.xcconfig"; sourceTree = "<group>"; };
+		B3328BB239CE760700C9361E /* libPods-Journey.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Journey.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ACA2421FA7082AA2AAEF419 /* libPods-Journey.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +47,8 @@
 			children = (
 				0021CDB820F3415F00224865 /* Journey */,
 				0021CDB720F3415F00224865 /* Products */,
+				B411DFF49B2D9CB06DAAF4E5 /* Pods */,
+				77EEB21D23C24B3DE7E9A431 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +74,23 @@
 			path = Journey;
 			sourceTree = "<group>";
 		};
+		77EEB21D23C24B3DE7E9A431 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B3328BB239CE760700C9361E /* libPods-Journey.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B411DFF49B2D9CB06DAAF4E5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */,
+				B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0021CDCB20F3416000224865 /* Build configuration list for PBXNativeTarget "Journey" */;
 			buildPhases = (
+				BEF6032885D9F7456829FBD0 /* [CP] Check Pods Manifest.lock */,
 				0021CDB220F3415F00224865 /* Sources */,
 				0021CDB320F3415F00224865 /* Frameworks */,
 				0021CDB420F3415F00224865 /* Resources */,
+				507A293871824653548BC19B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -132,6 +158,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		507A293871824653548BC19B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Journey/Pods-Journey-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Journey/Pods-Journey-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEF6032885D9F7456829FBD0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Journey-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0021CDB220F3415F00224865 /* Sources */ = {
@@ -282,15 +349,13 @@
 		};
 		0021CDCC20F3416000224865 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3WYBU2DK75;
 				INFOPLIST_FILE = Journey/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.f.825.tennis.Journey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -300,15 +365,13 @@
 		};
 		0021CDCD20F3416000224865 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3WYBU2DK75;
 				INFOPLIST_FILE = Journey/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.f.825.tennis.Journey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
