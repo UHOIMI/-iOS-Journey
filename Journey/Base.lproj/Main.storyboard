@@ -26,10 +26,9 @@
             </objects>
             <point key="canvasLocation" x="-1073" y="37"/>
         </scene>
-        <!--View Controller-->
+        <!--プラン投稿-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
@@ -48,10 +47,19 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lgb-V3-Xx3">
+                                                <rect key="frame" x="8" y="16" width="359" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="Lgb-V3-Xx3" firstAttribute="top" secondItem="rCu-U0-cHP" secondAttribute="top" constant="16" id="C6N-hR-v9E"/>
+                                            <constraint firstAttribute="trailing" secondItem="Lgb-V3-Xx3" secondAttribute="trailing" constant="8" id="HFd-NZ-IpN"/>
                                             <constraint firstAttribute="height" constant="1000" id="nYw-OI-6p5"/>
+                                            <constraint firstItem="Lgb-V3-Xx3" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="p1T-ST-jr8"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -63,20 +71,35 @@
                                     <constraint firstAttribute="trailing" secondItem="rCu-U0-cHP" secondAttribute="trailing" id="vQv-84-0MM"/>
                                 </constraints>
                             </scrollView>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOe-E0-1Zp">
+                                <rect key="frame" x="0.0" y="951" width="375" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <tabBarItem systemItem="favorites" id="wOo-p5-2bD"/>
+                                    <tabBarItem systemItem="more" id="iXv-dc-Uo9"/>
+                                </items>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="KOe-E0-1Zp" firstAttribute="trailing" secondItem="iUZ-Wx-VEv" secondAttribute="trailing" id="8GJ-fd-6Tl"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iUZ-Wx-VEv" secondAttribute="trailing" id="9Xe-nq-JeZ"/>
                             <constraint firstItem="iUZ-Wx-VEv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Gkm-yK-en2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="iUZ-Wx-VEv" secondAttribute="bottom" id="HeE-yp-Lb4"/>
+                            <constraint firstItem="KOe-E0-1Zp" firstAttribute="leading" secondItem="iUZ-Wx-VEv" secondAttribute="leading" id="TGx-DA-LU4"/>
                             <constraint firstItem="iUZ-Wx-VEv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="eKB-Of-I0m"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KOe-E0-1Zp" secondAttribute="bottom" id="oni-nS-bai"/>
                             <constraint firstItem="iUZ-Wx-VEv" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="tXG-qq-EcQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="CJd-MB-koX"/>
+                    <navigationItem key="navigationItem" title="プラン投稿" id="CJd-MB-koX"/>
                     <size key="freeformSize" width="375" height="1000"/>
+                    <connections>
+                        <outlet property="titleTextField" destination="Lgb-V3-Xx3" id="0Zc-EK-Fgk"/>
+                    </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="15" y="36"/>
         </scene>
