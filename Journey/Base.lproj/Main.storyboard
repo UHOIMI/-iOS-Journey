@@ -37,7 +37,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iUZ-Wx-VEv">
                                 <rect key="frame" x="0.0" y="64" width="375" height="936"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rCu-U0-cHP">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rCu-U0-cHP" userLabel="Sub View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uqa-7n-cS1">
@@ -96,6 +96,7 @@
                     <navigationItem key="navigationItem" title="プラン投稿" id="CJd-MB-koX"/>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
+                        <outlet property="subView" destination="rCu-U0-cHP" id="4Qz-wL-sTi"/>
                         <outlet property="titleTextField" destination="Lgb-V3-Xx3" id="0Zc-EK-Fgk"/>
                     </connections>
                 </viewController>
