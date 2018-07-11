@@ -47,19 +47,48 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lgb-V3-Xx3">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lgb-V3-Xx3" customClass="KeyBoard" customModule="Journey" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="16" width="359" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Z7k-R2-HRy">
+                                                <rect key="frame" x="8" y="386" width="359" height="128"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="128" id="Itt-0w-4LP"/>
+                                                </constraints>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="QPu-hE-dh2">
+                                                        <rect key="frame" x="0.0" y="28" width="359" height="44"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QPu-hE-dh2" id="kag-kW-mtU">
+                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="43.5"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </tableViewCellContentView>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                            </tableView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="umk-Za-NbH">
+                                                <rect key="frame" x="8" y="522" width="359" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Z7k-R2-HRy" secondAttribute="trailing" constant="8" id="9RK-Nn-PLS"/>
                                             <constraint firstItem="Lgb-V3-Xx3" firstAttribute="top" secondItem="rCu-U0-cHP" secondAttribute="top" constant="16" id="C6N-hR-v9E"/>
                                             <constraint firstAttribute="trailing" secondItem="Lgb-V3-Xx3" secondAttribute="trailing" constant="8" id="HFd-NZ-IpN"/>
+                                            <constraint firstAttribute="trailing" secondItem="umk-Za-NbH" secondAttribute="trailing" constant="8" id="RwQ-YC-S3E"/>
+                                            <constraint firstItem="umk-Za-NbH" firstAttribute="top" secondItem="Z7k-R2-HRy" secondAttribute="bottom" constant="8" id="aBI-6J-9o1"/>
+                                            <constraint firstItem="umk-Za-NbH" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="aac-dN-IDJ"/>
+                                            <constraint firstItem="Z7k-R2-HRy" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="ef6-aU-dIF"/>
                                             <constraint firstAttribute="height" constant="1000" id="nYw-OI-6p5"/>
                                             <constraint firstItem="Lgb-V3-Xx3" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="p1T-ST-jr8"/>
+                                            <constraint firstItem="Z7k-R2-HRy" firstAttribute="top" secondItem="Lgb-V3-Xx3" secondAttribute="bottom" constant="340" id="uSz-5V-A5j"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -75,8 +104,10 @@
                                 <rect key="frame" x="0.0" y="951" width="375" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
-                                    <tabBarItem systemItem="favorites" id="wOo-p5-2bD"/>
-                                    <tabBarItem systemItem="more" id="iXv-dc-Uo9"/>
+                                    <tabBarItem title="Home" selectedImage="home.png" id="wOo-p5-2bD"/>
+                                    <tabBarItem systemItem="search" id="iXv-dc-Uo9"/>
+                                    <tabBarItem systemItem="favorites" id="HNw-S3-yar"/>
+                                    <tabBarItem title="Setting" id="xN5-TP-U6D"/>
                                 </items>
                             </tabBar>
                         </subviews>
@@ -96,7 +127,9 @@
                     <navigationItem key="navigationItem" title="プラン投稿" id="CJd-MB-koX"/>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
+                        <outlet property="spotTable" destination="Z7k-R2-HRy" id="9dP-lk-eOV"/>
                         <outlet property="subView" destination="rCu-U0-cHP" id="4Qz-wL-sTi"/>
+                        <outlet property="tableHeight" destination="Itt-0w-4LP" id="fv4-yX-O2z"/>
                         <outlet property="titleTextField" destination="Lgb-V3-Xx3" id="0Zc-EK-Fgk"/>
                     </connections>
                 </viewController>
@@ -105,4 +138,7 @@
             <point key="canvasLocation" x="15" y="36"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="home.png" width="64" height="64"/>
+    </resources>
 </document>
