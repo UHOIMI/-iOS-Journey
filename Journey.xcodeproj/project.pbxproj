@@ -8,25 +8,53 @@
 
 /* Begin PBXBuildFile section */
 		0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDB920F3415F00224865 /* AppDelegate.swift */; };
-		0021CDBC20F3415F00224865 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDBB20F3415F00224865 /* ViewController.swift */; };
+		0021CDBC20F3415F00224865 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDBB20F3415F00224865 /* InputViewController.swift */; };
 		0021CDBF20F3415F00224865 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021CDBD20F3415F00224865 /* Main.storyboard */; };
 		0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDC020F3415F00224865 /* Journey.xcdatamodeld */; };
 		0021CDC420F3416000224865 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0021CDC320F3416000224865 /* Assets.xcassets */; };
 		0021CDC720F3416000224865 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021CDC520F3416000224865 /* LaunchScreen.storyboard */; };
-		005CB2AD20F369BE0078AD8F /* KeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005CB2AC20F369BE0078AD8F /* KeyBoard.swift */; };
+		0028241820FD900D0082EC7E /* s_car_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028241120FD900C0082EC7E /* s_car_on.png */; };
+		0028241920FD900D0082EC7E /* s_airplane_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028241220FD900C0082EC7E /* s_airplane_on.png */; };
+		0028241A20FD900D0082EC7E /* s_boat_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028241320FD900C0082EC7E /* s_boat_on.png */; };
+		0028241B20FD900D0082EC7E /* s_walk_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028241420FD900C0082EC7E /* s_walk_on.png */; };
+		0028241C20FD900D0082EC7E /* s_bicycle_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028241520FD900D0082EC7E /* s_bicycle_on.png */; };
+		0028241D20FD900D0082EC7E /* s_bus_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028241620FD900D0082EC7E /* s_bus_on.png */; };
+		0028241E20FD900D0082EC7E /* s_train_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028241720FD900D0082EC7E /* s_train_on.png */; };
+		0028242620FD90410082EC7E /* s_bus.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028241F20FD90400082EC7E /* s_bus.png */; };
+		0028242720FD90410082EC7E /* s_car.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242020FD90400082EC7E /* s_car.png */; };
+		0028242820FD90410082EC7E /* s_train.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242120FD90400082EC7E /* s_train.png */; };
+		0028242920FD90410082EC7E /* s_boat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242220FD90400082EC7E /* s_boat.png */; };
+		0028242A20FD90410082EC7E /* s_airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242320FD90410082EC7E /* s_airplane.png */; };
+		0028242B20FD90410082EC7E /* s_walk.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242420FD90410082EC7E /* s_walk.png */; };
+		0028242C20FD90410082EC7E /* s_bicycle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242520FD90410082EC7E /* s_bicycle.png */; };
+		005CB2AD20F369BE0078AD8F /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005CB2AC20F369BE0078AD8F /* Keyboard.swift */; };
 		3ACA2421FA7082AA2AAEF419 /* libPods-Journey.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3328BB239CE760700C9361E /* libPods-Journey.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0021CDB620F3415F00224865 /* Journey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Journey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0021CDB920F3415F00224865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0021CDBB20F3415F00224865 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0021CDBB20F3415F00224865 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		0021CDBE20F3415F00224865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0021CDC120F3415F00224865 /* Journey.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Journey.xcdatamodel; sourceTree = "<group>"; };
 		0021CDC320F3416000224865 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0021CDC620F3416000224865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0021CDC820F3416000224865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		005CB2AC20F369BE0078AD8F /* KeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoard.swift; sourceTree = "<group>"; };
+		0028241120FD900C0082EC7E /* s_car_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_car_on.png; sourceTree = "<group>"; };
+		0028241220FD900C0082EC7E /* s_airplane_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_airplane_on.png; sourceTree = "<group>"; };
+		0028241320FD900C0082EC7E /* s_boat_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_boat_on.png; sourceTree = "<group>"; };
+		0028241420FD900C0082EC7E /* s_walk_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_walk_on.png; sourceTree = "<group>"; };
+		0028241520FD900D0082EC7E /* s_bicycle_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_bicycle_on.png; sourceTree = "<group>"; };
+		0028241620FD900D0082EC7E /* s_bus_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_bus_on.png; sourceTree = "<group>"; };
+		0028241720FD900D0082EC7E /* s_train_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_train_on.png; sourceTree = "<group>"; };
+		0028241F20FD90400082EC7E /* s_bus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_bus.png; sourceTree = "<group>"; };
+		0028242020FD90400082EC7E /* s_car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_car.png; sourceTree = "<group>"; };
+		0028242120FD90400082EC7E /* s_train.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_train.png; sourceTree = "<group>"; };
+		0028242220FD90400082EC7E /* s_boat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_boat.png; sourceTree = "<group>"; };
+		0028242320FD90410082EC7E /* s_airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_airplane.png; sourceTree = "<group>"; };
+		0028242420FD90410082EC7E /* s_walk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_walk.png; sourceTree = "<group>"; };
+		0028242520FD90410082EC7E /* s_bicycle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_bicycle.png; sourceTree = "<group>"; };
+		005CB2AC20F369BE0078AD8F /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.debug.xcconfig"; sourceTree = "<group>"; };
 		B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.release.xcconfig"; sourceTree = "<group>"; };
 		B3328BB239CE760700C9361E /* libPods-Journey.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Journey.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,15 +94,37 @@
 			isa = PBXGroup;
 			children = (
 				0021CDB920F3415F00224865 /* AppDelegate.swift */,
-				0021CDBB20F3415F00224865 /* ViewController.swift */,
+				0021CDBB20F3415F00224865 /* InputViewController.swift */,
 				0021CDBD20F3415F00224865 /* Main.storyboard */,
+				0028241020FD8FFD0082EC7E /*  Transportation_Icon */,
 				0021CDC320F3416000224865 /* Assets.xcassets */,
 				0021CDC520F3416000224865 /* LaunchScreen.storyboard */,
 				0021CDC820F3416000224865 /* Info.plist */,
 				0021CDC020F3415F00224865 /* Journey.xcdatamodeld */,
-				005CB2AC20F369BE0078AD8F /* KeyBoard.swift */,
+				005CB2AC20F369BE0078AD8F /* Keyboard.swift */,
 			);
 			path = Journey;
+			sourceTree = "<group>";
+		};
+		0028241020FD8FFD0082EC7E /*  Transportation_Icon */ = {
+			isa = PBXGroup;
+			children = (
+				0028242320FD90410082EC7E /* s_airplane.png */,
+				0028242520FD90410082EC7E /* s_bicycle.png */,
+				0028242220FD90400082EC7E /* s_boat.png */,
+				0028241F20FD90400082EC7E /* s_bus.png */,
+				0028242020FD90400082EC7E /* s_car.png */,
+				0028242120FD90400082EC7E /* s_train.png */,
+				0028242420FD90410082EC7E /* s_walk.png */,
+				0028241220FD900C0082EC7E /* s_airplane_on.png */,
+				0028241520FD900D0082EC7E /* s_bicycle_on.png */,
+				0028241320FD900C0082EC7E /* s_boat_on.png */,
+				0028241620FD900D0082EC7E /* s_bus_on.png */,
+				0028241120FD900C0082EC7E /* s_car_on.png */,
+				0028241720FD900D0082EC7E /* s_train_on.png */,
+				0028241420FD900C0082EC7E /* s_walk_on.png */,
+			);
+			path = " Transportation_Icon";
 			sourceTree = "<group>";
 		};
 		77EEB21D23C24B3DE7E9A431 /* Frameworks */ = {
@@ -156,7 +206,21 @@
 			files = (
 				0021CDC720F3416000224865 /* LaunchScreen.storyboard in Resources */,
 				0021CDC420F3416000224865 /* Assets.xcassets in Resources */,
+				0028242A20FD90410082EC7E /* s_airplane.png in Resources */,
+				0028241D20FD900D0082EC7E /* s_bus_on.png in Resources */,
+				0028242620FD90410082EC7E /* s_bus.png in Resources */,
+				0028241A20FD900D0082EC7E /* s_boat_on.png in Resources */,
 				0021CDBF20F3415F00224865 /* Main.storyboard in Resources */,
+				0028241E20FD900D0082EC7E /* s_train_on.png in Resources */,
+				0028241C20FD900D0082EC7E /* s_bicycle_on.png in Resources */,
+				0028242720FD90410082EC7E /* s_car.png in Resources */,
+				0028242C20FD90410082EC7E /* s_bicycle.png in Resources */,
+				0028241820FD900D0082EC7E /* s_car_on.png in Resources */,
+				0028241B20FD900D0082EC7E /* s_walk_on.png in Resources */,
+				0028242920FD90410082EC7E /* s_boat.png in Resources */,
+				0028242820FD90410082EC7E /* s_train.png in Resources */,
+				0028242B20FD90410082EC7E /* s_walk.png in Resources */,
+				0028241920FD900D0082EC7E /* s_airplane_on.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,9 +272,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0021CDBC20F3415F00224865 /* ViewController.swift in Sources */,
+				0021CDBC20F3415F00224865 /* InputViewController.swift in Sources */,
 				0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */,
-				005CB2AD20F369BE0078AD8F /* KeyBoard.swift in Sources */,
+				005CB2AD20F369BE0078AD8F /* Keyboard.swift in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
