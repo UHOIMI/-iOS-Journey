@@ -18,12 +18,20 @@ class InputViewController: UIViewController ,UITableViewDelegate, UITableViewDat
   @IBOutlet weak var pickerTextField: UITextField!
   @IBOutlet weak var textView: UITextView!
   @IBOutlet weak var subViewHeight: NSLayoutConstraint!
-  
+
   var height = 46
   var count = 0
   var viewHeight = 0
   var text:Array = ["スポットを追加"]
   var pickOption = ["one", "two", "three", "seven", "fifteen"]
+  
+  var imageFlag1 = 0
+  var imageFlag2 = 0
+  var imageFlag3 = 0
+  var imageFlag4 = 0
+  var imageFlag5 = 0
+  var imageFlag6 = 0
+  var imageFlag7 = 0
   
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   
@@ -86,7 +94,7 @@ class InputViewController: UIViewController ,UITableViewDelegate, UITableViewDat
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let camera = GMSCameraPosition.camera(withLatitude: -33.868,longitude:151.2086, zoom:15)
+    let camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
     let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:60,width:myFrameSize.width,height:300),camera:camera)
     let marker = GMSMarker()
     
@@ -139,7 +147,79 @@ class InputViewController: UIViewController ,UITableViewDelegate, UITableViewDat
     kbToolBar.items = [spacer, commitButton]
     textView.inputAccessoryView = kbToolBar
   }
-
-
+  
+  enum actionTag: Int {
+    case action1 = 1
+    case action2 = 2
+    case action3 = 3
+    case action4 = 4
+    case action5 = 5
+    case action6 = 6
+    case action7 = 7
+  }
+  @IBAction func pushButton(_ sender: Any) {
+    if let button = sender as? UIButton {
+      if let tag = actionTag(rawValue: button.tag) {
+        switch tag {
+        case .action1:
+          if(imageFlag1 == 0){
+            button.setImage(UIImage(named: "s_walk_on.png"), for:UIControlState())
+            imageFlag1 = 1
+          }else{
+            button.setImage(UIImage(named: "s_walk.png"), for:UIControlState())
+            imageFlag1 = 0
+          }
+        case .action2:
+          if(imageFlag2 == 0){
+            button.setImage(UIImage(named: "s_bicycle_on.png"), for:UIControlState())
+            imageFlag2 = 1
+          }else{
+            button.setImage(UIImage(named: "s_bicycle.png"), for:UIControlState())
+            imageFlag1 = 0
+          }
+        case .action3:
+          if(imageFlag1 == 0){
+            button.setImage(UIImage(named: "s_car_on.png"), for:UIControlState())
+            imageFlag1 = 1
+          }else{
+            button.setImage(UIImage(named: "s_car.png"), for:UIControlState())
+            imageFlag1 = 0
+          }
+        case .action4:
+          if(imageFlag1 == 0){
+            button.setImage(UIImage(named: "s_bus_on.png"), for:UIControlState())
+            imageFlag1 = 1
+          }else{
+            button.setImage(UIImage(named: "s_bus.png"), for:UIControlState())
+            imageFlag1 = 0
+          }
+        case .action5:
+          if(imageFlag1 == 0){
+            button.setImage(UIImage(named: "s_train_on.png"), for:UIControlState())
+            imageFlag1 = 1
+          }else{
+            button.setImage(UIImage(named: "s_train.png"), for:UIControlState())
+            imageFlag1 = 0
+          }
+        case .action6:
+          if(imageFlag1 == 0){
+            button.setImage(UIImage(named: "s_airplane_on.png"), for:UIControlState())
+            imageFlag1 = 1
+          }else{
+            button.setImage(UIImage(named: "s_airplane.png"), for:UIControlState())
+            imageFlag1 = 0
+          }
+        case .action7:
+          if(imageFlag1 == 0){
+            button.setImage(UIImage(named: "s_boat_on.png"), for:UIControlState())
+            imageFlag1 = 1
+          }else{
+            button.setImage(UIImage(named: "s_boat.png"), for:UIControlState())
+            imageFlag1 = 0
+          }
+        }
+      }
+    }
+  }
 }
 

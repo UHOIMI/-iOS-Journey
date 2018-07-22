@@ -109,7 +109,6 @@
 		0028241020FD8FFD0082EC7E /*  Transportation_Icon */ = {
 			isa = PBXGroup;
 			children = (
-				0028242320FD90410082EC7E /* s_airplane.png */,
 				0028242520FD90410082EC7E /* s_bicycle.png */,
 				0028242220FD90400082EC7E /* s_boat.png */,
 				0028241F20FD90400082EC7E /* s_bus.png */,
@@ -123,6 +122,7 @@
 				0028241120FD900C0082EC7E /* s_car_on.png */,
 				0028241720FD900D0082EC7E /* s_train_on.png */,
 				0028241420FD900C0082EC7E /* s_walk_on.png */,
+				0028242320FD90410082EC7E /* s_airplane.png */,
 			);
 			path = " Transportation_Icon";
 			sourceTree = "<group>";
