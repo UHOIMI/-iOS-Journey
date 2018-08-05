@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="KHP-mh-G0N"/>
+                        <segue destination="Qxu-g9-ag6" kind="relationship" relationship="rootViewController" id="YOr-31-rlW"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ox-mr-kp5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -29,7 +29,7 @@
         <!--プラン投稿-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="InputViewController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="PostViewController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -253,7 +253,54 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-38" y="-70"/>
+            <point key="canvasLocation" x="895" y="-72"/>
+        </scene>
+        <!--Start View Controller-->
+        <scene sceneID="bqO-ZY-vMx">
+            <objects>
+                <viewController id="Qxu-g9-ag6" customClass="StartViewController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iWV-Bd-KrR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xfa-ZF-7Dp">
+                                <rect key="frame" x="69" y="144" width="182" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="スポット追加"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wF-Mg-jG8">
+                                <rect key="frame" x="69" y="224" width="182" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="スポット一覧"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3cU-8B-Bmb">
+                                <rect key="frame" x="130" y="304" width="61" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="投稿"/>
+                                <connections>
+                                    <action selector="tappedPostButton:" destination="Qxu-g9-ag6" eventType="touchUpInside" id="IKE-8x-Guq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xfa-ZF-7Dp" firstAttribute="centerX" secondItem="iWV-Bd-KrR" secondAttribute="centerX" id="1p4-cK-mgn"/>
+                            <constraint firstItem="4wF-Mg-jG8" firstAttribute="top" secondItem="xfa-ZF-7Dp" secondAttribute="bottom" constant="32" id="22n-JM-71o"/>
+                            <constraint firstItem="xfa-ZF-7Dp" firstAttribute="top" secondItem="hIr-Du-XeS" secondAttribute="top" constant="80" id="Eda-co-Xog"/>
+                            <constraint firstItem="3cU-8B-Bmb" firstAttribute="centerX" secondItem="iWV-Bd-KrR" secondAttribute="centerX" id="IfK-EE-ett"/>
+                            <constraint firstItem="3cU-8B-Bmb" firstAttribute="top" secondItem="4wF-Mg-jG8" secondAttribute="bottom" constant="32" id="U5u-Vc-8wS"/>
+                            <constraint firstItem="4wF-Mg-jG8" firstAttribute="centerX" secondItem="iWV-Bd-KrR" secondAttribute="centerX" id="YEL-OW-VxN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hIr-Du-XeS"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="7Ny-6H-y55"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="toPostView" id="ScF-Q7-9Tm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f45-W8-ZAN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-332" y="-71"/>
         </scene>
     </scenes>
     <resources>

@@ -28,6 +28,7 @@
 		0028242B20FD90410082EC7E /* s_walk.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242420FD90410082EC7E /* s_walk.png */; };
 		0028242C20FD90410082EC7E /* s_bicycle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242520FD90410082EC7E /* s_bicycle.png */; };
 		003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAA21173E7500A48959 /* Keyboard.swift */; };
+		003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAC2117411F00A48959 /* StartViewController.swift */; };
 		3ACA2421FA7082AA2AAEF419 /* libPods-Journey.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3328BB239CE760700C9361E /* libPods-Journey.a */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		0028242420FD90410082EC7E /* s_walk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_walk.png; sourceTree = "<group>"; };
 		0028242520FD90410082EC7E /* s_bicycle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_bicycle.png; sourceTree = "<group>"; };
 		003C6DAA21173E7500A48959 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
+		003C6DAC2117411F00A48959 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.debug.xcconfig"; sourceTree = "<group>"; };
 		B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.release.xcconfig"; sourceTree = "<group>"; };
 		B3328BB239CE760700C9361E /* libPods-Journey.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Journey.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +104,7 @@
 				0021CDC820F3416000224865 /* Info.plist */,
 				0021CDC020F3415F00224865 /* Journey.xcdatamodeld */,
 				003C6DAA21173E7500A48959 /* Keyboard.swift */,
+				003C6DAC2117411F00A48959 /* StartViewController.swift */,
 			);
 			path = Journey;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */,
 				0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */,
 				0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
