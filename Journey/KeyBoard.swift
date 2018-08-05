@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class KeyBoard: UITextField,UITextFieldDelegate{
+class Keyboard: UITextField,UITextFieldDelegate{
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -17,7 +17,7 @@ class KeyBoard: UITextField,UITextFieldDelegate{
     let tools = UIToolbar()
     tools.frame = CGRect(x: 0, y: 0, width: frame.width, height: 40)
     let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-    let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(KeyBoard.closeButtonTapped))
+    let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(Keyboard.closeButtonTapped))
     tools.items = [spacer, closeButton]
     self.inputAccessoryView = tools
   }
