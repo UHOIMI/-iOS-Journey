@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDB920F3415F00224865 /* AppDelegate.swift */; };
-		0021CDBC20F3415F00224865 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDBB20F3415F00224865 /* InputViewController.swift */; };
+		0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDBB20F3415F00224865 /* PostViewController.swift */; };
 		0021CDBF20F3415F00224865 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021CDBD20F3415F00224865 /* Main.storyboard */; };
 		0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDC020F3415F00224865 /* Journey.xcdatamodeld */; };
 		0021CDC420F3416000224865 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0021CDC320F3416000224865 /* Assets.xcassets */; };
@@ -34,7 +34,7 @@
 /* Begin PBXFileReference section */
 		0021CDB620F3415F00224865 /* Journey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Journey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0021CDB920F3415F00224865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0021CDBB20F3415F00224865 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
+		0021CDBB20F3415F00224865 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		0021CDBE20F3415F00224865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0021CDC120F3415F00224865 /* Journey.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Journey.xcdatamodel; sourceTree = "<group>"; };
 		0021CDC320F3416000224865 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				0021CDB920F3415F00224865 /* AppDelegate.swift */,
-				0021CDBB20F3415F00224865 /* InputViewController.swift */,
+				0021CDBB20F3415F00224865 /* PostViewController.swift */,
 				0021CDBD20F3415F00224865 /* Main.storyboard */,
 				0028241020FD8FFD0082EC7E /*  Transportation_Icon */,
 				0021CDC320F3416000224865 /* Assets.xcassets */,
@@ -272,7 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0021CDBC20F3415F00224865 /* InputViewController.swift in Sources */,
+				0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */,
 				0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */,
 				005CB2AD20F369BE0078AD8F /* Keyboard.swift in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
