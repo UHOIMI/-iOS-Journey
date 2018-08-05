@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 
-class InputViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate{
+class PostViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate{
 
   @IBOutlet weak var titleTextField: UITextField!
   @IBOutlet weak var subView: UIView!
