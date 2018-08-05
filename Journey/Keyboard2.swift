@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class Keyboard2: UITextField,UITextFieldDelegate{
+class Keyboard: UITextField,UITextFieldDelegate{
   
   override init(frame: CGRect) {
     super.init(frame: frame)
