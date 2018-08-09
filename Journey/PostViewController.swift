@@ -143,7 +143,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     // スペーサー
     let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
     // 閉じるボタン
-    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(InputViewController.commitButtonTapped))
+    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.commitButtonTapped))
     kbToolBar.items = [spacer, commitButton]
     textView.inputAccessoryView = kbToolBar
   }
