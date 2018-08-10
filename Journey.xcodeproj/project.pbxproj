@@ -31,6 +31,8 @@
 		003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAC2117411F00A48959 /* StartViewController.swift */; };
 		3ACA2421FA7082AA2AAEF419 /* libPods-Journey.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3328BB239CE760700C9361E /* libPods-Journey.a */; };
 		9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB69211D14E300B8753B /* SpotListViewController.swift */; };
+		9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */; };
+		9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */; };
 		9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +63,8 @@
 		003C6DAC2117411F00A48959 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.debug.xcconfig"; sourceTree = "<group>"; };
 		9151DB69211D14E300B8753B /* SpotListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotListViewController.swift; sourceTree = "<group>"; };
+		9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSpotViewController.swift; sourceTree = "<group>"; };
+		9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpotViewController.swift; sourceTree = "<group>"; };
 		9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutSpotViewController.swift; sourceTree = "<group>"; };
 		B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.release.xcconfig"; sourceTree = "<group>"; };
 		B3328BB239CE760700C9361E /* libPods-Journey.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Journey.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +106,8 @@
 				0021CDB920F3415F00224865 /* AppDelegate.swift */,
 				0021CDBB20F3415F00224865 /* PostViewController.swift */,
 				0021CDBD20F3415F00224865 /* Main.storyboard */,
+				9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */,
+				9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */,
 				9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */,
 				9151DB69211D14E300B8753B /* SpotListViewController.swift */,
 				0028241020FD8FFD0082EC7E /*  Transportation_Icon */,
@@ -282,12 +288,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */,
+				9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */,
 				9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */,
 				003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */,
 				0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */,
 				0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
 				003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */,
+				9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
