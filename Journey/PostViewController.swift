@@ -18,13 +18,15 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   @IBOutlet weak var pickerTextField: UITextField!
   @IBOutlet weak var textView: UITextView!
   @IBOutlet weak var subViewHeight: NSLayoutConstraint!
-
+  @IBOutlet weak var prefecturesTextField: UITextField!
+  
   var height = 46
   var count = 0
   var viewHeight = 0
   var text:Array = ["スポットを追加"]
   var pickOption = ["one", "two", "three", "seven", "fifteen"]
-  
+  var prefectures = [ "北海道", "青森県", "岩手県", "宮城県", "秋田県","山形県", "福島県", "茨城県", "栃木県", "群馬県","埼玉県", "千葉県", "東京都", "神奈川県", "新潟県","富山県", "石川県", "福井県", "山梨県", "長野県","岐阜県", "静岡県", "愛知県", "三重県", "滋賀県","京都府", "大阪府", "兵庫県", "奈良県", "和歌山県","鳥取県", "島根県", "岡山県", "広島県", "山口県","徳島県", "香川県", "愛媛県", "高知県", "福岡県","佐賀県", "長崎県", "熊本県", "大分県", "宮崎県","鹿児島県", "沖縄県"]
+ 
   var imageFlag1 = 0
   var imageFlag2 = 0
   var imageFlag3 = 0
@@ -40,13 +42,25 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    return pickOption.count
+    if pickerView.tag == 1{
+      return prefectures.count
+    }else{
+      return pickOption.count
+    }
   }
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    return pickOption[row]
+    if pickerView.tag == 1{
+      return prefectures[row]
+    }else{
+      return pickOption[row]
+    }
   }
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    pickerTextField.text = pickOption[row]
+    if pickerView.tag == 1{
+      prefecturesTextField.text = prefectures[row]
+    }else{
+      pickerTextField.text = pickOption[row]
+    }
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,7 +109,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     super.viewDidLoad()
     
     let camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
-    let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:60,width:myFrameSize.width,height:300),camera:camera)
+    let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:0,width:myFrameSize.width,height:300),camera:camera)
     let marker = GMSMarker()
     
     marker.icon = UIImage(named:"thumbs-up")
@@ -103,19 +117,27 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     self.subView.addSubview(mapView)
     
     titleTextField.placeholder = "プラン名を入力"
-    pickerTextField.placeholder = "選択してください"
+    prefecturesTextField.placeholder = "都道府県を選択してください"
+    pickerTextField.placeholder = "金額を選択してください"
     textView.text = "プラン説明"
     
     spotTable.delegate = self
     spotTable.dataSource = self
     tableHeight.constant = CGFloat(height)
     
+    let prefecturesPickerView = UIPickerView()
+    prefecturesPickerView.tag = 1
+    prefecturesPickerView.delegate = self
+    prefecturesTextField.inputView = prefecturesPickerView
+    
     let pickerView = UIPickerView()
+    pickerView.tag = 2
     pickerView.delegate = self
     pickerTextField.inputView = pickerView
+    
     textViewSetteings()
     keboardSettings()
-    
+  
   }
 
   override func didReceiveMemoryWarning() {
