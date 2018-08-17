@@ -76,17 +76,17 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
     let selectedNumber = text[indexPath.row]
-    print(selectedNumber)
     if(selectedNumber == "スポットを追加" && text.count != 21){
-      count += 1
-      let str = count.description
-      text.append(str)
-      viewHeight = Int(subView.frame.height) + 46
-      subViewHeight.constant = CGFloat(viewHeight)
-      print("Height:",viewHeight)
-      height += 46
-      tableHeight.constant = CGFloat(height)
-      spotTable.reloadData()
+      performSegue(withIdentifier: "toSelectSpotView", sender: nil)
+//      count += 1
+//      let str = count.description
+//      text.append(str)
+//      viewHeight = Int(subView.frame.height) + 46
+//      subViewHeight.constant = CGFloat(viewHeight)
+//      print("Height:",viewHeight)
+//      height += 46
+//      tableHeight.constant = CGFloat(height)
+//      spotTable.reloadData()
     } else if(text.count == 21) {
       text[0] = "これ以上追加できません"
       spotTable.reloadData()
