@@ -37,6 +37,8 @@
 		9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */; };
 		9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */; };
 		9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */; };
+		91C1E8162128152D00C9FE59 /* SpotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C1E8152128152D00C9FE59 /* SpotModel.swift */; };
+		91C1E8182128156A00C9FE59 /* ListSpotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C1E8172128156A00C9FE59 /* ListSpotModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,8 @@
 		9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSpotViewController.swift; sourceTree = "<group>"; };
 		9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpotViewController.swift; sourceTree = "<group>"; };
 		9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutSpotViewController.swift; sourceTree = "<group>"; };
+		91C1E8152128152D00C9FE59 /* SpotModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotModel.swift; sourceTree = "<group>"; };
+		91C1E8172128156A00C9FE59 /* ListSpotModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSpotModel.swift; sourceTree = "<group>"; };
 		B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +130,8 @@
 				003C6DAA21173E7500A48959 /* Keyboard.swift */,
 				003C6DAC2117411F00A48959 /* StartViewController.swift */,
 				0020A4D72127FD71005FC16C /* UINavigationViewController.swift */,
+				91C1E8152128152D00C9FE59 /* SpotModel.swift */,
+				91C1E8172128156A00C9FE59 /* ListSpotModel.swift */,
 			);
 			path = Journey;
 			sourceTree = "<group>";
@@ -322,9 +328,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */,
+				91C1E8182128156A00C9FE59 /* ListSpotModel.swift in Sources */,
 				9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */,
 				9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */,
 				003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */,
+				91C1E8162128152D00C9FE59 /* SpotModel.swift in Sources */,
 				0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */,
 				0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
