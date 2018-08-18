@@ -40,7 +40,6 @@
 		9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */; };
 		9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */; };
 		9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */; };
-		91C1E8182128156A00C9FE59 /* ListSpotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C1E8172128156A00C9FE59 /* ListSpotModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,7 +79,6 @@
 		9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSpotViewController.swift; sourceTree = "<group>"; };
 		9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpotViewController.swift; sourceTree = "<group>"; };
 		9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutSpotViewController.swift; sourceTree = "<group>"; };
-		91C1E8172128156A00C9FE59 /* ListSpotModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSpotModel.swift; sourceTree = "<group>"; };
 		B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,7 +103,6 @@
 				0021CDB720F3415F00224865 /* Products */,
 				B411DFF49B2D9CB06DAAF4E5 /* Pods */,
 				77EEB21D23C24B3DE7E9A431 /* Frameworks */,
-				00D7D42F21281D5A00C507B7 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,14 +158,6 @@
 				0028242320FD90410082EC7E /* s_airplane.png */,
 			);
 			path = " Transportation_Icon";
-			sourceTree = "<group>";
-		};
-		00D7D42F21281D5A00C507B7 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				91C1E8172128156A00C9FE59 /* ListSpotModel.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		77EEB21D23C24B3DE7E9A431 /* Frameworks */ = {
@@ -344,7 +333,6 @@
 			files = (
 				9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */,
 				00D7D431212821CE00C507B7 /* ListSpotModel.swift in Sources */,
-				91C1E8182128156A00C9FE59 /* ListSpotModel.swift in Sources */,
 				9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */,
 				9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */,
 				003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */,

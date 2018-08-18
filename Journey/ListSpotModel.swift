@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class SpotData: NSObject {
+class ListSpotModel: NSObject {
   var latitude: CLLocationDegrees
   var longitude: CLLocationDegrees
   var name: String
