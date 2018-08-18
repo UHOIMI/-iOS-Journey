@@ -509,6 +509,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ArH-gf-KXm">
                                 <rect key="frame" x="103" y="72" width="169" height="30"/>
                                 <state key="normal" title="プラン・スポットを探す"/>
+                                <connections>
+                                    <action selector="pickPlace:" destination="dUa-pH-V8z" eventType="touchUpInside" id="gLz-DP-8Ps"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="選択したスポット" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otl-AD-xPR">
                                 <rect key="frame" x="8" y="110" width="139" height="21"/>
@@ -528,11 +531,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r9d-tY-v2h">
+                            <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r9d-tY-v2h">
                                 <rect key="frame" x="8" y="139" width="359" height="202"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="FcC-64-HlM">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectCell" id="FcC-64-HlM">
                                         <rect key="frame" x="0.0" y="28" width="359" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FcC-64-HlM" id="mfe-12-oRn">
@@ -541,12 +544,16 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="dUa-pH-V8z" id="39f-DQ-kx8"/>
+                                    <outlet property="delegate" destination="dUa-pH-V8z" id="s7I-MX-iT2"/>
+                                </connections>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tme-a3-yHO">
+                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tme-a3-yHO">
                                 <rect key="frame" x="8" y="415" width="359" height="202"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Dh6-28-bV8">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" id="Dh6-28-bV8">
                                         <rect key="frame" x="0.0" y="28" width="359" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dh6-28-bV8" id="byx-zS-0mN">
@@ -555,10 +562,17 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="dUa-pH-V8z" id="C9t-el-Lmw"/>
+                                    <outlet property="delegate" destination="dUa-pH-V8z" id="yV9-AA-YmA"/>
+                                </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Haz-yz-bqc">
                                 <rect key="frame" x="336" y="381.5" width="31" height="30"/>
                                 <state key="normal" title="昇順"/>
+                                <connections>
+                                    <action selector="tappedSortButton:" destination="dUa-pH-V8z" eventType="touchUpInside" id="do0-mw-lbO"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="並び替え：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8T-e6-KXO">
                                 <rect key="frame" x="249" y="386.5" width="87" height="21"/>
@@ -599,6 +613,11 @@
                     <navigationItem key="navigationItem" title="スポット登録" id="zGu-7k-VBW">
                         <barButtonItem key="rightBarButtonItem" title="登録" id="pBY-pM-F5F"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="selectSpotTable" destination="r9d-tY-v2h" id="6co-3c-k9T"/>
+                        <outlet property="sortButton" destination="Haz-yz-bqc" id="QyU-Dl-nBg"/>
+                        <outlet property="userSpotTable" destination="Tme-a3-yHO" id="FRC-VB-ZFK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXV-kU-vyc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
