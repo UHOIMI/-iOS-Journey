@@ -33,6 +33,8 @@
 		003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAA21173E7500A48959 /* Keyboard.swift */; };
 		003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAC2117411F00A48959 /* StartViewController.swift */; };
 		00AFEE91212816A9002A49B5 /* gradation.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AFEE90212816A9002A49B5 /* gradation.png */; };
+		00D7D431212821CE00C507B7 /* ListSpotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D7D430212821CE00C507B7 /* ListSpotModel.swift */; };
+		00D7D433212821F400C507B7 /* SpotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D7D432212821F400C507B7 /* SpotModel.swift */; };
 		45E16F0FE3FC7BC835323696 /* Pods_Journey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4ACEDC8050F8641E5C887B /* Pods_Journey.framework */; };
 		9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB69211D14E300B8753B /* SpotListViewController.swift */; };
 		9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */; };
@@ -70,6 +72,8 @@
 		003C6DAA21173E7500A48959 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		003C6DAC2117411F00A48959 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		00AFEE90212816A9002A49B5 /* gradation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradation.png; sourceTree = "<group>"; };
+		00D7D430212821CE00C507B7 /* ListSpotModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSpotModel.swift; sourceTree = "<group>"; };
+		00D7D432212821F400C507B7 /* SpotModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotModel.swift; sourceTree = "<group>"; };
 		0C4ACEDC8050F8641E5C887B /* Pods_Journey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Journey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.debug.xcconfig"; sourceTree = "<group>"; };
 		9151DB69211D14E300B8753B /* SpotListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotListViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +132,8 @@
 				0021CDC520F3416000224865 /* LaunchScreen.storyboard */,
 				0021CDC820F3416000224865 /* Info.plist */,
 				0021CDC020F3415F00224865 /* Journey.xcdatamodeld */,
+				00D7D432212821F400C507B7 /* SpotModel.swift */,
+				00D7D430212821CE00C507B7 /* ListSpotModel.swift */,
 				003C6DAA21173E7500A48959 /* Keyboard.swift */,
 				003C6DAC2117411F00A48959 /* StartViewController.swift */,
 				0020A4D72127FD71005FC16C /* NavigationController.swift */,
@@ -337,10 +343,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */,
+				00D7D431212821CE00C507B7 /* ListSpotModel.swift in Sources */,
 				91C1E8182128156A00C9FE59 /* ListSpotModel.swift in Sources */,
 				9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */,
 				9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */,
 				003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */,
+				00D7D433212821F400C507B7 /* SpotModel.swift in Sources */,
 				0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */,
 				0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
