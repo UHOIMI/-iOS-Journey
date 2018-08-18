@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation View Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="DGx-tU-mJE">
             <objects>
-                <navigationController id="VVX-iF-CIv" customClass="UINavigationViewController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="VVX-iF-CIv" customClass="NavigationController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XTr-UR-IVG">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

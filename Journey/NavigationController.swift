@@ -8,20 +8,20 @@
 
 import UIKit
 
-class UINavigationViewController: UINavigationController {
+class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
       super.viewDidLoad()
-      
-      // 白黒半々になる
-      let startColor = UIColor(red: 95/255, green: 232/255, blue: 249/255, alpha: 1.0).cgColor
-      let endColor = UIColor(red: 91/255, green: 178/255, blue: 253/255, alpha: 1.0).cgColor
-      
-      let layer = CAGradientLayer()
-      layer.colors = [startColor, endColor]
-      layer.frame = navigationBar.bounds
-      
-      navigationBar.layer.addSublayer(layer)
+      //　ナビゲーションバーの背景色
+      let image:UIImage = UIImage(named: "gradation.png")!
+      navigationBar.setBackgroundImage(image, for: .default)
+      // ナビゲーションバーのアイテムの色　（戻る　＜　とか　読み込みゲージとか）
+      navigationBar.tintColor = .black
+      // ナビゲーションバーのテキストを変更する
+      navigationBar.titleTextAttributes = [
+        // 文字の色
+        .foregroundColor: UIColor.black
+      ]
 
     }
 

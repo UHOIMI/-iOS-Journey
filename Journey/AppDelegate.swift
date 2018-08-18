@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     GMSServices.provideAPIKey("AIzaSyBYMk-s7KT2Fef6jqO7VpWoWFd8CA5Emss")
     GMSPlacesClient.provideAPIKey("AIzaSyBYMk-s7KT2Fef6jqO7VpWoWFd8CA5Emss")
     GMSServices.provideAPIKey("AIzaSyBYMk-s7KT2Fef6jqO7VpWoWFd8CA5Emss")
+//    let vc = StartViewController()
+//    let naviVC = NavigationController(rootVC: vc, naviBarClass: CustomNavigationBar.self, toolbarClass: nil)
+//    self.window!.rootViewController = naviVC
     return true
   }
 

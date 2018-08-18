@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0020A4D42127F88D005FC16C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0020A4D32127F88D005FC16C /* Realm.framework */; };
 		0020A4D62127F892005FC16C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0020A4D52127F892005FC16C /* RealmSwift.framework */; };
-		0020A4D82127FD71005FC16C /* UINavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0020A4D72127FD71005FC16C /* UINavigationViewController.swift */; };
+		0020A4D82127FD71005FC16C /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0020A4D72127FD71005FC16C /* NavigationController.swift */; };
 		0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDB920F3415F00224865 /* AppDelegate.swift */; };
 		0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDBB20F3415F00224865 /* PostViewController.swift */; };
 		0021CDBF20F3415F00224865 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021CDBD20F3415F00224865 /* Main.storyboard */; };
@@ -32,6 +32,7 @@
 		0028242C20FD90410082EC7E /* s_bicycle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242520FD90410082EC7E /* s_bicycle.png */; };
 		003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAA21173E7500A48959 /* Keyboard.swift */; };
 		003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAC2117411F00A48959 /* StartViewController.swift */; };
+		00AFEE91212816A9002A49B5 /* gradation.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AFEE90212816A9002A49B5 /* gradation.png */; };
 		45E16F0FE3FC7BC835323696 /* Pods_Journey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4ACEDC8050F8641E5C887B /* Pods_Journey.framework */; };
 		9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB69211D14E300B8753B /* SpotListViewController.swift */; };
 		9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */; };
@@ -42,7 +43,7 @@
 /* Begin PBXFileReference section */
 		0020A4D32127F88D005FC16C /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0020A4D52127F892005FC16C /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0020A4D72127FD71005FC16C /* UINavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationViewController.swift; sourceTree = "<group>"; };
+		0020A4D72127FD71005FC16C /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		0021CDB620F3415F00224865 /* Journey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Journey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0021CDB920F3415F00224865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0021CDBB20F3415F00224865 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +68,7 @@
 		0028242520FD90410082EC7E /* s_bicycle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_bicycle.png; sourceTree = "<group>"; };
 		003C6DAA21173E7500A48959 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		003C6DAC2117411F00A48959 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		00AFEE90212816A9002A49B5 /* gradation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradation.png; sourceTree = "<group>"; };
 		0C4ACEDC8050F8641E5C887B /* Pods_Journey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Journey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.debug.xcconfig"; sourceTree = "<group>"; };
 		9151DB69211D14E300B8753B /* SpotListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotListViewController.swift; sourceTree = "<group>"; };
@@ -125,7 +127,7 @@
 				0021CDC020F3415F00224865 /* Journey.xcdatamodeld */,
 				003C6DAA21173E7500A48959 /* Keyboard.swift */,
 				003C6DAC2117411F00A48959 /* StartViewController.swift */,
-				0020A4D72127FD71005FC16C /* UINavigationViewController.swift */,
+				0020A4D72127FD71005FC16C /* NavigationController.swift */,
 			);
 			path = Journey;
 			sourceTree = "<group>";
@@ -133,6 +135,7 @@
 		0028241020FD8FFD0082EC7E /*  Transportation_Icon */ = {
 			isa = PBXGroup;
 			children = (
+				00AFEE90212816A9002A49B5 /* gradation.png */,
 				0028242520FD90410082EC7E /* s_bicycle.png */,
 				0028242220FD90400082EC7E /* s_boat.png */,
 				0028241F20FD90400082EC7E /* s_bus.png */,
@@ -238,6 +241,7 @@
 				0028242620FD90410082EC7E /* s_bus.png in Resources */,
 				0028241A20FD900D0082EC7E /* s_boat_on.png in Resources */,
 				0021CDBF20F3415F00224865 /* Main.storyboard in Resources */,
+				00AFEE91212816A9002A49B5 /* gradation.png in Resources */,
 				0028241E20FD900D0082EC7E /* s_train_on.png in Resources */,
 				0028241C20FD900D0082EC7E /* s_bicycle_on.png in Resources */,
 				0028242720FD90410082EC7E /* s_car.png in Resources */,
@@ -329,7 +333,7 @@
 				0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
 				003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */,
-				0020A4D82127FD71005FC16C /* UINavigationViewController.swift in Sources */,
+				0020A4D82127FD71005FC16C /* NavigationController.swift in Sources */,
 				9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
