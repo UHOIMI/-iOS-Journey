@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Navigation View Controller-->
         <scene sceneID="DGx-tU-mJE">
             <objects>
-                <navigationController id="VVX-iF-CIv" sceneMemberID="viewController">
+                <navigationController id="VVX-iF-CIv" customClass="UINavigationViewController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XTr-UR-IVG">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -326,7 +326,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hIr-Du-XeS"/>
                     </view>
-                    <navigationItem key="navigationItem" id="7Ny-6H-y55"/>
+                    <navigationItem key="navigationItem" id="TaG-Xt-toW"/>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="toPostView" id="ScF-Q7-9Tm"/>
                         <segue destination="dYc-gx-w37" kind="show" identifier="toPutSpotView" id="SAI-tm-OCo"/>
@@ -676,6 +676,6 @@
         <image name="settings_30px.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PgR-1F-fd2"/>
+        <segue reference="SAI-tm-OCo"/>
     </inferredMetricsTieBreakers>
 </document>
