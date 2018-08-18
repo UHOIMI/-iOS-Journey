@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 
-class PostViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate{
+class PostViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate{
 
   @IBOutlet weak var titleTextField: UITextField!
   @IBOutlet weak var subView: UIView!
@@ -36,6 +36,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var imageFlag7 = 0
   
   let myFrameSize:CGSize = UIScreen.main.bounds.size
+  private var tabBar:TabBar!
   
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
@@ -137,9 +138,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     
     textViewSetteings()
     keboardSettings()
-  
+    createTabBar()
   }
-
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -169,6 +170,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     kbToolBar.items = [spacer, commitButton]
     textView.inputAccessoryView = kbToolBar
   }
+  
   
   enum actionTag: Int {
     case action1 = 1
