@@ -12,10 +12,10 @@ class SpotModel: Object {
   
   @objc dynamic var spot_id : Int = 0;
   @objc dynamic var spot_name = "";
-  @objc dynamic var latitude : Float = 0.0;
-  @objc dynamic var longitude : Float = 0.0;
+  @objc dynamic var latitude : Double = 0.0;
+  @objc dynamic var longitude : Double = 0.0;
   @objc dynamic var comment = "";
-  @objc dynamic var datetime = Data();
+  @objc dynamic var datetime = Date();
   @objc dynamic var image_A = "";
   @objc dynamic var image_B = "";
   @objc dynamic var image_C = "";

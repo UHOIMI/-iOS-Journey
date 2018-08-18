@@ -35,9 +35,9 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         
         super.viewDidLoad()
         fmt.dateFormat = "yyyy/MM/dd"
-        for _sd in spotDataList{
+        /*for _sd in spotDataList{
             spotNameList.append(fmt.string(from: _sd.date) + "：" + _sd.name)
-        }
+        }*/
     }
     
     override func didReceiveMemoryWarning() {
