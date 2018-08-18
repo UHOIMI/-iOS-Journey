@@ -13,7 +13,7 @@ class NavigationController: UINavigationController {
     override func viewDidLoad() {
       super.viewDidLoad()
       //　ナビゲーションバーの背景色
-      let image:UIImage = UIImage(named: "gradation.png")!
+      let image:UIImage = UIImage(named: "s_gradation.png")!
       navigationBar.setBackgroundImage(image, for: .default)
       // ナビゲーションバーのアイテムの色　（戻る　＜　とか　読み込みゲージとか）
       navigationBar.tintColor = .black
