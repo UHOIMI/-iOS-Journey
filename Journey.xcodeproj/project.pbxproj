@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0020A4D42127F88D005FC16C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0020A4D32127F88D005FC16C /* Realm.framework */; };
+		0020A4D62127F892005FC16C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0020A4D52127F892005FC16C /* RealmSwift.framework */; };
 		0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDB920F3415F00224865 /* AppDelegate.swift */; };
 		0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021CDBB20F3415F00224865 /* PostViewController.swift */; };
 		0021CDBF20F3415F00224865 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021CDBD20F3415F00224865 /* Main.storyboard */; };
@@ -29,7 +31,7 @@
 		0028242C20FD90410082EC7E /* s_bicycle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242520FD90410082EC7E /* s_bicycle.png */; };
 		003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAA21173E7500A48959 /* Keyboard.swift */; };
 		003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAC2117411F00A48959 /* StartViewController.swift */; };
-		3ACA2421FA7082AA2AAEF419 /* libPods-Journey.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3328BB239CE760700C9361E /* libPods-Journey.a */; };
+		45E16F0FE3FC7BC835323696 /* Pods_Journey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4ACEDC8050F8641E5C887B /* Pods_Journey.framework */; };
 		9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB69211D14E300B8753B /* SpotListViewController.swift */; };
 		9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */; };
 		9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0020A4D32127F88D005FC16C /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0020A4D52127F892005FC16C /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0021CDB620F3415F00224865 /* Journey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Journey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0021CDB920F3415F00224865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0021CDBB20F3415F00224865 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -61,13 +65,13 @@
 		0028242520FD90410082EC7E /* s_bicycle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_bicycle.png; sourceTree = "<group>"; };
 		003C6DAA21173E7500A48959 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		003C6DAC2117411F00A48959 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		0C4ACEDC8050F8641E5C887B /* Pods_Journey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Journey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.debug.xcconfig"; sourceTree = "<group>"; };
 		9151DB69211D14E300B8753B /* SpotListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotListViewController.swift; sourceTree = "<group>"; };
 		9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSpotViewController.swift; sourceTree = "<group>"; };
 		9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpotViewController.swift; sourceTree = "<group>"; };
 		9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutSpotViewController.swift; sourceTree = "<group>"; };
 		B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.release.xcconfig"; sourceTree = "<group>"; };
-		B3328BB239CE760700C9361E /* libPods-Journey.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Journey.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +79,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3ACA2421FA7082AA2AAEF419 /* libPods-Journey.a in Frameworks */,
+				0020A4D62127F892005FC16C /* RealmSwift.framework in Frameworks */,
+				0020A4D42127F88D005FC16C /* Realm.framework in Frameworks */,
+				45E16F0FE3FC7BC835323696 /* Pods_Journey.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +151,9 @@
 		77EEB21D23C24B3DE7E9A431 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B3328BB239CE760700C9361E /* libPods-Journey.a */,
+				0020A4D52127F892005FC16C /* RealmSwift.framework */,
+				0020A4D32127F88D005FC16C /* Realm.framework */,
+				0C4ACEDC8050F8641E5C887B /* Pods_Journey.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -171,6 +179,7 @@
 				0021CDB320F3415F00224865 /* Frameworks */,
 				0021CDB420F3415F00224865 /* Resources */,
 				507A293871824653548BC19B /* [CP] Copy Pods Resources */,
+				5F194984C60C6B225C430551 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -262,6 +271,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Journey/Pods-Journey-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5F194984C60C6B225C430551 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Journey/Pods-Journey-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Journey/Pods-Journey-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BEF6032885D9F7456829FBD0 /* [CP] Check Pods Manifest.lock */ = {
@@ -446,7 +475,10 @@
 				DEVELOPMENT_TEAM = 3WYBU2DK75;
 				INFOPLIST_FILE = Journey/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.f.825.tennis.Journey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -463,7 +495,10 @@
 				DEVELOPMENT_TEAM = 3WYBU2DK75;
 				INFOPLIST_FILE = Journey/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.f.825.tennis.Journey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
