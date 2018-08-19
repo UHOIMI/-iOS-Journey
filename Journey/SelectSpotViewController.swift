@@ -18,7 +18,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     
     var spotDataList : [ListSpotModel] = []
     var spotNameList : [String] = []
-    var selectSpotDataList : [ListSpotModel] = []
+    var selectSpotDataList : [ListSpotModel] = []//現状PotViewControllerに渡す予定のデータリスト
     var selectSpotNameList : [String] = []
     var placePicker: GMSPlacePicker?
     
