@@ -160,6 +160,22 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         
     }
     
+    @IBAction func tappedMapButton(_ sender: Any) {
+        if selectSpotNameList.count == 0 {
+            let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertControllerStyle.alert)
+            let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
+            alert.addAction(okayButton)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        self.performSegue(withIdentifier: "changePostView", sender:selectSpotDataList)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextViewController = segue.destination as! PostViewController
+        nextViewController.spotDataList = sender as! [ListSpotModel]
+    }
+    
     func createTabBar(){
         let width = self.view.frame.width
         let height = self.view.frame.height

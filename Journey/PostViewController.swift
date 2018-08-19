@@ -34,6 +34,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var imageFlag5 = 0
   var imageFlag6 = 0
   var imageFlag7 = 0
+    
+  var spotDataList : [ListSpotModel] = []//猪岡追加
   
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   private var tabBar:TabBar!

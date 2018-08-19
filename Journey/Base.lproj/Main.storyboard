@@ -631,12 +631,17 @@
                         <viewLayoutGuide key="safeArea" id="OfZ-HM-nFR"/>
                     </view>
                     <navigationItem key="navigationItem" title="スポット登録" id="zGu-7k-VBW">
-                        <barButtonItem key="rightBarButtonItem" title="登録" id="pBY-pM-F5F"/>
+                        <barButtonItem key="rightBarButtonItem" title="登録" id="pBY-pM-F5F">
+                            <connections>
+                                <action selector="tappedMapButton:" destination="dUa-pH-V8z" id="c3E-t3-TXa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="selectSpotTable" destination="r9d-tY-v2h" id="6co-3c-k9T"/>
                         <outlet property="sortButton" destination="Haz-yz-bqc" id="QyU-Dl-nBg"/>
                         <outlet property="userSpotTable" destination="Tme-a3-yHO" id="FRC-VB-ZFK"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="changePostView" id="Ngc-W0-UHN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXV-kU-vyc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -700,6 +705,7 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PgR-1F-fd2"/>
+        <segue reference="SAI-tm-OCo"/>
+        <segue reference="ScF-Q7-9Tm"/>
     </inferredMetricsTieBreakers>
 </document>
