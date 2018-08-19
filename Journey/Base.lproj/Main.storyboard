@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -287,6 +288,9 @@
                                 <rect key="frame" x="96.5" y="144" width="182" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="スポット追加"/>
+                                <connections>
+                                    <action selector="tappedAddButton:" destination="Qxu-g9-ag6" eventType="touchUpInside" id="kbN-Ye-FrC"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wF-Mg-jG8">
                                 <rect key="frame" x="96.5" y="224" width="182" height="48"/>
@@ -333,52 +337,55 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="スポット名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01v-GC-Duh">
-                                <rect key="frame" x="8" y="280" width="87" height="21"/>
+                                <rect key="frame" x="8" y="347" width="87" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="スポットの説明" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2C1-fO-M6H">
-                                <rect key="frame" x="8" y="347" width="122" height="21"/>
+                                <rect key="frame" x="8" y="414" width="122" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="参考画像" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1gA-mY-Yq3">
-                                <rect key="frame" x="8" y="414" width="70" height="21"/>
+                                <rect key="frame" x="8" y="481" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ie2-Xn-c53">
-                                <rect key="frame" x="8" y="309" width="287" height="30"/>
+                                <rect key="frame" x="8" y="376" width="287" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WM2-fR-McP">
-                                <rect key="frame" x="8" y="376" width="359" height="30"/>
+                                <rect key="frame" x="8" y="443" width="359" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-6y-ASE">
-                                <rect key="frame" x="8" y="443" width="114.5" height="85.5"/>
+                                <rect key="frame" x="8" y="510" width="114.5" height="85.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="BaB-6y-ASE" secondAttribute="height" multiplier="4:3" id="rQB-at-vNI"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="weg-k8-Eyt">
-                                <rect key="frame" x="130.5" y="443" width="114" height="85.5"/>
+                                <rect key="frame" x="130.5" y="510" width="114" height="85.5"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VlC-eX-svm">
-                                <rect key="frame" x="252.5" y="443" width="114.5" height="85.5"/>
+                                <rect key="frame" x="252.5" y="510" width="114.5" height="85.5"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eEL-XJ-B7g">
+                                <rect key="frame" x="8" y="64" width="359" height="267"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="BaB-6y-ASE" firstAttribute="leading" secondItem="bhH-SZ-oGw" secondAttribute="leading" constant="8" id="3DU-MA-wlE"/>
-                            <constraint firstItem="01v-GC-Duh" firstAttribute="top" secondItem="bhH-SZ-oGw" secondAttribute="top" constant="216" id="6cA-88-gXJ"/>
                             <constraint firstItem="BaB-6y-ASE" firstAttribute="top" secondItem="1gA-mY-Yq3" secondAttribute="bottom" constant="8" id="7pR-Mq-Wtc"/>
                             <constraint firstItem="2C1-fO-M6H" firstAttribute="leading" secondItem="bhH-SZ-oGw" secondAttribute="leading" constant="8" id="8t5-Cm-ndm"/>
                             <constraint firstItem="weg-k8-Eyt" firstAttribute="width" secondItem="BaB-6y-ASE" secondAttribute="width" id="B26-KJ-ydr"/>
@@ -393,6 +400,9 @@
                             <constraint firstItem="WM2-fR-McP" firstAttribute="top" secondItem="2C1-fO-M6H" secondAttribute="bottom" constant="8" id="UJE-L4-fs4"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2C1-fO-M6H" secondAttribute="trailing" constant="20" symbolic="YES" id="bUY-xQ-UzC"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="01v-GC-Duh" secondAttribute="trailing" constant="20" symbolic="YES" id="cmb-MF-DL1"/>
+                            <constraint firstItem="eEL-XJ-B7g" firstAttribute="height" secondItem="7Vk-CX-f8i" secondAttribute="height" multiplier="0.4" id="dfe-Ph-nQ2"/>
+                            <constraint firstItem="eEL-XJ-B7g" firstAttribute="leading" secondItem="bhH-SZ-oGw" secondAttribute="leading" constant="8" id="etg-HM-Vvw"/>
+                            <constraint firstItem="bhH-SZ-oGw" firstAttribute="trailing" secondItem="eEL-XJ-B7g" secondAttribute="trailing" constant="8" id="fMK-Uy-nI8"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1gA-mY-Yq3" secondAttribute="trailing" constant="20" symbolic="YES" id="gKy-Dd-sSI"/>
                             <constraint firstItem="bhH-SZ-oGw" firstAttribute="trailing" secondItem="VlC-eX-svm" secondAttribute="trailing" constant="8" id="gWE-cA-q9B"/>
                             <constraint firstItem="weg-k8-Eyt" firstAttribute="leading" secondItem="BaB-6y-ASE" secondAttribute="trailing" constant="8" id="iq1-Z2-S5z"/>
@@ -402,13 +412,23 @@
                             <constraint firstItem="2C1-fO-M6H" firstAttribute="top" secondItem="Ie2-Xn-c53" secondAttribute="bottom" constant="8" id="pKD-G2-lIA"/>
                             <constraint firstItem="Ie2-Xn-c53" firstAttribute="top" secondItem="01v-GC-Duh" secondAttribute="bottom" constant="8" id="sQB-zf-BTk"/>
                             <constraint firstItem="weg-k8-Eyt" firstAttribute="height" secondItem="BaB-6y-ASE" secondAttribute="height" id="ska-My-i3J"/>
+                            <constraint firstItem="01v-GC-Duh" firstAttribute="top" secondItem="eEL-XJ-B7g" secondAttribute="bottom" constant="16" id="tc6-1H-I44"/>
+                            <constraint firstItem="eEL-XJ-B7g" firstAttribute="top" secondItem="bhH-SZ-oGw" secondAttribute="top" id="vod-2R-eo8"/>
                             <constraint firstItem="WM2-fR-McP" firstAttribute="leading" secondItem="bhH-SZ-oGw" secondAttribute="leading" constant="8" id="xPx-b9-CEt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bhH-SZ-oGw"/>
                     </view>
                     <navigationItem key="navigationItem" title="スポット追加" id="00R-H9-5Hw">
-                        <barButtonItem key="rightBarButtonItem" title="保存" id="Frx-nU-z6T"/>
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="Frx-nU-z6T">
+                            <connections>
+                                <action selector="tappedMapButton:" destination="dYc-gx-w37" id="LH7-Pv-Fid"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapButton" destination="Frx-nU-z6T" id="hEf-Eu-0rw"/>
+                        <outlet property="nameTextField" destination="Ie2-Xn-c53" id="MEB-qH-Lbq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gMl-9k-jnq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -680,6 +700,6 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SAI-tm-OCo"/>
+        <segue reference="PgR-1F-fd2"/>
     </inferredMetricsTieBreakers>
 </document>
