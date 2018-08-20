@@ -24,5 +24,8 @@ class StartViewController: UIViewController {
     performSegue(withIdentifier: "toPostView", sender: nil)
   }
   
-
+    @IBAction func tappedAddButton(_ sender: Any) {
+        performSegue(withIdentifier: "toPutSpotView", sender: nil)
+    }
+    
 }

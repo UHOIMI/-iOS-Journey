@@ -12,11 +12,13 @@ import GoogleMaps
 import GooglePlaces
 import GooglePlacePicker
 
-class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableViewDataSource{
+class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableViewDataSource,UITabBarDelegate{
+    
+    private var tabBar:TabBar!
     
     var spotDataList : [ListSpotModel] = []
     var spotNameList : [String] = []
-    var selectSpotDataList : [ListSpotModel] = []
+    var selectSpotDataList : [ListSpotModel] = []//現状PotViewControllerに渡す予定のデータリスト
     var selectSpotNameList : [String] = []
     var placePicker: GMSPlacePicker?
     
@@ -27,17 +29,17 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     var fmt = DateFormatter()
     
     @IBOutlet weak var selectSpotTable: UITableView!
-    @IBOutlet weak var goMapButton: UIButton!
     @IBOutlet weak var userSpotTable: UITableView!
     @IBOutlet weak var sortButton: UIButton!
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         fmt.dateFormat = "yyyy/MM/dd"
-        for _sd in spotDataList{
+        /*for _sd in spotDataList{
             spotNameList.append(fmt.string(from: _sd.date) + "：" + _sd.name)
-        }
+        }*/
+        
+        createTabBar()
     }
     
     override func didReceiveMemoryWarning() {
@@ -60,11 +62,13 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         if tableView.tag == 1 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
             cell.textLabel!.text = selectSpotNameList[indexPath.row]
+            print("selectTableは通過")
             return cell
         }else if tableView.tag == 2 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
             print("test:" + spotNameList[indexPath.row])
             cell.textLabel!.text = spotNameList[indexPath.row]
+            print("userTableは通過")
             return cell
         }
         
@@ -101,6 +105,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             
             if error != nil {
                 name = "エラー"
+                print(error)
                 return
             }
             
@@ -119,7 +124,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         })
     }
     
-    @IBAction func tappedMapButton(_ sender: Any) {
+    /*@IBAction func tappedMapButton(_ sender: Any) {
         if selectSpotNameList.count == 0 {
             let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertControllerStyle.alert)
             let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
@@ -132,7 +137,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     
     func goMap() {
         self.performSegue(withIdentifier: "goMap", sender:selectSpotDataList)
-    }
+    }*/
     
     /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      let nextViewController = segue.destination as! MapViewController
@@ -153,6 +158,70 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             sortButton.setTitle("昇順", for: .normal)
         }
         
+    }
+    
+    @IBAction func tappedMapButton(_ sender: Any) {
+        if selectSpotNameList.count == 0 {
+            let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertControllerStyle.alert)
+            let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
+            alert.addAction(okayButton)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        self.performSegue(withIdentifier: "changePostView", sender:selectSpotDataList)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextViewController = segue.destination as! PostViewController
+        nextViewController.spotDataList = sender as! [ListSpotModel]
+    }
+    
+    func createTabBar(){
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+        //デフォルトは49
+        let tabBarHeight:CGFloat = 58
+        /**   TabBarを設置   **/
+        tabBar = TabBar()
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 2436:
+                tabBar.frame = CGRect(x:0,y:height - tabBarHeight - 34.1,width:width,height:tabBarHeight)
+            default:
+                tabBar.frame = CGRect(x:0,y:height - tabBarHeight,width:width,height:tabBarHeight)
+            }
+        }
+        //バーの色
+        tabBar.barTintColor = UIColor.lightGray
+        //選択されていないボタンの色
+        tabBar.unselectedItemTintColor = UIColor.black
+        //ボタンを押した時の色
+        tabBar.tintColor = UIColor.black
+        //ボタンを生成
+        let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 1)
+        let search:UITabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 2)
+        let favorites:UITabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 3)
+        let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 4)
+        //ボタンをタブバーに配置する
+        tabBar.items = [home,search,favorites,setting]
+        //デリゲートを設定する
+        tabBar.delegate = self
+        
+        self.view.addSubview(tabBar)
+    }
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        switch item.tag{
+        case 1:
+            print("１")
+        case 2:
+            print("２")
+        case 3:
+            print("３")
+        case 4:
+            print("４")
+        default : return
+            
+        }
     }
     
 }
