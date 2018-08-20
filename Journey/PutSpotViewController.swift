@@ -12,6 +12,7 @@ import GooglePlaces
 import CoreLocation
 import CoreMotion
 import Darwin
+import RealmSwift
 
 class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate{
     
@@ -73,6 +74,13 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         
         self.view.addSubview(mapView)
         
+        if CLLocationManager.locationServicesEnabled() {
+            print("位置情報通過")
+            locationManager = CLLocationManager()
+            locationManager.delegate = self as CLLocationManagerDelegate
+            locationManager.startUpdatingLocation()
+        }
+        
         createTabBar()
     }
     
@@ -106,13 +114,24 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             alert.addAction(okayButton)
             present(alert, animated: true, completion: nil)
             return
+        }else{
+            let realm = try! Realm()
+            
+            let spotModel = SpotModel()
+            spotModel.spot_name = nameTextField.text!
+            spotModel.latitude = lat
+            spotModel.longitude = lng
+            
+            try! realm.write() {
+                realm.add(spotModel)
+            }
         }
-        if CLLocationManager.locationServicesEnabled() {
+        /*if CLLocationManager.locationServicesEnabled() {
             print("位置情報通過")
             locationManager = CLLocationManager()
             locationManager.delegate = self as CLLocationManagerDelegate
             locationManager.startUpdatingLocation()
-        }
+        }*/
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -139,14 +158,14 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         lng = newLocation.coordinate.longitude
         
         let camera = GMSCameraPosition.camera(withLatitude: latitude,longitude:longitude, zoom:15)
-        let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:0,width:myFrameSize.width,height:myFrameSize.height/2),camera:camera)
+        let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)
         self.view.addSubview(mapView)
         
         let marker: GMSMarker = GMSMarker()
         
         marker.position = camera.target
         
-        marker.snippet = "Hello World"
+        marker.snippet = "NOW"
         
         marker.map = mapView
         if CLLocationManager.locationServicesEnabled() {
