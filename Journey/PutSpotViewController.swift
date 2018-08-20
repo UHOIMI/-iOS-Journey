@@ -86,13 +86,16 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print("位置情報通過４")
         switch status {
         case .notDetermined:
+            print("位置情報通過６")
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
             showAlert()
             break
         case .authorizedAlways, .authorizedWhenInUse:
+            print("位置情報通過５")
             break
         }
     }
@@ -105,6 +108,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             return
         }
         if CLLocationManager.locationServicesEnabled() {
+            print("位置情報通過")
             locationManager = CLLocationManager()
             locationManager.delegate = self as CLLocationManagerDelegate
             locationManager.startUpdatingLocation()
@@ -112,6 +116,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("位置情報通過２")
         guard let newLocation = locations.last,
             CLLocationCoordinate2DIsValid(newLocation.coordinate) else {
                 print("Error")
@@ -150,6 +155,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         
     }
     func showAlert() {
+        print("位置情報通過３")
         let alert = UIAlertController(title: "GPSがオフになっています", message: "設定を押して位置情報を許可してください", preferredStyle: UIAlertControllerStyle.alert)
         let okAction = UIAlertAction(title: "設定", style: UIAlertActionStyle.default){(action: UIAlertAction) in
             let url = NSURL(string: UIApplicationOpenSettingsURLString)!
