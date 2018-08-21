@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class StartViewController: UIViewController {
 
@@ -26,6 +27,10 @@ class StartViewController: UIViewController {
   
     @IBAction func tappedAddButton(_ sender: Any) {
         performSegue(withIdentifier: "toPutSpotView", sender: nil)
+    }
+    
+    @IBAction func tappedListButton(_ sender: Any) {
+        performSegue(withIdentifier: "toSpotListView", sender: nil)
     }
     
 }

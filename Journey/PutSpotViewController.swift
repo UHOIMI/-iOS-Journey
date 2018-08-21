@@ -117,7 +117,12 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         }else{
             let realm = try! Realm()
             
+            let date:Date = Date()
+            let format = DateFormatter()
+            format.dateFormat = "yyyyMMddHHmmssSSS"
+            
             let spotModel = SpotModel()
+            spotModel.spot_id = Int(format.string(from: date))!
             spotModel.spot_name = nameTextField.text!
             spotModel.latitude = lat
             spotModel.longitude = lng
@@ -125,6 +130,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             try! realm.write() {
                 realm.add(spotModel)
             }
+            
+            print(realm.objects(SpotModel.self))
         }
         /*if CLLocationManager.locationServicesEnabled() {
             print("位置情報通過")
