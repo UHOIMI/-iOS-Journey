@@ -13,8 +13,9 @@ import CoreLocation
 import CoreMotion
 import Darwin
 import RealmSwift
+import Photos
 
-class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate{
+class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
       private var tabBar:TabBar!
 
@@ -53,10 +54,16 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     var locationManager: CLLocationManager!
     let motionManager = CMMotionManager()
     
-    //@IBOutlet weak var mapButton: UIButton!
+    var selectImg = UIImage(named:"画像を選択")!
+    
     @IBOutlet weak var mapButton: UIBarButtonItem!
     
     @IBOutlet weak var nameTextField: UITextField!
+    
+    
+    @IBOutlet weak var spotImageView1: UIImageView!
+    @IBOutlet weak var spotImageView2: UIImageView!
+    @IBOutlet weak var spotImageView3: UIImageView!
     
     @IBOutlet weak var selectSpotButton: UIButton!
     
@@ -80,6 +87,10 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             locationManager.delegate = self as CLLocationManagerDelegate
             locationManager.startUpdatingLocation()
         }
+        
+        spotImageView1.image = selectImg
+        spotImageView2.image = selectImg
+        spotImageView3.image = selectImg
         
         createTabBar()
     }
@@ -193,7 +204,72 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         self.present(alert, animated: true, completion: nil)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self,action: #selector(imageTapped))
+        
+        for touch: UITouch in touches {
+            let tag = touch.view!.tag
+            switch tag {
+            case 1:
+                spotImageView1!.isUserInteractionEnabled = true
+                spotImageView1!.addGestureRecognizer(tapGestureRecognizer)
+                self.view.addSubview(spotImageView1!)
+                break
+            case 2:
+                spotImageView2!.isUserInteractionEnabled = true
+                spotImageView2!.addGestureRecognizer(tapGestureRecognizer)
+                self.view.addSubview(spotImageView2!)
+                break
+            case 3:
+                spotImageView3!.isUserInteractionEnabled = true
+                spotImageView3!.addGestureRecognizer(tapGestureRecognizer)
+                self.view.addSubview(spotImageView3!)
+                break
+            default:
+                break
+            }
+        }
+    }
     
+    @objc
+    fileprivate func imageTapped(){
+        checkPermission()
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            print("present Start")
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    // アルバム(Photo liblary)の閲覧権限の確認をするメソッド
+    func checkPermission(){
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        
+        switch photoAuthorizationStatus {
+        case .authorized:
+            print("auth")
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({
+                (newStatus) in
+                print("status is \(newStatus)")
+                if newStatus ==  PHAuthorizationStatus.authorized {
+                    /* do stuff here */
+                    print("success")
+                }
+            })
+            print("not Determined")
+        case .restricted:
+            print("restricted")
+        case .denied:
+            print("denied")
+        }
+    }
     
     @IBAction func tappedSelectSpotButton(_ sender: Any) {
         goToSelectSpot()
