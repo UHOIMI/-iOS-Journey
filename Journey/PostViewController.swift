@@ -22,7 +22,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   var height = 46
   var count = 0
-  var viewHeight = 0
+  var viewHeight = 1000
   var pickOption = ["one", "two", "three", "seven", "fifteen"]
   let prefectures:Array = [ "北海道", "青森県", "岩手県", "宮城県", "秋田県","山形県", "福島県", "茨城県", "栃木県", "群馬県","埼玉県", "千葉県", "東京都", "神奈川県", "新潟県","富山県", "石川県", "福井県", "山梨県", "長野県","岐阜県", "静岡県", "愛知県", "三重県", "滋賀県","京都府", "大阪府", "兵庫県", "奈良県", "和歌山県","鳥取県", "島根県", "岡山県", "広島県", "山口県","徳島県", "香川県", "愛媛県", "高知県", "福岡県","佐賀県", "長崎県", "熊本県", "大分県", "宮崎県","鹿児島県", "沖縄県"]
  
@@ -33,8 +33,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var imageFlag5 = 0
   var imageFlag6 = 0
   var imageFlag7 = 0
-    
-  var spotDataList : [ListSpotModel] = []//猪岡追加
+  
+  var camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
+  
   var globalVar = GlobalVar.shared
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   private var tabBar:TabBar!
@@ -78,9 +79,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
     let selectedNumber = globalVar.selectSpot[indexPath.row]
-    if(selectedNumber == "スポットを追加" && globalVar.selectSpot.count != 21){
+    if(selectedNumber == "スポットを追加" && globalVar.selectSpot.count < 21){
       performSegue(withIdentifier: "toSelectSpotView", sender: nil)
-    } else if(globalVar.selectSpot.count == 21) {
+    } else {
       globalVar.selectSpot[0] = "これ以上追加できません"
       spotTable.reloadData()
     }
@@ -90,38 +91,35 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     
     let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
       self.globalVar.selectSpot.remove(at: indexPath.row)
+      self.globalVar.spotDataList.remove(at: indexPath.row - 1)
       tableView.deleteRows(at: [indexPath], with: .fade)
-      self.height -= 46
+      self.height -= 43
+      self.tableHeight.constant = CGFloat(self.height)
       self.spotTable.reloadData()
+      self.viewHeight -= 43
+      self.subViewHeight.constant = CGFloat(self.viewHeight)
+      self.subView.frame = CGRect(x:0, y: 0, width:375, height:self.viewHeight)
     }
     deleteButton.backgroundColor = UIColor.red
     return [deleteButton]
   }
 
-  func updateTableView(name:String) {
-      globalVar.selectSpot.append(name)
-//      self.viewHeight = Int(subView.frame.height) + 46
-//      self.subViewHeight.constant = CGFloat(viewHeight)
-//      self.height += 46
-//      self.tableHeight.constant = CGFloat(height)
-//      self.spotTable.reloadData()
-      print(globalVar.selectSpot)
+  func updateTableView(name:String, list:ListSpotModel) {
+    globalVar.selectSpot.append(name)
+    globalVar.spotDataList.append(list)
+    print(globalVar.selectSpot)
   }
-//  override func updateViewConstraints() {
 
-//  }
-  
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    let camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
+    if(globalVar.spotDataList.count != 0){
+      camera = GMSCameraPosition.camera(withLatitude: globalVar.spotDataList[0].latitude,longitude:globalVar.spotDataList[0].longitude, zoom:15)
+    }
     let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:0,width:myFrameSize.width,height:300),camera:camera)
     let marker = GMSMarker()
-    
     marker.icon = UIImage(named:"thumbs-up")
     marker.map = mapView
     self.subView.addSubview(mapView)
-    
     titleTextField.placeholder = "プラン名を入力"
     prefecturesTextField.placeholder = "都道府県を選択してください"
     pickerTextField.placeholder = "金額を選択してください"
@@ -146,33 +144,16 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     createTabBar()
     if(globalVar.selectSpot.count != 1){
       for _ in globalVar.selectSpot{
-        print(subView.frame.height)
         height += 43
-        print(spotTable.frame.height)
         tableHeight.constant = CGFloat(height)
         spotTable.reloadData()
-        viewHeight = Int(subView.frame.height) + 43
-        subViewHeight.constant = CGFloat(viewHeight)
-        subView.frame = CGRect(x:0, y: 0, width:375, height:viewHeight - 15)
+        viewHeight = viewHeight + 43
       }
     }
+    subViewHeight.constant = CGFloat(viewHeight)
+    subView.frame = CGRect(x:0, y: 0, width:375, height:viewHeight)
   }
-  
-//  override func viewWillAppear(_ animated: Bool) {
-//    super.viewWillAppear(true)
-//    if(globalVar.selectSpot.count != 1){
-//      for _ in globalVar.selectSpot{
-//        print(subView.frame.height)
-//        viewHeight = Int(subView.frame.height) + 46
-//        subViewHeight.constant = CGFloat(viewHeight)
-//        height += 46
-//        print(spotTable.frame.height)
-//        tableHeight.constant = CGFloat(height)
-//        spotTable.reloadData()
-//      }
-//    }
-//  }
-//
+
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
