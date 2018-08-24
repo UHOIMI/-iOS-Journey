@@ -21,13 +21,15 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     var selectSpotDataList : [ListSpotModel] = []//現状PotViewControllerに渡す予定のデータリスト
     var selectSpotNameList : [String] = []
     var placePicker: GMSPlacePicker?
-    
+  
     let top = "エラー"
     let message = "スポットが選択されていません"
     let okText = "OK"
     
     var fmt = DateFormatter()
-    
+  
+  let postViewController = PostViewController()
+  
     @IBOutlet weak var selectSpotTable: UITableView!
     @IBOutlet weak var userSpotTable: UITableView!
     @IBOutlet weak var sortButton: UIButton!
@@ -168,12 +170,20 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             present(alert, animated: true, completion: nil)
             return
         }
-        self.performSegue(withIdentifier: "changePostView", sender:selectSpotDataList)
+      self.performSegue(withIdentifier: "changePostView", sender:selectSpotDataList)
     }
-    
+  
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      if (segue.identifier == "changePostView"){
+        print(selectSpotDataList)
+        print(selectSpotNameList)
+        for name in selectSpotNameList{
+          postViewController.count += 1
+          postViewController.updateTableView(name: name)
+        }
         let nextViewController = segue.destination as! PostViewController
         nextViewController.spotDataList = sender as! [ListSpotModel]
+      }
     }
     
     func createTabBar(){

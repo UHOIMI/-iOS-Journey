@@ -23,9 +23,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var height = 46
   var count = 0
   var viewHeight = 0
-  var text:Array = ["スポットを追加"]
   var pickOption = ["one", "two", "three", "seven", "fifteen"]
-  var prefectures = [ "北海道", "青森県", "岩手県", "宮城県", "秋田県","山形県", "福島県", "茨城県", "栃木県", "群馬県","埼玉県", "千葉県", "東京都", "神奈川県", "新潟県","富山県", "石川県", "福井県", "山梨県", "長野県","岐阜県", "静岡県", "愛知県", "三重県", "滋賀県","京都府", "大阪府", "兵庫県", "奈良県", "和歌山県","鳥取県", "島根県", "岡山県", "広島県", "山口県","徳島県", "香川県", "愛媛県", "高知県", "福岡県","佐賀県", "長崎県", "熊本県", "大分県", "宮崎県","鹿児島県", "沖縄県"]
+  let prefectures:Array = [ "北海道", "青森県", "岩手県", "宮城県", "秋田県","山形県", "福島県", "茨城県", "栃木県", "群馬県","埼玉県", "千葉県", "東京都", "神奈川県", "新潟県","富山県", "石川県", "福井県", "山梨県", "長野県","岐阜県", "静岡県", "愛知県", "三重県", "滋賀県","京都府", "大阪府", "兵庫県", "奈良県", "和歌山県","鳥取県", "島根県", "岡山県", "広島県", "山口県","徳島県", "香川県", "愛媛県", "高知県", "福岡県","佐賀県", "長崎県", "熊本県", "大分県", "宮崎県","鹿児島県", "沖縄県"]
  
   var imageFlag1 = 0
   var imageFlag2 = 0
@@ -36,7 +35,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var imageFlag7 = 0
     
   var spotDataList : [ListSpotModel] = []//猪岡追加
-  
+  var globalVar = GlobalVar.shared
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   private var tabBar:TabBar!
   
@@ -67,31 +66,22 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return(text.count)
+    return(globalVar.selectSpot.count)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
-    cell.textLabel?.text = text[indexPath.row]
+    cell.textLabel?.text = globalVar.selectSpot[indexPath.row]
     
     return(cell)
   }
   
   func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
-    let selectedNumber = text[indexPath.row]
-    if(selectedNumber == "スポットを追加" && text.count != 21){
+    let selectedNumber = globalVar.selectSpot[indexPath.row]
+    if(selectedNumber == "スポットを追加" && globalVar.selectSpot.count != 21){
       performSegue(withIdentifier: "toSelectSpotView", sender: nil)
-//      count += 1
-//      let str = count.description
-//      text.append(str)
-//      viewHeight = Int(subView.frame.height) + 46
-//      subViewHeight.constant = CGFloat(viewHeight)
-//      print("Height:",viewHeight)
-//      height += 46
-//      tableHeight.constant = CGFloat(height)
-//      spotTable.reloadData()
-    } else if(text.count == 21) {
-      text[0] = "これ以上追加できません"
+    } else if(globalVar.selectSpot.count == 21) {
+      globalVar.selectSpot[0] = "これ以上追加できません"
       spotTable.reloadData()
     }
   }
@@ -99,7 +89,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
     
     let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
-      self.text.remove(at: indexPath.row)
+      self.globalVar.selectSpot.remove(at: indexPath.row)
       tableView.deleteRows(at: [indexPath], with: .fade)
       self.height -= 46
       self.spotTable.reloadData()
@@ -107,6 +97,19 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     deleteButton.backgroundColor = UIColor.red
     return [deleteButton]
   }
+
+  func updateTableView(name:String) {
+      globalVar.selectSpot.append(name)
+//      self.viewHeight = Int(subView.frame.height) + 46
+//      self.subViewHeight.constant = CGFloat(viewHeight)
+//      self.height += 46
+//      self.tableHeight.constant = CGFloat(height)
+//      self.spotTable.reloadData()
+      print(globalVar.selectSpot)
+  }
+//  override func updateViewConstraints() {
+
+//  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -139,10 +142,37 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     pickerTextField.inputView = pickerView
     
     textViewSetteings()
-    keboardSettings()
+    keyboardSettings()
     createTabBar()
+    if(globalVar.selectSpot.count != 1){
+      for _ in globalVar.selectSpot{
+        print(subView.frame.height)
+        height += 43
+        print(spotTable.frame.height)
+        tableHeight.constant = CGFloat(height)
+        spotTable.reloadData()
+        viewHeight = Int(subView.frame.height) + 43
+        subViewHeight.constant = CGFloat(viewHeight)
+        subView.frame = CGRect(x:0, y: 0, width:375, height:viewHeight - 15)
+      }
+    }
   }
   
+//  override func viewWillAppear(_ animated: Bool) {
+//    super.viewWillAppear(true)
+//    if(globalVar.selectSpot.count != 1){
+//      for _ in globalVar.selectSpot{
+//        print(subView.frame.height)
+//        viewHeight = Int(subView.frame.height) + 46
+//        subViewHeight.constant = CGFloat(viewHeight)
+//        height += 46
+//        print(spotTable.frame.height)
+//        tableHeight.constant = CGFloat(height)
+//        spotTable.reloadData()
+//      }
+//    }
+//  }
+//
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -160,7 +190,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     self.view.endEditing(true)
     self.resignFirstResponder()
   }
-  func keboardSettings(){
+  func keyboardSettings(){
     // 仮のサイズでツールバー生成
     let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
     kbToolBar.barStyle = UIBarStyle.default  // スタイルを設定
