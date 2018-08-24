@@ -21,15 +21,15 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     var selectSpotDataList : [ListSpotModel] = []//現状PotViewControllerに渡す予定のデータリスト
     var selectSpotNameList : [String] = []
     var placePicker: GMSPlacePicker?
-  
+    
     let top = "エラー"
     let message = "スポットが選択されていません"
     let okText = "OK"
     
     var fmt = DateFormatter()
-  
-  let postViewController = PostViewController()
-  
+    
+    let postViewController = PostViewController()
+    
     @IBOutlet weak var selectSpotTable: UITableView!
     @IBOutlet weak var userSpotTable: UITableView!
     @IBOutlet weak var sortButton: UIButton!
@@ -38,8 +38,25 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         super.viewDidLoad()
         fmt.dateFormat = "yyyy/MM/dd"
         /*for _sd in spotDataList{
-            spotNameList.append(fmt.string(from: _sd.date) + "：" + _sd.name)
-        }*/
+         spotNameList.append(fmt.string(from: _sd.date) + "：" + _sd.name)
+         }*/
+        
+        let realm = try! Realm()
+        let spotModelList = realm.objects(SpotModel.self)
+        for _sm in spotModelList {
+            let listSpotModel = ListSpotModel()
+            listSpotModel.spot_id = _sm.spot_id
+            listSpotModel.spot_name = _sm.spot_name
+            listSpotModel.latitude = _sm.latitude
+            listSpotModel.longitude = _sm.longitude
+            listSpotModel.comment = _sm.comment
+            listSpotModel.datetime = _sm.datetime
+            listSpotModel.image_A = _sm.image_A
+            listSpotModel.image_B = _sm.image_B
+            listSpotModel.image_C = _sm.image_C
+            spotDataList.append(listSpotModel)
+            spotNameList.append(_sm.spot_name)
+        }
         
         createTabBar()
     }
@@ -127,19 +144,19 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     }
     
     /*@IBAction func tappedMapButton(_ sender: Any) {
-        if selectSpotNameList.count == 0 {
-            let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertControllerStyle.alert)
-            let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
-            alert.addAction(okayButton)
-            present(alert, animated: true, completion: nil)
-            return
-        }
-        goMap()
-    }
-    
-    func goMap() {
-        self.performSegue(withIdentifier: "goMap", sender:selectSpotDataList)
-    }*/
+     if selectSpotNameList.count == 0 {
+     let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertControllerStyle.alert)
+     let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
+     alert.addAction(okayButton)
+     present(alert, animated: true, completion: nil)
+     return
+     }
+     goMap()
+     }
+     
+     func goMap() {
+     self.performSegue(withIdentifier: "goMap", sender:selectSpotDataList)
+     }*/
     
     /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      let nextViewController = segue.destination as! MapViewController
@@ -170,18 +187,18 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             present(alert, animated: true, completion: nil)
             return
         }
-      self.performSegue(withIdentifier: "changePostView", sender:selectSpotDataList)
+        self.performSegue(withIdentifier: "changePostView", sender:selectSpotDataList)
     }
-  
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-      if (segue.identifier == "changePostView"){
-        print(selectSpotDataList)
-        print(selectSpotNameList)
-        for i in 0 ... selectSpotNameList.count - 1{
-          postViewController.count += 1
-          postViewController.updateTableView(name: selectSpotNameList[i], list:selectSpotDataList[i])
+        if (segue.identifier == "changePostView"){
+            print(selectSpotDataList)
+            print(selectSpotNameList)
+            for i in 0 ... selectSpotNameList.count - 1{
+                postViewController.count += 1
+                postViewController.updateTableView(name: selectSpotNameList[i], list:selectSpotDataList[i])
+            }
         }
-      }
     }
     
     func createTabBar(){
