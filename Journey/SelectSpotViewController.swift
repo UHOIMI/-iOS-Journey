@@ -177,12 +177,10 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
       if (segue.identifier == "changePostView"){
         print(selectSpotDataList)
         print(selectSpotNameList)
-        for name in selectSpotNameList{
+        for i in 0 ... selectSpotNameList.count - 1{
           postViewController.count += 1
-          postViewController.updateTableView(name: name)
+          postViewController.updateTableView(name: selectSpotNameList[i], list:selectSpotDataList[i])
         }
-        let nextViewController = segue.destination as! PostViewController
-        nextViewController.spotDataList = sender as! [ListSpotModel]
       }
     }
     
