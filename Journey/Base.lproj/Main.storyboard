@@ -522,16 +522,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-6y-ASE">
+                            <imageView tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-6y-ASE">
                                 <rect key="frame" x="8" y="510" width="114.5" height="85.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="BaB-6y-ASE" secondAttribute="height" multiplier="4:3" id="rQB-at-vNI"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="weg-k8-Eyt">
+                            <imageView tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="weg-k8-Eyt">
                                 <rect key="frame" x="130.5" y="510" width="114" height="85.5"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VlC-eX-svm">
+                            <imageView tag="3" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VlC-eX-svm">
                                 <rect key="frame" x="252.5" y="510" width="114.5" height="85.5"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eEL-XJ-B7g">
@@ -584,6 +584,9 @@
                     <connections>
                         <outlet property="mapButton" destination="Frx-nU-z6T" id="hEf-Eu-0rw"/>
                         <outlet property="nameTextField" destination="Ie2-Xn-c53" id="MEB-qH-Lbq"/>
+                        <outlet property="spotImageView1" destination="BaB-6y-ASE" id="0M4-n8-Rpn"/>
+                        <outlet property="spotImageView2" destination="weg-k8-Eyt" id="5GO-8d-o1z"/>
+                        <outlet property="spotImageView3" destination="VlC-eX-svm" id="gWQ-cZ-7qv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gMl-9k-jnq" userLabel="First Responder" sceneMemberID="firstResponder"/>
