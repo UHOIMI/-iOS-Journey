@@ -582,6 +582,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="commentTextField" destination="WM2-fR-McP" id="gD7-uy-Ucb"/>
                         <outlet property="mapButton" destination="Frx-nU-z6T" id="hEf-Eu-0rw"/>
                         <outlet property="nameTextField" destination="Ie2-Xn-c53" id="MEB-qH-Lbq"/>
                         <outlet property="spotImageView1" destination="BaB-6y-ASE" id="0M4-n8-Rpn"/>
