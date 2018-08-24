@@ -55,15 +55,20 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     let motionManager = CMMotionManager()
     
     var selectImg = UIImage(named:"画像を選択")!
+    var selectImgNum = 1
     
     @IBOutlet weak var mapButton: UIBarButtonItem!
     
     @IBOutlet weak var nameTextField: UITextField!
     
-    
     @IBOutlet weak var spotImageView1: UIImageView!
     @IBOutlet weak var spotImageView2: UIImageView!
     @IBOutlet weak var spotImageView3: UIImageView!
+    
+    var image1Path = ""
+    var image2Path = ""
+    var image3Path = ""
+    
     
     @IBOutlet weak var selectSpotButton: UIButton!
     
@@ -207,7 +212,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self,action: #selector(imageTapped))
+        /*let tapGestureRecognizer = UITapGestureRecognizer(target: self,action: #selector(imageTapped))
         
         for touch: UITouch in touches {
             let tag = touch.view!.tag
@@ -230,21 +235,63 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             default:
                 break
             }
+        }*/
+        
+        for touch: UITouch in touches {
+            let tag = touch.view!.tag
+            switch tag {
+            case 1:
+                selectImgNum = tag
+                break
+            case 2:
+                selectImgNum = tag
+                break
+            case 3:
+                selectImgNum = tag
+                break
+            default:
+                break
+            }
         }
+        
+        checkPermission()
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            /*print("present Start")
+             let imagePicker = UIImagePickerController()
+             imagePicker.delegate = self
+             imagePicker.sourceType = .photoLibrary
+             imagePicker.allowsEditing = true
+             present(imagePicker, animated: true, completion: nil)*/
+            let ipc = UIImagePickerController()
+            ipc.delegate = self
+            ipc.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            //編集を可能にする
+            ipc.allowsEditing = false
+            self.present(ipc,animated: true, completion: nil)
+        }
+        
+        
     }
     
     @objc
     fileprivate func imageTapped(){
-        checkPermission()
+        /*checkPermission()
         
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
-            print("present Start")
+            /*print("present Start")
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary
             imagePicker.allowsEditing = true
-            self.present(imagePicker, animated: true, completion: nil)
-        }
+            present(imagePicker, animated: true, completion: nil)*/
+            let ipc = UIImagePickerController()
+            ipc.delegate = self
+            ipc.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            //編集を可能にする
+            ipc.allowsEditing = true
+            self.present(ipc,animated: true, completion: nil)
+        }*/
     }
     
     // アルバム(Photo liblary)の閲覧権限の確認をするメソッド
@@ -269,6 +316,55 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         case .denied:
             print("denied")
         }
+    }
+    
+    /*func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        
+        // 選択した画像・写真を取得し、imageViewに表示
+        if let info = editingInfo, let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage{
+            spotImageView1.image = editedImage
+        }else{
+            spotImageView1.image = image
+        }
+        
+        // フォトライブラリの画像・写真選択画面を閉じる
+        picker.dismiss(animated: true, completion: nil)
+    }*/
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        //編集機能を表示させたい場合
+        //UIImagePickerControllerEditedImageはallowsEditingをYESにした場合に用いる。
+        //allowsEditingで指定した範囲を画像として取得する事ができる。
+        //UIImagePickerControllerOriginalImageはallowsEditingをYESにしていたとしても編集機能は表示されない。
+        /*if info[UIImagePickerControllerOriginalImage] != nil {
+            let image = info[UIImagePickerControllerEditedImage] as! UIImage
+            //画像を設定する
+            imageView.image = image
+        }*/
+        
+        //編集機能を表示させない場合
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let imageUrl = info[UIImagePickerControllerReferenceURL] as? NSURL
+        
+        switch selectImgNum {
+        case 1:
+            spotImageView1.image = image
+            image1Path = (imageUrl?.absoluteString)!
+            break
+        case 2:
+            spotImageView2.image = image
+            image2Path = (imageUrl?.absoluteString!)!
+            break
+        case 3:
+            spotImageView3.image = image
+            image3Path = (imageUrl?.absoluteString)!
+            break
+        default:
+            break
+        }
+        
+        dismiss(animated: true,completion: nil)
     }
     
     @IBAction func tappedSelectSpotButton(_ sender: Any) {
