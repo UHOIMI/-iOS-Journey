@@ -35,6 +35,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var imageFlag7 = 0
   
   var camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
+
+  var makerList : [GMSMarker] = []
   
   var globalVar = GlobalVar.shared
   let myFrameSize:CGSize = UIScreen.main.bounds.size
@@ -112,13 +114,18 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     if(globalVar.spotDataList.count != 0){
       camera = GMSCameraPosition.camera(withLatitude: globalVar.spotDataList[0].latitude,longitude:globalVar.spotDataList[0].longitude, zoom:15)
     }
     let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:0,width:myFrameSize.width,height:300),camera:camera)
-    let marker = GMSMarker()
-    marker.icon = UIImage(named:"thumbs-up")
-    marker.map = mapView
+    if(globalVar.spotDataList.count != 0){
+      for i in 0 ... globalVar.spotDataList.count - 1{
+        makerList.append(GMSMarker())
+        makerList[i].position = CLLocationCoordinate2D(latitude: globalVar.spotDataList[i].latitude, longitude: globalVar.spotDataList[i].longitude)
+        makerList[i].map = mapView
+      }
+    }
     self.subView.addSubview(mapView)
     titleTextField.placeholder = "プラン名を入力"
     prefecturesTextField.placeholder = "都道府県を選択してください"
