@@ -60,6 +60,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     @IBOutlet weak var mapButton: UIBarButtonItem!
     
     @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var commentTextField: UITextField!
     
     @IBOutlet weak var spotImageView1: UIImageView!
     @IBOutlet weak var spotImageView2: UIImageView!
@@ -133,7 +134,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         }else{
             let realm = try! Realm()
             
-            let date:Date = Date()
+            let date : Date = Date()
             let format = DateFormatter()
             format.dateFormat = "yyyyMMddHHmmssSSS"
             
@@ -142,6 +143,11 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             spotModel.spot_name = nameTextField.text!
             spotModel.latitude = lat
             spotModel.longitude = lng
+            spotModel.comment = commentTextField.text!
+            spotModel.datetime = date
+            spotModel.image_A = image1Path
+            spotModel.image_B = image2Path
+            spotModel.image_C = image3Path
             
             try! realm.write() {
                 realm.add(spotModel)
