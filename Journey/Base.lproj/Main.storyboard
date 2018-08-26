@@ -341,7 +341,7 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DX6-9b-fv0">
-                                                <rect key="frame" x="165" y="960" width="41" height="36"/>
+                                                <rect key="frame" x="167" y="960" width="41" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="投稿"/>
                                             </button>
@@ -366,13 +366,11 @@
                                             <constraint firstItem="Z7k-R2-HRy" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="L3e-3D-lgx"/>
                                             <constraint firstItem="Lgb-V3-Xx3" firstAttribute="top" secondItem="afS-u9-Nym" secondAttribute="bottom" constant="8" id="MEE-31-o1f"/>
                                             <constraint firstItem="8ru-Gl-Zbt" firstAttribute="top" secondItem="Lgb-V3-Xx3" secondAttribute="bottom" constant="16" id="OnJ-ao-lF5"/>
-                                            <constraint firstItem="DX6-9b-fv0" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="164.5" id="QCu-mA-boT"/>
                                             <constraint firstItem="VvM-oc-O5H" firstAttribute="top" secondItem="ueW-Dk-1Eg" secondAttribute="bottom" constant="23" id="QPh-Jz-jgY"/>
                                             <constraint firstAttribute="trailing" secondItem="umk-Za-NbH" secondAttribute="trailing" constant="8" id="RwQ-YC-S3E"/>
                                             <constraint firstItem="DX6-9b-fv0" firstAttribute="top" secondItem="5Y9-fq-mqb" secondAttribute="bottom" constant="32" id="Sw9-V7-cKT"/>
                                             <constraint firstItem="afS-u9-Nym" firstAttribute="top" secondItem="rCu-U0-cHP" secondAttribute="top" constant="330" id="VZZ-2g-mAd"/>
                                             <constraint firstItem="5Y9-fq-mqb" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="Z5w-vX-0V1"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DX6-9b-fv0" secondAttribute="trailing" id="aJE-Ng-bLJ"/>
                                             <constraint firstItem="umk-Za-NbH" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="aac-dN-IDJ"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VvM-oc-O5H" secondAttribute="trailing" constant="20" symbolic="YES" id="cAX-up-XAC"/>
                                             <constraint firstItem="afS-u9-Nym" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="dil-ne-jib"/>
@@ -382,6 +380,7 @@
                                             <constraint firstItem="z5F-az-ZLQ" firstAttribute="top" secondItem="VvM-oc-O5H" secondAttribute="bottom" constant="8" id="hwf-Dq-7LL"/>
                                             <constraint firstItem="VvM-oc-O5H" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="iWh-aP-4aP"/>
                                             <constraint firstItem="Z7k-R2-HRy" firstAttribute="top" secondItem="rT1-Sy-CUE" secondAttribute="bottom" constant="16" id="itN-Ct-Ba4"/>
+                                            <constraint firstItem="DX6-9b-fv0" firstAttribute="centerX" secondItem="rCu-U0-cHP" secondAttribute="centerX" id="kDS-6f-jNP"/>
                                             <constraint firstAttribute="height" constant="1296" id="knD-Jm-Bha"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="afS-u9-Nym" secondAttribute="trailing" constant="20" symbolic="YES" id="nCG-SJ-vox"/>
                                             <constraint firstItem="z5F-az-ZLQ" firstAttribute="leading" secondItem="rCu-U0-cHP" secondAttribute="leading" constant="8" id="nrD-jB-mGn"/>
