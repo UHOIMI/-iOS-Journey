@@ -17,6 +17,7 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
     var spotNameList : [String] = []
     
     @IBOutlet weak var spotTableView: UITableView!
+    @IBOutlet weak var sortButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,16 +65,40 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        self.performSegue(withIdentifier: "toDetailSpotView", sender:spotDataList[indexPath.row])
+        
+        /*spotNameList.append(spotNameList[indexPath.row])
+        spotDataList.append(spotDataList[indexPath.row])
+        
+        let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
+        selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
+        
+        spotNameList.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)*/
     }
-    */
+    
+    @IBAction func tappedSortButton(_ sender: Any) {
+        
+        spotDataList.reverse()
+        spotNameList.reverse()
+        
+        spotTableView.reloadData()
+        
+        if(sortButton.currentTitle == "昇順"){
+            sortButton.setTitle("降順", for: .normal)
+        }else{
+            sortButton.setTitle("昇順", for: .normal)
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextViewController = segue.destination as! DetailSpotViewController
+        nextViewController.spotData = sender as! ListSpotModel
+    }
+    
     
     func createTabBar(){
         let width = self.view.frame.width

@@ -861,13 +861,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="スポット一覧" id="zFN-Ow-rzU"/>
                     <connections>
+                        <outlet property="sortButton" destination="Lqx-2m-hAa" id="9s2-95-Trh"/>
                         <outlet property="spotTableView" destination="sw8-jr-74k" id="QeV-JR-Dah"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="EVb-Zv-0QA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ujv-ty-37u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1241" y="1107"/>
+            <point key="canvasLocation" x="-1242.4000000000001" y="1106.8965517241379"/>
         </scene>
     </scenes>
     <resources>

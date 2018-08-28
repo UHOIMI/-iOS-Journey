@@ -11,6 +11,8 @@ import UIKit
 class DetailSpotViewController: UIViewController ,UITabBarDelegate{
     
       private var tabBar:TabBar!
+    
+    var spotData : ListSpotModel = ListSpotModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
