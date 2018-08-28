@@ -7,15 +7,36 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SpotListViewController: UIViewController ,UITabBarDelegate{
     
       private var tabBar:TabBar!
+    
+    var spotDataList : [ListSpotModel] = []
+    var spotNameList : [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        let realm = try! Realm()
+        let spotModelList = realm.objects(SpotModel.self)
+        for _sm in spotModelList {
+            let listSpotModel = ListSpotModel()
+            listSpotModel.spot_id = _sm.spot_id
+            listSpotModel.spot_name = _sm.spot_name
+            listSpotModel.latitude = _sm.latitude
+            listSpotModel.longitude = _sm.longitude
+            listSpotModel.comment = _sm.comment
+            listSpotModel.datetime = _sm.datetime
+            listSpotModel.image_A = _sm.image_A
+            listSpotModel.image_B = _sm.image_B
+            listSpotModel.image_C = _sm.image_C
+            spotDataList.append(listSpotModel)
+            spotNameList.append(_sm.spot_name)
+        }
         
         createTabBar()
     }
@@ -23,6 +44,21 @@ class SpotListViewController: UIViewController ,UITabBarDelegate{
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return spotNameList.count
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SpotCell", for: indexPath)
+        cell.textLabel!.text = spotNameList[indexPath.row]
+        print("selectTableは通過")
+        return cell
+        
     }
     
 
