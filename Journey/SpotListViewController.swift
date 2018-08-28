@@ -69,14 +69,6 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.performSegue(withIdentifier: "toDetailSpotView", sender:spotDataList[indexPath.row])
         
-        /*spotNameList.append(spotNameList[indexPath.row])
-        spotDataList.append(spotDataList[indexPath.row])
-        
-        let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
-        selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
-        
-        spotNameList.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)*/
     }
     
     @IBAction func tappedSortButton(_ sender: Any) {

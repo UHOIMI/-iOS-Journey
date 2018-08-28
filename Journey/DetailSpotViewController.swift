@@ -7,15 +7,54 @@
 //
 
 import UIKit
+import GoogleMaps
+import GooglePlaces
+import CoreLocation
+import CoreMotion
 
-class DetailSpotViewController: UIViewController ,UITabBarDelegate{
+class DetailSpotViewController: UIViewController ,UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate{
     
       private var tabBar:TabBar!
     
+    var lat:Double = 0
+    var lng:Double = 0
+    
+    var aaa = -33.868
+    var bbb = 151.2086
+    
+    var locationManager: CLLocationManager!
+    let motionManager = CMMotionManager()
+    
     var spotData : ListSpotModel = ListSpotModel()
+    
+    let myFrameSize:CGSize = UIScreen.main.bounds.size
+    
+    @IBOutlet weak var spotImageView1: UIImageView!
+    @IBOutlet weak var spotImageView2: UIImageView!
+    @IBOutlet weak var spotImageView3: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let camera = GMSCameraPosition.camera(withLatitude: aaa,longitude:bbb, zoom:15)
+        let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)
+        let marker = GMSMarker()
+        
+        marker.icon = UIImage(named:"thumbs-up")
+        marker.map = mapView
+        
+        self.view.addSubview(mapView)
+        
+        if CLLocationManager.locationServicesEnabled() {
+            print("位置情報通過")
+            locationManager = CLLocationManager()
+            locationManager.delegate = self as CLLocationManagerDelegate
+            locationManager.startUpdatingLocation()
+        }
+        
+        //spotImageView1.image =
+        //spotImageView2.image =
+        //spotImageView3.image =
         
         createTabBar()
 
@@ -27,16 +66,6 @@ class DetailSpotViewController: UIViewController ,UITabBarDelegate{
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     func createTabBar(){
         let width = self.view.frame.width
