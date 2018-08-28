@@ -9,13 +9,15 @@
 import UIKit
 import RealmSwift
 
-class SpotListViewController: UIViewController ,UITabBarDelegate{
+class SpotListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate{
     
       private var tabBar:TabBar!
     
     var spotDataList : [ListSpotModel] = []
     var spotNameList : [String] = []
-
+    
+    @IBOutlet weak var spotTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

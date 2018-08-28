@@ -839,6 +839,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="wbt-C5-9Ws" id="Bzo-na-csK"/>
+                                    <outlet property="delegate" destination="wbt-C5-9Ws" id="UkT-z3-pGa"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -857,6 +861,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="スポット一覧" id="zFN-Ow-rzU"/>
                     <connections>
+                        <outlet property="spotTableView" destination="sw8-jr-74k" id="QeV-JR-Dah"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="EVb-Zv-0QA"/>
                     </connections>
                 </viewController>
