@@ -36,6 +36,7 @@ class SpotListViewController: UIViewController ,UITabBarDelegate{
             listSpotModel.image_C = _sm.image_C
             spotDataList.append(listSpotModel)
             spotNameList.append(_sm.spot_name)
+            
         }
         
         createTabBar()
