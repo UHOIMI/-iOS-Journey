@@ -7,15 +7,40 @@
 //
 
 import UIKit
+import RealmSwift
 
-class SpotListViewController: UIViewController ,UITabBarDelegate{
+class SpotListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate{
     
       private var tabBar:TabBar!
-
+    
+    var spotDataList : [ListSpotModel] = []
+    var spotNameList : [String] = []
+    
+    @IBOutlet weak var spotTableView: UITableView!
+    @IBOutlet weak var sortButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        let realm = try! Realm()
+        let spotModelList = realm.objects(SpotModel.self)
+        for _sm in spotModelList {
+            let listSpotModel = ListSpotModel()
+            listSpotModel.spot_id = _sm.spot_id
+            listSpotModel.spot_name = _sm.spot_name
+            listSpotModel.latitude = _sm.latitude
+            listSpotModel.longitude = _sm.longitude
+            listSpotModel.comment = _sm.comment
+            listSpotModel.datetime = _sm.datetime
+            listSpotModel.image_A = _sm.image_A
+            listSpotModel.image_B = _sm.image_B
+            listSpotModel.image_C = _sm.image_C
+            spotDataList.append(listSpotModel)
+            spotNameList.append(_sm.spot_name)
+            
+        }
         
         createTabBar()
     }
@@ -25,16 +50,55 @@ class SpotListViewController: UIViewController ,UITabBarDelegate{
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return spotNameList.count
+        
     }
-    */
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SpotCell", for: indexPath)
+        cell.textLabel!.text = spotNameList[indexPath.row]
+        print("selectTableは通過")
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        self.performSegue(withIdentifier: "toDetailSpotView", sender:spotDataList[indexPath.row])
+        
+        /*spotNameList.append(spotNameList[indexPath.row])
+        spotDataList.append(spotDataList[indexPath.row])
+        
+        let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
+        selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
+        
+        spotNameList.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)*/
+    }
+    
+    @IBAction func tappedSortButton(_ sender: Any) {
+        
+        spotDataList.reverse()
+        spotNameList.reverse()
+        
+        spotTableView.reloadData()
+        
+        if(sortButton.currentTitle == "昇順"){
+            sortButton.setTitle("降順", for: .normal)
+        }else{
+            sortButton.setTitle("昇順", for: .normal)
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextViewController = segue.destination as! DetailSpotViewController
+        nextViewController.spotData = sender as! ListSpotModel
+    }
+    
     
     func createTabBar(){
         let width = self.view.frame.width
