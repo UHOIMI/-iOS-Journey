@@ -674,6 +674,11 @@
                         <barButtonItem key="rightBarButtonItem" title="編集" id="Z7Q-sM-qCP"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="spotCommentLabel" destination="Jgx-bt-6g2" id="YOw-Dv-G3k"/>
+                        <outlet property="spotImageView1" destination="F3a-tH-G4c" id="Hn3-nk-heP"/>
+                        <outlet property="spotImageView2" destination="DCd-S6-b6Q" id="vYU-M6-dyj"/>
+                        <outlet property="spotImageView3" destination="Ryt-wy-s7d" id="1wl-hA-npZ"/>
+                        <outlet property="spotNameLabel" destination="LO6-iP-sLS" id="j6r-rS-f4e"/>
                         <segue destination="dYc-gx-w37" kind="show" identifier="changePutSpotView" id="PgR-1F-fd2"/>
                     </connections>
                 </viewController>

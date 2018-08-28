@@ -29,6 +29,9 @@ class DetailSpotViewController: UIViewController ,UITabBarDelegate, GMSMapViewDe
     
     let myFrameSize:CGSize = UIScreen.main.bounds.size
     
+    @IBOutlet weak var spotNameLabel: UILabel!
+    @IBOutlet weak var spotCommentLabel: UILabel!
+    
     @IBOutlet weak var spotImageView1: UIImageView!
     @IBOutlet weak var spotImageView2: UIImageView!
     @IBOutlet weak var spotImageView3: UIImageView!
@@ -36,11 +39,12 @@ class DetailSpotViewController: UIViewController ,UITabBarDelegate, GMSMapViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let camera = GMSCameraPosition.camera(withLatitude: aaa,longitude:bbb, zoom:15)
+        let camera = GMSCameraPosition.camera(withLatitude: spotData.latitude,longitude:spotData.longitude, zoom:15)
         let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)
         let marker = GMSMarker()
         
         marker.icon = UIImage(named:"thumbs-up")
+        marker.position = camera.target
         marker.map = mapView
         
         self.view.addSubview(mapView)
@@ -52,7 +56,12 @@ class DetailSpotViewController: UIViewController ,UITabBarDelegate, GMSMapViewDe
             locationManager.startUpdatingLocation()
         }
         
-        //spotImageView1.image =
+        spotNameLabel.text = spotData.spot_name
+        spotCommentLabel.text = spotData.comment
+        
+        let image = UIImage(contentsOfFile: spotData.image_A)
+        
+        spotImageView1.image = image
         //spotImageView2.image =
         //spotImageView3.image =
         
