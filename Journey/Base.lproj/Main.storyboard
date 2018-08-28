@@ -344,6 +344,9 @@
                                                 <rect key="frame" x="167" y="960" width="41" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="投稿"/>
+                                                <connections>
+                                                    <action selector="tappedPostButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S8n-Bi-Jl0"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

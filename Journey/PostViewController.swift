@@ -164,6 +164,17 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     subViewHeight.constant = CGFloat(viewHeight)
     subView.frame = CGRect(x:0, y: 0, width:375, height:viewHeight)
   }
+  
+  @IBAction func tappedPostButton(_ sender: Any) {
+    if(globalVar.spotDataList.count >= 1){
+      let str = "user_id=1&spot_title=\(globalVar.spotDataList[0].spot_name)&spot_address=\(globalVar.spotDataList[0].latitude),\(globalVar.spotDataList[0].longitude)&spot_comment=\(globalVar.spotDataList[0].comment)&spot_image_a=\(globalVar.spotDataList[0].image_A)"
+      let strData = str.data(using: String.Encoding.utf8)
+      
+      var url = NSURL(string: "http://hoge.com/api.php")
+      var request = NSMutableURLRequest(URL: url)
+    }
+  }
+  
 
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
