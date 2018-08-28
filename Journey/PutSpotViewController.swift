@@ -256,26 +256,30 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
                 selectImgNum = tag
                 break
             default:
+                selectImgNum = 0
                 break
             }
         }
         
-        checkPermission()
-        
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
-            /*print("present Start")
-             let imagePicker = UIImagePickerController()
-             imagePicker.delegate = self
-             imagePicker.sourceType = .photoLibrary
-             imagePicker.allowsEditing = true
-             present(imagePicker, animated: true, completion: nil)*/
-            let ipc = UIImagePickerController()
-            ipc.delegate = self
-            ipc.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            //編集を可能にする
-            ipc.allowsEditing = false
-            self.present(ipc,animated: true, completion: nil)
+        if(selectImgNum != 0) {
+            checkPermission()
+            
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+                /*print("present Start")
+                 let imagePicker = UIImagePickerController()
+                 imagePicker.delegate = self
+                 imagePicker.sourceType = .photoLibrary
+                 imagePicker.allowsEditing = true
+                 present(imagePicker, animated: true, completion: nil)*/
+                let ipc = UIImagePickerController()
+                ipc.delegate = self
+                ipc.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                //編集を可能にする
+                ipc.allowsEditing = false
+                self.present(ipc,animated: true, completion: nil)
+            }
         }
+        
         
         
     }
