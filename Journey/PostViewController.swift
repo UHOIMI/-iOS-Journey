@@ -81,13 +81,13 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
     let selectedNumber = globalVar.selectSpot[indexPath.row]
-    let selectedModel = globalVar.spotDataList[indexPath.row - 1]
     if(selectedNumber == "スポットを追加" && globalVar.selectSpot.count < 21){
       performSegue(withIdentifier: "toSelectSpotView", sender: nil)
     }else if(selectedNumber == "スポット追加" && globalVar.selectSpot.count >= 21){
       globalVar.selectSpot[0] = "これ以上追加できません"
       spotTable.reloadData()
     }else {
+      let selectedModel = globalVar.spotDataList[indexPath.row - 1]
       print(selectedNumber)
       print(selectedModel.datetime)
     }
@@ -167,15 +167,31 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   @IBAction func tappedPostButton(_ sender: Any) {
     if(globalVar.spotDataList.count >= 1){
-      let str = "user_id=1&spot_title=\(globalVar.spotDataList[0].spot_name)&spot_address=\(globalVar.spotDataList[0].latitude),\(globalVar.spotDataList[0].longitude)&spot_comment=\(globalVar.spotDataList[0].comment)&spot_image_a=\(globalVar.spotDataList[0].image_A)"
-      let strData = str.data(using: String.Encoding.utf8)
-      
-      var url = NSURL(string: "http://hoge.com/api.php")
-      var request = NSMutableURLRequest(URL: url)
+      postSpot()
     }
   }
   
-
+  func postSpot(){
+    for i in 0...globalVar.spotDataList.count - 1{
+      let str = "user_id=1&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=\(globalVar.spotDataList[i].image_A)&spot_image_b=\(globalVar.spotDataList[i].image_B)&spot_image_c=\(globalVar.spotDataList[i].image_C)"
+      let url = URL(string: "http://192.168.1.230:3000/api/v1/spot/register")
+      var request = URLRequest(url: url!)
+      // POSTを指定
+      request.httpMethod = "POST"
+      // POSTするデータをBodyとして設定
+      request.httpBody = str.data(using: .utf8)
+      let session = URLSession.shared
+      session.dataTask(with: request) { (data, response, error) in
+        if error == nil, let data = data, let response = response as? HTTPURLResponse {
+          // HTTPヘッダの取得
+          print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+          // HTTPステータスコード
+          print("statusCode: \(response.statusCode)")
+          print(String(data: data, encoding: .utf8) ?? "")
+        }
+      }.resume()
+    }
+  }
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
