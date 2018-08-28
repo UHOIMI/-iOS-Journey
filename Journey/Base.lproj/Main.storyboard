@@ -422,6 +422,7 @@
                         <outlet property="textView" destination="5Y9-fq-mqb" id="1ea-7r-EEq"/>
                         <outlet property="titleTextField" destination="Lgb-V3-Xx3" id="0Zc-EK-Fgk"/>
                         <segue destination="dUa-pH-V8z" kind="show" identifier="toSelectSpotView" id="wPv-3s-Ppv"/>
+                        <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="TeA-Xz-GIE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -864,7 +865,8 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SAI-tm-OCo"/>
+        <segue reference="TeA-Xz-GIE"/>
+        <segue reference="PgR-1F-fd2"/>
         <segue reference="ScF-Q7-9Tm"/>
     </inferredMetricsTieBreakers>
 </document>
