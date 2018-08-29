@@ -50,6 +50,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     var nameList: [String] = []
     
     var spotDataList : [ListSpotModel] = []
+    var spotData : ListSpotModel = ListSpotModel()
     
     var locationManager: CLLocationManager!
     let motionManager = CMMotionManager()
@@ -78,7 +79,59 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let camera = GMSCameraPosition.camera(withLatitude: aaa,longitude:bbb, zoom:15)
+        if spotData.spot_id != 0 {
+            nameTextField.text = spotData.spot_name
+            commentTextField.text = spotData.comment
+            
+            for i in 0..<3 {
+                
+                var url = NSURL()
+                
+                switch i{
+                case 0:
+                    url = NSURL(string: spotData.image_A)!
+                    break
+                case 1:
+                    url = NSURL(string: spotData.image_B)!
+                    break
+                case 2:
+                    url = NSURL(string: spotData.image_C)!
+                    break
+                default:
+                    break
+                }
+                
+                if url != NSURL(string: "") {
+                    let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url as URL], options: nil)
+                    let asset: PHAsset = fetchResult.firstObject as! PHAsset
+                    let manager = PHImageManager.default()
+                    manager.requestImage(for: asset, targetSize: CGSize(width: 140, height: 140), contentMode: .aspectFill, options: nil) { (image, info) in
+                        // imageをセットする
+                        switch i{
+                        case 0:
+                            self.spotImageView1.image = image
+                            break
+                        case 1:
+                            self.spotImageView2.image = image
+                            break
+                        case 2:
+                            self.spotImageView3.image = image
+                            break
+                        default:
+                            break
+                        }
+                    }
+                    
+                }
+                
+            }
+        }else{
+            spotImageView1.image = selectImg
+            spotImageView2.image = selectImg
+            spotImageView3.image = selectImg
+        }
+        
+        let camera = GMSCameraPosition.camera(withLatitude: spotData.latitude,longitude:spotData.longitude, zoom:15)
         let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)
         let marker = GMSMarker()
         
@@ -93,10 +146,6 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             locationManager.delegate = self as CLLocationManagerDelegate
             locationManager.startUpdatingLocation()
         }
-        
-        spotImageView1.image = selectImg
-        spotImageView2.image = selectImg
-        spotImageView3.image = selectImg
         
         createTabBar()
     }

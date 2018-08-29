@@ -114,6 +114,16 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
     }
     
     
+    @IBAction func putEditButton(_ sender: Any) {
+        self.performSegue(withIdentifier: "changePutSpotView", sender:spotData)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextViewController = segue.destination as! PutSpotViewController
+        nextViewController.spotData = sender as! ListSpotModel
+    }
+    
+    
     func createTabBar(){
         let width = self.view.frame.width
         let height = self.view.frame.height
@@ -147,6 +157,7 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
         
         self.view.addSubview(tabBar)
     }
+    
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag{
         case 1:

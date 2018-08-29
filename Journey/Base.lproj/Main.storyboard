@@ -671,7 +671,11 @@
                         <viewLayoutGuide key="safeArea" id="Awo-n5-tIM"/>
                     </view>
                     <navigationItem key="navigationItem" title="スポット詳細" id="hDZ-2s-aTN">
-                        <barButtonItem key="rightBarButtonItem" title="編集" id="Z7Q-sM-qCP"/>
+                        <barButtonItem key="rightBarButtonItem" title="編集" id="Z7Q-sM-qCP">
+                            <connections>
+                                <action selector="putEditButton:" destination="cMD-wf-H1X" id="GN7-OS-7N4"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="spotCommentLabel" destination="Jgx-bt-6g2" id="YOw-Dv-G3k"/>
