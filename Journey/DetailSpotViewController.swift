@@ -11,10 +11,11 @@ import GoogleMaps
 import GooglePlaces
 import CoreLocation
 import CoreMotion
+import Photos
 
-class DetailSpotViewController: UIViewController ,UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate{
+class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate{
     
-      private var tabBar:TabBar!
+    private var tabBar:TabBar!
     
     var lat:Double = 0
     var lng:Double = 0
@@ -59,11 +60,48 @@ class DetailSpotViewController: UIViewController ,UITabBarDelegate, GMSMapViewDe
         spotNameLabel.text = spotData.spot_name
         spotCommentLabel.text = spotData.comment
         
-        let image = UIImage(contentsOfFile: spotData.image_A)
-        
-        spotImageView1.image = image
-        //spotImageView2.image =
-        //spotImageView3.image =
+        for i in 0..<3 {
+            
+            var url = NSURL()
+            
+            switch i{
+            case 0:
+                url = NSURL(string: spotData.image_A)!
+                break
+            case 1:
+                url = NSURL(string: spotData.image_B)!
+                break
+            case 2:
+                url = NSURL(string: spotData.image_C)!
+                break
+            default:
+                break
+            }
+            
+            if url != NSURL(string: "") {
+                let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url as URL], options: nil)
+                let asset: PHAsset = fetchResult.firstObject as! PHAsset
+                let manager = PHImageManager.default()
+                manager.requestImage(for: asset, targetSize: CGSize(width: 140, height: 140), contentMode: .aspectFill, options: nil) { (image, info) in
+                    // imageをセットする
+                    switch i{
+                    case 0:
+                        self.spotImageView1.image = image
+                        break
+                    case 1:
+                        self.spotImageView2.image = image
+                        break
+                    case 2:
+                        self.spotImageView3.image = image
+                        break
+                    default:
+                        break
+                    }
+                }
+                
+            }
+            
+        }
         
         createTabBar()
 
