@@ -90,12 +90,15 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
                 switch i{
                 case 0:
                     url = NSURL(string: spotData.image_A)!
+                    image1Path = spotData.image_A
                     break
                 case 1:
                     url = NSURL(string: spotData.image_B)!
+                    image2Path = spotData.image_B
                     break
                 case 2:
                     url = NSURL(string: spotData.image_C)!
+                    image3Path = spotData.image_C
                     break
                 default:
                     break
@@ -188,21 +191,35 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             format.dateFormat = "yyyyMMddHHmmssSSS"
             
             let spotModel = SpotModel()
-            spotModel.spot_id = Int(format.string(from: date))!
+            var nextSegue = ""
+
             spotModel.spot_name = nameTextField.text!
-            spotModel.latitude = lat
-            spotModel.longitude = lng
             spotModel.comment = commentTextField.text!
-            spotModel.datetime = date
             spotModel.image_A = image1Path
             spotModel.image_B = image2Path
             spotModel.image_C = image3Path
             
+            if spotData.spot_id == 0{
+                spotModel.spot_id = Int(format.string(from: date))!
+                spotModel.latitude = lat
+                spotModel.longitude = lng
+                spotModel.datetime = date
+                nextSegue = "toStartView"
+            }else{
+                spotModel.spot_id = spotData.spot_id
+                spotModel.latitude = spotData.latitude
+                spotModel.longitude = spotData.longitude
+                spotModel.datetime = spotData.datetime
+                nextSegue = "changeSpotListView"
+            }
+            
             try! realm.write() {
-                realm.add(spotModel)
+                realm.add(spotModel, update: true)
             }
             
             print(realm.objects(SpotModel.self))
+            
+            performSegue(withIdentifier: nextSegue, sender: nil)
         }
         /*if CLLocationManager.locationServicesEnabled() {
             print("位置情報通過")
@@ -426,7 +443,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         dismiss(animated: true,completion: nil)
     }
     
-    @IBAction func tappedSelectSpotButton(_ sender: Any) {
+    /*@IBAction func tappedSelectSpotButton(_ sender: Any) {
         goToSelectSpot()
     }
     
@@ -437,7 +454,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nextViewController = segue.destination as! SelectSpotViewController
         nextViewController.spotDataList = sender as! [ListSpotModel]
-    }
+    }*/
+    
     
     /****************/
     
