@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import Foundation
 
 class PostViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate{
 
@@ -119,6 +120,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    getSpot()
+    
     if(globalVar.spotDataList.count != 0){
       camera = GMSCameraPosition.camera(withLatitude: globalVar.spotDataList[0].latitude,longitude:globalVar.spotDataList[0].longitude, zoom:15)
     }
@@ -167,14 +170,14 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   @IBAction func tappedPostButton(_ sender: Any) {
     if(globalVar.spotDataList.count >= 1){
-      postSpot()
+      getSpot()
     }
   }
   
   func postSpot(){
     for i in 0...globalVar.spotDataList.count - 1{
       let str = "user_id=1&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=\(globalVar.spotDataList[i].image_A)&spot_image_b=\(globalVar.spotDataList[i].image_B)&spot_image_c=\(globalVar.spotDataList[i].image_C)"
-      let url = URL(string: "http://192.168.1.230:3000/api/v1/spot/register")
+      let url = URL(string: "http://192.168.1.91:3000/api/v1/spot/register")
       var request = URLRequest(url: url!)
       // POSTを指定
       request.httpMethod = "POST"
@@ -191,6 +194,63 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         }
       }.resume()
     }
+  }
+  struct AllData : Codable{
+    let status : Int?
+    let record : [Record]
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+  }
+  struct Record : Codable{
+    let spotId : Int? = 0
+    let userId : Int? = 0
+    let spotTitle : String? = "0"
+    let spotAddress : [SpotAddress]
+    let spotComment : String? = "0"
+    let spotImageA : String? = "0"
+    let spotImageB : String? = "0"
+    let spotImageC : String? = "0"
+    let date : Date? = NSDate() as Date
+    enum CodingKeys: String, CodingKey {
+      case spotId = "spot_id"
+      case userId = "user_id"
+      case spotTitle = "spot_title"
+      case spotAddress = "spot_address"
+      case spotComment = "spot_comment"
+      case spotImageA = "spot_image_a"
+      case spotImageB = "spot_image_b"
+      case spotImageC = "spot_image_c"
+      case date
+    }
+  }
+  struct SpotAddress : Codable{
+    let x : Double? = 0
+    let y : Double? = 0
+    enum CodingKeys: String, CodingKey {
+      case x
+      case y
+    }
+  }
+  
+  func getSpot(){
+    let url = URL(string: "http://192.168.1.91:3000/api/v1/spot/find?user_id=1")
+    let request = URLRequest(url: url!)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+//        let allData = try! JSONDecoder().decode(AllData.self, from: data)
+//        print(allData.status)
+      }
+    }.resume()
   }
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
