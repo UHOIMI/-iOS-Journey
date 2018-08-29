@@ -27,6 +27,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     let okText = "OK"
     
     var fmt = DateFormatter()
+    var changeColorRow = -1
     
     let postViewController = PostViewController()
     
@@ -88,6 +89,9 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             print("test:" + spotNameList[indexPath.row])
             cell.textLabel!.text = spotNameList[indexPath.row]
             print("userTableは通過")
+            if changeColorRow == indexPath.row{
+                cell.textLabel?.textColor = UIColor.gray
+            }
             return cell
         }
         
@@ -102,14 +106,25 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         }
         
         if(tableView.tag == 2){
+            //let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
+            /*let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath) as! UITableViewCell*/
+            
             selectSpotNameList.append(spotNameList[indexPath.row])
             selectSpotDataList.append(spotDataList[indexPath.row])
             
             let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
             selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
             
-            spotNameList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            //cell.textLabel?.textColor = UIColor.red
+            //cell.backgroundColor = UIColor.red
+            //userSpotTable.reloadData()
+            //cell.reloadInputViews()
+            changeColorRow = indexPath.row
+            //tableView.reloadRows(at: tableView.indexPathsForVisibleRows!, with: UITableViewRowAnimation.fade)
+            tableView.reloadData()
+            
+            /*spotNameList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)*/
         }
     }
     
