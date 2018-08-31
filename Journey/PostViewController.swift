@@ -27,6 +27,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var pickOption = ["500円以下", "501円〜1000円", "1001円〜5000円", "5001円〜10000円", "10001円以上"]
   let prefectures:Array = [ "北海道", "青森県", "岩手県", "宮城県", "秋田県","山形県", "福島県", "茨城県", "栃木県", "群馬県","埼玉県", "千葉県", "東京都", "神奈川県", "新潟県","富山県", "石川県", "福井県", "山梨県", "長野県","岐阜県", "静岡県", "愛知県", "三重県", "滋賀県","京都府", "大阪府", "兵庫県", "奈良県", "和歌山県","鳥取県", "島根県", "岡山県", "広島県", "山口県","徳島県", "香川県", "愛媛県", "高知県", "福岡県","佐賀県", "長崎県", "熊本県", "大分県", "宮崎県","鹿児島県", "沖縄県"]
  
+  var transportation = [0,0,0,0,0,0,0]
+  
   var imageFlag1 = 0
   var imageFlag2 = 0
   var imageFlag3 = 0
@@ -171,10 +173,38 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   @IBAction func tappedPostButton(_ sender: Any) {
     if(globalVar.spotDataList.count >= 1){
-      postSpot()
+      let dispatchGroup = DispatchGroup()
+      // 直列キュー / attibutes指定なし
+      let dispatchQueue = DispatchQueue(label: "queue")
+      // 5つの非同期処理を実行
+      for i in 1...2 {
+        dispatchGroup.enter()
+        dispatchQueue.async(group: dispatchGroup) {
+          [weak self] in
+          self?.asyncProcess(number: i) {
+            (number: Int) -> Void in
+            print("#\(number) End")
+            dispatchGroup.leave()
+          }
+        }
+      }
+      
+      // 全ての非同期処理完了後にメインスレッドで処理
+      dispatchGroup.notify(queue: .main) {
+        print("All Process Done!")
+      }
     }
   }
-  
+  func asyncProcess(number: Int, completion: (_ number: Int) -> Void) {
+    print("#\(number) Start")
+    if(number == 1){
+      postSpot()
+    }else if(number == 2){
+      getSpot()
+    }
+    sleep((arc4random() % 100 + 1) / 100)
+    completion(number)
+  }
   func postSpot(){
     for i in 0...globalVar.spotDataList.count - 1{
       self.postSpotCount += 1
@@ -197,7 +227,6 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         }
       }.resume()
     }
-    getSpot()
   }
   
   struct AllData : Codable{
@@ -359,57 +388,71 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_walk_on.png"), for:UIControlState())
             imageFlag1 = 1
+            transportation[0] = 1
           }else{
             button.setImage(UIImage(named: "s_walk.png"), for:UIControlState())
             imageFlag1 = 0
+            transportation[0] = 0
           }
         case .action2:
           if(imageFlag2 == 0){
             button.setImage(UIImage(named: "s_bicycle_on.png"), for:UIControlState())
             imageFlag2 = 1
+            transportation[1] = 1
           }else{
             button.setImage(UIImage(named: "s_bicycle.png"), for:UIControlState())
             imageFlag1 = 0
+            transportation[1] = 0
           }
         case .action3:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_car_on.png"), for:UIControlState())
             imageFlag1 = 1
+            transportation[2] = 1
           }else{
             button.setImage(UIImage(named: "s_car.png"), for:UIControlState())
             imageFlag1 = 0
+            transportation[2] = 0
           }
         case .action4:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_bus_on.png"), for:UIControlState())
             imageFlag1 = 1
+            transportation[3] = 1
           }else{
             button.setImage(UIImage(named: "s_bus.png"), for:UIControlState())
             imageFlag1 = 0
+            transportation[3] = 0
           }
         case .action5:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_train_on.png"), for:UIControlState())
             imageFlag1 = 1
+            transportation[4] = 1
           }else{
             button.setImage(UIImage(named: "s_train.png"), for:UIControlState())
             imageFlag1 = 0
+            transportation[4] = 0
           }
         case .action6:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_airplane_on.png"), for:UIControlState())
             imageFlag1 = 1
+            transportation[5] = 1
           }else{
             button.setImage(UIImage(named: "s_airplane.png"), for:UIControlState())
             imageFlag1 = 0
+            transportation[5] = 0
           }
         case .action7:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_boat_on.png"), for:UIControlState())
             imageFlag1 = 1
+            transportation[6] = 1
           }else{
             button.setImage(UIImage(named: "s_boat.png"), for:UIControlState())
             imageFlag1 = 0
+            transportation[6] = 0
           }
         }
       }
