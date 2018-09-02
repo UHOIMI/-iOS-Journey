@@ -97,8 +97,10 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             }*/
             if grayList[indexPath.row] == true{
                 cell.textLabel?.textColor = UIColor.gray
+                cell.selectionStyle = UITableViewCellSelectionStyle.none
             }else{
                 cell.textLabel?.textColor = UIColor.black
+                cell.selectionStyle = UITableViewCellSelectionStyle.default
             }
             return cell
         }
@@ -142,6 +144,32 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             /*spotNameList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)*/
         }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if(tableView.tag == 1){
+            if editingStyle == .delete {
+                
+                for (i, value) in spotDataList.enumerated() {
+                    if value.spot_id == selectSpotDataList[indexPath.row].spot_id{
+                        grayList[i] = false
+                    }
+                }
+                
+                selectSpotDataList.remove(at: indexPath.row)
+                selectSpotNameList.remove(at: indexPath.row)
+                
+                userSpotTable.reloadData()
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if(tableView.tag == 2){
+            return false
+        }
+        return true
     }
     
     
