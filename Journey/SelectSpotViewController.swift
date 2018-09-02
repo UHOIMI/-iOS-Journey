@@ -20,6 +20,8 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     var spotNameList : [String] = []
     var selectSpotDataList : [ListSpotModel] = []//現状PotViewControllerに渡す予定のデータリスト
     var selectSpotNameList : [String] = []
+    var grayList : [Bool] = []
+    
     var placePicker: GMSPlacePicker?
     
     let top = "エラー"
@@ -57,6 +59,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             listSpotModel.image_C = _sm.image_C
             spotDataList.append(listSpotModel)
             spotNameList.append(_sm.spot_name)
+            grayList.append(false)
         }
         
         createTabBar()
@@ -89,8 +92,13 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             print("test:" + spotNameList[indexPath.row])
             cell.textLabel!.text = spotNameList[indexPath.row]
             print("userTableは通過")
-            if changeColorRow == indexPath.row{
+            /*if changeColorRow == indexPath.row{
                 cell.textLabel?.textColor = UIColor.gray
+            }*/
+            if grayList[indexPath.row] == true{
+                cell.textLabel?.textColor = UIColor.gray
+            }else{
+                cell.textLabel?.textColor = UIColor.black
             }
             return cell
         }
@@ -119,7 +127,8 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             //cell.backgroundColor = UIColor.red
             //userSpotTable.reloadData()
             //cell.reloadInputViews()
-            changeColorRow = indexPath.row
+            //changeColorRow = indexPath.row
+            grayList[indexPath.row] = true
             //tableView.reloadRows(at: tableView.indexPathsForVisibleRows!, with: UITableViewRowAnimation.fade)
             tableView.reloadData()
             
@@ -183,6 +192,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         
         spotDataList.reverse()
         spotNameList.reverse()
+        grayList.reverse()
         
         userSpotTable.reloadData()
         
