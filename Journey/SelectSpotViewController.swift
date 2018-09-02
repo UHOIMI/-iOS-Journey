@@ -117,20 +117,27 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             //let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
             /*let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath) as! UITableViewCell*/
             
-            selectSpotNameList.append(spotNameList[indexPath.row])
-            selectSpotDataList.append(spotDataList[indexPath.row])
+            if(grayList[indexPath.row] == false){
             
-            let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
-            selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
+                selectSpotNameList.append(spotNameList[indexPath.row])
+                selectSpotDataList.append(spotDataList[indexPath.row])
+                
+                let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
+                selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
+                
+                grayList[indexPath.row] = true
+                tableView.reloadData()
+                
+            }
             
             //cell.textLabel?.textColor = UIColor.red
             //cell.backgroundColor = UIColor.red
             //userSpotTable.reloadData()
             //cell.reloadInputViews()
             //changeColorRow = indexPath.row
-            grayList[indexPath.row] = true
+            
             //tableView.reloadRows(at: tableView.indexPathsForVisibleRows!, with: UITableViewRowAnimation.fade)
-            tableView.reloadData()
+            
             
             /*spotNameList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)*/
