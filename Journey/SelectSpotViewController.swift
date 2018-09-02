@@ -183,7 +183,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             
             if error != nil {
                 name = "エラー"
-                print(error)
+                print(error!)
                 return
             }
             
