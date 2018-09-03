@@ -42,7 +42,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     var bbb = 151.2086
     
     let top = "エラー"
-    let message = "名前が入力されていません"
+    var message = ""
     let okText = "OK"
     
     var latitudeList: [Double] = []
@@ -177,7 +177,20 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         }
     }
     @IBAction func tappedMapButton(_ sender: Any) {
+        
+        message = ""
         if nameTextField.text == "" {
+            message = "名前が入力されていません。\n"
+        }
+        if (nameTextField.text?.characters.count)! > 20{
+            message = "スポット名が文字数制限(20字)を超えています。\n"
+        }
+        if (commentTextField.text?.characters.count)! > 140{
+            message += "コメントが文字数制限(140字)を超えています。"
+        }
+        
+        
+        if message != "" {
             let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertControllerStyle.alert)
             let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
             alert.addAction(okayButton)

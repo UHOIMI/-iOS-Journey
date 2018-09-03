@@ -20,6 +20,8 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     var spotNameList : [String] = []
     var selectSpotDataList : [ListSpotModel] = []//現状PotViewControllerに渡す予定のデータリスト
     var selectSpotNameList : [String] = []
+    var grayList : [Bool] = []
+    
     var placePicker: GMSPlacePicker?
     
     let top = "エラー"
@@ -57,6 +59,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             listSpotModel.image_C = _sm.image_C
             spotDataList.append(listSpotModel)
             spotNameList.append(_sm.spot_name)
+            grayList.append(false)
         }
         
         createTabBar()
@@ -89,8 +92,15 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             print("test:" + spotNameList[indexPath.row])
             cell.textLabel!.text = spotNameList[indexPath.row]
             print("userTableは通過")
-            if changeColorRow == indexPath.row{
+            /*if changeColorRow == indexPath.row{
                 cell.textLabel?.textColor = UIColor.gray
+            }*/
+            if grayList[indexPath.row] == true{
+                cell.textLabel?.textColor = UIColor.gray
+                cell.selectionStyle = UITableViewCellSelectionStyle.none
+            }else{
+                cell.textLabel?.textColor = UIColor.black
+                cell.selectionStyle = UITableViewCellSelectionStyle.default
             }
             return cell
         }
@@ -109,23 +119,57 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             //let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
             /*let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath) as! UITableViewCell*/
             
-            selectSpotNameList.append(spotNameList[indexPath.row])
-            selectSpotDataList.append(spotDataList[indexPath.row])
+            if(grayList[indexPath.row] == false){
             
-            let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
-            selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
+                selectSpotNameList.append(spotNameList[indexPath.row])
+                selectSpotDataList.append(spotDataList[indexPath.row])
+                
+                let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
+                selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
+                
+                grayList[indexPath.row] = true
+                tableView.reloadData()
+                
+            }
             
             //cell.textLabel?.textColor = UIColor.red
             //cell.backgroundColor = UIColor.red
             //userSpotTable.reloadData()
             //cell.reloadInputViews()
-            changeColorRow = indexPath.row
+            //changeColorRow = indexPath.row
+            
             //tableView.reloadRows(at: tableView.indexPathsForVisibleRows!, with: UITableViewRowAnimation.fade)
-            tableView.reloadData()
+            
             
             /*spotNameList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)*/
         }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if(tableView.tag == 1){
+            if editingStyle == .delete {
+                
+                for (i, value) in spotDataList.enumerated() {
+                    if value.spot_id == selectSpotDataList[indexPath.row].spot_id{
+                        grayList[i] = false
+                    }
+                }
+                
+                selectSpotDataList.remove(at: indexPath.row)
+                selectSpotNameList.remove(at: indexPath.row)
+                
+                userSpotTable.reloadData()
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if(tableView.tag == 2){
+            return false
+        }
+        return true
     }
     
     
@@ -139,7 +183,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             
             if error != nil {
                 name = "エラー"
-                print(error)
+                print(error!)
                 return
             }
             
@@ -183,6 +227,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         
         spotDataList.reverse()
         spotNameList.reverse()
+        grayList.reverse()
         
         userSpotTable.reloadData()
         
