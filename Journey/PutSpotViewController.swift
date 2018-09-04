@@ -487,6 +487,11 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     
     /****************/
     
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     func createTabBar(){
         let width = self.view.frame.width
         let height = self.view.frame.height

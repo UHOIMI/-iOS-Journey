@@ -519,12 +519,18 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="dYc-gx-w37" id="Nj7-8f-Ydr"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WM2-fR-McP">
                                 <rect key="frame" x="8" y="399" width="359" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="dYc-gx-w37" id="HM0-WS-LJG"/>
+                                </connections>
                             </textField>
                             <imageView tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-6y-ASE">
                                 <rect key="frame" x="8" y="466" width="114.5" height="85.5"/>
@@ -907,10 +913,10 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0Xj-CK-ZoO"/>
+        <segue reference="q0P-y1-Ch3"/>
         <segue reference="TeA-Xz-GIE"/>
         <segue reference="SAI-tm-OCo"/>
-        <segue reference="6mO-Qw-wNq"/>
+        <segue reference="j0d-eN-8yJ"/>
         <segue reference="ScF-Q7-9Tm"/>
     </inferredMetricsTieBreakers>
 </document>
