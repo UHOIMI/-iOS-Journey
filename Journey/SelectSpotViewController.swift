@@ -12,7 +12,7 @@ import GoogleMaps
 import GooglePlaces
 import GooglePlacePicker
 
-class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableViewDataSource,UITabBarDelegate{
+class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableViewDataSource,UITabBarDelegate, GMSPlacePickerViewControllerDelegate{
     
     private var tabBar:TabBar!
     
@@ -22,7 +22,8 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     var selectSpotNameList : [String] = []
     var grayList : [Bool] = []
     
-    var placePicker: GMSPlacePicker?
+    //var placePicker: GMSPlacePicker?
+    var placePicker: GMSPlacePickerViewController?
     
     let top = "エラー"
     let message = "スポットが選択されていません"
@@ -89,8 +90,8 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         if tableView.tag == 1 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
             cell.textLabel!.text = String(selectSpotNameList.count + 1) + " : " + selectSpotNameList[indexPath.row]
-            var selectName : String = cell.textLabel!.text!
-            var pt = "[0-9]* : (.*)"
+            let selectName : String = cell.textLabel!.text!
+            let pt = "[0-9]* : (.*)"
             
             var matchStrings:[String] = []
             
@@ -211,9 +212,11 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     
     @IBAction func pickPlace(_ sender: UIButton) {
         let config = GMSPlacePickerConfig(viewport: nil)
-        placePicker = GMSPlacePicker(config: config)
+        placePicker = GMSPlacePickerViewController(config: config)
+        placePicker?.delegate = self
+        present(placePicker!, animated: true, completion: nil)
         
-        placePicker?.pickPlace(callback: { (place,error) -> Void in
+        /*placePicker?.pickPlace(callback: { (place,error) -> Void in
             var name = ""
             var coordinate = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
             
@@ -237,7 +240,40 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             } else {
                 name = "No place selected"
             }
-        })
+        })*/
+    }
+    
+    func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
+        // Dismiss the place picker, as it cannot dismiss itself.
+        viewController.dismiss(animated: true, completion: nil)
+        
+        var name = ""
+        var coordinate = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+        
+        /*if error != nil {
+            name = "エラー"
+            print(error!)
+            return
+        }*/
+        
+        name = (place.name)
+        print(name)
+        coordinate = (place.coordinate)
+        print(coordinate)
+        //self.selectSpotNameList.append(String(self.selectSpotNameList.count + 1) + " : " + name)
+        self.selectSpotNameList.append(name)
+        self.selectSpotDataList.append(ListSpotModel(la: coordinate.latitude,lo: coordinate.longitude, na: name))
+        let selectIndexPath = IndexPath(row : self.selectSpotNameList.count - 1,section : 0)
+        self.selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
+        self.selectSpotTable.reloadData()
+
+    }
+    
+    func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
+        // Dismiss the place picker, as it cannot dismiss itself.
+        viewController.dismiss(animated: true, completion: nil)
+        
+        print("No place selected")
     }
     
     /*@IBAction func tappedMapButton(_ sender: Any) {

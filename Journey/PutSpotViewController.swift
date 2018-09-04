@@ -106,7 +106,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
                 
                 if url != NSURL(string: "") {
                     let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url as URL], options: nil)
-                    let asset: PHAsset = fetchResult.firstObject as! PHAsset
+                    //let asset: PHAsset = fetchResult.firstObject as! PHAsset
+                    let asset: PHAsset = fetchResult.firstObject!
                     let manager = PHImageManager.default()
                     manager.requestImage(for: asset, targetSize: CGSize(width: 140, height: 140), contentMode: .aspectFill, options: nil) { (image, info) in
                         // imageをセットする
@@ -195,10 +196,10 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         if nameTextField.text == "" {
             message = "名前が入力されていません。\n"
         }
-        if (nameTextField.text?.characters.count)! > 20{
+        if (nameTextField.text?.count)! > 20{
             message = "スポット名が文字数制限(20字)を超えています。\n"
         }
-        if (commentTextField.text?.characters.count)! > 140{
+        if (commentTextField.text?.count)! > 140{
             message += "コメントが文字数制限(140字)を超えています。"
         }
         
@@ -270,7 +271,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         longitudeList.append(newLocation.coordinate.longitude)
         nameList.append(nameTextField.text!)
         
-        var spotData : ListSpotModel =
+        let spotData : ListSpotModel =
             ListSpotModel(la: newLocation.coordinate.latitude,lo: newLocation.coordinate.longitude,na: nameTextField.text!)
         
         spotDataList.append(spotData)
@@ -299,7 +300,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         let alert = UIAlertController(title: "GPSがオフになっています", message: "設定を押して位置情報を許可してください", preferredStyle: UIAlertControllerStyle.alert)
         let okAction = UIAlertAction(title: "設定", style: UIAlertActionStyle.default){(action: UIAlertAction) in
             let url = NSURL(string: UIApplicationOpenSettingsURLString)!
-            UIApplication.shared.openURL(url as URL)
+            //UIApplication.shared.openURL(url as URL)
+            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
         }
         let cancelButton = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler: nil)
         alert.addAction(cancelButton)
