@@ -29,6 +29,12 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
  
   var transportation = ["0,","0,","0,","0,","0,","0,","0"]
   
+  let ipAddress = "172.20.10.2"
+  var planTitle = ""
+  var planArea = ""
+  var planText = ""
+  var planPrice = ""
+  
   var imageFlag1 = 0
   var imageFlag2 = 0
   var imageFlag3 = 0
@@ -39,6 +45,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   var spotList : [Int] = []
   var postSpotCount = 0
+  var keepAlive = true
   
   var camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
 
@@ -89,10 +96,10 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     let selectedNumber = globalVar.selectSpot[indexPath.row]
     if(selectedNumber == "スポットを追加" && globalVar.selectSpot.count < 21){
       performSegue(withIdentifier: "toSelectSpotView", sender: nil)
-    }else if(selectedNumber == "スポット追加" && globalVar.selectSpot.count >= 21){
+    }else if(selectedNumber == "スポットを追加" && globalVar.selectSpot.count >= 21){
       globalVar.selectSpot[0] = "これ以上追加できません"
       spotTable.reloadData()
-    }else {
+    }else{
       let selectedModel = globalVar.spotDataList[indexPath.row - 1]
       print(selectedNumber)
       print(selectedModel.datetime)
@@ -173,46 +180,20 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   @IBAction func tappedPostButton(_ sender: Any) {
     if(globalVar.spotDataList.count >= 1 && titleTextField.text != "" && prefecturesTextField.text != "" && pickerTextField.text != ""){
-      let dispatchGroup = DispatchGroup()
-      // 直列キュー / attibutes指定なし
-      let dispatchQueue = DispatchQueue(label: "queue")
-      // 5つの非同期処理を実行
-      for i in 1...3 {
-        dispatchGroup.enter()
-        dispatchQueue.async(group: dispatchGroup) {
-          [weak self] in
-          self?.asyncProcess(number: i) {
-            (number: Int) -> Void in
-            print("#\(number) End")
-            dispatchGroup.leave()
-          }
-        }
-      }
-      
-      // 全ての非同期処理完了後にメインスレッドで処理
-      dispatchGroup.notify(queue: .main) {
-        print("All Process Done!")
-      }
-    }
-  }
-  func asyncProcess(number: Int, completion: (_ number: Int) -> Void) {
-    print("#\(number) Start")
-    if(number == 1){
+      planTitle = titleTextField.text!
+      planArea = prefecturesTextField.text!
+      planPrice = pickerTextField.text!
+      planTitle = textView.text!
       postSpot()
-    }else if(number == 2){
-      getSpot()
-    }else if(number == 3){
-      postPlan()
     }
-    sleep((arc4random() % 100 + 5) / 100)
-    completion(number)
   }
+
   func postSpot(){
     for i in 0...globalVar.spotDataList.count - 1{
       self.postSpotCount += 1
       print(self.postSpotCount)
       let str = "user_id=1&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=\(globalVar.spotDataList[i].image_A)&spot_image_b=\(globalVar.spotDataList[i].image_B)&spot_image_c=\(globalVar.spotDataList[i].image_C)"
-      let url = URL(string: "http://192.168.0.11:3000/api/v1/spot/register")
+      let url = URL(string: "http://\(ipAddress):3000/api/v1/spot/register")
       var request = URLRequest(url: url!)
       // POSTを指定
       request.httpMethod = "POST"
@@ -226,6 +207,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
           // HTTPステータスコード
           print("statusCode: \(response.statusCode)")
           print(String(data: data, encoding: .utf8) ?? "")
+          if (i == self.globalVar.spotDataList.count - 1){
+            self.getSpot()
+          }
         }
       }.resume()
     }
@@ -273,7 +257,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   
   func getSpot(){
-    let url = URL(string: "http://192.168.0.11:3000/api/v1/spot/find?user_id=1")
+    let url = URL(string: "http://\(ipAddress):3000/api/v1/spot/find?user_id=1")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -291,6 +275,10 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
           backCount = max - index
           self.spotList.append(allData.record[backCount].spotId)
           print(self.spotList)
+          if(index == self.postSpotCount - 1){
+            self.spotList.reverse()
+            self.postPlan()
+          }
         }
       }
     }.resume()
@@ -301,49 +289,50 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     var str : String = ""
     switch spotList.count {
     case 1:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=\(planText)&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea)&spot_id_a=\(spotList[0])"
     case 2:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])"
     case 3:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])"
     case 4:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])"
     case 5:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])"
     case 6:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])"
     case 7:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])"
     case 8:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])"
     case 9:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])"
     case 10:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])"
     case 11:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])"
     case 12:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])"
     case 13:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])"
     case 14:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])"
     case 15:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])"
     case 16:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])"
     case 17:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])&spot_q=\(spotList[16])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])"
     case 18:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])&spot_q=\(spotList[16])&spot_r=\(spotList[17])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])&spot_id_r=\(spotList[17])"
     case 19:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])&spot_q=\(spotList[16])&spot_r=\(spotList[17])&spot_s=\(spotList[18])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])&spot_id_r=\(spotList[17])&spot_id_s=\(spotList[18])"
     case 20:
-      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])&spot_q=\(spotList[16])&spot_r=\(spotList[17])&spot_s=\(spotList[18])&spot_t=\(spotList[19])"
+      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])&spot_id_r=\(spotList[17])&spot_id_s=\(spotList[18])&spot_id_t=\(spotList[19])"
     default:
       return
     }
-    let url = URL(string: "http://192.168.0.11:3000/api/v1/plan/register ")
+    print(str)
+    let url = URL(string: "http://\(ipAddress):3000/api/v1/plan/register")
     var request = URLRequest(url: url!)
     // POSTを指定
     request.httpMethod = "POST"
@@ -434,7 +423,6 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     case 4:
       print("４")
     default : return
-      
     }
   }
   
