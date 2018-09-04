@@ -227,7 +227,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                 print(name)
                 coordinate = (place?.coordinate)!
                 print(coordinate)
-                self.selectSpotNameList.append(name)
+                self.selectSpotNameList.append(String(self.selectSpotNameList.count + 1) + " : " + name)
                 self.selectSpotDataList.append(ListSpotModel(la: coordinate.latitude,lo: coordinate.longitude, na: name))
                 let selectIndexPath = IndexPath(row : self.selectSpotNameList.count - 1,section : 0)
                 self.selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
