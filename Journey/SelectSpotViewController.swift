@@ -89,6 +89,35 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         if tableView.tag == 1 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
             cell.textLabel!.text = selectSpotNameList[indexPath.row]
+            var selectName : String = cell.textLabel!.text!
+            var pt = "[0-9]* : (.*)"
+            
+            var matchStrings:[String] = []
+            
+            do {
+                
+                let regex = try NSRegularExpression(pattern: pt, options: [])
+                let targetStringRange = NSRange(location: 0, length: (selectName as NSString).length)
+                
+                let matches = regex.matches(in: selectName, options: [], range: targetStringRange)
+                
+                for match in matches {
+                    
+                    // rangeAtIndexに0を渡すとマッチ全体が、1以降を渡すと括弧でグループにした部分マッチが返される
+                    let range = match.range(at: 1)
+                    let result = (selectName as NSString).substring(with: range)
+                    
+                    matchStrings.append(result)
+                }
+                cell.textLabel?.text = String(indexPath.row + 1) + " : " + matchStrings[0]
+                
+            } catch {
+                print("error: getMatchStrings")
+            }
+            
+            
+            //let ans = selectName.pregReplace(pattern: pt, with: "")
+            //selectName.match(pattern: "^([0-9]*):([^/]+)", group: 2)
             print("selectTableは通過")
             return cell
         }else if tableView.tag == 2 {
