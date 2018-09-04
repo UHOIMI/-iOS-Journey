@@ -44,6 +44,9 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
          spotNameList.append(fmt.string(from: _sd.date) + "：" + _sd.name)
          }*/
         
+        let format = DateFormatter()
+        format.dateFormat = "yyyy/MM/dd HH:mm "
+        
         let realm = try! Realm()
         let spotModelList = realm.objects(SpotModel.self)
         for _sm in spotModelList {
@@ -58,7 +61,8 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             listSpotModel.image_B = _sm.image_B
             listSpotModel.image_C = _sm.image_C
             spotDataList.append(listSpotModel)
-            spotNameList.append(_sm.spot_name)
+            //spotNameList.append(_sm.spot_name)
+            spotNameList.append(_sm.spot_name + "\n" + format.string(from: _sm.datetime))
             grayList.append(false)
         }
         
@@ -84,13 +88,43 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         
         if tableView.tag == 1 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
-            cell.textLabel!.text = selectSpotNameList[indexPath.row]
+            cell.textLabel!.text = String(selectSpotNameList.count + 1) + " : " + selectSpotNameList[indexPath.row]
+            var selectName : String = cell.textLabel!.text!
+            var pt = "[0-9]* : (.*)"
+            
+            var matchStrings:[String] = []
+            
+            do {
+                
+                let regex = try NSRegularExpression(pattern: pt, options: [])
+                let targetStringRange = NSRange(location: 0, length: (selectName as NSString).length)
+                
+                let matches = regex.matches(in: selectName, options: [], range: targetStringRange)
+                
+                for match in matches {
+                    
+                    // rangeAtIndexに0を渡すとマッチ全体が、1以降を渡すと括弧でグループにした部分マッチが返される
+                    let range = match.range(at: 1)
+                    let result = (selectName as NSString).substring(with: range)
+                    
+                    matchStrings.append(result)
+                }
+                cell.textLabel?.text = String(indexPath.row + 1) + " : " + matchStrings[0]
+                
+            } catch {
+                print("error: getMatchStrings")
+            }
+            
+            
+            //let ans = selectName.pregReplace(pattern: pt, with: "")
+            //selectName.match(pattern: "^([0-9]*):([^/]+)", group: 2)
             print("selectTableは通過")
             return cell
         }else if tableView.tag == 2 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
             print("test:" + spotNameList[indexPath.row])
             cell.textLabel!.text = spotNameList[indexPath.row]
+            cell.textLabel?.numberOfLines = 0;
             print("userTableは通過")
             /*if changeColorRow == indexPath.row{
                 cell.textLabel?.textColor = UIColor.gray
@@ -121,6 +155,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             
             if(grayList[indexPath.row] == false){
             
+                //selectSpotNameList.append(String(selectSpotNameList.count + 1) + " : " +  spotNameList[indexPath.row])
                 selectSpotNameList.append(spotNameList[indexPath.row])
                 selectSpotDataList.append(spotDataList[indexPath.row])
                 
@@ -161,6 +196,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                 
                 userSpotTable.reloadData()
                 tableView.deleteRows(at: [indexPath], with: .fade)
+                selectSpotTable.reloadData()
             }
         }
     }
@@ -192,10 +228,12 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                 print(name)
                 coordinate = (place?.coordinate)!
                 print(coordinate)
+                //self.selectSpotNameList.append(String(self.selectSpotNameList.count + 1) + " : " + name)
                 self.selectSpotNameList.append(name)
                 self.selectSpotDataList.append(ListSpotModel(la: coordinate.latitude,lo: coordinate.longitude, na: name))
                 let selectIndexPath = IndexPath(row : self.selectSpotNameList.count - 1,section : 0)
                 self.selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
+                self.selectSpotTable.reloadData()
             } else {
                 name = "No place selected"
             }

@@ -124,7 +124,20 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
                             break
                         }
                     }
-                    
+                }else{
+                    switch i{
+                    case 0:
+                        spotImageView1.image = selectImg
+                        break
+                    case 1:
+                        spotImageView2.image = selectImg
+                        break
+                    case 2:
+                        spotImageView3.image = selectImg
+                        break
+                    default:
+                        break
+                    }
                 }
                 
             }
