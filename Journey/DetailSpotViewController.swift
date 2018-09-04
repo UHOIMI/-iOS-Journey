@@ -80,7 +80,7 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
             
             if url != NSURL(string: "") {
                 let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url as URL], options: nil)
-                let asset: PHAsset = fetchResult.firstObject as! PHAsset
+                let asset: PHAsset = fetchResult.firstObject!
                 let manager = PHImageManager.default()
                 manager.requestImage(for: asset, targetSize: CGSize(width: 140, height: 140), contentMode: .aspectFill, options: nil) { (image, info) in
                     // imageをセットする
