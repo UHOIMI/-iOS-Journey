@@ -88,7 +88,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         
         if tableView.tag == 1 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
-            cell.textLabel!.text = selectSpotNameList[indexPath.row]
+            cell.textLabel!.text = String(selectSpotNameList.count + 1) + " : " + selectSpotNameList[indexPath.row]
             var selectName : String = cell.textLabel!.text!
             var pt = "[0-9]* : (.*)"
             
@@ -155,7 +155,8 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             
             if(grayList[indexPath.row] == false){
             
-                selectSpotNameList.append(String(selectSpotNameList.count + 1) + " : " +  spotNameList[indexPath.row])
+                //selectSpotNameList.append(String(selectSpotNameList.count + 1) + " : " +  spotNameList[indexPath.row])
+                selectSpotNameList.append(spotNameList[indexPath.row])
                 selectSpotDataList.append(spotDataList[indexPath.row])
                 
                 let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
@@ -227,10 +228,12 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                 print(name)
                 coordinate = (place?.coordinate)!
                 print(coordinate)
-                self.selectSpotNameList.append(String(self.selectSpotNameList.count + 1) + " : " + name)
+                //self.selectSpotNameList.append(String(self.selectSpotNameList.count + 1) + " : " + name)
+                self.selectSpotNameList.append(name)
                 self.selectSpotDataList.append(ListSpotModel(la: coordinate.latitude,lo: coordinate.longitude, na: name))
                 let selectIndexPath = IndexPath(row : self.selectSpotNameList.count - 1,section : 0)
                 self.selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
+                self.selectSpotTable.reloadData()
             } else {
                 name = "No place selected"
             }
