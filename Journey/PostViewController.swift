@@ -29,7 +29,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
  
   var transportation = ["0,","0,","0,","0,","0,","0,","0"]
   
-  let ipAddress = "172.20.10.2"
+  let ipAddress = "192.168.100.102"
   var planTitle = ""
   var planArea = ""
   var planText = ""
@@ -101,10 +101,17 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       spotTable.reloadData()
     }else{
       let selectedModel = globalVar.spotDataList[indexPath.row - 1]
-      print(selectedNumber)
-      print(selectedModel.datetime)
+      performSegue(withIdentifier: "toDetailSpotView", sender: selectedModel)
     }
   }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if(segue.identifier == "toDetailSpotView"){
+      let nextView = segue.destination as! DetailSpotViewController
+      nextView.spotData = sender as! ListSpotModel
+    }
+  }
+  
   
   func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
     
@@ -346,6 +353,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
+        self.performSegue(withIdentifier: "toStartView", sender: nil)
       }
     }.resume()
   }
