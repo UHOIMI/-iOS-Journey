@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import Foundation
 
-class PostViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate{
+class PostViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate,UITextFieldDelegate,UITextViewDelegate{
 
   @IBOutlet weak var titleTextField: UITextField!
   @IBOutlet weak var subView: UIView!
@@ -45,7 +45,6 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   var spotList : [Int] = []
   var postSpotCount = 0
-  var keepAlive = true
   
   var camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
 
@@ -169,6 +168,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     pickerView.tag = 2
     pickerView.delegate = self
     pickerTextField.inputView = pickerView
+    
+    textView.delegate = self
+    titleTextField.delegate = self
     
     textViewSetteings()
     keyboardSettings()
@@ -385,6 +387,62 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.commitButtonTapped))
     kbToolBar.items = [spacer, commitButton]
     textView.inputAccessoryView = kbToolBar
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    
+    super.viewWillAppear(animated)
+    self.configureObserver()
+    
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    
+    super.viewWillDisappear(animated)
+    self.removeObserver() // Notificationを画面が消えるときに削除
+  }
+  
+  // Notificationを設定
+  func configureObserver() {
+    
+    let notification = NotificationCenter.default
+    notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+  
+  // Notificationを削除
+  func removeObserver() {
+    
+    let notification = NotificationCenter.default
+    notification.removeObserver(self)
+  }
+  
+  // キーボードが現れた時に、画面全体をずらす。
+  @objc func keyboardWillShow(notification: Notification?) {
+    tabBar.isHidden = true
+    let rect = (notification?.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+    let duration: TimeInterval? = notification?.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double
+    UIView.animate(withDuration: duration!, animations: { () in
+      let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+      self.view.transform = transform
+      
+    })
+  }
+  
+  // キーボードが消えたときに、画面を戻す
+  @objc func keyboardWillHide(notification: Notification?) {
+    tabBar.isHidden = false
+    let duration: TimeInterval? = notification?.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? Double
+    UIView.animate(withDuration: duration!, animations: { () in
+      
+      self.view.transform = CGAffineTransform.identity
+    })
+  }
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    
+    textField.resignFirstResponder() // Returnキーを押したときにキーボードを下げる
+    return true
   }
   
   func createTabBar(){
