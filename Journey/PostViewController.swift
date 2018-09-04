@@ -27,7 +27,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var pickOption = ["500円以下", "501円〜1000円", "1001円〜5000円", "5001円〜10000円", "10001円以上"]
   let prefectures:Array = [ "北海道", "青森県", "岩手県", "宮城県", "秋田県","山形県", "福島県", "茨城県", "栃木県", "群馬県","埼玉県", "千葉県", "東京都", "神奈川県", "新潟県","富山県", "石川県", "福井県", "山梨県", "長野県","岐阜県", "静岡県", "愛知県", "三重県", "滋賀県","京都府", "大阪府", "兵庫県", "奈良県", "和歌山県","鳥取県", "島根県", "岡山県", "広島県", "山口県","徳島県", "香川県", "愛媛県", "高知県", "福岡県","佐賀県", "長崎県", "熊本県", "大分県", "宮崎県","鹿児島県", "沖縄県"]
  
-  var transportation = [0,0,0,0,0,0,0]
+  var transportation = ["0,","0,","0,","0,","0,","0,","0"]
   
   var imageFlag1 = 0
   var imageFlag2 = 0
@@ -140,7 +140,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     titleTextField.placeholder = "プラン名を入力"
     prefecturesTextField.placeholder = "都道府県を選択してください"
     pickerTextField.placeholder = "金額を選択してください"
-    textView.text = "プラン説明"
+    textView.text = ""
     
     spotTable.delegate = self
     spotTable.dataSource = self
@@ -172,12 +172,12 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   
   @IBAction func tappedPostButton(_ sender: Any) {
-    if(globalVar.spotDataList.count >= 1){
+    if(globalVar.spotDataList.count >= 1 && titleTextField.text != "" && prefecturesTextField.text != "" && pickerTextField.text != ""){
       let dispatchGroup = DispatchGroup()
       // 直列キュー / attibutes指定なし
       let dispatchQueue = DispatchQueue(label: "queue")
       // 5つの非同期処理を実行
-      for i in 1...2 {
+      for i in 1...3 {
         dispatchGroup.enter()
         dispatchQueue.async(group: dispatchGroup) {
           [weak self] in
@@ -201,8 +201,10 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       postSpot()
     }else if(number == 2){
       getSpot()
+    }else if(number == 3){
+      postPlan()
     }
-    sleep((arc4random() % 100 + 1) / 100)
+    sleep((arc4random() % 100 + 5) / 100)
     completion(number)
   }
   func postSpot(){
@@ -290,6 +292,71 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
           self.spotList.append(allData.record[backCount].spotId)
           print(self.spotList)
         }
+      }
+    }.resume()
+  }
+  
+  func postPlan(){
+    let transportationString = transportation.reduce("") { $0 + String($1) }
+    var str : String = ""
+    switch spotList.count {
+    case 1:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])"
+    case 2:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])"
+    case 3:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])"
+    case 4:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])"
+    case 5:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])"
+    case 6:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])"
+    case 7:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])"
+    case 8:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])"
+    case 9:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])"
+    case 10:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])"
+    case 11:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])"
+    case 12:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])"
+    case 13:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])"
+    case 14:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])"
+    case 15:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])"
+    case 16:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])"
+    case 17:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])&spot_q=\(spotList[16])"
+    case 18:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])&spot_q=\(spotList[16])&spot_r=\(spotList[17])"
+    case 19:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])&spot_q=\(spotList[16])&spot_r=\(spotList[17])&spot_s=\(spotList[18])"
+    case 20:
+      str = "user_id=1&plan_title=\(String(describing: titleTextField.text))&plan_comment=\(textView.text)&transportation=\(transportationString)&price=\(String(describing: pickerTextField.text))&area=\(String(describing: prefecturesTextField.text))&spot_a=\(spotList[0])&spot_b=\(spotList[1])&spot_c=\(spotList[2])&spot_d=\(spotList[3])&spot_e=\(spotList[4])&spot_f=\(spotList[5])&spot_g=\(spotList[6])&spot_h=\(spotList[7])&spot_i=\(spotList[8])&spot_j=\(spotList[9])&spot_k=\(spotList[10])&spot_l=\(spotList[11])&spot_m=\(spotList[12])&spot_n=\(spotList[13])&spot_o=\(spotList[14])&spot_p=\(spotList[15])&spot_q=\(spotList[16])&spot_r=\(spotList[17])&spot_s=\(spotList[18])&spot_t=\(spotList[19])"
+    default:
+      return
+    }
+    let url = URL(string: "http://192.168.0.11:3000/api/v1/plan/register ")
+    var request = URLRequest(url: url!)
+    // POSTを指定
+    request.httpMethod = "POST"
+    // POSTするデータをBodyとして設定
+    request.httpBody = str.data(using: .utf8)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: .utf8) ?? "")
       }
     }.resume()
   }
@@ -388,71 +455,71 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_walk_on.png"), for:UIControlState())
             imageFlag1 = 1
-            transportation[0] = 1
+            transportation[0] = "1,"
           }else{
             button.setImage(UIImage(named: "s_walk.png"), for:UIControlState())
             imageFlag1 = 0
-            transportation[0] = 0
+            transportation[0] = "0,"
           }
         case .action2:
           if(imageFlag2 == 0){
             button.setImage(UIImage(named: "s_bicycle_on.png"), for:UIControlState())
             imageFlag2 = 1
-            transportation[1] = 1
+            transportation[1] = "1,"
           }else{
             button.setImage(UIImage(named: "s_bicycle.png"), for:UIControlState())
             imageFlag1 = 0
-            transportation[1] = 0
+            transportation[1] = "0,"
           }
         case .action3:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_car_on.png"), for:UIControlState())
             imageFlag1 = 1
-            transportation[2] = 1
+            transportation[2] = "1,"
           }else{
             button.setImage(UIImage(named: "s_car.png"), for:UIControlState())
             imageFlag1 = 0
-            transportation[2] = 0
+            transportation[2] = "0,"
           }
         case .action4:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_bus_on.png"), for:UIControlState())
             imageFlag1 = 1
-            transportation[3] = 1
+            transportation[3] = "1,"
           }else{
             button.setImage(UIImage(named: "s_bus.png"), for:UIControlState())
             imageFlag1 = 0
-            transportation[3] = 0
+            transportation[3] = "0,"
           }
         case .action5:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_train_on.png"), for:UIControlState())
             imageFlag1 = 1
-            transportation[4] = 1
+            transportation[4] = "1,"
           }else{
             button.setImage(UIImage(named: "s_train.png"), for:UIControlState())
             imageFlag1 = 0
-            transportation[4] = 0
+            transportation[4] = "0,"
           }
         case .action6:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_airplane_on.png"), for:UIControlState())
             imageFlag1 = 1
-            transportation[5] = 1
+            transportation[5] = "1,"
           }else{
             button.setImage(UIImage(named: "s_airplane.png"), for:UIControlState())
             imageFlag1 = 0
-            transportation[5] = 0
+            transportation[5] = "0,"
           }
         case .action7:
           if(imageFlag1 == 0){
             button.setImage(UIImage(named: "s_boat_on.png"), for:UIControlState())
             imageFlag1 = 1
-            transportation[6] = 1
+            transportation[6] = "1"
           }else{
             button.setImage(UIImage(named: "s_boat.png"), for:UIControlState())
             imageFlag1 = 0
-            transportation[6] = 0
+            transportation[6] = "0"
           }
         }
       }
