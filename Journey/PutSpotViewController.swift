@@ -15,7 +15,7 @@ import Darwin
 import RealmSwift
 import Photos
 
-class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
       private var tabBar:TabBar!
 
@@ -61,7 +61,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     @IBOutlet weak var mapButton: UIBarButtonItem!
     
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var commentTextField: UITextField!
+    //@IBOutlet weak var commentTextField: UITextField!
+    @IBOutlet weak var commentTextView: UITextView!
     
     @IBOutlet weak var spotImageView1: UIImageView!
     @IBOutlet weak var spotImageView2: UIImageView!
@@ -79,9 +80,16 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //self.commentTextView.returnKeyType = UIReturnKeyDone;
+        
+        commentTextView.layer.borderColor = UIColor.gray.cgColor
+        commentTextView.layer.borderWidth = 0.5
+        commentTextView.layer.cornerRadius = 10.0
+        commentTextView.layer.masksToBounds = true
+        
         if spotData.spot_id != 0 {
             nameTextField.text = spotData.spot_name
-            commentTextField.text = spotData.comment
+            commentTextView.text = spotData.comment
             
             for i in 0..<3 {
                 
@@ -199,7 +207,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         if (nameTextField.text?.count)! > 20{
             message = "スポット名が文字数制限(20字)を超えています。\n"
         }
-        if (commentTextField.text?.count)! > 140{
+        if (commentTextView.text?.count)! > 140{
             message += "コメントが文字数制限(140字)を超えています。"
         }
         
@@ -221,7 +229,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             var nextSegue = ""
 
             spotModel.spot_name = nameTextField.text!
-            spotModel.comment = commentTextField.text!
+            spotModel.comment = commentTextView.text!
             spotModel.image_A = image1Path
             spotModel.image_B = image2Path
             spotModel.image_C = image3Path
@@ -489,6 +497,14 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        return true
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            commentTextView.resignFirstResponder()
+            return false
+        }
         return true
     }
     
