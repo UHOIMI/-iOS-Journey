@@ -44,6 +44,9 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
          spotNameList.append(fmt.string(from: _sd.date) + "：" + _sd.name)
          }*/
         
+        let format = DateFormatter()
+        format.dateFormat = "yyyy/MM/dd HH:mm "
+        
         let realm = try! Realm()
         let spotModelList = realm.objects(SpotModel.self)
         for _sm in spotModelList {
@@ -58,7 +61,8 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             listSpotModel.image_B = _sm.image_B
             listSpotModel.image_C = _sm.image_C
             spotDataList.append(listSpotModel)
-            spotNameList.append(_sm.spot_name)
+            //spotNameList.append(_sm.spot_name)
+            spotNameList.append(_sm.spot_name + "\n" + format.string(from: _sm.datetime))
             grayList.append(false)
         }
         
@@ -91,6 +95,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
             print("test:" + spotNameList[indexPath.row])
             cell.textLabel!.text = spotNameList[indexPath.row]
+            cell.textLabel?.numberOfLines = 0;
             print("userTableは通過")
             /*if changeColorRow == indexPath.row{
                 cell.textLabel?.textColor = UIColor.gray
@@ -121,7 +126,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             
             if(grayList[indexPath.row] == false){
             
-                selectSpotNameList.append(spotNameList[indexPath.row])
+                selectSpotNameList.append(String(selectSpotNameList.count + 1) + " : " +  spotNameList[indexPath.row])
                 selectSpotDataList.append(spotDataList[indexPath.row])
                 
                 let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
@@ -161,6 +166,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                 
                 userSpotTable.reloadData()
                 tableView.deleteRows(at: [indexPath], with: .fade)
+                selectSpotTable.reloadData()
             }
         }
     }

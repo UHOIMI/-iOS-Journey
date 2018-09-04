@@ -24,6 +24,9 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
 
         // Do any additional setup after loading the view.
         
+        let format = DateFormatter()
+        format.dateFormat = "yyyy/MM/dd HH:mm "
+        
         let realm = try! Realm()
         let spotModelList = realm.objects(SpotModel.self)
         for _sm in spotModelList {
@@ -38,7 +41,7 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
             listSpotModel.image_B = _sm.image_B
             listSpotModel.image_C = _sm.image_C
             spotDataList.append(listSpotModel)
-            spotNameList.append(_sm.spot_name)
+            spotNameList.append(_sm.spot_name + "\n" + format.string(from: _sm.datetime))
             
         }
         
@@ -59,6 +62,7 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SpotCell", for: indexPath)
+        cell.textLabel?.numberOfLines = 0;
         cell.textLabel!.text = spotNameList[indexPath.row]
         print("selectTableは通過")
         return cell
