@@ -171,7 +171,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             locationManager.delegate = self as CLLocationManagerDelegate
             locationManager.startUpdatingLocation()
         }
-        
+      
+        keyboardSettings()
         createTabBar()
     }
     
@@ -507,7 +508,72 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         }
         return true
     }
+  @objc func commitButtonTapped (){
+    self.view.endEditing(true)
+    self.resignFirstResponder()
+  }
+  func keyboardSettings(){
+    // 仮のサイズでツールバー生成
+    let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
+    kbToolBar.barStyle = UIBarStyle.default  // スタイルを設定
+    kbToolBar.sizeToFit()  // 画面幅に合わせてサイズを変更
+    // スペーサー
+    let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+    // 閉じるボタン
+    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.commitButtonTapped))
+    kbToolBar.items = [spacer, commitButton]
+    commentTextView.inputAccessoryView = kbToolBar
+  }
+  override func viewWillAppear(_ animated: Bool) {
     
+    super.viewWillAppear(animated)
+    self.configureObserver()
+    
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    
+    super.viewWillDisappear(animated)
+    self.removeObserver() // Notificationを画面が消えるときに削除
+  }
+  
+  // Notificationを設定
+  func configureObserver() {
+    
+    let notification = NotificationCenter.default
+    notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+  
+  // Notificationを削除
+  func removeObserver() {
+    
+    let notification = NotificationCenter.default
+    notification.removeObserver(self)
+  }
+  
+  // キーボードが現れた時に、画面全体をずらす。
+  @objc func keyboardWillShow(notification: Notification?) {
+    tabBar.isHidden = true
+    let rect = (notification?.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+    let duration: TimeInterval? = notification?.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double
+    UIView.animate(withDuration: duration!, animations: { () in
+      let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+      self.view.transform = transform
+      
+    })
+  }
+  
+  // キーボードが消えたときに、画面を戻す
+  @objc func keyboardWillHide(notification: Notification?) {
+    tabBar.isHidden = false
+    let duration: TimeInterval? = notification?.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? Double
+    UIView.animate(withDuration: duration!, animations: { () in
+      
+      self.view.transform = CGAffineTransform.identity
+    })
+  }
+  
     func createTabBar(){
         let width = self.view.frame.width
         let height = self.view.frame.height
