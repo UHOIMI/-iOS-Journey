@@ -48,6 +48,9 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
         marker.position = camera.target
         marker.map = mapView
         
+        spotCommentLabel.numberOfLines = 0
+        spotCommentLabel.sizeToFit()
+        
         self.view.addSubview(mapView)
         
         if CLLocationManager.locationServicesEnabled() {
