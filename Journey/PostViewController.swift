@@ -373,6 +373,12 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
+        self.globalVar.planArea = ""
+        self.globalVar.planPrice = ""
+        self.globalVar.planText = ""
+        self.globalVar.planTitle = ""
+        self.globalVar.selectSpot = ["スポットを追加"]
+        self.globalVar.spotDataList = []
       }
     }.resume()
   }
