@@ -203,8 +203,32 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     subViewHeight.constant = CGFloat(viewHeight)
     subView.frame = CGRect(x:0, y: 0, width:375, height:viewHeight)
   }
+  func showAlert(title:String,message:String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    let okAction = UIAlertAction(title: "設定", style: UIAlertActionStyle.default){(action: UIAlertAction) in
+      let url = NSURL(string: UIApplicationOpenSettingsURLString)!
+      //UIApplication.shared.openURL(url as URL)
+      UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+    }
+    let cancelButton = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler: nil)
+    alert.addAction(cancelButton)
+    alert.addAction(okAction)
+    self.present(alert, animated: true, completion: nil)
+  }
   
   @IBAction func tappedPostButton(_ sender: Any) {
+    let transportationString = transportation.reduce("") { $0 + String($1) }
+    if(titleTextField.text! == ""){
+      showAlert(title: "プラン名が入力されていません", message: "プラン名を入力してください")
+    }else if(titleTextField.text?.count == 21){
+      showAlert(title: "プラン名が20文字を超えています", message: "文字数を20文字以内にしてください")
+    }else if(globalVar.spotDataList.count == 0){
+      showAlert(title: "スポットが登録されていません", message: "スポットを登録してください")
+    }else if(transportationString == "0,0,0,0,0,0,0"){
+      showAlert(title: "交通手段が選択されていません", message: "交通手段を1つ以上選択してください")
+    }else if(pickerTextField.text! == ""){
+      showAlert(title: "金額が選択されていません", message: "金額を選択してください")
+    }
     if(globalVar.spotDataList.count >= 1 && titleTextField.text != "" && prefecturesTextField.text != "" && pickerTextField.text != ""){
       globalVar.planTitle = titleTextField.text!
       globalVar.planArea = prefecturesTextField.text!
