@@ -105,6 +105,10 @@ class GlobalVar{
   
   var selectSpot:Array = ["スポットを追加"]
   var spotDataList : [ListSpotModel] = []
+  var planTitle : String = ""
+  var planArea : String = ""
+  var planText : String = ""
+  var planPrice : String = ""
   
 }
 
