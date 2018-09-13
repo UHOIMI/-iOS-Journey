@@ -29,7 +29,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
  
   var transportation = ["0,","0,","0,","0,","0,","0,","0"]
   
-  let ipAddress = "192.168.100.102"
+  let ipAddress = "172.20.10.2"
   
   var imageFlag1 = 0
   var imageFlag2 = 0
@@ -126,6 +126,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       self.viewHeight -= 43
       self.subViewHeight.constant = CGFloat(self.viewHeight)
       self.subView.frame = CGRect(x:0, y: 0, width:375, height:self.viewHeight)
+      if(indexPath.row == 21){
+        self.globalVar.selectSpot[0] = "スポットを登録"
+      }
     }
     deleteButton.backgroundColor = UIColor.red
     return [deleteButton]
@@ -205,14 +208,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   func showAlert(title:String,message:String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    let okAction = UIAlertAction(title: "設定", style: UIAlertActionStyle.default){(action: UIAlertAction) in
-      let url = NSURL(string: UIApplicationOpenSettingsURLString)!
-      //UIApplication.shared.openURL(url as URL)
-      UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
-    }
-    let cancelButton = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler: nil)
+    let cancelButton = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
     alert.addAction(cancelButton)
-    alert.addAction(okAction)
     self.present(alert, animated: true, completion: nil)
   }
   
@@ -222,6 +219,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       showAlert(title: "プラン名が入力されていません", message: "プラン名を入力してください")
     }else if(titleTextField.text?.count == 21){
       showAlert(title: "プラン名が20文字を超えています", message: "文字数を20文字以内にしてください")
+    }else if(prefecturesTextField.text == ""){
+      showAlert(title: "都道府県が選択されていません", message: "都道府県を選択してください")
     }else if(globalVar.spotDataList.count == 0){
       showAlert(title: "スポットが登録されていません", message: "スポットを登録してください")
     }else if(transportationString == "0,0,0,0,0,0,0"){
