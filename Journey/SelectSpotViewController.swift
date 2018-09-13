@@ -33,6 +33,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     var changeColorRow = -1
     
     let postViewController = PostViewController()
+    let globalVar = GlobalVar.shared
     
     @IBOutlet weak var selectSpotTable: UITableView!
     @IBOutlet weak var userSpotTable: UITableView!
@@ -89,7 +90,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         
         if tableView.tag == 1 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
-            cell.textLabel!.text = String(selectSpotNameList.count + 1) + " : " + selectSpotNameList[indexPath.row]
+            cell.textLabel!.text = String(globalVar.selectCount) + " : " + selectSpotNameList[indexPath.row]
             let selectName : String = cell.textLabel!.text!
             let pt = "[0-9]* : (.*)"
             
@@ -110,7 +111,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                     
                     matchStrings.append(result)
                 }
-                cell.textLabel?.text = String(indexPath.row + 1) + " : " + matchStrings[0]
+                cell.textLabel?.text = String(globalVar.selectCount) + " : " + matchStrings[0]
                 
             } catch {
                 print("error: getMatchStrings")
@@ -159,6 +160,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                 //selectSpotNameList.append(String(selectSpotNameList.count + 1) + " : " +  spotNameList[indexPath.row])
                 selectSpotNameList.append(spotNameList[indexPath.row])
                 selectSpotDataList.append(spotDataList[indexPath.row])
+                globalVar.selectCount += 1
                 
                 let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
                 selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
@@ -194,6 +196,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                 
                 selectSpotDataList.remove(at: indexPath.row)
                 selectSpotNameList.remove(at: indexPath.row)
+                globalVar.selectCount -= 1
                 
                 userSpotTable.reloadData()
                 tableView.deleteRows(at: [indexPath], with: .fade)

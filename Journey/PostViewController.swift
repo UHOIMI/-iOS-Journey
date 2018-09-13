@@ -84,7 +84,11 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
-    cell.textLabel?.text = globalVar.selectSpot[indexPath.row]
+    if(indexPath.row == 0){
+      cell.textLabel?.text = globalVar.selectSpot[indexPath.row]
+    }else{
+      cell.textLabel?.text = String(indexPath.row) + " : " + globalVar.selectSpot[indexPath.row]
+    }
     
     return(cell)
   }

@@ -109,6 +109,7 @@ class GlobalVar{
   var planArea : String = ""
   var planText : String = ""
   var planPrice : String = ""
+  var selectCount : Int = 0
   
 }
 
