@@ -29,11 +29,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
  
   var transportation = ["0,","0,","0,","0,","0,","0,","0"]
   
-  let ipAddress = "192.168.100.102"
-  var planTitle = ""
-  var planArea = ""
-  var planText = ""
-  var planPrice = ""
+  let ipAddress = "172.20.10.2"
   
   var imageFlag1 = 0
   var imageFlag2 = 0
@@ -45,6 +41,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   var spotList : [Int] = []
   var postSpotCount = 0
+  
+  let color = UIColor.blue
   
   var camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
 
@@ -86,7 +84,11 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
-    cell.textLabel?.text = globalVar.selectSpot[indexPath.row]
+    if(indexPath.row == 0){
+      cell.textLabel?.text = globalVar.selectSpot[indexPath.row]
+    }else{
+      cell.textLabel?.text = String(indexPath.row) + " : " + globalVar.selectSpot[indexPath.row]
+    }
     
     return(cell)
   }
@@ -94,6 +96,10 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func tableView(_ table: UITableView,didSelectRowAt indexPath: IndexPath) {
     let selectedNumber = globalVar.selectSpot[indexPath.row]
     if(selectedNumber == "スポットを追加" && globalVar.selectSpot.count < 21){
+      globalVar.planTitle = titleTextField.text!
+      globalVar.planArea = prefecturesTextField.text!
+      globalVar.planPrice = pickerTextField.text!
+      globalVar.planText = textView.text!
       performSegue(withIdentifier: "toSelectSpotView", sender: nil)
     }else if(selectedNumber == "スポットを追加" && globalVar.selectSpot.count >= 21){
       globalVar.selectSpot[0] = "これ以上追加できません"
@@ -124,6 +130,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       self.viewHeight -= 43
       self.subViewHeight.constant = CGFloat(self.viewHeight)
       self.subView.frame = CGRect(x:0, y: 0, width:375, height:self.viewHeight)
+      if(indexPath.row == 21){
+        self.globalVar.selectSpot[0] = "スポットを登録"
+      }
     }
     deleteButton.backgroundColor = UIColor.red
     return [deleteButton]
@@ -150,11 +159,26 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       }
     }
     self.subView.addSubview(mapView)
-    titleTextField.placeholder = "プラン名を入力"
-    prefecturesTextField.placeholder = "都道府県を選択してください"
-    pickerTextField.placeholder = "金額を選択してください"
-    textView.text = ""
-    
+    if(globalVar.planTitle != ""){
+      titleTextField.text = globalVar.planTitle
+    }else{
+      titleTextField.placeholder = "プラン名を入力"
+    }
+    if(globalVar.planArea != ""){
+      prefecturesTextField.text = globalVar.planArea
+    }else{
+      prefecturesTextField.placeholder = "都道府県を選択してください"
+    }
+    if(globalVar.planPrice != ""){
+      pickerTextField.text = globalVar.planPrice
+    }else{
+      pickerTextField.placeholder = "金額を選択してください"
+    }
+    if(globalVar.planText != ""){
+      textView.text = globalVar.planText
+    }else{
+      textView.text = ""
+    }
     spotTable.delegate = self
     spotTable.dataSource = self
     tableHeight.constant = CGFloat(height)
@@ -186,14 +210,35 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     subViewHeight.constant = CGFloat(viewHeight)
     subView.frame = CGRect(x:0, y: 0, width:375, height:viewHeight)
   }
+  func showAlert(title:String,message:String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    let cancelButton = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+    alert.addAction(cancelButton)
+    self.present(alert, animated: true, completion: nil)
+  }
   
   @IBAction func tappedPostButton(_ sender: Any) {
+    let transportationString = transportation.reduce("") { $0 + String($1) }
+    if(titleTextField.text! == ""){
+      showAlert(title: "プラン名が入力されていません", message: "プラン名を入力してください")
+    }else if(titleTextField.text?.count == 21){
+      showAlert(title: "プラン名が20文字を超えています", message: "文字数を20文字以内にしてください")
+    }else if(prefecturesTextField.text == ""){
+      showAlert(title: "都道府県が選択されていません", message: "都道府県を選択してください")
+    }else if(globalVar.spotDataList.count == 0){
+      showAlert(title: "スポットが登録されていません", message: "スポットを登録してください")
+    }else if(transportationString == "0,0,0,0,0,0,0"){
+      showAlert(title: "交通手段が選択されていません", message: "交通手段を1つ以上選択してください")
+    }else if(pickerTextField.text! == ""){
+      showAlert(title: "金額が選択されていません", message: "金額を選択してください")
+    }
     if(globalVar.spotDataList.count >= 1 && titleTextField.text != "" && prefecturesTextField.text != "" && pickerTextField.text != ""){
-      planTitle = titleTextField.text!
-      planArea = prefecturesTextField.text!
-      planPrice = pickerTextField.text!
-      planTitle = textView.text!
+      globalVar.planTitle = titleTextField.text!
+      globalVar.planArea = prefecturesTextField.text!
+      globalVar.planPrice = pickerTextField.text!
+      globalVar.planText = textView.text!
       postSpot()
+      self.performSegue(withIdentifier: "toStartView", sender: nil)
     }
   }
 
@@ -298,45 +343,45 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     var str : String = ""
     switch spotList.count {
     case 1:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=\(planText)&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea)&spot_id_a=\(spotList[0])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])"
     case 2:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])"
     case 3:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])"
     case 4:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])"
     case 5:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])"
     case 6:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])"
     case 7:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])"
     case 8:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])"
     case 9:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])"
     case 10:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])"
     case 11:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])"
     case 12:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])"
     case 13:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])"
     case 14:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])"
     case 15:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])"
     case 16:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])"
     case 17:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])"
     case 18:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])&spot_id_r=\(spotList[17])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])&spot_id_r=\(spotList[17])"
     case 19:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])&spot_id_r=\(spotList[17])&spot_id_s=\(spotList[18])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])&spot_id_r=\(spotList[17])&spot_id_s=\(spotList[18])"
     case 20:
-      str = "user_id=1&plan_title=\(planTitle))&plan_comment=planText&transportation=\(transportationString)&price=\(planPrice)&area=\(planArea))&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])&spot_id_r=\(spotList[17])&spot_id_s=\(spotList[18])&spot_id_t=\(spotList[19])"
+      str = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)&spot_id_a=\(spotList[0])&spot_id_b=\(spotList[1])&spot_id_c=\(spotList[2])&spot_id_d=\(spotList[3])&spot_id_e=\(spotList[4])&spot_id_f=\(spotList[5])&spot_id_g=\(spotList[6])&spot_id_h=\(spotList[7])&spot_id_i=\(spotList[8])&spot_id_j=\(spotList[9])&spot_id_k=\(spotList[10])&spot_id_l=\(spotList[11])&spot_id_m=\(spotList[12])&spot_id_n=\(spotList[13])&spot_id_o=\(spotList[14])&spot_id_p=\(spotList[15])&spot_id_q=\(spotList[16])&spot_id_r=\(spotList[17])&spot_id_s=\(spotList[18])&spot_id_t=\(spotList[19])"
     default:
       return
     }
@@ -355,7 +400,12 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
-        self.performSegue(withIdentifier: "toStartView", sender: nil)
+        self.globalVar.planArea = ""
+        self.globalVar.planPrice = ""
+        self.globalVar.planText = ""
+        self.globalVar.planTitle = ""
+        self.globalVar.selectSpot = ["スポットを追加"]
+        self.globalVar.spotDataList = []
       }
     }.resume()
   }
