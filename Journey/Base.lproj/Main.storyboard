@@ -347,7 +347,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kv4-Qy-aPb">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKk-8e-Now">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKk-8e-Now" userLabel="SubView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="700"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eEL-XJ-B7g">
@@ -468,10 +468,13 @@
                     <connections>
                         <outlet property="commentTextView" destination="OAX-sI-pMy" id="ltb-5b-43M"/>
                         <outlet property="mapButton" destination="Frx-nU-z6T" id="hEf-Eu-0rw"/>
+                        <outlet property="mapPositionView" destination="eEL-XJ-B7g" id="NEA-K5-XeB"/>
                         <outlet property="nameTextField" destination="Ie2-Xn-c53" id="MEB-qH-Lbq"/>
+                        <outlet property="scrollView" destination="kv4-Qy-aPb" id="g66-eF-1EY"/>
                         <outlet property="spotImageView1" destination="BaB-6y-ASE" id="0M4-n8-Rpn"/>
                         <outlet property="spotImageView2" destination="weg-k8-Eyt" id="5GO-8d-o1z"/>
                         <outlet property="spotImageView3" destination="VlC-eX-svm" id="gWQ-cZ-7qv"/>
+                        <outlet property="subView" destination="dKk-8e-Now" id="BJF-Xk-sSm"/>
                         <segue destination="wbt-C5-9Ws" kind="show" identifier="changeSpotListView" id="q0P-y1-Ch3"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="j0d-eN-8yJ"/>
                     </connections>
@@ -787,11 +790,10 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wPv-3s-Ppv"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="TeA-Xz-GIE"/>
         <segue reference="PgR-1F-fd2"/>
-        <segue reference="6mO-Qw-wNq"/>
+        <segue reference="j0d-eN-8yJ"/>
         <segue reference="Ngc-W0-UHN"/>
     </inferredMetricsTieBreakers>
 </document>
