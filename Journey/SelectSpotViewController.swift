@@ -35,6 +35,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     let postViewController = PostViewController()
     let globalVar = GlobalVar.shared
     var tableFlag = 0
+    var changePostViewFlag = 0
     
     @IBOutlet weak var selectSpotTable: UITableView!
     @IBOutlet weak var userSpotTable: UITableView!
@@ -172,7 +173,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             if(grayList[indexPath.row] == false){
             
                 //selectSpotNameList.append(String(selectSpotNameList.count + 1) + " : " +  spotNameList[indexPath.row])
-              if(selectSpotNameList.count + globalVar.selectCount > 19){
+              if(selectSpotNameList.count + globalVar.selectCount > 19 || globalVar.selectSpot.count >= 21){
                 let alert = UIAlertController(title: top, message: "これ以上スポットを追加できません", preferredStyle: UIAlertControllerStyle.alert)
                 let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
                 alert.addAction(okayButton)
@@ -345,19 +346,33 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             alert.addAction(okayButton)
             present(alert, animated: true, completion: nil)
             return
+        }else if(globalVar.selectSpot.count >= 21){
+          let alert = UIAlertController(title: "すでに20件スポットが登録されています", message: "前の画面でスポットを削除してください", preferredStyle: UIAlertControllerStyle.alert)
+          let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler:{(action: UIAlertAction!) in
+            //アラートが消えるのと画面遷移が重ならないように0.5秒後に画面遷移するようにしてる
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+              self.changePostViewFlag = 1
+              self.performSegue(withIdentifier: "changePostView", sender: nil)
+            }
+          })
+          alert.addAction(okayButton)
+          present(alert, animated: true, completion: nil)
+          return
         }
+        changePostViewFlag = 0
         globalVar.selectCount += selectSpotNameList.count
         self.performSegue(withIdentifier: "changePostView", sender:selectSpotDataList)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "changePostView"){
+          if(changePostViewFlag == 0){
             print(selectSpotDataList)
             print(selectSpotNameList)
             for i in 0 ... selectSpotNameList.count - 1{
-                postViewController.count += 1
                 postViewController.updateTableView(name: selectSpotNameList[i], list:selectSpotDataList[i])
             }
+          }
         }
     }
     
