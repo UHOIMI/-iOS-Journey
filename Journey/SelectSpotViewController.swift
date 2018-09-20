@@ -34,6 +34,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     
     let postViewController = PostViewController()
     let globalVar = GlobalVar.shared
+    var tableFlag = 0
     
     @IBOutlet weak var selectSpotTable: UITableView!
     @IBOutlet weak var userSpotTable: UITableView!
@@ -88,9 +89,15 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if tableView.tag == 1 {
+        if tableView.tag == 1{
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
-            cell.textLabel!.text = String(globalVar.selectCount) + " : " + selectSpotNameList[indexPath.row]
+            if(tableFlag == 0){
+              if(globalVar.selectCount != 0){
+                cell.textLabel!.text = String(globalVar.selectCount + selectSpotNameList.count) + " : " + selectSpotNameList[indexPath.row]
+              }else{
+                cell.textLabel!.text = String(selectSpotNameList.count) + " : " + selectSpotNameList[indexPath.row]
+              }
+            }
             let selectName : String = cell.textLabel!.text!
             let pt = "[0-9]* : (.*)"
             
@@ -111,7 +118,13 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                     
                     matchStrings.append(result)
                 }
-                cell.textLabel?.text = String(globalVar.selectCount) + " : " + matchStrings[0]
+              if(tableFlag == 0){
+                if(globalVar.selectCount != 0){
+                  cell.textLabel!.text = String(globalVar.selectCount + selectSpotNameList.count) + " : " + selectSpotNameList[indexPath.row]
+                }else{
+                  cell.textLabel!.text = String(selectSpotNameList.count) + " : " + selectSpotNameList[indexPath.row]
+                }
+              }
                 
             } catch {
                 print("error: getMatchStrings")
@@ -121,6 +134,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             //let ans = selectName.pregReplace(pattern: pt, with: "")
             //selectName.match(pattern: "^([0-9]*):([^/]+)", group: 2)
             print("selectTableは通過")
+            tableFlag = 1
             return cell
         }else if tableView.tag == 2 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
@@ -158,15 +172,23 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             if(grayList[indexPath.row] == false){
             
                 //selectSpotNameList.append(String(selectSpotNameList.count + 1) + " : " +  spotNameList[indexPath.row])
+              if(selectSpotNameList.count + globalVar.selectCount > 19){
+                let alert = UIAlertController(title: top, message: "これ以上スポットを追加できません", preferredStyle: UIAlertControllerStyle.alert)
+                let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(okayButton)
+                present(alert, animated: true, completion: nil)
+              }else{
                 selectSpotNameList.append(spotNameList[indexPath.row])
                 selectSpotDataList.append(spotDataList[indexPath.row])
-                globalVar.selectCount += 1
+                tableFlag = 0
+              
                 
                 let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
                 selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
                 
                 grayList[indexPath.row] = true
                 tableView.reloadData()
+              }
                 
             }
             
@@ -193,10 +215,10 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                         grayList[i] = false
                     }
                 }
-                
+              
                 selectSpotDataList.remove(at: indexPath.row)
                 selectSpotNameList.remove(at: indexPath.row)
-                globalVar.selectCount -= 1
+                tableFlag = 0
                 
                 userSpotTable.reloadData()
                 tableView.deleteRows(at: [indexPath], with: .fade)
@@ -324,6 +346,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             present(alert, animated: true, completion: nil)
             return
         }
+        globalVar.selectCount += selectSpotNameList.count
         self.performSegue(withIdentifier: "changePostView", sender:selectSpotDataList)
     }
     

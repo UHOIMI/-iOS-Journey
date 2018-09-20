@@ -238,6 +238,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       globalVar.planArea = prefecturesTextField.text!
       globalVar.planPrice = pickerTextField.text!
       globalVar.planText = textView.text!
+      globalVar.selectCount = 0
       postSpot()
       self.performSegue(withIdentifier: "toStartView", sender: nil)
     }
