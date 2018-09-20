@@ -18,22 +18,6 @@ import Photos
 class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
       private var tabBar:TabBar!
-
-    /*override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-        createTabBar()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }*/
-    
-
-    /****************/
     
     var lat:Double = 0
     var lng:Double = 0
@@ -59,9 +43,11 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     var selectImgNum = 1
     
     @IBOutlet weak var mapButton: UIBarButtonItem!
+    @IBOutlet weak var subView: UIView!
+    @IBOutlet weak var mapPositionView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var nameTextField: UITextField!
-    //@IBOutlet weak var commentTextField: UITextField!
     @IBOutlet weak var commentTextView: UITextView!
     
     @IBOutlet weak var spotImageView1: UIImageView!
@@ -80,7 +66,13 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.commentTextView.returnKeyType = UIReturnKeyDone;
+        print("画面高さ")
+        print(myFrameSize.height)
+        
+        if myFrameSize.height > 650{
+            //scrollViewsetScrollEnabled
+            scrollView.isScrollEnabled = false
+        }
         
         commentTextView.layer.borderColor = UIColor.gray.cgColor
         commentTextView.layer.borderWidth = 0.5
@@ -157,13 +149,16 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         }
         
         let camera = GMSCameraPosition.camera(withLatitude: spotData.latitude,longitude:spotData.longitude, zoom:15)
-        let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)
+        /*let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)*/
+        let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:0,width:myFrameSize.width,height:mapPositionView.layer.bounds.height),camera:camera)
         let marker = GMSMarker()
         
         marker.icon = UIImage(named:"thumbs-up")
         marker.map = mapView
         
-        self.view.addSubview(mapView)
+        //self.view.addSubview(mapView)
+        self.subView.addSubview(mapView)
+
         
         if CLLocationManager.locationServicesEnabled() {
             print("位置情報通過")
@@ -289,8 +284,9 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         lng = newLocation.coordinate.longitude
         
         let camera = GMSCameraPosition.camera(withLatitude: latitude,longitude:longitude, zoom:15)
-        let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)
-        self.view.addSubview(mapView)
+        let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:0,width:myFrameSize.width,height:mapPositionView.layer.bounds.height),camera:camera)
+        
+        self.subView.addSubview(mapView)
         
         let marker: GMSMarker = GMSMarker()
         
@@ -320,31 +316,6 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        
-        /*let tapGestureRecognizer = UITapGestureRecognizer(target: self,action: #selector(imageTapped))
-        
-        for touch: UITouch in touches {
-            let tag = touch.view!.tag
-            switch tag {
-            case 1:
-                spotImageView1!.isUserInteractionEnabled = true
-                spotImageView1!.addGestureRecognizer(tapGestureRecognizer)
-                self.view.addSubview(spotImageView1!)
-                break
-            case 2:
-                spotImageView2!.isUserInteractionEnabled = true
-                spotImageView2!.addGestureRecognizer(tapGestureRecognizer)
-                self.view.addSubview(spotImageView2!)
-                break
-            case 3:
-                spotImageView3!.isUserInteractionEnabled = true
-                spotImageView3!.addGestureRecognizer(tapGestureRecognizer)
-                self.view.addSubview(spotImageView3!)
-                break
-            default:
-                break
-            }
-        }*/
         
         for touch: UITouch in touches {
             let tag = touch.view!.tag
@@ -389,22 +360,6 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     
     @objc
     fileprivate func imageTapped(){
-        /*checkPermission()
-        
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
-            /*print("present Start")
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.allowsEditing = true
-            present(imagePicker, animated: true, completion: nil)*/
-            let ipc = UIImagePickerController()
-            ipc.delegate = self
-            ipc.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            //編集を可能にする
-            ipc.allowsEditing = true
-            self.present(ipc,animated: true, completion: nil)
-        }*/
     }
     
     // アルバム(Photo liblary)の閲覧権限の確認をするメソッド
@@ -431,30 +386,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         }
     }
     
-    /*func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        
-        // 選択した画像・写真を取得し、imageViewに表示
-        if let info = editingInfo, let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage{
-            spotImageView1.image = editedImage
-        }else{
-            spotImageView1.image = image
-        }
-        
-        // フォトライブラリの画像・写真選択画面を閉じる
-        picker.dismiss(animated: true, completion: nil)
-    }*/
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        //編集機能を表示させたい場合
-        //UIImagePickerControllerEditedImageはallowsEditingをYESにした場合に用いる。
-        //allowsEditingで指定した範囲を画像として取得する事ができる。
-        //UIImagePickerControllerOriginalImageはallowsEditingをYESにしていたとしても編集機能は表示されない。
-        /*if info[UIImagePickerControllerOriginalImage] != nil {
-            let image = info[UIImagePickerControllerEditedImage] as! UIImage
-            //画像を設定する
-            imageView.image = image
-        }*/
         
         //編集機能を表示させない場合
         let image = info[UIImagePickerControllerOriginalImage] as? UIImage
@@ -479,22 +411,6 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         
         dismiss(animated: true,completion: nil)
     }
-    
-    /*@IBAction func tappedSelectSpotButton(_ sender: Any) {
-        goToSelectSpot()
-    }
-    
-    func goToSelectSpot(){
-        self.performSegue(withIdentifier: "goSelectSpot", sender:spotDataList)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nextViewController = segue.destination as! SelectSpotViewController
-        nextViewController.spotDataList = sender as! [ListSpotModel]
-    }*/
-    
-    
-    /****************/
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
