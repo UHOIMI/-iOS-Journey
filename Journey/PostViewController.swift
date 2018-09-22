@@ -126,13 +126,12 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       tableView.deleteRows(at: [indexPath], with: .fade)
       self.height -= 43
       self.tableHeight.constant = CGFloat(self.height)
+      self.globalVar.selectSpot[0] = "スポットを追加"
+      self.globalVar.selectCount -= 1
       self.spotTable.reloadData()
       self.viewHeight -= 43
       self.subViewHeight.constant = CGFloat(self.viewHeight)
       self.subView.frame = CGRect(x:0, y: 0, width:375, height:self.viewHeight)
-      if(indexPath.row == 21){
-        self.globalVar.selectSpot[0] = "スポットを登録"
-      }
     }
     deleteButton.backgroundColor = UIColor.red
     return [deleteButton]
