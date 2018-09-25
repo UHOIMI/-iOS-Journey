@@ -209,8 +209,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         
         
         if message != "" {
-            let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertControllerStyle.alert)
-            let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
+            let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertController.Style.alert)
+            let okayButton = UIAlertAction(title: okText, style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okayButton)
             present(alert, animated: true, completion: nil)
             return
@@ -302,13 +302,13 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     }
     func showAlert() {
         print("位置情報通過３")
-        let alert = UIAlertController(title: "GPSがオフになっています", message: "設定を押して位置情報を許可してください", preferredStyle: UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title: "設定", style: UIAlertActionStyle.default){(action: UIAlertAction) in
-            let url = NSURL(string: UIApplicationOpenSettingsURLString)!
+        let alert = UIAlertController(title: "GPSがオフになっています", message: "設定を押して位置情報を許可してください", preferredStyle: UIAlertController.Style.alert)
+        let okAction = UIAlertAction(title: "設定", style: UIAlertAction.Style.default){(action: UIAlertAction) in
+            let url = NSURL(string: UIApplication.openSettingsURLString)!
             //UIApplication.shared.openURL(url as URL)
-            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url as URL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         }
-        let cancelButton = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler: nil)
+        let cancelButton = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: nil)
         alert.addAction(cancelButton)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
@@ -347,7 +347,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
                  present(imagePicker, animated: true, completion: nil)*/
                 let ipc = UIImagePickerController()
                 ipc.delegate = self
-                ipc.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                ipc.sourceType = UIImagePickerController.SourceType.photoLibrary
                 //編集を可能にする
                 ipc.allowsEditing = false
                 self.present(ipc,animated: true, completion: nil)
@@ -386,11 +386,14 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
         //編集機能を表示させない場合
-        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        let imageUrl = info[UIImagePickerControllerReferenceURL] as? NSURL
+        let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage
+        let imageUrl = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.referenceURL)] as? NSURL
         
         switch selectImgNum {
         case 1:
@@ -434,9 +437,9 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     kbToolBar.barStyle = UIBarStyle.default  // スタイルを設定
     kbToolBar.sizeToFit()  // 画面幅に合わせてサイズを変更
     // スペーサー
-    let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+    let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
     // 閉じるボタン
-    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.commitButtonTapped))
+    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(self.commitButtonTapped))
     kbToolBar.items = [spacer, commitButton]
     commentTextView.inputAccessoryView = kbToolBar
   }
@@ -457,8 +460,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
   func configureObserver() {
     
     let notification = NotificationCenter.default
-    notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-    notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
   }
   
   // Notificationを削除
@@ -471,8 +474,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
   // キーボードが現れた時に、画面全体をずらす。
   @objc func keyboardWillShow(notification: Notification?) {
     tabBar.isHidden = true
-    let rect = (notification?.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-    let duration: TimeInterval? = notification?.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double
+    let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+    let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
     UIView.animate(withDuration: duration!, animations: { () in
       let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
       self.view.transform = transform
@@ -483,7 +486,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
   // キーボードが消えたときに、画面を戻す
   @objc func keyboardWillHide(notification: Notification?) {
     tabBar.isHidden = false
-    let duration: TimeInterval? = notification?.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? Double
+    let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
     UIView.animate(withDuration: duration!, animations: { () in
       
       self.view.transform = CGAffineTransform.identity
@@ -512,10 +515,10 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         //ボタンを押した時の色
         tabBar.tintColor = UIColor.black
         //ボタンを生成
-        let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 1)
+        let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 1)
         let search:UITabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 2)
         let favorites:UITabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 3)
-        let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 4)
+        let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 4)
         //ボタンをタブバーに配置する
         tabBar.items = [home,search,favorites,setting]
         //デリゲートを設定する
@@ -538,4 +541,19 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
         }
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

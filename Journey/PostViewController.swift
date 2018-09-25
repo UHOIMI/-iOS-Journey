@@ -83,7 +83,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
+    let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")
     if(indexPath.row == 0){
       cell.textLabel?.text = globalVar.selectSpot[indexPath.row]
     }else{
@@ -210,8 +210,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     subView.frame = CGRect(x:0, y: 0, width:375, height:viewHeight)
   }
   func showAlert(title:String,message:String) {
-    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    let cancelButton = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+    let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
     alert.addAction(cancelButton)
     self.present(alert, animated: true, completion: nil)
   }
@@ -393,9 +393,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     kbToolBar.barStyle = UIBarStyle.default  // スタイルを設定
     kbToolBar.sizeToFit()  // 画面幅に合わせてサイズを変更
     // スペーサー
-    let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+    let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
     // 閉じるボタン
-    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.commitButtonTapped))
+    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(self.commitButtonTapped))
     kbToolBar.items = [spacer, commitButton]
     textView.inputAccessoryView = kbToolBar
   }
@@ -417,8 +417,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func configureObserver() {
     
     let notification = NotificationCenter.default
-    notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-    notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
   }
   
   // Notificationを削除
@@ -431,8 +431,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   // キーボードが現れた時に、画面全体をずらす。
   @objc func keyboardWillShow(notification: Notification?) {
     tabBar.isHidden = true
-    let rect = (notification?.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-    let duration: TimeInterval? = notification?.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double
+    let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+    let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
     UIView.animate(withDuration: duration!, animations: { () in
       let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
       self.view.transform = transform
@@ -443,7 +443,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   // キーボードが消えたときに、画面を戻す
   @objc func keyboardWillHide(notification: Notification?) {
     tabBar.isHidden = false
-    let duration: TimeInterval? = notification?.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? Double
+    let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
     UIView.animate(withDuration: duration!, animations: { () in
       
       self.view.transform = CGAffineTransform.identity
@@ -478,10 +478,10 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     //ボタンを押した時の色
     tabBar.tintColor = UIColor.black
     //ボタンを生成
-    let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 1)
+    let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 1)
     let search:UITabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 2)
     let favorites:UITabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 3)
-    let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 4)
+    let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 4)
     //ボタンをタブバーに配置する
     tabBar.items = [home,search,favorites,setting]
     //デリゲートを設定する
@@ -518,71 +518,71 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         switch tag {
         case .action1:
           if(imageFlag1 == 0){
-            button.setImage(UIImage(named: "s_walk_on.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_walk_on.png"), for:UIControl.State())
             imageFlag1 = 1
             transportation[0] = "1,"
           }else{
-            button.setImage(UIImage(named: "s_walk.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_walk.png"), for:UIControl.State())
             imageFlag1 = 0
             transportation[0] = "0,"
           }
         case .action2:
           if(imageFlag2 == 0){
-            button.setImage(UIImage(named: "s_bicycle_on.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_bicycle_on.png"), for:UIControl.State())
             imageFlag2 = 1
             transportation[1] = "1,"
           }else{
-            button.setImage(UIImage(named: "s_bicycle.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_bicycle.png"), for:UIControl.State())
             imageFlag1 = 0
             transportation[1] = "0,"
           }
         case .action3:
           if(imageFlag1 == 0){
-            button.setImage(UIImage(named: "s_car_on.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_car_on.png"), for:UIControl.State())
             imageFlag1 = 1
             transportation[2] = "1,"
           }else{
-            button.setImage(UIImage(named: "s_car.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_car.png"), for:UIControl.State())
             imageFlag1 = 0
             transportation[2] = "0,"
           }
         case .action4:
           if(imageFlag1 == 0){
-            button.setImage(UIImage(named: "s_bus_on.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_bus_on.png"), for:UIControl.State())
             imageFlag1 = 1
             transportation[3] = "1,"
           }else{
-            button.setImage(UIImage(named: "s_bus.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_bus.png"), for:UIControl.State())
             imageFlag1 = 0
             transportation[3] = "0,"
           }
         case .action5:
           if(imageFlag1 == 0){
-            button.setImage(UIImage(named: "s_train_on.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_train_on.png"), for:UIControl.State())
             imageFlag1 = 1
             transportation[4] = "1,"
           }else{
-            button.setImage(UIImage(named: "s_train.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_train.png"), for:UIControl.State())
             imageFlag1 = 0
             transportation[4] = "0,"
           }
         case .action6:
           if(imageFlag1 == 0){
-            button.setImage(UIImage(named: "s_airplane_on.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_airplane_on.png"), for:UIControl.State())
             imageFlag1 = 1
             transportation[5] = "1,"
           }else{
-            button.setImage(UIImage(named: "s_airplane.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_airplane.png"), for:UIControl.State())
             imageFlag1 = 0
             transportation[5] = "0,"
           }
         case .action7:
           if(imageFlag1 == 0){
-            button.setImage(UIImage(named: "s_boat_on.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_boat_on.png"), for:UIControl.State())
             imageFlag1 = 1
             transportation[6] = "1"
           }else{
-            button.setImage(UIImage(named: "s_boat.png"), for:UIControlState())
+            button.setImage(UIImage(named: "s_boat.png"), for:UIControl.State())
             imageFlag1 = 0
             transportation[6] = "0"
           }

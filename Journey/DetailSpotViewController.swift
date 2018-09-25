@@ -149,10 +149,10 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
         //ボタンを押した時の色
         tabBar.tintColor = UIColor.black
         //ボタンを生成
-        let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 1)
+        let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 1)
         let search:UITabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 2)
         let favorites:UITabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 3)
-        let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 4)
+        let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 4)
         //ボタンをタブバーに配置する
         tabBar.items = [home,search,favorites,setting]
         //デリゲートを設定する
