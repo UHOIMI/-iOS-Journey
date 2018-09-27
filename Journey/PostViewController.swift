@@ -123,6 +123,18 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
       self.globalVar.selectSpot.remove(at: indexPath.row)
       self.globalVar.spotDataList.remove(at: indexPath.row - 1)
+      if(self.globalVar.spotDataList.count != 0){
+        self.camera = GMSCameraPosition.camera(withLatitude: self.globalVar.spotDataList[0].latitude,longitude:self.globalVar.spotDataList[0].longitude, zoom:15)
+      }
+      let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:0,width:self.myFrameSize.width,height:300),camera:self.camera)
+      if(self.globalVar.spotDataList.count != 0){
+        for i in 0 ... self.globalVar.spotDataList.count - 1{
+          self.makerList.append(GMSMarker())
+          self.makerList[i].position = CLLocationCoordinate2D(latitude: self.globalVar.spotDataList[i].latitude, longitude: self.globalVar.spotDataList[i].longitude)
+          self.makerList[i].map = mapView
+        }
+      }
+      self.subView.addSubview(mapView)
       tableView.deleteRows(at: [indexPath], with: .fade)
       self.height -= 43
       self.tableHeight.constant = CGFloat(self.height)
