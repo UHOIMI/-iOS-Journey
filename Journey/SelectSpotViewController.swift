@@ -36,6 +36,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     let globalVar = GlobalVar.shared
     var tableFlag = 0
     var changePostViewFlag = 0
+    var count = 0
     
     @IBOutlet weak var selectSpotTable: UITableView!
     @IBOutlet weak var userSpotTable: UITableView!
@@ -89,54 +90,10 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if tableView.tag == 1{
-            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
-            if(tableFlag == 0){
-              if(globalVar.selectCount != 0){
-                cell.textLabel!.text = String(globalVar.selectCount + selectSpotNameList.count) + " : " + selectSpotNameList[indexPath.row]
-              }else{
-                cell.textLabel!.text = String(selectSpotNameList.count) + " : " + selectSpotNameList[indexPath.row]
-              }
-            }
-            let selectName : String = cell.textLabel!.text!
-            let pt = "[0-9]* : (.*)"
-            
-            var matchStrings:[String] = []
-            
-            do {
-                
-                let regex = try NSRegularExpression(pattern: pt, options: [])
-                let targetStringRange = NSRange(location: 0, length: (selectName as NSString).length)
-                
-                let matches = regex.matches(in: selectName, options: [], range: targetStringRange)
-                
-                for match in matches {
-                    
-                    // rangeAtIndexに0を渡すとマッチ全体が、1以降を渡すと括弧でグループにした部分マッチが返される
-                    let range = match.range(at: 1)
-                    let result = (selectName as NSString).substring(with: range)
-                    
-                    matchStrings.append(result)
-                }
-              if(tableFlag == 0){
-                if(globalVar.selectCount != 0){
-                  cell.textLabel!.text = String(globalVar.selectCount + selectSpotNameList.count) + " : " + selectSpotNameList[indexPath.row]
-                }else{
-                  cell.textLabel!.text = String(selectSpotNameList.count) + " : " + selectSpotNameList[indexPath.row]
-                }
-              }
-                
-            } catch {
-                print("error: getMatchStrings")
-            }
-            
-            
-            //let ans = selectName.pregReplace(pattern: pt, with: "")
-            //selectName.match(pattern: "^([0-9]*):([^/]+)", group: 2)
-            print("selectTableは通過")
-          print(tableFlag)
-            tableFlag = 1
+          let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
+          cell.textLabel?.text = String(indexPath.row + 1 + globalVar.selectCount) + " : " + selectSpotNameList[indexPath.row]
+          
             return cell
         }else if tableView.tag == 2 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
