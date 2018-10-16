@@ -9,6 +9,9 @@
 import UIKit
 import GoogleMaps
 import Foundation
+import Photos
+import CoreLocation
+import CoreMotion
 
 class PostViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate,UITextFieldDelegate,UITextViewDelegate{
 
@@ -27,8 +30,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   let prefectures:Array = [ "北海道", "青森県", "岩手県", "宮城県", "秋田県","山形県", "福島県", "茨城県", "栃木県", "群馬県","埼玉県", "千葉県", "東京都", "神奈川県", "新潟県","富山県", "石川県", "福井県", "山梨県", "長野県","岐阜県", "静岡県", "愛知県", "三重県", "滋賀県","京都府", "大阪府", "兵庫県", "奈良県", "和歌山県","鳥取県", "島根県", "岡山県", "広島県", "山口県","徳島県", "香川県", "愛媛県", "高知県", "福岡県","佐賀県", "長崎県", "熊本県", "大分県", "宮崎県","鹿児島県", "沖縄県"]
  
   var transportation = ["0,","0,","0,","0,","0,","0,","0"]
-  
-  let ipAddress = "192.168.100.102"
+  var spotData : ListSpotModel = ListSpotModel()
+  let ipAddress = "172.20.10.2:3000"
+//  let ipAddress = "35.200.26.70:443"
   
   var imageFlag1 = 0
   var imageFlag2 = 0
@@ -51,6 +55,16 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var globalVar = GlobalVar.shared
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   private var tabBar:TabBar!
+  
+  var pickedImageA: UIImage?
+  var pickedImageB: UIImage?
+  var pickedImageC: UIImage?
+  let boundary = "----WebKitFormBoundaryZLdHZy8HNaBmUX0d"
+  
+  var imageCount = 0
+  var setImageCount = 0
+  var imageFlagList = Array(repeating:0, count:60)
+  var imageNumber = 0
   
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
@@ -249,17 +263,191 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       globalVar.planPrice = pickerTextField.text!
       globalVar.planText = textView.text!
       globalVar.selectCount = 0
-      postSpot()
+      settingImage()
       self.performSegue(withIdentifier: "toStartView", sender: nil)
     }
+  }
+  
+  func settingImage(){
+    for i in 0 ... globalVar.spotDataList.count - 1{
+      var cnt = 0
+      for f in 0 ..< 3 {
+        cnt += 1
+         print("cnt",cnt)
+        var url = NSURL()
+        switch f{
+        case 0:
+          url = NSURL(string: globalVar.spotDataList[i].image_A)!
+          imageNumber += 1
+          print("URL1",url)
+          break
+        case 1:
+          url = NSURL(string: globalVar.spotDataList[i].image_B)!
+          imageNumber += 1
+          print("URL2",url)
+          break
+        case 2:
+          url = NSURL(string: globalVar.spotDataList[i].image_C)!
+          imageNumber += 1
+          print("URL3",url)
+          break
+        default:
+          break
+        }
+        if url != NSURL(string: "") {
+          imageCount += 1
+          let fetchResult: PHFetchResult = PHAsset.fetchAssets(withALAssetURLs: [url as URL], options: nil)
+          let asset: PHAsset = fetchResult.firstObject!
+          let manager = PHImageManager.default()
+          manager.requestImage(for: asset, targetSize: CGSize(width: 140, height: 140), contentMode: .aspectFill, options: nil) { (image, info) in
+            // imageをセットする
+            switch f{
+            case 0:
+              self.pickedImageA = image
+              self.postImage(pickedImage: self.pickedImageA!,flag:f,number: i)
+              break
+            case 1:
+              self.pickedImageB = image
+              self.postImage(pickedImage: self.pickedImageB!,flag:f,number: i)
+              break
+            case 2:
+              self.pickedImageC = image
+              if(i == self.globalVar.spotDataList.count - 1){
+              }
+              self.postImage(pickedImage: self.pickedImageC!,flag:f,number: i)
+              break
+            default:
+              break
+            }
+          }
+        }else{
+          switch f{
+          case 0:
+            self.globalVar.spotImageA[i] = ""
+            print(i,":",f,":",globalVar.spotImageA)
+            break
+          case 1:
+            self.globalVar.spotImageB[i] = ""
+            print(i,":",f,":",globalVar.spotImageB)
+            break
+          case 2:
+            self.globalVar.spotImageC[i] = ""
+            print(i,":",f,":",globalVar.spotImageC)
+            if(i == globalVar.spotDataList.count - 1 && imageCount == 0){
+              print("EndBBB")
+              postSpot()
+            }
+            break
+          default:
+//            if(i == globalVar.spotDataList.count - 1  && globalVar.spotImageC.count == globalVar.spotDataList.count){
+//              postSpot()
+//            }
+            break
+          }
+        }
+      }
+    }
+  }
+  
+  func postImage(pickedImage:UIImage,flag:Int,number:Int){
+    print("number:",number)
+    // UIImageからPNGに変換してアップロード
+    if(imageFlagList[imageNumber - 1] == 0){
+      self.imageFlagList[imageNumber - 1] = 1
+      let imageData = pickedImage.jpegData(compressionQuality: 1000.0)
+      print("FlagA",number,":",flag,":",imageFlagList[number])
+      let body = httpBody(imageData!, fileName: "\(number)-\(flag).jpg")
+      let url = URL(string: "http://\(ipAddress)/api/v1/image/upload")!
+      fileUpload(url, data: body) {(data, response, error) in
+        if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
+          print("FlagB",number,":",flag,":",self.imageFlagList[number])
+          if response.statusCode == 200 {
+            print("FlagC",number,":",flag,":",self.imageFlagList[number])
+            var imageStr:String = String(data: data!, encoding: .utf8)!
+            if let range = imageStr.range(of: "["){
+              imageStr.removeSubrange(range)
+            }
+            for _ in 0...1{
+              if let range = imageStr.range(of: "\\"){
+                imageStr.removeSubrange(range)
+              }
+              if let range = imageStr.range(of: "\""){
+                imageStr.removeSubrange(range)
+              }
+            }
+            if let range = imageStr.range(of: "]"){
+              imageStr.removeSubrange(range)
+            }
+            switch flag{
+            case 0:
+              self.globalVar.spotImageA[number] = imageStr
+              self.setImageCount += 1
+              print(self.imageFlagList[number])
+              print(number,":",flag,":",self.globalVar.spotImageA)
+              break
+            case 1:
+              self.globalVar.spotImageB[number] = imageStr
+              self.setImageCount += 1
+              print(number,":",flag,":",self.globalVar.spotImageB)
+              break
+            case 2:
+              self.globalVar.spotImageC[number] = imageStr
+              self.setImageCount += 1
+              print(number,":",flag,":",self.globalVar.spotImageC)
+              break
+            default:
+              break
+            }
+            print("Upload done",data as Any)
+            print(String(data: data!, encoding: .utf8) ?? "")
+            if(self.setImageCount == self.imageCount){
+              print("EndAAA")
+              self.setImageCount += 100
+              self.postSpot()
+            }
+          } else {
+            print(response.statusCode)
+          }
+        }
+      }
+    }
+  }
+  func httpBody(_ fileAsData: Data, fileName: String) -> Data {
+    var data = "--\(boundary)\r\n".data(using: .utf8)!
+    // サーバ側が想定しているinput(type=file)タグのname属性値とファイル名をContent-Dispositionヘッダで設定
+    data += "Content-Disposition: form-data; name=\"image\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!
+    data += "Content-Type: image/jpeg\r\n".data(using: .utf8)!
+    data += "\r\n".data(using: .utf8)!
+    data += fileAsData
+    data += "\r\n".data(using: .utf8)!
+    data += "--\(boundary)--\r\n".data(using: .utf8)!
+    
+    return data
+  }
+  // リクエストを生成してアップロード
+  func fileUpload(_ url: URL, data: Data, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    print("FlagE",imageFlagList[0])
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    // マルチパートでファイルアップロード
+    let headers = ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
+    let urlConfig = URLSessionConfiguration.default
+    urlConfig.httpAdditionalHeaders = headers
+    
+    let session = Foundation.URLSession(configuration: urlConfig)
+    let task = session.uploadTask(with: request, from: data, completionHandler: completionHandler)
+    task.resume()
+  }
+  
+  func deleteImage(){
+    
   }
 
   func postSpot(){
     for i in 0...globalVar.spotDataList.count - 1{
       self.postSpotCount += 1
-      print(self.postSpotCount)
-      let str = "user_id=1&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=\(globalVar.spotDataList[i].image_A)&spot_image_b=\(globalVar.spotDataList[i].image_B)&spot_image_c=\(globalVar.spotDataList[i].image_C)"
-      let url = URL(string: "http://\(ipAddress):3000/api/v1/spot/register")
+      let str = "user_id=1&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=\(globalVar.spotImageA[i])&spot_image_b=\(globalVar.spotImageB[i])&spot_image_c=\(globalVar.spotImageC[i])"
+      let url = URL(string: "http://\(ipAddress)/api/v1/spot/register")
       var request = URLRequest(url: url!)
       // POSTを指定
       request.httpMethod = "POST"
@@ -323,7 +511,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   
   func getSpot(){
-    let url = URL(string: "http://\(ipAddress):3000/api/v1/spot/find?user_id=1")
+    let url = URL(string: "http://\(ipAddress)/api/v1/spot/find?user_id=1")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -353,13 +541,13 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func postPlan(){
     let transportationString = transportation.reduce("") { $0 + String($1) }
     var str : String = "user_id=1&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)"
-    for i in 0 ... spotList.count {
+    for i in 0 ... spotList.count{
       if (i != spotList.count){
         str = str + "&spot_id_\(spotFlagList[i])=\(spotList[i])"
       }
     }
     print(str)
-    let url = URL(string: "http://\(ipAddress):3000/api/v1/plan/register")
+    let url = URL(string: "http://\(ipAddress)/api/v1/plan/register")
     var request = URLRequest(url: url!)
     // POSTを指定
     request.httpMethod = "POST"
@@ -379,6 +567,13 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         self.globalVar.planTitle = ""
         self.globalVar.selectSpot = ["スポットを追加"]
         self.globalVar.spotDataList = []
+        self.imageCount = 0
+        self.setImageCount = 0
+        for i in 0 ... 19{
+          self.globalVar.spotImageA[i] = ""
+          self.globalVar.spotImageB[i] = ""
+          self.globalVar.spotImageC[i] = ""
+        }
       }
     }.resume()
   }
@@ -411,7 +606,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     kbToolBar.items = [spacer, commitButton]
     textView.inputAccessoryView = kbToolBar
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     
     super.viewWillAppear(animated)

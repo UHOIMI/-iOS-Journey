@@ -15,7 +15,8 @@ import Darwin
 import RealmSwift
 import Photos
 
-class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+
+class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate{
     
       private var tabBar:TabBar!
     
@@ -113,12 +114,15 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
                         // imageをセットする
                         switch i{
                         case 0:
+                            self.spotImageView1.contentMode = .scaleAspectFit
                             self.spotImageView1.image = image
                             break
                         case 1:
+                            self.spotImageView2.contentMode = .scaleAspectFit
                             self.spotImageView2.image = image
                             break
                         case 2:
+                            self.spotImageView3.contentMode = .scaleAspectFit
                             self.spotImageView3.image = image
                             break
                         default:
@@ -556,4 +560,20 @@ fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ inp
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
 	return input.rawValue
+}
+extension UIScrollView {
+  override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.next?.touchesBegan(touches, with: event)
+    print("touchesBegan")
+  }
+  
+  override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.next?.touchesMoved(touches, with: event)
+    print("touchesMoved")
+  }
+  
+  override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.next?.touchesEnded(touches, with: event)
+    print("touchesEnded")
+  }
 }

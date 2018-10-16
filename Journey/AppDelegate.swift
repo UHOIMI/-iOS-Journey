@@ -110,6 +110,9 @@ class GlobalVar{
   var planText : String = ""
   var planPrice : String = ""
   var selectCount : Int = 0
+  var spotImageA = Array(repeating:"", count:20)
+  var spotImageB = Array(repeating:"", count:20)
+  var spotImageC = Array(repeating:"", count:20)
   
 }
 
