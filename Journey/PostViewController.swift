@@ -31,7 +31,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
  
   var transportation = ["0,","0,","0,","0,","0,","0,","0"]
   var spotData : ListSpotModel = ListSpotModel()
-  let ipAddress = "172.20.10.2:3000"
+  let ipAddress = "192.168.100.102:3000"
 //  let ipAddress = "35.200.26.70:443"
   
   var imageFlag1 = 0
@@ -446,7 +446,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func postSpot(){
     for i in 0...globalVar.spotDataList.count - 1{
       self.postSpotCount += 1
-      let str = "user_id=1&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=\(globalVar.spotImageA[i])&spot_image_b=\(globalVar.spotImageB[i])&spot_image_c=\(globalVar.spotImageC[i])"
+      let str = "user_id=1&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=http://35.200.26.70:8080/test1/\(globalVar.spotImageA[i])&spot_image_b=http://35.200.26.70:8080/test1/\(globalVar.spotImageB[i])&spot_image_c=http://35.200.26.70:8080/test1/\(globalVar.spotImageC[i])"
       let url = URL(string: "http://\(ipAddress)/api/v1/spot/register")
       var request = URLRequest(url: url!)
       // POSTを指定
