@@ -270,10 +270,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   func settingImage(){
     for i in 0 ... globalVar.spotDataList.count - 1{
-      var cnt = 0
       for f in 0 ..< 3 {
-        cnt += 1
-         print("cnt",cnt)
         var url = NSURL()
         switch f{
         case 0:
@@ -339,9 +336,6 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
             }
             break
           default:
-//            if(i == globalVar.spotDataList.count - 1  && globalVar.spotImageC.count == globalVar.spotDataList.count){
-//              postSpot()
-//            }
             break
           }
         }
@@ -437,10 +431,6 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     let session = Foundation.URLSession(configuration: urlConfig)
     let task = session.uploadTask(with: request, from: data, completionHandler: completionHandler)
     task.resume()
-  }
-  
-  func deleteImage(){
-    
   }
 
   func postSpot(){
@@ -658,10 +648,10 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    
     textField.resignFirstResponder() // Returnキーを押したときにキーボードを下げる
     return true
   }
+  
   
   func createTabBar(){
     let width = self.view.frame.width
