@@ -34,6 +34,11 @@
 		003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAC2117411F00A48959 /* StartViewController.swift */; };
 		00C4129C21784FBC006B5ABC /* journey.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C4129B21784FBB006B5ABC /* journey.png */; };
 		00C4129E217853AA006B5ABC /* ButtonSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4129D217853AA006B5ABC /* ButtonSettings.swift */; };
+		00C412A0217DB0D7006B5ABC /* IndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4129F217DB0D7006B5ABC /* IndexViewController.swift */; };
+		00C412A2217DB0EE006B5ABC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C412A1217DB0EE006B5ABC /* LoginViewController.swift */; };
+		00C412A4217DB103006B5ABC /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C412A3217DB103006B5ABC /* CreateUserViewController.swift */; };
+		00C412A6217DB118006B5ABC /* ConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C412A5217DB118006B5ABC /* ConfirmationViewController.swift */; };
+		00C412A8217DB2D8006B5ABC /* no-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C412A7217DB2D7006B5ABC /* no-image.png */; };
 		00D7D431212821CE00C507B7 /* ListSpotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D7D430212821CE00C507B7 /* ListSpotModel.swift */; };
 		00D7D433212821F400C507B7 /* SpotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D7D432212821F400C507B7 /* SpotModel.swift */; };
 		00D7D4392128249400C507B7 /* s_gradation.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D7D4382128249400C507B7 /* s_gradation.png */; };
@@ -77,6 +82,11 @@
 		003C6DAC2117411F00A48959 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		00C4129B21784FBB006B5ABC /* journey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = journey.png; sourceTree = "<group>"; };
 		00C4129D217853AA006B5ABC /* ButtonSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonSettings.swift; sourceTree = "<group>"; };
+		00C4129F217DB0D7006B5ABC /* IndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexViewController.swift; sourceTree = "<group>"; };
+		00C412A1217DB0EE006B5ABC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		00C412A3217DB103006B5ABC /* CreateUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
+		00C412A5217DB118006B5ABC /* ConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewController.swift; sourceTree = "<group>"; };
+		00C412A7217DB2D7006B5ABC /* no-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-image.png"; sourceTree = "<group>"; };
 		00D7D430212821CE00C507B7 /* ListSpotModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSpotModel.swift; sourceTree = "<group>"; };
 		00D7D432212821F400C507B7 /* SpotModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotModel.swift; sourceTree = "<group>"; };
 		00D7D4382128249400C507B7 /* s_gradation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_gradation.png; sourceTree = "<group>"; };
@@ -131,6 +141,10 @@
 				0021CDBB20F3415F00224865 /* PostViewController.swift */,
 				0021CDBD20F3415F00224865 /* Main.storyboard */,
 				00C4129D217853AA006B5ABC /* ButtonSettings.swift */,
+				00C4129F217DB0D7006B5ABC /* IndexViewController.swift */,
+				00C412A1217DB0EE006B5ABC /* LoginViewController.swift */,
+				00C412A3217DB103006B5ABC /* CreateUserViewController.swift */,
+				00C412A5217DB118006B5ABC /* ConfirmationViewController.swift */,
 				9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */,
 				9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */,
 				9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */,
@@ -153,6 +167,7 @@
 		0028241020FD8FFD0082EC7E /*  Transportation_Icon */ = {
 			isa = PBXGroup;
 			children = (
+				00C412A7217DB2D7006B5ABC /* no-image.png */,
 				00C4129B21784FBB006B5ABC /* journey.png */,
 				00D7D4382128249400C507B7 /* s_gradation.png */,
 				0028242520FD90410082EC7E /* s_bicycle.png */,
@@ -276,6 +291,7 @@
 				00D7D45121285AAB00C507B7 /* home.png in Resources */,
 				0028242B20FD90410082EC7E /* s_walk.png in Resources */,
 				0028241920FD900D0082EC7E /* s_airplane_on.png in Resources */,
+				00C412A8217DB2D8006B5ABC /* no-image.png in Resources */,
 				00D7D4392128249400C507B7 /* s_gradation.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,10 +376,14 @@
 				0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */,
 				0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
+				00C412A4217DB103006B5ABC /* CreateUserViewController.swift in Sources */,
 				00D7D43D212846B500C507B7 /* TabBar.swift in Sources */,
+				00C412A6217DB118006B5ABC /* ConfirmationViewController.swift in Sources */,
 				003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */,
+				00C412A2217DB0EE006B5ABC /* LoginViewController.swift in Sources */,
 				0020A4D82127FD71005FC16C /* NavigationController.swift in Sources */,
 				9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */,
+				00C412A0217DB0D7006B5ABC /* IndexViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

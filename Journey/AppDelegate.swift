@@ -22,6 +22,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     GMSServices.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
     GMSPlacesClient.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
     GMSServices.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
+    var currentuser:String? = "Username"
+    currentuser = nil
+    //ユーザーがいない場合IndexViewに遷移
+    if (currentuser == nil){
+      //windowを生成
+      self.window = UIWindow(frame: UIScreen.main.bounds)
+      //Storyboardを指定
+      let storyboard = UIStoryboard(name: "Main", bundle: nil)//Viewcontrollerを指定
+      let initialViewController = storyboard.instantiateViewController(withIdentifier: "index")
+      //rootViewControllerに入れる
+      self.window?.rootViewController = initialViewController
+      //表示
+      self.window?.makeKeyAndVisible()
+    }else{
+      //ユーザーがいる場合Storyboardでチェックの入っているIs Initial View Controllerに遷移する
+    }
     return true
   }
 
