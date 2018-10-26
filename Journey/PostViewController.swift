@@ -246,7 +246,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     let transportationString = transportation.reduce("") { $0 + String($1) }
     if(titleTextField.text! == ""){
       showAlert(title: "プラン名が入力されていません", message: "プラン名を入力してください")
-    }else if(titleTextField.text?.count == 21){
+    }else if((titleTextField.text?.count)! >= 21){
       showAlert(title: "プラン名が20文字を超えています", message: "文字数を20文字以内にしてください")
     }else if(prefecturesTextField.text == ""){
       showAlert(title: "都道府県が選択されていません", message: "都道府県を選択してください")

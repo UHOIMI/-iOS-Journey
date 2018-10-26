@@ -99,10 +99,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iFt-RN-kfR">
-                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gky-eb-NaJ" userLabel="SubView">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="734"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-image.png" translatesAutoresizingMaskIntoConstraints="NO" id="sjX-V1-KD3">
                                                 <rect key="frame" x="137.66666666666666" y="16" width="100" height="100"/>
@@ -121,7 +121,7 @@
                                                 <rect key="frame" x="16" y="180" width="343" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザー名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBh-mz-fzW">
                                                 <rect key="frame" x="16" y="226" width="102" height="24"/>
@@ -201,6 +201,9 @@
                                                         <real key="value" value="25"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="tappedConfirmationButton:" destination="9O0-ua-uXk" eventType="touchUpInside" id="APq-Ho-DqQ"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0P-Ho-iwO" customClass="ButtonSettings" customModule="Journey" customModuleProvider="target">
                                                 <rect key="frame" x="8" y="632" width="142" height="47"/>
@@ -300,6 +303,7 @@
                     <connections>
                         <outlet property="genderTextField" destination="GW1-Qm-lF2" id="OzS-am-xvE"/>
                         <outlet property="generationTextField" destination="Et4-gj-8Ta" id="xqR-GZ-R3p"/>
+                        <outlet property="iconImageView" destination="sjX-V1-KD3" id="thp-bg-m30"/>
                         <outlet property="nextPassTextField" destination="jJ7-NF-hhR" id="sjF-lL-AfC"/>
                         <outlet property="passTextField" destination="quq-SX-JO7" id="V8S-2F-j87"/>
                         <outlet property="scrollView" destination="iFt-RN-kfR" id="kyn-AU-199"/>
@@ -1195,7 +1199,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="wtz-ch-ohP">
-                                <rect key="frame" x="0.0" y="104" width="375" height="563"/>
+                                <rect key="frame" x="0.0" y="60" width="375" height="607"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Xo-Sp-8Qb">
                                         <rect key="frame" x="137.66666666666666" y="0.0" width="100" height="100"/>
@@ -1205,7 +1209,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="24B-Cm-M7h">
-                                        <rect key="frame" x="16" y="159.66666666666669" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="170.66666666666666" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザーID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zw-bI-wdq">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1217,7 +1221,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXI-vB-BTE">
-                                                <rect key="frame" x="16" y="32" width="311" height="24"/>
+                                                <rect key="frame" x="16" y="32.000000000000028" width="311" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="24" id="SWu-fw-NUW"/>
                                                 </constraints>
@@ -1232,7 +1236,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ANS-Rx-aUn">
-                                        <rect key="frame" x="16" y="275.66666666666669" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="297.66666666666669" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザー名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlz-9P-Frs">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1259,7 +1263,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pJz-98-06r">
-                                        <rect key="frame" x="16" y="391.33333333333331" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="424.33333333333331" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの年代" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKL-Bj-6zp">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1286,7 +1290,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dpR-59-I7w">
-                                        <rect key="frame" x="16" y="507" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="551" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの性別" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHR-hj-mW6">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1338,6 +1342,9 @@
                                         <real key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="tappedModificationButton:" destination="tdk-kA-I20" eventType="touchUpInside" id="UUB-OP-MMx"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="frj-D0-Fbg" customClass="ButtonSettings" customModule="Journey" customModuleProvider="target">
                                 <rect key="frame" x="225" y="699" width="142" height="47"/>
@@ -1357,6 +1364,9 @@
                                         <real key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="tappedStartViewButton:" destination="tdk-kA-I20" eventType="touchUpInside" id="UOL-XT-5pe"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1374,6 +1384,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="入力内容確認" id="lva-9Q-hwF"/>
                     <connections>
+                        <outlet property="setIconImageView" destination="8Xo-Sp-8Qb" id="B05-e1-OOO"/>
+                        <outlet property="userGenderLabel" destination="nHo-9U-v1O" id="1gS-ee-Hdl"/>
+                        <outlet property="userGenerationLabel" destination="60x-pH-hiB" id="oec-QZ-sSD"/>
+                        <outlet property="userIdLabel" destination="PXI-vB-BTE" id="BUj-h4-BRN"/>
+                        <outlet property="userNameLabel" destination="pNG-rU-OXu" id="shV-2Z-GUt"/>
                         <segue destination="9O0-ua-uXk" kind="show" identifier="backCreateUserView" id="F4q-09-NOQ"/>
                         <segue destination="VVX-iF-CIv" kind="show" identifier="toStartView" id="FsQ-GA-J3d"/>
                     </connections>
@@ -1395,13 +1410,13 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kFc-cm-I4M"/>
+        <segue reference="hV9-uI-wJ9"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="TeA-Xz-GIE"/>
         <segue reference="SAI-tm-OCo"/>
         <segue reference="6mO-Qw-wNq"/>
         <segue reference="Ngc-W0-UHN"/>
-        <segue reference="lfn-x3-RFi"/>
-        <segue reference="XJN-4F-Krb"/>
+        <segue reference="FsQ-GA-J3d"/>
+        <segue reference="F4q-09-NOQ"/>
     </inferredMetricsTieBreakers>
 </document>

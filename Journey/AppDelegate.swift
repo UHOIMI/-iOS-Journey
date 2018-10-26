@@ -127,5 +127,12 @@ class GlobalVar{
   var spotImageB = Array(repeating:"", count:20)
   var spotImageC = Array(repeating:"", count:20)
   
+  var userId : String = ""
+  var userName : String = ""
+  var userPass : String = ""
+  var userGender : String = ""
+  var userGeneration : String = ""
+  var userIcon = UIImage()
+  
 }
 
