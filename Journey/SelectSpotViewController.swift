@@ -34,6 +34,9 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     
     let postViewController = PostViewController()
     let globalVar = GlobalVar.shared
+    var tableFlag = 0
+    var changePostViewFlag = 0
+    var count = 0
     
     @IBOutlet weak var selectSpotTable: UITableView!
     @IBOutlet weak var userSpotTable: UITableView!
@@ -87,40 +90,10 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if tableView.tag == 1 {
-            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
-            cell.textLabel!.text = String(globalVar.selectCount) + " : " + selectSpotNameList[indexPath.row]
-            let selectName : String = cell.textLabel!.text!
-            let pt = "[0-9]* : (.*)"
-            
-            var matchStrings:[String] = []
-            
-            do {
-                
-                let regex = try NSRegularExpression(pattern: pt, options: [])
-                let targetStringRange = NSRange(location: 0, length: (selectName as NSString).length)
-                
-                let matches = regex.matches(in: selectName, options: [], range: targetStringRange)
-                
-                for match in matches {
-                    
-                    // rangeAtIndexに0を渡すとマッチ全体が、1以降を渡すと括弧でグループにした部分マッチが返される
-                    let range = match.range(at: 1)
-                    let result = (selectName as NSString).substring(with: range)
-                    
-                    matchStrings.append(result)
-                }
-                cell.textLabel?.text = String(globalVar.selectCount) + " : " + matchStrings[0]
-                
-            } catch {
-                print("error: getMatchStrings")
-            }
-            
-            
-            //let ans = selectName.pregReplace(pattern: pt, with: "")
-            //selectName.match(pattern: "^([0-9]*):([^/]+)", group: 2)
-            print("selectTableは通過")
+        if tableView.tag == 1{
+          let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SelectCell", for: indexPath)
+          cell.textLabel?.text = String(indexPath.row + 1 + globalVar.selectCount) + " : " + selectSpotNameList[indexPath.row]
+          
             return cell
         }else if tableView.tag == 2 {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
@@ -133,10 +106,10 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             }*/
             if grayList[indexPath.row] == true{
                 cell.textLabel?.textColor = UIColor.gray
-                cell.selectionStyle = UITableViewCellSelectionStyle.none
+                cell.selectionStyle = UITableViewCell.SelectionStyle.none
             }else{
                 cell.textLabel?.textColor = UIColor.black
-                cell.selectionStyle = UITableViewCellSelectionStyle.default
+                cell.selectionStyle = UITableViewCell.SelectionStyle.default
             }
             return cell
         }
@@ -158,15 +131,23 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             if(grayList[indexPath.row] == false){
             
                 //selectSpotNameList.append(String(selectSpotNameList.count + 1) + " : " +  spotNameList[indexPath.row])
+              if(selectSpotNameList.count + globalVar.selectCount > 19 || globalVar.selectSpot.count >= 21){
+                let alert = UIAlertController(title: top, message: "これ以上スポットを追加できません", preferredStyle: UIAlertController.Style.alert)
+                let okayButton = UIAlertAction(title: okText, style: UIAlertAction.Style.cancel, handler: nil)
+                alert.addAction(okayButton)
+                present(alert, animated: true, completion: nil)
+              }else{
                 selectSpotNameList.append(spotNameList[indexPath.row])
                 selectSpotDataList.append(spotDataList[indexPath.row])
-                globalVar.selectCount += 1
+                tableFlag = 0
+              
                 
                 let selectIndexPath = IndexPath(row : selectSpotNameList.count - 1,section : 0)
                 selectSpotTable.insertRows(at: [selectIndexPath], with: .automatic)
                 
                 grayList[indexPath.row] = true
                 tableView.reloadData()
+              }
                 
             }
             
@@ -184,7 +165,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         }
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if(tableView.tag == 1){
             if editingStyle == .delete {
                 
@@ -193,10 +174,10 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                         grayList[i] = false
                     }
                 }
-                
+              
                 selectSpotDataList.remove(at: indexPath.row)
                 selectSpotNameList.remove(at: indexPath.row)
-                globalVar.selectCount -= 1
+                tableFlag = 0
                 
                 userSpotTable.reloadData()
                 tableView.deleteRows(at: [indexPath], with: .fade)
@@ -318,23 +299,38 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     
     @IBAction func tappedMapButton(_ sender: Any) {
         if selectSpotNameList.count == 0 {
-            let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertControllerStyle.alert)
-            let okayButton = UIAlertAction(title: okText, style: UIAlertActionStyle.cancel, handler: nil)
+            let alert = UIAlertController(title: top, message: message, preferredStyle: UIAlertController.Style.alert)
+            let okayButton = UIAlertAction(title: okText, style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okayButton)
             present(alert, animated: true, completion: nil)
             return
+        }else if(globalVar.selectSpot.count >= 21){
+          let alert = UIAlertController(title: "すでに20件スポットが登録されています", message: "前の画面でスポットを削除してください", preferredStyle: UIAlertController.Style.alert)
+          let okayButton = UIAlertAction(title: okText, style: UIAlertAction.Style.cancel, handler:{(action: UIAlertAction!) in
+            //アラートが消えるのと画面遷移が重ならないように0.5秒後に画面遷移するようにしてる
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+              self.changePostViewFlag = 1
+              self.performSegue(withIdentifier: "changePostView", sender: nil)
+            }
+          })
+          alert.addAction(okayButton)
+          present(alert, animated: true, completion: nil)
+          return
         }
+        changePostViewFlag = 0
+        globalVar.selectCount += selectSpotNameList.count
         self.performSegue(withIdentifier: "changePostView", sender:selectSpotDataList)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "changePostView"){
+          if(changePostViewFlag == 0){
             print(selectSpotDataList)
             print(selectSpotNameList)
             for i in 0 ... selectSpotNameList.count - 1{
-                postViewController.count += 1
                 postViewController.updateTableView(name: selectSpotNameList[i], list:selectSpotDataList[i])
             }
+          }
         }
     }
     
@@ -360,10 +356,10 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
         //ボタンを押した時の色
         tabBar.tintColor = UIColor.black
         //ボタンを生成
-        let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 1)
+        let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 1)
         let search:UITabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 2)
         let favorites:UITabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 3)
-        let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal), tag: 4)
+        let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 4)
         //ボタンをタブバーに配置する
         tabBar.items = [home,search,favorites,setting]
         //デリゲートを設定する

@@ -17,14 +17,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     GMSServices.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
     GMSPlacesClient.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
     GMSServices.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
-//    let vc = StartViewController()
-//    let naviVC = NavigationController(rootVC: vc, naviBarClass: CustomNavigationBar.self, toolbarClass: nil)
-//    self.window!.rootViewController = naviVC
+    var currentuser:String? = "Username"
+    currentuser = nil
+    //ユーザーがいない場合IndexViewに遷移
+    if (currentuser == nil){
+      //windowを生成
+      self.window = UIWindow(frame: UIScreen.main.bounds)
+      //Storyboardを指定
+      let storyboard = UIStoryboard(name: "Main", bundle: nil)//Viewcontrollerを指定
+      let initialViewController = storyboard.instantiateViewController(withIdentifier: "index")
+      //rootViewControllerに入れる
+      self.window?.rootViewController = initialViewController
+      //表示
+      self.window?.makeKeyAndVisible()
+    }else{
+      //ユーザーがいる場合Storyboardでチェックの入っているIs Initial View Controllerに遷移する
+    }
     return true
   }
 
@@ -110,6 +123,16 @@ class GlobalVar{
   var planText : String = ""
   var planPrice : String = ""
   var selectCount : Int = 0
+  var spotImageA = Array(repeating:"", count:20)
+  var spotImageB = Array(repeating:"", count:20)
+  var spotImageC = Array(repeating:"", count:20)
+  
+  var userId : String = ""
+  var userName : String = ""
+  var userPass : String = ""
+  var userGender : String = ""
+  var userGeneration : String = ""
+  var userIcon = UIImage()
   
 }
 
