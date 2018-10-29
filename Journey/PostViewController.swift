@@ -31,7 +31,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
  
   var transportation = ["0,","0,","0,","0,","0,","0,","0"]
   var spotData : ListSpotModel = ListSpotModel()
-  let ipAddress = "192.168.100.102:3000"
+  let ipAddress = "172.20.10.2:3000"
 //  let ipAddress = "35.200.26.70:443"
   
   var imageFlag1 = 0
@@ -348,7 +348,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     // UIImageからPNGに変換してアップロード
     if(imageFlagList[imageNumber - 1] == 0){
       self.imageFlagList[imageNumber - 1] = 1
-      let imageData = pickedImage.jpegData(compressionQuality: 1000.0)
+      let imageData = pickedImage.jpegData(compressionQuality: 1.0)
       print("FlagA",number,":",flag,":",imageFlagList[number])
       let body = httpBody(imageData!, fileName: "\(number)-\(flag).jpg")
       let url = URL(string: "http://\(ipAddress)/api/v1/image/upload")!

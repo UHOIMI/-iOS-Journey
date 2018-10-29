@@ -17,6 +17,8 @@ class ConfirmationViewController: UIViewController {
   @IBOutlet weak var userGenderLabel: UILabel!
   
   let globalVar = GlobalVar.shared
+  //var pickedImage: UIImage? //選択されたイメージを保存するためのインスタンス変数
+  let boundary = "----WebKitFormBoundaryZLdHZy8HNaBmUX0d"
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,12 @@ class ConfirmationViewController: UIViewController {
     performSegue(withIdentifier: "toStartView", sender: nil)
   }
   
+  func settingImage(){
+    let imageData = setIconImageView.image?.jpegData(compressionQuality: 1.0)
+  }
+  func postImage(){
+    
+  }
 
     /*
     // MARK: - Navigation

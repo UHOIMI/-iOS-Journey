@@ -23,7 +23,6 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   var globalVar = GlobalVar.shared
   let gender = ["-性別を選択-","男性","女性"]
   let generation = ["-年代を選択-","10歳未満","10代","20代","30代","40代","50代","60代","70代","80代","90代","100歳以上"]
-  let pattern = "^[A-Za-z0-9]$"
   var str : String = ""
   var userId:Array<String> = []
   var pass : String = ""
@@ -174,8 +173,8 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   }
 
   @IBAction func tappedConfirmationButton(_ sender: Any) {
-    let pattern = "^[A-Za-z0-9]{1,}$"
-    let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
+//    let pattern = "^[A-Za-z0-9]{1,}$"
+//    let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
     if(userIdTextField.text == ""){
       showAlert(title: "ユーザーIDが入力されていません", message: "ユーザーIDを入力してください")
     }else if((userIdTextField.text?.count)! > 20){
@@ -190,9 +189,13 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
       showAlert(title: "パスワードの文字数が足りません", message: "8文字以上,20文字以下で入力してください")
     }else if(passTextField.text!.count > 20){
       showAlert(title: "パスワードの文字数が多すぎます", message: "8文字以上,20文字以下で入力してください")
-    }else if (predicate.evaluate(with: passTextField.text) || predicate.evaluate(with: userIdTextField.text) || predicate.evaluate(with: nextPassTextField.text)){
-      showAlert(title: "半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
-    }else if(nextPassTextField.text == ""){
+    }
+//    else if (predicate.evaluate(with: passTextField.text)){
+//      showAlert(title: "パスワードに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
+//    }else if(predicate.evaluate(with: userIdTextField.text)){
+//      showAlert(title: "ユーザーIDに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
+//    }
+    else if(nextPassTextField.text == ""){
       showAlert(title: "確認用パスワードが入力されていません", message: "8文字以上,20文字以下で入力してください")
     }else if((nextPassTextField.text?.count)! < 8){
       showAlert(title: "確認用パスワードの文字数が足りません", message: "8文字以上,20文字以下で入力してください")
@@ -220,6 +223,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     alert.addAction(cancelButton)
     self.present(alert, animated: true, completion: nil)
   }
+  
   /*
     // MARK: - Navigation
 
