@@ -173,8 +173,8 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   }
 
   @IBAction func tappedConfirmationButton(_ sender: Any) {
-//    let pattern = "^[A-Za-z0-9]{1,}$"
-//    let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
+    let pattern = "^[A-Za-z0-9]{1,}$"
+    let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
     if(userIdTextField.text == ""){
       showAlert(title: "ユーザーIDが入力されていません", message: "ユーザーIDを入力してください")
     }else if((userIdTextField.text?.count)! > 20){
@@ -190,11 +190,11 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     }else if(passTextField.text!.count > 20){
       showAlert(title: "パスワードの文字数が多すぎます", message: "8文字以上,20文字以下で入力してください")
     }
-//    else if (predicate.evaluate(with: passTextField.text)){
-//      showAlert(title: "パスワードに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
-//    }else if(predicate.evaluate(with: userIdTextField.text)){
-//      showAlert(title: "ユーザーIDに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
-//    }
+    else if (!predicate.evaluate(with: passTextField.text)){
+      showAlert(title: "パスワードに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
+    }else if(!predicate.evaluate(with: userIdTextField.text)){
+      showAlert(title: "ユーザーIDに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
+    }
     else if(nextPassTextField.text == ""){
       showAlert(title: "確認用パスワードが入力されていません", message: "8文字以上,20文字以下で入力してください")
     }else if((nextPassTextField.text?.count)! < 8){
