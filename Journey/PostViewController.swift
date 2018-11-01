@@ -351,7 +351,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       let imageData = pickedImage.jpegData(compressionQuality: 1.0)
       print("FlagA",number,":",flag,":",imageFlagList[number])
       let body = httpBody(imageData!, fileName: "\(number)-\(flag).jpg")
-      let url = URL(string: "http://\(ipAddress)/api/v1/image/upload")!
+      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/image/upload")!
       fileUpload(url, data: body) {(data, response, error) in
         if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
           print("FlagB",number,":",flag,":",self.imageFlagList[number])
@@ -437,7 +437,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     for i in 0...globalVar.spotDataList.count - 1{
       self.postSpotCount += 1
       let str = "user_id=sanwa114514&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=http://35.200.26.70:8080/test1/\(globalVar.spotImageA[i])&spot_image_b=http://35.200.26.70:8080/test1/\(globalVar.spotImageB[i])&spot_image_c=http://35.200.26.70:8080/test1/\(globalVar.spotImageC[i])"
-      let url = URL(string: "http://\(ipAddress)/api/v1/spot/register")
+      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/register")
       var request = URLRequest(url: url!)
       // POSTを指定
       request.httpMethod = "POST"
@@ -501,7 +501,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   
   func getSpot(){
-    let url = URL(string: "http://\(ipAddress)/api/v1/spot/find?user_id=sanwa114514")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/find?user_id=sanwa114514")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -537,7 +537,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       }
     }
     print(str)
-    let url = URL(string: "http://\(ipAddress)/api/v1/plan/register")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/plan/register")
     var request = URLRequest(url: url!)
     // POSTを指定
     request.httpMethod = "POST"

@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import GoogleMaps
 import GooglePlaces
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     GMSServices.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
     GMSPlacesClient.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
     GMSServices.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
-    var currentuser:String? = "Username"
+    var currentuser:String? = nil
+    let realm = try! Realm()
+    let user = realm.objects(UserModel.self)
+    for _user in user {
+      currentuser = _user.user_name
+    }
     currentuser = nil
     //ユーザーがいない場合IndexViewに遷移
     if (currentuser == nil){
@@ -133,6 +139,7 @@ class GlobalVar{
   var userGender : String = ""
   var userGeneration : String = ""
   var userIcon = UIImage()
-  
+  let ipAddress = "172.20.10.2:3000"
+//  let ipAddress = "35.200.26.70:443"
 }
 

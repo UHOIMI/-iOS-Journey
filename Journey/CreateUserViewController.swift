@@ -250,7 +250,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   }
   
   func getUser(){
-    let url = URL(string: "http://\(ipAddress)/api/v1/users/find?user_id=\(userIdTextField.text!)")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/find?user_id=\(userIdTextField.text!)")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in

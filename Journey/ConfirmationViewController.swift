@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ConfirmationViewController: UIViewController {
   
@@ -41,6 +42,7 @@ class ConfirmationViewController: UIViewController {
   }
   @IBAction func tappedStartViewButton(_ sender: Any) {
     postImage()
+    saveUser(id: globalVar.userId, name: globalVar.userName, pass: globalVar.userPass, generation: generation, gender: globalVar.userGender)
     self.performSegue(withIdentifier: "toStartView", sender: nil)
   }
   
@@ -48,7 +50,7 @@ class ConfirmationViewController: UIViewController {
   func postImage(){
     let imageData = setIconImageView.image?.jpegData(compressionQuality: 1.0)
     let body = httpBody(imageData!, fileName: "\(globalVar.userId).jpg")
-    let url = URL(string: "http://\(ipAddress)/api/v1/image/upload")!
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/image/upload")!
     fileUpload(url, data: body) {(data, response, error) in
       if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
         if response.statusCode == 200 {
@@ -105,7 +107,7 @@ class ConfirmationViewController: UIViewController {
   func postUser(imageStr:String){
     print("imageStr",imageStr)
     let str = "user_id=\(globalVar.userId)&user_pass=\(globalVar.userPass)&user_name=\(globalVar.userName)&generation=\(generation)&gender=\(gender)&comment=こんにちは&user_icon=\(imageStr)"
-    let url = URL(string: "http://\(ipAddress)/api/v1/users/register")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/register")
     var request = URLRequest(url: url!)
     // POSTを指定
     request.httpMethod = "POST"
@@ -170,6 +172,22 @@ class ConfirmationViewController: UIViewController {
       break
     default:
       break
+    }
+  }
+  
+  func saveUser(id : String, name : String, pass : String, generation : Int, gender : String){
+    let realm = try! Realm()
+    let userModel = UserModel()
+    
+    userModel.user_id = id
+    userModel.user_name = name
+    userModel.user_pass = pass
+    userModel.user_generation = generation
+    userModel.user_gender = gender
+    userModel.user_comment = "こんにちは"
+    
+    try! realm.write() {
+      realm.add(userModel, update: true)
     }
   }
 
