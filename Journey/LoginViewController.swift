@@ -13,9 +13,9 @@ class LoginViewController: UIViewController {
   @IBOutlet weak var userIdTextField: UITextField!
   @IBOutlet weak var userPassTextField: UITextField!
   
-  let ipAddress = "172.20.10.2:3000"
-  
-  
+
+  let globalVar = GlobalVar.shared
+
   override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
   
   func loginUser(){
     let str = "user_id=\(userIdTextField.text!)&user_pass=\(userPassTextField.text!)"
-    let url = URL(string: "http://\(ipAddress)/api/v1/users/login")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/login")
     var request = URLRequest(url: url!)
     request.httpMethod = "POST"
     // POSTするデータをBodyとして設定
