@@ -33,4 +33,14 @@ class StartViewController: UIViewController {
         performSegue(withIdentifier: "toSpotListView", sender: nil)
     }
     
+  @IBAction func tappedDeleteUser(_ sender: Any) {
+    let realm = try! Realm()
+    let users = realm.objects(UserModel.self)
+
+    if let user = users.last {
+      try! realm.write() {
+        realm.delete(user)
+      }
+    }
+  }
 }

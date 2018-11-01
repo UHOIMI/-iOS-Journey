@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     for _user in user {
       currentuser = _user.user_name
     }
-    currentuser = nil
+    //currentuser = nil
     //ユーザーがいない場合IndexViewに遷移
     if (currentuser == nil){
       //windowを生成
@@ -139,7 +139,7 @@ class GlobalVar{
   var userGender : String = ""
   var userGeneration : String = ""
   var userIcon = UIImage()
-  let ipAddress = "172.20.10.2:3000"
+  let ipAddress = "192.168.43.221:3000"
 //  let ipAddress = "35.200.26.70:443"
 }
 
