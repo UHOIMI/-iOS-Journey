@@ -721,13 +721,22 @@
                                     <action selector="tappedPostButton:" destination="Qxu-g9-ag6" eventType="touchUpInside" id="IKE-8x-Guq"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vho-cS-3s8">
+                                <rect key="frame" x="141.66666666666666" y="372" width="92" height="30"/>
+                                <state key="normal" title="ユーザー削除"/>
+                                <connections>
+                                    <action selector="tappedDeleteUser:" destination="Qxu-g9-ag6" eventType="touchUpInside" id="HRD-4v-bPa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="xfa-ZF-7Dp" firstAttribute="centerX" secondItem="iWV-Bd-KrR" secondAttribute="centerX" id="1p4-cK-mgn"/>
                             <constraint firstItem="4wF-Mg-jG8" firstAttribute="top" secondItem="xfa-ZF-7Dp" secondAttribute="bottom" constant="32" id="22n-JM-71o"/>
+                            <constraint firstItem="vho-cS-3s8" firstAttribute="top" secondItem="3cU-8B-Bmb" secondAttribute="bottom" constant="40" id="BeX-HT-PKz"/>
                             <constraint firstItem="xfa-ZF-7Dp" firstAttribute="top" secondItem="hIr-Du-XeS" secondAttribute="top" constant="80" id="Eda-co-Xog"/>
                             <constraint firstItem="3cU-8B-Bmb" firstAttribute="centerX" secondItem="iWV-Bd-KrR" secondAttribute="centerX" id="IfK-EE-ett"/>
+                            <constraint firstItem="vho-cS-3s8" firstAttribute="centerX" secondItem="iWV-Bd-KrR" secondAttribute="centerX" id="Im7-5W-1ub"/>
                             <constraint firstItem="3cU-8B-Bmb" firstAttribute="top" secondItem="4wF-Mg-jG8" secondAttribute="bottom" constant="32" id="U5u-Vc-8wS"/>
                             <constraint firstItem="4wF-Mg-jG8" firstAttribute="centerX" secondItem="iWV-Bd-KrR" secondAttribute="centerX" id="YEL-OW-VxN"/>
                         </constraints>
