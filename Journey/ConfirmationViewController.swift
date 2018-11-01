@@ -27,12 +27,13 @@ class ConfirmationViewController: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
+      
       userIdLabel.text = globalVar.userId
       userNameLabel.text = globalVar.userName
       userGenerationLabel.text = globalVar.userGeneration
       userGenderLabel.text = globalVar.userGender
       setIconImageView.image = globalVar.userIcon
-
+      settingData()
         // Do any additional setup after loading the view.
     }
   @IBAction func tappedModificationButton(_ sender: Any) {
@@ -40,7 +41,7 @@ class ConfirmationViewController: UIViewController {
   }
   @IBAction func tappedStartViewButton(_ sender: Any) {
     postImage()
-    performSegue(withIdentifier: "toStartView", sender: nil)
+    self.performSegue(withIdentifier: "toStartView", sender: nil)
   }
   
 
@@ -102,7 +103,6 @@ class ConfirmationViewController: UIViewController {
   }
   
   func postUser(imageStr:String){
-    settingData()
     print("imageStr",imageStr)
     let str = "user_id=\(globalVar.userId)&user_pass=\(globalVar.userPass)&user_name=\(globalVar.userName)&generation=\(generation)&gender=\(gender)&comment=こんにちは&user_icon=\(imageStr)"
     let url = URL(string: "http://\(ipAddress)/api/v1/users/register")
@@ -124,7 +124,7 @@ class ConfirmationViewController: UIViewController {
   }
   
   func settingData(){
-    switch userGenderLabel.text {
+    switch globalVar.userGender {
     case "男性":
       gender = "男"
       break
@@ -134,7 +134,7 @@ class ConfirmationViewController: UIViewController {
     default:
       break
     }
-    switch userGenerationLabel.text {
+    switch globalVar.userGeneration {
     case "10歳未満":
       generation = 0
       break

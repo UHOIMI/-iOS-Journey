@@ -29,6 +29,9 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   var nextPass : String = ""
   
   let myFrameSize:CGSize = UIScreen.main.bounds.size
+  
+  let ipAddress = "172.20.10.2:3000"
+  //  let ipAddress = "35.200.26.70:443"
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
@@ -214,6 +217,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
       globalVar.userGender = genderTextField.text!
       globalVar.userGeneration = generationTextField.text!
       globalVar.userIcon = iconImageView.image!
+      getUser()
       performSegue(withIdentifier: "toConfirmationView", sender: nil)
     }
   }
@@ -222,6 +226,59 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
     alert.addAction(cancelButton)
     self.present(alert, animated: true, completion: nil)
+  }
+  
+  func getUser(){
+    let url = URL(string: "http://\(ipAddress)/api/v1/users/find?user_id=\(globalVar.userId)")
+    let request = URLRequest(url: url!)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let allData = try? JSONDecoder().decode(AllData.self, from: data)
+        if(allData!.status == 200){
+          self.showAlert(title: "そのユーザーIDは存在しています。", message: "別のユーザーIDを設定してください。")
+        }else if(allData?.status == 404){
+//          performSegue(withIdentifier: "toConfirmationView", sender: nil)
+        }
+      }
+    }.resume()
+  }
+  
+  
+  struct AllData : Codable{
+    let status : Int
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+      let userId : String
+      let userName : String
+      let generation : Int
+      let gender : String
+      let comment : String?
+      let userIcon : String?
+      let userHeader : String?
+      let date : Date? = NSDate() as Date
+      enum CodingKeys: String, CodingKey {
+        case userId = "user_id"
+        case userName = "user_name"
+        case generation = "generation"
+        case gender = "gender"
+        case comment = "comment"
+        case userIcon = "user_icon"
+        case userHeader = "user_header"
+        case date
+      }
+    }
   }
   
   /*
