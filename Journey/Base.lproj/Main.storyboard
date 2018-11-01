@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVX-iF-CIv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVX-iF-CIv">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -291,7 +291,6 @@
                         <constraints>
                             <constraint firstItem="iFt-RN-kfR" firstAttribute="top" secondItem="bhV-tC-I2f" secondAttribute="top" id="BUi-wb-aJG"/>
                             <constraint firstItem="bhV-tC-I2f" firstAttribute="trailing" secondItem="iFt-RN-kfR" secondAttribute="trailing" id="K8c-0W-DIX"/>
-                            <constraint firstItem="gky-eb-NaJ" firstAttribute="height" secondItem="bhV-tC-I2f" secondAttribute="height" id="Vkm-TS-EC9"/>
                             <constraint firstItem="gky-eb-NaJ" firstAttribute="width" secondItem="bhV-tC-I2f" secondAttribute="width" id="eb3-FL-74I"/>
                             <constraint firstItem="iFt-RN-kfR" firstAttribute="leading" secondItem="bhV-tC-I2f" secondAttribute="leading" id="lAZ-Yw-zVI"/>
                             <constraint firstItem="bhV-tC-I2f" firstAttribute="bottom" secondItem="iFt-RN-kfR" secondAttribute="bottom" id="vKI-Oy-C8t"/>
@@ -307,6 +306,7 @@
                         <outlet property="nextPassTextField" destination="jJ7-NF-hhR" id="sjF-lL-AfC"/>
                         <outlet property="passTextField" destination="quq-SX-JO7" id="V8S-2F-j87"/>
                         <outlet property="scrollView" destination="iFt-RN-kfR" id="kyn-AU-199"/>
+                        <outlet property="subVIew" destination="gky-eb-NaJ" id="ZXv-XV-03u"/>
                         <outlet property="userIdTextField" destination="0ke-QF-ual" id="S6U-Fd-S0q"/>
                         <outlet property="userNameTextField" destination="nhg-XJ-1MK" id="ASc-oZ-Omp"/>
                         <segue destination="tdk-kA-I20" kind="show" identifier="toConfirmationView" id="hV9-uI-wJ9"/>
@@ -315,7 +315,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="suS-15-x6g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2478" y="483"/>
+            <point key="canvasLocation" x="-2479.1999999999998" y="482.51231527093597"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="CdM-0K-Yfm">
@@ -1379,7 +1379,7 @@
                             <constraint firstItem="8go-uh-ORA" firstAttribute="trailing" secondItem="wtz-ch-ohP" secondAttribute="trailing" id="bSQ-wd-pHS"/>
                             <constraint firstItem="uWm-Wg-n0c" firstAttribute="leading" secondItem="8go-uh-ORA" secondAttribute="leading" constant="8" id="myH-9F-RH1"/>
                             <constraint firstItem="uWm-Wg-n0c" firstAttribute="top" secondItem="wtz-ch-ohP" secondAttribute="bottom" constant="32" id="qHt-Mh-2RB"/>
-                            <constraint firstItem="frj-D0-Fbg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uWm-Wg-n0c" secondAttribute="trailing" symbolic="YES" id="rcz-Vx-hAG"/>
+                            <constraint firstItem="frj-D0-Fbg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uWm-Wg-n0c" secondAttribute="trailing" constant="8" symbolic="YES" id="rcz-Vx-hAG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8go-uh-ORA"/>
                     </view>
@@ -1411,6 +1411,7 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="hV9-uI-wJ9"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="TeA-Xz-GIE"/>
         <segue reference="SAI-tm-OCo"/>

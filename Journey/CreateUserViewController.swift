@@ -18,8 +18,14 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   @IBOutlet weak var generationTextField: UITextField!
   @IBOutlet weak var genderTextField: UITextField!
   @IBOutlet weak var iconImageView: UIImageView!
+  @IBOutlet weak var subVIew: UIView!
   
+  
+  
+  var flag = 0
   var keyboardFlag = 0
+  var idCheckFlag = false
+  var colorFlag = false
   var globalVar = GlobalVar.shared
   let gender = ["-性別を選択-","男性","女性"]
   let generation = ["-年代を選択-","10歳未満","10代","20代","30代","40代","50代","60代","70代","80代","90代","100歳以上"]
@@ -30,7 +36,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   
-  let ipAddress = "172.20.10.2:3000"
+  let ipAddress = "192.168.43.221:3000"
   //  let ipAddress = "35.200.26.70:443"
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
@@ -59,6 +65,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   }
   override func viewDidLoad() {
         super.viewDidLoad()
+    subVIew.isUserInteractionEnabled = true
     self.userIdTextField.delegate = self
     self.userNameTextField.delegate = self
     
@@ -115,13 +122,18 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   // キーボードが現れた時に、画面全体をずらす。
   @objc func keyboardWillShow(notification: Notification?) {
     if(keyboardFlag == 0){
-      let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-      let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
-      UIView.animate(withDuration: duration!, animations: { () in
-        let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
-        self.view.transform = transform
-        
-      })
+      if(userIdTextField.isFirstResponder){
+        idCheckFlag = true
+      }
+      if (!userIdTextField.isFirstResponder && !userNameTextField.isFirstResponder) {
+        let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+          let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+          self.view.transform = transform
+          
+        })
+      }
     }
   }
   
@@ -167,6 +179,12 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
         
         self.view.transform = CGAffineTransform.identity
       })
+      
+      if(idCheckFlag){
+        checkId()
+        idCheckFlag = false
+      }
+      
     }
   }
   
@@ -210,7 +228,10 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
       showAlert(title: "年代が選択されていません", message: "年代を選択してください")
     }else if(genderTextField.text == ""){
       showAlert(title: "性別が選択されていません", message: "性別を選択してください")
-    }else{
+    }else if(flag == 0){
+      showAlert(title: "そのユーザーIDは存在しています。", message: "別のユーザーIDを設定してください。")
+    }
+    else{
       globalVar.userId = userIdTextField.text!
       globalVar.userName = userNameTextField.text!
       globalVar.userPass = passTextField.text!
@@ -241,12 +262,27 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let allData = try? JSONDecoder().decode(AllData.self, from: data)
         if(allData!.status == 200){
-          self.showAlert(title: "そのユーザーIDは存在しています。", message: "別のユーザーIDを設定してください。")
+          print("通過")
+          self.flag = 1
+//          self.showAlert(title: "そのユーザーIDは存在しています。", message: "別のユーザーIDを設定してください。")
         }else if(allData?.status == 404){
 //          performSegue(withIdentifier: "toConfirmationView", sender: nil)
         }
       }
     }.resume()
+  }
+  
+  func checkId(){
+    print("呼ばれたよーーーーーー！")
+    getUser()
+    
+  }
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    if (self.userIdTextField.isFirstResponder) {
+      print("びぎん")
+      checkId()
+    }
   }
   
   
