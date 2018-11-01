@@ -606,7 +606,7 @@
                                                 <rect key="frame" x="116.66666666666669" y="960" width="142" height="47"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="47" id="Vyt-JL-rJf"/>
-                                                    <constraint firstAttribute="width" constant="142" id="lEW-6A-aFX"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="142" id="lEW-6A-aFX"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="投稿"/>
@@ -1431,6 +1431,8 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="wPv-3s-Ppv"/>
+        <segue reference="hV9-uI-wJ9"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="TeA-Xz-GIE"/>
         <segue reference="SAI-tm-OCo"/>
