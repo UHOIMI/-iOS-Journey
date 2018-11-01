@@ -1411,6 +1411,8 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="wPv-3s-Ppv"/>
+        <segue reference="hV9-uI-wJ9"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="TeA-Xz-GIE"/>
         <segue reference="SAI-tm-OCo"/>
