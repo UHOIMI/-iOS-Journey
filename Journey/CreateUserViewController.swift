@@ -65,7 +65,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   }
   override func viewDidLoad() {
         super.viewDidLoad()
-    subVIew.isUserInteractionEnabled = true
+//    subVIew.isUserInteractionEnabled = true
     self.userIdTextField.delegate = self
     self.userNameTextField.delegate = self
     
@@ -228,7 +228,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
       showAlert(title: "年代が選択されていません", message: "年代を選択してください")
     }else if(genderTextField.text == ""){
       showAlert(title: "性別が選択されていません", message: "性別を選択してください")
-    }else if(flag == 0){
+    }else if(flag == 1){
       showAlert(title: "そのユーザーIDは存在しています。", message: "別のユーザーIDを設定してください。")
     }
     else{
@@ -250,7 +250,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   }
   
   func getUser(){
-    let url = URL(string: "http://\(ipAddress)/api/v1/users/find?user_id=\(globalVar.userId)")
+    let url = URL(string: "http://\(ipAddress)/api/v1/users/find?user_id=\(userIdTextField.text!)")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -266,13 +266,14 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
           self.flag = 1
 //          self.showAlert(title: "そのユーザーIDは存在しています。", message: "別のユーザーIDを設定してください。")
         }else if(allData?.status == 404){
-//          performSegue(withIdentifier: "toConfirmationView", sender: nil)
+          self.flag = 0
         }
       }
     }.resume()
   }
   
   func checkId(){
+    flag = 0
     print("呼ばれたよーーーーーー！")
     getUser()
     
