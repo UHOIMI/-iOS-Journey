@@ -349,14 +349,17 @@
                                         <real key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="tappedLoginButton:" destination="nzb-pQ-6jx" eventType="touchUpInside" id="Mdp-uL-V7O"/>
+                                </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ASs-U2-7GA">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ASs-U2-7GA" customClass="Keyboard" customModule="Journey" customModuleProvider="target">
                                 <rect key="frame" x="16" y="481" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bef-Ml-lKY">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bef-Ml-lKY" customClass="Keyboard" customModule="Journey" customModuleProvider="target">
                                 <rect key="frame" x="16" y="559" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -397,6 +400,8 @@
                         <viewLayoutGuide key="safeArea" id="Z7z-SI-3VN"/>
                     </view>
                     <connections>
+                        <outlet property="userIdTextField" destination="ASs-U2-7GA" id="v90-MB-mUx"/>
+                        <outlet property="userPassTextField" destination="bef-Ml-lKY" id="ghX-xT-Xvu"/>
                         <segue destination="VVX-iF-CIv" kind="show" identifier="toStartView" id="lfn-x3-RFi"/>
                     </connections>
                 </viewController>

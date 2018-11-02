@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class LoginViewController: UIViewController {
 
@@ -56,6 +57,8 @@ class LoginViewController: UIViewController {
               strData.removeSubrange(range)
             }
           }
+          self.saveUser(id: self.userIdTextField.text!, pass: self.userPassTextField.text!, token: strData)
+          self.testRealm()
           print("出力",strData)
           self.performSegue(withIdentifier: "toStartView", sender: nil)
         }
@@ -115,6 +118,31 @@ class LoginViewController: UIViewController {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder() // Returnキーを押したときにキーボードを下げる
     return true
+  }
+  
+  func saveUser(id : String, pass : String, token : String){
+    let realm = try! Realm()
+    let userModel = UserModel()
+    
+    userModel.user_id = id
+    userModel.user_pass = pass
+    userModel.user_comment = "こんにちは"
+    userModel.user_token = token
+    
+    try! realm.write() {
+      realm.add(userModel, update: true)
+    }
+  }
+  
+  func testRealm(){
+    let realm = try! Realm()
+    
+    let user = realm.objects(UserModel.self)
+    for _user in user {
+      print("れるむテストid", _user.user_id)
+      print("れるむテストpass", _user.user_pass)
+      print("れるむテストtoken", _user.user_token)
+    }
   }
     /*
     // MARK: - Navigation
