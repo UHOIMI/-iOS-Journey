@@ -10,8 +10,12 @@ import UIKit
 import RealmSwift
 
 class StartViewController: UIViewController {
+  
+  let globalVar = GlobalVar.shared
 
     override func viewDidLoad() {
+      
+      self.saveUser(id: globalVar.userId, pass: globalVar.userPass, token: globalVar.token)
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
@@ -32,6 +36,20 @@ class StartViewController: UIViewController {
     @IBAction func tappedListButton(_ sender: Any) {
         performSegue(withIdentifier: "toSpotListView", sender: nil)
     }
+  
+  func saveUser(id : String, pass : String, token : String){
+    let realm = try! Realm()
+    let userModel = UserModel()
+    
+    userModel.user_id = id
+    userModel.user_pass = pass
+    userModel.user_comment = "こんにちは"
+    userModel.user_token = token
+    
+    try! realm.write() {
+      realm.add(userModel, update: true)
+    }
+  }
     
   @IBAction func tappedDeleteUser(_ sender: Any) {
     let realm = try! Realm()

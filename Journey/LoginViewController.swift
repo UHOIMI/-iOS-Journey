@@ -60,6 +60,9 @@ class LoginViewController: UIViewController {
           self.saveUser(id: self.userIdTextField.text!, pass: self.userPassTextField.text!, token: strData)
           self.testRealm()
           print("出力",strData)
+          self.globalVar.userId = self.userIdTextField.text!
+          self.globalVar.userPass = self.userPassTextField.text!
+          self.globalVar.token = strData
           self.performSegue(withIdentifier: "toStartView", sender: nil)
         }
       }

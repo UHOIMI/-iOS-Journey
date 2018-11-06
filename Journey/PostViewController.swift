@@ -12,6 +12,7 @@ import Foundation
 import Photos
 import CoreLocation
 import CoreMotion
+import RealmSwift
 
 class PostViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate,UITextFieldDelegate,UITextViewDelegate{
 
@@ -171,6 +172,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    idSetRealm()
     
     if(globalVar.spotDataList.count != 0){
       camera = GMSCameraPosition.camera(withLatitude: globalVar.spotDataList[0].latitude,longitude:globalVar.spotDataList[0].longitude, zoom:15)
@@ -436,7 +439,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func postSpot(){
     for i in 0...globalVar.spotDataList.count - 1{
       self.postSpotCount += 1
-      let str = "user_id=sanwa114514&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=http://35.200.26.70:8080/test1/\(globalVar.spotImageA[i])&spot_image_b=http://35.200.26.70:8080/test1/\(globalVar.spotImageB[i])&spot_image_c=http://35.200.26.70:8080/test1/\(globalVar.spotImageC[i])"
+      let str = "token=\(globalVar.token)&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=http://35.200.26.70:8080/test1/\(globalVar.spotImageA[i])&spot_image_b=http://35.200.26.70:8080/test1/\(globalVar.spotImageB[i])&spot_image_c=http://35.200.26.70:8080/test1/\(globalVar.spotImageC[i])"
       let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/register")
       var request = URLRequest(url: url!)
       // POSTを指定
@@ -461,7 +464,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   struct AllData : Codable{
     let status : Int
-    let record : [Record]
+    let record : [Record]?
     let message : String
     enum CodingKeys: String, CodingKey {
       case status
@@ -501,7 +504,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   }
   
   func getSpot(){
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/find?user_id=sanwa114514")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/find?user_id=\(globalVar.userId)")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -512,17 +515,21 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let allData = try! JSONDecoder().decode(AllData.self, from: data)
-        let max : Int = allData.record.count - 1
-        var backCount = 0
-        print(self.postSpotCount)
-        for index in 0 ... self.postSpotCount - 1{
-          backCount = max - index
-          self.spotList.append(allData.record[backCount].spotId)
-          print(self.spotList)
-          if(index == self.postSpotCount - 1){
-            self.spotList.reverse()
-            self.postPlan()
+        if (allData.message == ""){
+          let max : Int = allData.record!.count - 1
+          var backCount = 0
+          print(self.postSpotCount)
+          for index in 0 ... self.postSpotCount - 1{
+            backCount = max - index
+            self.spotList.append(allData.record![backCount].spotId)
+            print(self.spotList)
+            if(index == self.postSpotCount - 1){
+              self.spotList.reverse()
+              self.postPlan()
+            }
           }
+        }else{
+          self.showAlert(title: allData.message, message: "再ログインしてください")
         }
       }
     }.resume()
@@ -530,7 +537,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   
   func postPlan(){
     let transportationString = transportation.reduce("") { $0 + String($1) }
-    var str : String = "user_id=sanwa114514&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)"
+    var str : String = "token=\(globalVar.token)&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)"
     for i in 0 ... spotList.count{
       if (i != spotList.count){
         str = str + "&spot_id_\(spotFlagList[i])=\(spotList[i])"
@@ -686,6 +693,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     
     self.view.addSubview(tabBar)
   }
+  
+  
   func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
     switch item.tag{
     case 1:
@@ -708,6 +717,15 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     case action5 = 5
     case action6 = 6
     case action7 = 7
+  }
+  
+  func idSetRealm(){
+    let realm = try! Realm()
+    
+    let user = realm.objects(UserModel.self)
+    for _user in user {
+      globalVar.userId = _user.user_id
+    }
   }
   @IBAction func pushButton(_ sender: Any) {
     if let button = sender as? UIButton {

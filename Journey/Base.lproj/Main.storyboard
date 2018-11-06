@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVX-iF-CIv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVX-iF-CIv">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -99,7 +99,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iFt-RN-kfR">
-                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gky-eb-NaJ" userLabel="SubView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
@@ -305,6 +305,7 @@
                         <outlet property="iconImageView" destination="sjX-V1-KD3" id="thp-bg-m30"/>
                         <outlet property="nextPassTextField" destination="jJ7-NF-hhR" id="sjF-lL-AfC"/>
                         <outlet property="passTextField" destination="quq-SX-JO7" id="V8S-2F-j87"/>
+                        <outlet property="scrollView" destination="iFt-RN-kfR" id="1Bc-en-28k"/>
                         <outlet property="subVIew" destination="gky-eb-NaJ" id="9oa-Ea-zPZ"/>
                         <outlet property="userIdTextField" destination="0ke-QF-ual" id="S6U-Fd-S0q"/>
                         <outlet property="userNameTextField" destination="nhg-XJ-1MK" id="ASc-oZ-Omp"/>
@@ -1212,7 +1213,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="wtz-ch-ohP">
-                                <rect key="frame" x="0.0" y="104" width="375" height="563"/>
+                                <rect key="frame" x="0.0" y="60" width="375" height="607"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Xo-Sp-8Qb">
                                         <rect key="frame" x="137.66666666666666" y="0.0" width="100" height="100"/>
@@ -1222,7 +1223,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="24B-Cm-M7h">
-                                        <rect key="frame" x="16" y="159.66666666666669" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="170.66666666666666" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザーID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zw-bI-wdq">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1234,7 +1235,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXI-vB-BTE">
-                                                <rect key="frame" x="16" y="32" width="311" height="24"/>
+                                                <rect key="frame" x="16" y="32.000000000000028" width="311" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="24" id="SWu-fw-NUW"/>
                                                 </constraints>
@@ -1249,7 +1250,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ANS-Rx-aUn">
-                                        <rect key="frame" x="16" y="275.66666666666669" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="297.66666666666669" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザー名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlz-9P-Frs">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1276,7 +1277,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pJz-98-06r">
-                                        <rect key="frame" x="16" y="391.33333333333331" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="424.33333333333331" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの年代" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKL-Bj-6zp">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1303,7 +1304,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dpR-59-I7w">
-                                        <rect key="frame" x="16" y="507" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="551" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの性別" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHR-hj-mW6">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1392,7 +1393,7 @@
                             <constraint firstItem="8go-uh-ORA" firstAttribute="trailing" secondItem="wtz-ch-ohP" secondAttribute="trailing" id="bSQ-wd-pHS"/>
                             <constraint firstItem="uWm-Wg-n0c" firstAttribute="leading" secondItem="8go-uh-ORA" secondAttribute="leading" constant="8" id="myH-9F-RH1"/>
                             <constraint firstItem="uWm-Wg-n0c" firstAttribute="top" secondItem="wtz-ch-ohP" secondAttribute="bottom" constant="32" id="qHt-Mh-2RB"/>
-                            <constraint firstItem="frj-D0-Fbg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uWm-Wg-n0c" secondAttribute="trailing" symbolic="YES" id="rcz-Vx-hAG"/>
+                            <constraint firstItem="frj-D0-Fbg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uWm-Wg-n0c" secondAttribute="trailing" constant="8" symbolic="YES" id="rcz-Vx-hAG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8go-uh-ORA"/>
                     </view>
@@ -1429,7 +1430,7 @@
         <segue reference="SAI-tm-OCo"/>
         <segue reference="6mO-Qw-wNq"/>
         <segue reference="ScF-Q7-9Tm"/>
-        <segue reference="lfn-x3-RFi"/>
-        <segue reference="XJN-4F-Krb"/>
+        <segue reference="FsQ-GA-J3d"/>
+        <segue reference="F4q-09-NOQ"/>
     </inferredMetricsTieBreakers>
 </document>

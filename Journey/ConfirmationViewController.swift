@@ -42,8 +42,8 @@ class ConfirmationViewController: UIViewController {
   }
   @IBAction func tappedStartViewButton(_ sender: Any) {
     postImage()
-    saveUser(id: globalVar.userId, name: globalVar.userName, pass: globalVar.userPass, generation: generation, gender: globalVar.userGender)
-    self.performSegue(withIdentifier: "toStartView", sender: nil)
+//    saveUser(id: globalVar.userId, name: globalVar.userName, pass: globalVar.userPass, generation: generation, gender: globalVar.userGender)
+//    self.performSegue(withIdentifier: "toStartView", sender: nil)
   }
   
 
@@ -121,8 +121,53 @@ class ConfirmationViewController: UIViewController {
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
+        print("aaaaaaaaaaa")
+//        self.loginUser()
       }
     }.resume()
+  }
+  
+  func loginUser(){
+    let str = "user_id=\(globalVar.userId)&user_pass=\(globalVar.userPass)"
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/login")
+    var request = URLRequest(url: url!)
+    request.httpMethod = "POST"
+    // POSTするデータをBodyとして設定
+    request.httpBody = str.data(using: .utf8)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: .utf8) ?? "")
+        var strData:String = String(data: data, encoding: .utf8)!
+        let nsStr:NSString = strData as NSString
+        let firstStr : String = nsStr.substring(to: 1)
+        if(firstStr == "{"){
+          self.showAlert(title: "IDまたはパスワードが間違っています。", message: "入力し直してください")
+        }else{
+          for _ in 0...1{
+            if let range = strData.range(of: "\""){
+              strData.removeSubrange(range)
+            }
+          }
+          self.saveUser(id: self.globalVar.userId, name: self.globalVar.userName, pass: self.globalVar.userPass, generation: self.generation, gender:  self.gender, token: strData)
+//          self.testRealm()
+          print("出力",strData)
+          self.globalVar.token = strData
+          self.performSegue(withIdentifier: "toStartView", sender: nil)
+        }
+      }
+      }.resume()
+  }
+  
+  func showAlert(title:String,message:String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+    let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+    alert.addAction(cancelButton)
+    self.present(alert, animated: true, completion: nil)
   }
   
   func settingData(){
@@ -175,7 +220,7 @@ class ConfirmationViewController: UIViewController {
     }
   }
   
-  func saveUser(id : String, name : String, pass : String, generation : Int, gender : String){
+  func saveUser(id : String, name : String, pass : String, generation : Int, gender : String, token : String){
     let realm = try! Realm()
     let userModel = UserModel()
     
@@ -185,6 +230,7 @@ class ConfirmationViewController: UIViewController {
     userModel.user_generation = generation
     userModel.user_gender = gender
     userModel.user_comment = "こんにちは"
+    userModel.user_token = token
     
     try! realm.write() {
       realm.add(userModel, update: true)
