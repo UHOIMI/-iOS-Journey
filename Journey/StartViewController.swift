@@ -37,6 +37,11 @@ class StartViewController: UIViewController {
         performSegue(withIdentifier: "toSpotListView", sender: nil)
     }
   
+  
+  @IBAction func tappedUserDetailButton(_ sender: Any) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
+  
   func saveUser(id : String, pass : String, token : String){
     let realm = try! Realm()
     let userModel = UserModel()
@@ -60,5 +65,6 @@ class StartViewController: UIViewController {
         realm.delete(user)
       }
     }
+    performSegue(withIdentifier: "toStartView", sender: nil)
   }
 }

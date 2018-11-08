@@ -50,7 +50,9 @@
 		9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB69211D14E300B8753B /* SpotListViewController.swift */; };
 		9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */; };
 		9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */; };
+		9155367F2191596300581837 /* DetailUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9155367E2191596300581837 /* DetailUserViewController.swift */; };
 		9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */; };
+		91D6442C219286F3005FF11E /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D6442B219286F3005FF11E /* EditUserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,7 +102,9 @@
 		9151DB69211D14E300B8753B /* SpotListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotListViewController.swift; sourceTree = "<group>"; };
 		9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSpotViewController.swift; sourceTree = "<group>"; };
 		9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpotViewController.swift; sourceTree = "<group>"; };
+		9155367E2191596300581837 /* DetailUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUserViewController.swift; sourceTree = "<group>"; };
 		9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutSpotViewController.swift; sourceTree = "<group>"; };
+		91D6442B219286F3005FF11E /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
 		B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,6 +167,8 @@
 				003C6DAC2117411F00A48959 /* StartViewController.swift */,
 				0020A4D72127FD71005FC16C /* NavigationController.swift */,
 				914BEE96218ABC3D009EF3BC /* UserModel.swift */,
+				9155367E2191596300581837 /* DetailUserViewController.swift */,
+				91D6442B219286F3005FF11E /* EditUserViewController.swift */,
 			);
 			path = Journey;
 			sourceTree = "<group>";
@@ -375,11 +381,13 @@
 				9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */,
 				00C4129E217853AA006B5ABC /* ButtonSettings.swift in Sources */,
 				003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */,
+				9155367F2191596300581837 /* DetailUserViewController.swift in Sources */,
 				00D7D433212821F400C507B7 /* SpotModel.swift in Sources */,
 				0021CDBC20F3415F00224865 /* PostViewController.swift in Sources */,
 				0021CDC220F3415F00224865 /* Journey.xcdatamodeld in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
 				00C412A4217DB103006B5ABC /* CreateUserViewController.swift in Sources */,
+				91D6442C219286F3005FF11E /* EditUserViewController.swift in Sources */,
 				00D7D43D212846B500C507B7 /* TabBar.swift in Sources */,
 				00C412A6217DB118006B5ABC /* ConfirmationViewController.swift in Sources */,
 				003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */,
