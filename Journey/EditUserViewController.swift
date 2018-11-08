@@ -11,9 +11,11 @@ import UIKit
 class EditUserViewController: UIViewController ,UITabBarDelegate {
   
   var imgView:UIImageView!
+  let myFrameSize:CGSize = UIScreen.main.bounds.size
   
   private var tabBar:TabBar!
   
+  @IBOutlet weak var scrollView: UIScrollView!
   @IBOutlet weak var subView: UIView!
   @IBOutlet weak var headerImageView: UIImageView!
   @IBOutlet weak var userNameTextField: UITextField!
@@ -25,18 +27,29 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
       
+      if myFrameSize.height >= 812{
+        //scrollViewsetScrollEnabled
+        scrollView.isScrollEnabled = false
+      }
+      
       self.imgView = UIImageView()
       self.imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
       self.imgView.image = UIImage(named: "no-image.png")
       self.imgView.frame.origin.y -= self.imgView.frame.height / 2
       
-      headerImageView.image = UIImage(named: "画像を選択")
+      //headerImageView.contentMode = UIView.ContentMode.scaleAspectFit
+      headerImageView.image = UIImage(named: "mountain")
       
       // 角を丸くする
       self.imgView.layer.cornerRadius = 100 * 0.5
       self.imgView.clipsToBounds = true
       
       subView.addSubview(self.imgView)
+      
+      userCommentTextView.layer.borderColor = UIColor.gray.cgColor
+      userCommentTextView.layer.borderWidth = 0.5
+      userCommentTextView.layer.cornerRadius = 10.0
+      userCommentTextView.layer.masksToBounds = true
 
       keyboardSettings()
       createTabBar()
