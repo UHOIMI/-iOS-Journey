@@ -1288,11 +1288,14 @@
                                             <constraint firstItem="AoB-jw-zFK" firstAttribute="top" secondItem="QjP-ki-pag" secondAttribute="bottom" constant="16" id="HFA-o7-0nc"/>
                                             <constraint firstAttribute="height" constant="647" id="LZF-kv-fK4"/>
                                             <constraint firstItem="H1t-59-7Kn" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="Mue-x9-6vw"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="H1t-59-7Kn" secondAttribute="trailing" constant="20" symbolic="YES" id="Ss7-0f-hPm"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AoB-jw-zFK" secondAttribute="trailing" constant="20" symbolic="YES" id="Ur0-mP-zwv"/>
                                             <constraint firstAttribute="trailing" secondItem="NQd-M3-wfZ" secondAttribute="trailing" constant="16" id="Xs2-Qh-dlH"/>
                                             <constraint firstItem="98c-iN-EzL" firstAttribute="top" secondItem="H1t-59-7Kn" secondAttribute="bottom" constant="16" id="YnS-QF-vyd"/>
                                             <constraint firstItem="AoB-jw-zFK" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="f9h-tk-hyA"/>
                                             <constraint firstItem="rAD-hQ-2ef" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" id="jMf-Ld-7gI"/>
                                             <constraint firstItem="H1t-59-7Kn" firstAttribute="top" secondItem="AoB-jw-zFK" secondAttribute="bottom" constant="16" id="jNE-KW-NSo"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QjP-ki-pag" secondAttribute="trailing" constant="20" symbolic="YES" id="jP9-aJ-6L1"/>
                                             <constraint firstItem="98c-iN-EzL" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="ucl-PN-yCY"/>
                                             <constraint firstItem="QjP-ki-pag" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="xM6-9i-x6R"/>
                                             <constraint firstAttribute="width" constant="375" id="xTz-Hn-AKW"/>
