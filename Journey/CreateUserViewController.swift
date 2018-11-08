@@ -200,33 +200,27 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
       showAlert(title: "ユーザーIDが入力されていません", message: "ユーザーIDを入力してください")
     }else if((userIdTextField.text?.count)! > 20){
       showAlert(title: "ユーザーIDが20文字を超えています", message: "文字数を20文字以内にしてください")
+    }else if(!predicate.evaluate(with: userIdTextField.text)){
+      showAlert(title: "ユーザーIDに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
     }else if(userNameTextField.text == ""){
-      showAlert(title: "名前が入力されていません", message: "名前を入力してください")
+      showAlert(title: "ユーザー名が入力されていません", message: "ユーザー名を入力してください")
     }else if((userNameTextField.text?.count)! > 20){
       showAlert(title: "ユーザー名が20文字を超えています", message: "文字数を20文字以内にしてください")
     }else if(passTextField.text == ""){
-      showAlert(title: "パスワードが入力されていません", message: "8文字以上,20文字以下で入力してください")
+      showAlert(title: "パスワードが入力されていません", message: "パスワードを入力してください")
     }else if((passTextField.text?.count)! < 8){
       showAlert(title: "パスワードの文字数が足りません", message: "8文字以上,20文字以下で入力してください")
     }else if(passTextField.text!.count > 20){
       showAlert(title: "パスワードの文字数が多すぎます", message: "8文字以上,20文字以下で入力してください")
-    }
-    else if (!predicate.evaluate(with: passTextField.text)){
+    }else if (!predicate.evaluate(with: passTextField.text)){
       showAlert(title: "パスワードに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
-    }else if(!predicate.evaluate(with: userIdTextField.text)){
-      showAlert(title: "ユーザーIDに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
-    }
-    else if(nextPassTextField.text == ""){
-      showAlert(title: "確認用パスワードが入力されていません", message: "8文字以上,20文字以下で入力してください")
-    }else if((nextPassTextField.text?.count)! < 8){
-      showAlert(title: "確認用パスワードの文字数が足りません", message: "8文字以上,20文字以下で入力してください")
-    }else if(nextPassTextField.text!.count > 20){
-      showAlert(title: "確認用パスワードの文字数が多すぎます", message: "8文字以上,20文字以下で入力してください")
+    }else if(nextPassTextField.text == ""){
+      showAlert(title: "確認用パスワードが入力されていません", message: "確認用パスワードを入力してください")
     }else if(passTextField.text != nextPassTextField.text){
       showAlert(title: "パスワードの文字が確認用と一致しません", message: "パスワードを再度入力してください")
-    }else if(generationTextField.text == ""){
+    }else if(generationTextField.text == "" || generationTextField.text == "-年代を選択-"){
       showAlert(title: "年代が選択されていません", message: "年代を選択してください")
-    }else if(genderTextField.text == ""){
+    }else if(genderTextField.text == "" || genderTextField.text == "-性別を選択-"){
       showAlert(title: "性別が選択されていません", message: "性別を選択してください")
     }else if(flag == 1){
       showAlert(title: "そのユーザーIDは存在しています。", message: "別のユーザーIDを設定してください。")
