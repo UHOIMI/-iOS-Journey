@@ -20,13 +20,15 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   @IBOutlet weak var userGenerationTextView: UILabel!
   @IBOutlet weak var userCommentTextView: UILabel!
   
+  let globalVar = GlobalVar.shared
+  
   var imgView:UIImageView!
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-      if myFrameSize.height >= 6{
+
+      if (myFrameSize.height >= 6){
         //scrollViewsetScrollEnabled
         scrollView.isScrollEnabled = true
       }
@@ -44,8 +46,10 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       self.imgView.clipsToBounds = true
       
       subView.addSubview(self.imgView)
-
-      userCommentTextView.text = "俺は泥棒である。本日も、とあるお宅にお邪魔した。――しかし。靴には穴が開いている。服にも穴が開いている。ガスは止められ、電気もつかない。通帳を見つけた。残高十八円だった。子供の部屋で見つけたのは、小さな手紙。『サンタさんへおかあさんに、きれいなドレスをください』俺は自分の財布から、福沢諭吉を一枚取り出した。そして、手紙の下に書き加えた。『サンタさんはセンスがないので、君が好きなのを選んであげてね』"
+      userGenderTextView.text = globalVar.userGender
+      userGenerationTextView.text = globalVar.userGeneration
+      userNameTextView.text = globalVar.userName
+      userCommentTextView.text = globalVar.userComment
       userCommentTextView.numberOfLines = 0
       userCommentTextView.sizeToFit()
       
@@ -107,5 +111,4 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       
     }
   }
-
 }

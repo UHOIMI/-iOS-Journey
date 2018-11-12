@@ -63,16 +63,68 @@ class LoginViewController: UIViewController {
               strData.removeSubrange(range)
             }
           }
-          self.saveUser(id: self.userIdTextField.text!, pass: self.userPassTextField.text!, token: strData)
           self.testRealm()
           print("出力",strData)
-          self.globalVar.userId = self.userIdTextField.text!
-          self.globalVar.userPass = self.userPassTextField.text!
-          self.globalVar.token = strData
+          self.getUser(token: strData)
           self.performSegue(withIdentifier: "toStartView", sender: nil)
         }
       }
     }.resume()
+  }
+  
+  func getUser(token : String){
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/find?user_id=\(userIdTextField.text!)")
+    let request = URLRequest(url: url!)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let allData = try? JSONDecoder().decode(AllData.self, from: data)
+        if(allData!.status == 200){
+          self.saveUser(id: self.userIdTextField.text!, pass: self.userPassTextField.text!, token: token, name: (allData?.record![0].userName)!, generation:  (allData?.record![0].generation)!, gender:  (allData?.record![0].gender)!, header:  (allData?.record![0].userHeader ?? "nil"), icon:  (allData?.record![0].userIcon)!, comment:  (allData?.record![0].comment)!)
+          self.globalVar.userId = self.userIdTextField.text!
+          self.globalVar.userPass = self.userPassTextField.text!
+          self.globalVar.token = token
+          self.globalVar.userName = (allData?.record![0].userName)!
+          self.settingData(gender: (allData?.record![0].gender)!, generation: (allData?.record![0].generation)!)
+          self.globalVar.userComment = (allData?.record![0].comment)!
+        }
+      }
+    }.resume()
+  }
+  struct AllData : Codable{
+    let status : Int
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+      let userId : String
+      let userName : String
+      let generation : Int
+      let gender : String
+      let comment : String?
+      let userIcon : String?
+      let userHeader : String?
+      let date : Date? = NSDate() as Date
+      enum CodingKeys: String, CodingKey {
+        case userId = "user_id"
+        case userName = "user_name"
+        case generation = "generation"
+        case gender = "gender"
+        case comment = "comment"
+        case userIcon = "user_icon"
+        case userHeader = "user_header"
+        case date
+      }
+    }
   }
   
   func showAlert(title:String,message:String) {
@@ -129,14 +181,19 @@ class LoginViewController: UIViewController {
     return true
   }
   
-  func saveUser(id : String, pass : String, token : String){
+  func saveUser(id : String, pass : String, token : String, name : String, generation : Int, gender : String, header : String, icon : String, comment : String){
     let realm = try! Realm()
     let userModel = UserModel()
     
     userModel.user_id = id
     userModel.user_pass = pass
-    userModel.user_comment = "こんにちは"
+    userModel.user_comment = comment
     userModel.user_token = token
+    userModel.user_name = name
+    userModel.user_image = icon
+    userModel.user_generation = generation
+    userModel.user_gender = gender
+    userModel.user_header = header
     
     try! realm.write() {
       realm.add(userModel, update: true)
@@ -151,6 +208,56 @@ class LoginViewController: UIViewController {
       print("れるむテストid", _user.user_id)
       print("れるむテストpass", _user.user_pass)
       print("れるむテストtoken", _user.user_token)
+      print("generation", _user.user_generation)
+    }
+  }
+  func settingData(gender:String,generation:Int){
+    switch gender {
+    case "男":
+      globalVar.userGender = "男性"
+      break
+    case "女":
+      globalVar.userGender = "女性"
+      break
+    default:
+      break
+    }
+    switch generation {
+    case 0:
+      globalVar.userGeneration = "10歳未満"
+      break
+    case 10:
+      globalVar.userGeneration = "10代"
+      break
+    case 20:
+      globalVar.userGeneration = "20代"
+      break
+    case 30:
+      globalVar.userGeneration = "30代"
+      break
+    case 40:
+      globalVar.userGeneration = "40代"
+      break
+    case 50:
+      globalVar.userGeneration = "50代"
+      break
+    case 60:
+      globalVar.userGeneration = "60代"
+      break
+    case 70:
+      globalVar.userGeneration = "70代"
+      break
+    case 80:
+      globalVar.userGeneration = "80代"
+      break
+    case 90:
+      globalVar.userGeneration = "90代"
+      break
+    case 100:
+      globalVar.userGeneration = "100歳以上"
+      break
+    default:
+      break
     }
   }
     /*

@@ -209,6 +209,7 @@ class ConfirmationViewController: UIViewController {
     userModel.user_generation = generation
     userModel.user_gender = gender
     userModel.user_comment = "こんにちは"
+    globalVar.userComment = "こんにちは"
     userModel.user_token = token
     
     try! realm.write() {
