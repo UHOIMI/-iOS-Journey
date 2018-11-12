@@ -20,8 +20,10 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
   @IBOutlet weak var headerImageView: UIImageView!
   @IBOutlet weak var userNameTextField: UITextField!
   @IBOutlet weak var userGenerationTextField: UITextField!
-  @IBOutlet weak var userPassTextField: UILabel!
+  @IBOutlet weak var userPassLabel: UILabel!
   @IBOutlet weak var userCommentTextView: UITextView!
+  
+  let globalVar = GlobalVar.shared
   
   
     override func viewDidLoad() {
@@ -45,6 +47,11 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
       self.imgView.clipsToBounds = true
       
       subView.addSubview(self.imgView)
+      
+      userNameTextField.text = globalVar.userName
+      userPassLabel.text = String(globalVar.userPass.suffix(4))
+      userGenerationTextField.text = globalVar.userGeneration
+      userCommentTextView.text = globalVar.userComment
       
       userCommentTextView.layer.borderColor = UIColor.gray.cgColor
       userCommentTextView.layer.borderWidth = 0.5

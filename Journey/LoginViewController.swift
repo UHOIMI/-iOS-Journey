@@ -85,6 +85,7 @@ class LoginViewController: UIViewController {
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let allData = try? JSONDecoder().decode(AllData.self, from: data)
         if(allData!.status == 200){
+          print("名前!!!!",(allData?.record![0].userName)!)
           self.saveUser(id: self.userIdTextField.text!, pass: self.userPassTextField.text!, token: token, name: (allData?.record![0].userName)!, generation:  (allData?.record![0].generation)!, gender:  (allData?.record![0].gender)!, header:  (allData?.record![0].userHeader ?? "nil"), icon:  (allData?.record![0].userIcon)!, comment:  (allData?.record![0].comment)!)
           self.globalVar.userId = self.userIdTextField.text!
           self.globalVar.userPass = self.userPassTextField.text!
@@ -184,6 +185,16 @@ class LoginViewController: UIViewController {
   func saveUser(id : String, pass : String, token : String, name : String, generation : Int, gender : String, header : String, icon : String, comment : String){
     let realm = try! Realm()
     let userModel = UserModel()
+    
+    let users = realm.objects(UserModel.self)
+    
+    for _user in users{
+      try! realm.write() {
+        realm.delete(_user)
+      }
+    }
+    
+  print("saveUser名前",name)
     
     userModel.user_id = id
     userModel.user_pass = pass

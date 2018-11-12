@@ -17,21 +17,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
+  let globalVar = GlobalVar.shared
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     GMSServices.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
     GMSPlacesClient.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
     GMSServices.provideAPIKey("AIzaSyAu4shygs1dkfd--14xncAtce8etYwP9EM")
-    var currentuser:String? = nil
+    var currentUser : String = ""
     let realm = try! Realm()
     let user = realm.objects(UserModel.self)
     for _user in user {
-      currentuser = _user.user_name
+      print("名前",_user.user_name)
+      currentUser = _user.user_name
     }
     //currentuser = nil
     //ユーザーがいない場合IndexViewに遷移
-    if (currentuser == nil){
+    if (currentUser == ""){
       //windowを生成
       self.window = UIWindow(frame: UIScreen.main.bounds)
       //Storyboardを指定
@@ -42,9 +44,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       //表示
       self.window?.makeKeyAndVisible()
     }else{
-      //ユーザーがいる場合Storyboardでチェックの入っているIs Initial View Controllerに遷移する
+      for _user in user {
+        globalVar.userName = _user.user_name
+        globalVar.userPass = _user.user_pass
+        globalVar.userComment = _user.user_comment
+        globalVar.userId = _user.user_id
+        globalVar.userIconPath = _user.user_image
+        globalVar.userHeaderPath = _user.user_header
+        settingData(gender: _user.user_gender, generation: _user.user_generation)
+      }
     }
     return true
+  }
+  
+  func settingData(gender:String,generation:Int){
+    switch gender {
+    case "男":
+      globalVar.userGender = "男性"
+      break
+    case "女":
+      globalVar.userGender = "女性"
+      break
+    default:
+      break
+    }
+    switch generation {
+    case 0:
+      globalVar.userGeneration = "10歳未満"
+      break
+    case 10:
+      globalVar.userGeneration = "10代"
+      break
+    case 20:
+      globalVar.userGeneration = "20代"
+      break
+    case 30:
+      globalVar.userGeneration = "30代"
+      break
+    case 40:
+      globalVar.userGeneration = "40代"
+      break
+    case 50:
+      globalVar.userGeneration = "50代"
+      break
+    case 60:
+      globalVar.userGeneration = "60代"
+      break
+    case 70:
+      globalVar.userGeneration = "70代"
+      break
+    case 80:
+      globalVar.userGeneration = "80代"
+      break
+    case 90:
+      globalVar.userGeneration = "90代"
+      break
+    case 100:
+      globalVar.userGeneration = "100歳以上"
+      break
+    default:
+      break
+    }
   }
 
   func applicationWillResignActive(_ application: UIApplication) {
@@ -138,9 +198,12 @@ class GlobalVar{
   var userPass : String = ""
   var userGender : String = ""
   var userGeneration : String = ""
+  var userIconPath : String = ""
   var userIcon = UIImage()
-  let ipAddress = "172.20.10.3:3000"
+  let ipAddress = "172.20.10.2:3000"
   var userComment = ""
+  var userHeaderPath = ""
+  var userHeader = UIImage()
   
   var token : String = ""
 //  let ipAddress = "35.200.26.70:443"

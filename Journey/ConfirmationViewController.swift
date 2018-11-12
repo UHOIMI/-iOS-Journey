@@ -202,6 +202,12 @@ class ConfirmationViewController: UIViewController {
   func saveUser(id : String, name : String, pass : String, generation : Int, gender : String, token : String){
     let realm = try! Realm()
     let userModel = UserModel()
+    let users = realm.objects(UserModel.self)
+    for _user in users{
+      try! realm.write() {
+        realm.delete(_user)
+      }
+    }
     
     userModel.user_id = id
     userModel.user_name = name
