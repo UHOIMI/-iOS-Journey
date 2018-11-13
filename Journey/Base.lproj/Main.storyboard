@@ -1684,12 +1684,17 @@
                                                 </connections>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="16g-kj-eIp">
-                                                <rect key="frame" x="323" y="272" width="20" height="20"/>
+                                                <rect key="frame" x="313" y="272" width="30" height="30"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="1yP-Ji-3AN"/>
-                                                    <constraint firstAttribute="width" constant="20" id="YIj-GD-ecS"/>
+                                                    <constraint firstAttribute="width" constant="30" id="Cuh-xz-8V1"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="O3T-5i-Nk8"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="b7Z-My-FPq"/>
+                                                    <constraint firstAttribute="height" constant="30" id="eD4-Fj-wAD"/>
                                                 </constraints>
                                                 <state key="normal" image="eye"/>
+                                                <connections>
+                                                    <action selector="tappedShowPasswordButton:" destination="AUq-od-qik" eventType="touchUpInside" id="d0F-SR-qKL"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1757,7 +1762,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pM-23-PR1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1598" y="-1097"/>
+            <point key="canvasLocation" x="-1599.2" y="-1097.001499250375"/>
         </scene>
     </scenes>
     <resources>
@@ -1773,7 +1778,6 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="llm-0e-jhh"/>
         <segue reference="euD-hk-qwI"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="EVb-Zv-0QA"/>

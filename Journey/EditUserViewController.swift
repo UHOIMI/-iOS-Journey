@@ -194,11 +194,48 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
     updateUser()
 //    performSegue(withIdentifier: "backDetailUserView", sender: nil)
   }
+  @IBAction func tappedShowPasswordButton(_ sender: Any) {
+    let ac = UIAlertController(title: "パスワード表示", message: "ユーザーIDを入力してください", preferredStyle: .alert)
+    let ok = UIAlertAction(title: "表示", style: .default, handler: {[weak ac] (action) -> Void in
+      guard let textFields = ac?.textFields else {
+        return
+      }
+      guard !textFields.isEmpty else {
+        return
+      }
+      for text in textFields {
+        if text.tag == 1 {
+          if(text.text! == self.globalVar.userId){
+            self.showAlert(title: "パスワード表示", message: self.globalVar.userPass)
+          }else{
+            self.showAlert(title: "ユーザーIDが間違っています", message: "入力し直してください")
+          }
+        }
+      }
+    })
+    let cancel = UIAlertAction(title: "閉じる", style: .cancel, handler: nil)
+    
+    //textfiled1の追加
+    ac.addTextField(configurationHandler: {(text:UITextField!) -> Void in
+      text.tag  = 1
+      text.placeholder = "ユーザーID"
+    })
+    
+    ac.addAction(ok)
+    ac.addAction(cancel)
+    
+    present(ac, animated: true, completion: nil)
+  }
   
   @IBAction func tappedCancelButton(_ sender: Any) {
     performSegue(withIdentifier: "backDetailUserView", sender: nil)
   }
-  
+  func showAlert(title:String,message:String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+    let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+    alert.addAction(cancelButton)
+    self.present(alert, animated: true, completion: nil)
+  }
   
   func keyboardSettings(){
     // 仮のサイズでツールバー生成
