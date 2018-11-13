@@ -24,9 +24,12 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
   @IBOutlet weak var userCommentTextView: UITextView!
   
   let globalVar = GlobalVar.shared
-  
+  let boundary = "----WebKitFormBoundaryZLdHZy8HNaBmUX0d"
+  var generation:Int = 0
   
     override func viewDidLoad() {
+      
+      print("token",globalVar.token)
         super.viewDidLoad()
       
       if myFrameSize.height >= 812{
@@ -62,6 +65,180 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
       createTabBar()
         // Do any additional setup after loading the view.
     }
+  
+  @objc func commitButtonTapped (){
+    self.view.endEditing(true)
+    self.resignFirstResponder()
+  }
+  
+  func postImage(){
+    let imageData = imgView.image?.jpegData(compressionQuality: 1.0)
+    let body = httpBody(imageData!, fileName: "\(globalVar.userId).jpg")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/image/upload")!
+    fileUpload(url, data: body) {(data, response, error) in
+      if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
+        if response.statusCode == 200 {
+          var imageStr:String = String(data: data!, encoding: .utf8)!
+          if let range = imageStr.range(of: "["){
+            imageStr.removeSubrange(range)
+          }
+          for _ in 0...1{
+            if let range = imageStr.range(of: "\\"){
+              imageStr.removeSubrange(range)
+            }
+            if let range = imageStr.range(of: "\""){
+              imageStr.removeSubrange(range)
+            }
+          }
+          if let range = imageStr.range(of: "]"){
+            imageStr.removeSubrange(range)
+          }
+          print("Upload done",data as Any)
+          print(String(data: data!, encoding: .utf8) ?? "")
+        } else {
+          print(response.statusCode)
+        }
+      }
+    }
+  }
+  func httpBody(_ fileAsData: Data, fileName: String) -> Data {
+    var data = "--\(boundary)\r\n".data(using: .utf8)!
+    // サーバ側が想定しているinput(type=file)タグのname属性値とファイル名をContent-Dispositionヘッダで設定
+    data += "Content-Disposition: form-data; name=\"image\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!
+    data += "Content-Type: image/jpeg\r\n".data(using: .utf8)!
+    data += "\r\n".data(using: .utf8)!
+    data += fileAsData
+    data += "\r\n".data(using: .utf8)!
+    data += "--\(boundary)--\r\n".data(using: .utf8)!
+    
+    return data
+  }
+  // リクエストを生成してアップロード
+  func fileUpload(_ url: URL, data: Data, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    // マルチパートでファイルアップロード
+    let headers = ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
+    let urlConfig = URLSessionConfiguration.default
+    urlConfig.httpAdditionalHeaders = headers
+    
+    let session = Foundation.URLSession(configuration: urlConfig)
+    let task = session.uploadTask(with: request, from: data, completionHandler: completionHandler)
+    task.resume()
+  }
+  
+  func updateUser(){
+    let str = "user_name=\(userNameTextField.text!)&generation=\(generation)&comment=\(userCommentTextView.text!)&token=\(globalVar.token)"
+    print("表示",str)
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/update")
+    var request = URLRequest(url: url!)
+    // POSTを指定
+    request.httpMethod = "PUT"
+    // POSTするデータをBodyとして設定
+    request.httpBody = str.data(using: .utf8)
+    request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: .utf8) ?? "")
+      }
+    }.resume()
+  }
+  
+  func settingData(userGeneration : String){
+    switch userGeneration {
+    case "10歳未満":
+      generation = 0
+      break
+    case "10代":
+      generation = 10
+      break
+    case "20代":
+      generation = 20
+      break
+    case "30代":
+      generation = 30
+      break
+    case "40代":
+      generation = 40
+      break
+    case "50代":
+      generation = 50
+      break
+    case "60代":
+      generation = 60
+      break
+    case "70代":
+      generation = 70
+      break
+    case "80代":
+      generation = 80
+      break
+    case "90代":
+      generation = 90
+      break
+    case "100歳以上":
+      generation = 100
+      break
+    default:
+      break
+    }
+  }
+  
+  @IBAction func tappedSaveButton(_ sender: Any) {
+    settingData(userGeneration: userGenerationTextField.text!)
+    updateUser()
+//    performSegue(withIdentifier: "backDetailUserView", sender: nil)
+  }
+  
+  @IBAction func tappedCancelButton(_ sender: Any) {
+    performSegue(withIdentifier: "backDetailUserView", sender: nil)
+  }
+  
+  
+  func keyboardSettings(){
+    // 仮のサイズでツールバー生成
+    let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
+    kbToolBar.barStyle = UIBarStyle.default  // スタイルを設定
+    kbToolBar.sizeToFit()  // 画面幅に合わせてサイズを変更
+    // スペーサー
+    let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+    // 閉じるボタン
+    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(self.commitButtonTapped))
+    kbToolBar.items = [spacer, commitButton]
+    userCommentTextView.inputAccessoryView = kbToolBar
+  }
+  
+  // キーボードが現れた時に、画面全体をずらす。
+  @objc func keyboardWillShow(notification: Notification?) {
+    tabBar.isHidden = true
+    let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+    let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+    UIView.animate(withDuration: duration!, animations: { () in
+      let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+      self.view.transform = transform
+      
+    })
+  }
+  
+  // キーボードが消えたときに、画面を戻す
+  @objc func keyboardWillHide(notification: Notification?) {
+    tabBar.isHidden = false
+    let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
+    UIView.animate(withDuration: duration!, animations: { () in
+      
+      self.view.transform = CGAffineTransform.identity
+    })
+  }
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder() // Returnキーを押したときにキーボードを下げる
+    return true
+  }
   
   func createTabBar(){
     let width = self.view.frame.width
@@ -111,50 +288,4 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
       
     }
   }
-  
-  @objc func commitButtonTapped (){
-    self.view.endEditing(true)
-    self.resignFirstResponder()
-  }
-  
-  func keyboardSettings(){
-    // 仮のサイズでツールバー生成
-    let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
-    kbToolBar.barStyle = UIBarStyle.default  // スタイルを設定
-    kbToolBar.sizeToFit()  // 画面幅に合わせてサイズを変更
-    // スペーサー
-    let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-    // 閉じるボタン
-    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(self.commitButtonTapped))
-    kbToolBar.items = [spacer, commitButton]
-    userCommentTextView.inputAccessoryView = kbToolBar
-  }
-  
-  // キーボードが現れた時に、画面全体をずらす。
-  @objc func keyboardWillShow(notification: Notification?) {
-    tabBar.isHidden = true
-    let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-    let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
-    UIView.animate(withDuration: duration!, animations: { () in
-      let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
-      self.view.transform = transform
-      
-    })
-  }
-  
-  // キーボードが消えたときに、画面を戻す
-  @objc func keyboardWillHide(notification: Notification?) {
-    tabBar.isHidden = false
-    let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
-    UIView.animate(withDuration: duration!, animations: { () in
-      
-      self.view.transform = CGAffineTransform.identity
-    })
-  }
-  
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder() // Returnキーを押したときにキーボードを下げる
-    return true
-  }
-
 }

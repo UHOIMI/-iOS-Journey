@@ -1340,7 +1340,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYB-y1-OP4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-446" y="-1088"/>
+            <point key="canvasLocation" x="143" y="-1271"/>
         </scene>
         <!--入力内容確認-->
         <scene sceneID="Dch-sw-eK7">
@@ -1645,6 +1645,7 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="tappedConfirmationButton:" destination="9O0-ua-uXk" eventType="touchUpInside" id="wkJ-Bh-xr5"/>
+                                                    <action selector="tappedSaveButton:" destination="AUq-od-qik" eventType="touchUpInside" id="uJ8-Et-8aG"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QnE-lb-2CM" customClass="ButtonSettings" customModule="Journey" customModuleProvider="target">
@@ -1667,6 +1668,7 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="tappedBackButton:" destination="9O0-ua-uXk" eventType="touchUpInside" id="l5F-8Z-1HO"/>
+                                                    <action selector="tappedCancelButton:" destination="AUq-od-qik" eventType="touchUpInside" id="4YS-Q5-wWh"/>
                                                 </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ped-v0-0vd">
@@ -1750,11 +1752,12 @@
                         <outlet property="userGenerationTextField" destination="yU6-gH-1rg" id="YF5-rZ-SOs"/>
                         <outlet property="userNameTextField" destination="nAD-j3-s4F" id="cJM-g3-WXS"/>
                         <outlet property="userPassLabel" destination="SjS-mF-sbk" id="Aad-ON-iov"/>
+                        <segue destination="KJW-a3-dr8" kind="show" identifier="backDetailUserView" id="euD-hk-qwI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pM-23-PR1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1578.4000000000001" y="-1226.6009852216748"/>
+            <point key="canvasLocation" x="-1598" y="-1097"/>
         </scene>
     </scenes>
     <resources>
@@ -1770,6 +1773,8 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="llm-0e-jhh"/>
+        <segue reference="euD-hk-qwI"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="EVb-Zv-0QA"/>
         <segue reference="SAI-tm-OCo"/>

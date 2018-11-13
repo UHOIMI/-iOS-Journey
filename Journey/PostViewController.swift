@@ -465,7 +465,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   struct AllData : Codable{
     let status : Int
     let record : [Record]?
-    let message : String
+    let message : String?
     enum CodingKeys: String, CodingKey {
       case status
       case record
@@ -476,7 +476,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       let userId : String
       let spotTitle : String
       let spotAddress : SpotAddress
-      let spotComment : String
+      let spotComment : String?
       let spotImageA : String?
       let spotImageB : String?
       let spotImageC : String?
@@ -529,7 +529,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
             }
           }
         }else{
-          self.showAlert(title: allData.message, message: "再ログインしてください")
+          self.showAlert(title: allData.message!, message: "再ログインしてください")
         }
       }
     }.resume()
