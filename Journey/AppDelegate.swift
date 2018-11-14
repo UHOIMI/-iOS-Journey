@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         globalVar.userComment = _user.user_comment
         globalVar.userId = _user.user_id
         globalVar.userIconPath = _user.user_image
-        globalVar.userHeaderPath = _user.user_header
+        globalVar.userHeaderPath = "http://35.200.26.70:8080/test1/netherland-1-860x573.jpg"
         settingData(gender: _user.user_gender, generation: _user.user_generation)
       }
     }

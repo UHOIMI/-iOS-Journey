@@ -32,6 +32,14 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         //scrollViewsetScrollEnabled
         scrollView.isScrollEnabled = true
       }
+      if(globalVar.userHeaderPath == ""){
+        headerImageView.image = UIImage(named: "mountain")
+      }else{
+        let url = URL(string: globalVar.userHeaderPath)!
+        let imageData = try? Data(contentsOf: url)
+        let image = UIImage(data:imageData!)
+        headerImageView.image = image
+      }
       
       self.imgView = UIImageView()
       self.imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
@@ -39,7 +47,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       self.imgView.frame.origin.y -= self.imgView.frame.height / 2
       
       //headerImageView.contentMode = UIView.ContentMode.scaleAspectFit
-      headerImageView.image = UIImage(named: "mountain")
+//      headerImageView.image = UIImage(named: "mountain")
       
       // 角を丸くする
       self.imgView.layer.cornerRadius = 100 * 0.5
