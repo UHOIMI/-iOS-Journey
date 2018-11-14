@@ -33,12 +33,14 @@ class LoginViewController: UIViewController {
     }else if(userPassTextField.text == ""){
       showAlert(title: "パスワードが入力されていません", message: "パスワードを入力してください")
     }else{
+      globalVar.userId = userIdTextField.text!
+      globalVar.userPass = userPassTextField.text!
       loginUser()
     }
   }
   
   func loginUser(){
-    let str = "user_id=\(userIdTextField.text!)&user_pass=\(userPassTextField.text!)"
+    let str = "user_id=\(globalVar.userId)&user_pass=\(globalVar.userPass)"
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/login")
     var request = URLRequest(url: url!)
     request.httpMethod = "POST"
@@ -66,14 +68,14 @@ class LoginViewController: UIViewController {
           self.testRealm()
           print("出力",strData)
           self.getUser(token: strData)
-          self.performSegue(withIdentifier: "toStartView", sender: nil)
+          
         }
       }
     }.resume()
   }
   
   func getUser(token : String){
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/find?user_id=\(userIdTextField.text!)")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/find?user_id=\(globalVar.userId)")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -86,13 +88,12 @@ class LoginViewController: UIViewController {
         let allData = try? JSONDecoder().decode(AllData.self, from: data)
         if(allData!.status == 200){
           print("名前!!!!",(allData?.record![0].userName)!)
-          self.saveUser(id: self.userIdTextField.text!, pass: self.userPassTextField.text!, token: token, name: (allData?.record![0].userName)!, generation:  (allData?.record![0].generation)!, gender:  (allData?.record![0].gender)!, header:  (allData?.record![0].userHeader ?? "nil"), icon:  (allData?.record![0].userIcon)!, comment:  (allData?.record![0].comment)!)
-          self.globalVar.userId = self.userIdTextField.text!
-          self.globalVar.userPass = self.userPassTextField.text!
+          self.saveUser(id: (allData?.record![0].userId)!, pass: self.globalVar.userPass, token: token, name: (allData?.record![0].userName)!, generation:  (allData?.record![0].generation)!, gender:  (allData?.record![0].gender)!, header:  (allData?.record![0].userHeader ?? "nil"), icon:  (allData?.record![0].userIcon)!, comment:  (allData?.record![0].comment)!)
           self.globalVar.token = token
           self.globalVar.userName = (allData?.record![0].userName)!
           self.settingData(gender: (allData?.record![0].gender)!, generation: (allData?.record![0].generation)!)
           self.globalVar.userComment = (allData?.record![0].comment)!
+          self.performSegue(withIdentifier: "toStartView", sender: nil)
         }
       }
     }.resume()
