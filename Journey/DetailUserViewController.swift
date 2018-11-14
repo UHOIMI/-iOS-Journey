@@ -40,11 +40,14 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         let image = UIImage(data:imageData!)
         headerImageView.image = image
       }
+      let iconUrl = URL(string: globalVar.userIconPath)!
+      let iconData = try? Data(contentsOf: iconUrl)
+      let iconImage = UIImage(data:iconData!)
       
       self.imgView = UIImageView()
-      self.imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
-      self.imgView.image = UIImage(named: "no-image.png")
-      self.imgView.frame.origin.y -= self.imgView.frame.height / 2
+      imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
+      imgView.image = iconImage
+      imgView.frame.origin.y -= self.imgView.frame.height / 2
       
       //headerImageView.contentMode = UIView.ContentMode.scaleAspectFit
 //      headerImageView.image = UIImage(named: "mountain")
