@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RSKImageCropper
 
 class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerViewDataSource, UIPickerViewDelegate{
 
@@ -171,6 +172,17 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     notification.removeObserver(self)
   }
   
+  
+  @IBAction func tappedIcon(_ sender: Any) {
+    let image = UIImage(named: "img2")!
+    let imageCropVC = RSKImageCropViewController(image: image, cropMode: .circle)
+    imageCropVC.moveAndScaleLabel.text = "切り取り範囲を選択"
+    imageCropVC.cancelButton.setTitle("キャンセル", for: .normal)
+    imageCropVC.chooseButton.setTitle("完了", for: .normal)
+    imageCropVC.delegate = self
+    present(imageCropVC, animated: true)
+  }
+  
   // キーボードが消えたときに、画面を戻す
   @objc func keyboardWillHide(notification: Notification?) {
     if(keyboardFlag == 0){
@@ -323,3 +335,37 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     */
 
 }
+
+extension CreateUserViewController: RSKImageCropViewControllerDelegate{
+  
+  func imageCropViewControllerCustomMovementRect(_ controller: RSKImageCropViewController) -> CGRect {
+    return controller.maskRect
+  }
+  
+  //キャンセルを押した時の処理
+  func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  //完了を押した後の処理
+  func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
+    
+    dismiss(animated: true)
+    
+    if controller.cropMode == .circle {
+      UIGraphicsBeginImageContext(croppedImage.size)
+      let layerView = UIImageView(image: croppedImage)
+      layerView.frame.size = croppedImage.size
+      layerView.layer.cornerRadius = layerView.frame.size.width * 0.5
+      layerView.clipsToBounds = true
+      let context = UIGraphicsGetCurrentContext()!
+      layerView.layer.render(in: context)
+      let capturedImage = UIGraphicsGetImageFromCurrentImageContext()!
+      UIGraphicsEndImageContext()
+      let pngData = capturedImage.pngData()!
+      //このImageは円形で余白は透過です。
+      let png = UIImage(data: pngData)!
+      iconImageView.image = png
+    }
+  }
+}
+
