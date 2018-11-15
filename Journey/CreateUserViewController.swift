@@ -363,7 +363,6 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     //編集機能を表示させない場合
     let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage
     editImage = image
-    let imageUrl = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.referenceURL)] as? NSURL
     
     //iconImageView.image = image
     print("画像通過２")
