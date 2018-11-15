@@ -1268,51 +1268,53 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="147" translatesAutoresizingMaskIntoConstraints="NO" id="NQd-M3-wfZ">
-                                                <rect key="frame" x="16" y="372" width="343" height="27"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="過去の投稿" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7Y-6s-AiW">
-                                                        <rect key="frame" x="0.0" y="0.0" width="102" height="27"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TK3-8T-BbU">
-                                                        <rect key="frame" x="249" y="0.0" width="94" height="27"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                        <state key="normal" title="すべて表示"/>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" horizontalCompressionResistancePriority="749" text="過去の投稿" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7Y-6s-AiW">
+                                                <rect key="frame" x="16" y="372" width="120" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="c67-1z-MzW"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98c-iN-EzL">
-                                                <rect key="frame" x="16" y="324" width="33" height="16"/>
+                                                <rect key="frame" x="16" y="324" width="343" height="16"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TK3-8T-BbU">
+                                                <rect key="frame" x="284" y="372" width="75" height="27"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="ssL-lh-qRa"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <state key="normal" title="すべて表示"/>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="NQd-M3-wfZ" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="0n2-fi-Pyd"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="98c-iN-EzL" secondAttribute="trailing" constant="20" symbolic="YES" id="CQh-Bj-nv4"/>
-                                            <constraint firstItem="NQd-M3-wfZ" firstAttribute="top" secondItem="98c-iN-EzL" secondAttribute="bottom" constant="32" id="Dob-Eu-rOX"/>
                                             <constraint firstAttribute="trailing" secondItem="rAD-hQ-2ef" secondAttribute="trailing" id="EpN-mD-xZH"/>
                                             <constraint firstItem="rAD-hQ-2ef" firstAttribute="top" secondItem="lkc-eX-UHd" secondAttribute="top" id="F62-XK-a59"/>
                                             <constraint firstItem="QjP-ki-pag" firstAttribute="top" secondItem="rAD-hQ-2ef" secondAttribute="bottom" constant="64" id="HBm-lw-cz5"/>
                                             <constraint firstItem="AoB-jw-zFK" firstAttribute="top" secondItem="QjP-ki-pag" secondAttribute="bottom" constant="16" id="HFA-o7-0nc"/>
                                             <constraint firstAttribute="height" constant="647" id="LZF-kv-fK4"/>
+                                            <constraint firstItem="TK3-8T-BbU" firstAttribute="top" secondItem="98c-iN-EzL" secondAttribute="bottom" constant="32" id="LZN-Gq-R5R"/>
                                             <constraint firstItem="H1t-59-7Kn" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="Mue-x9-6vw"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="H1t-59-7Kn" secondAttribute="trailing" constant="20" symbolic="YES" id="Ss7-0f-hPm"/>
+                                            <constraint firstAttribute="trailing" secondItem="98c-iN-EzL" secondAttribute="trailing" constant="16" id="UfY-YE-MFM"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AoB-jw-zFK" secondAttribute="trailing" constant="20" symbolic="YES" id="Ur0-mP-zwv"/>
-                                            <constraint firstAttribute="trailing" secondItem="NQd-M3-wfZ" secondAttribute="trailing" constant="16" id="Xs2-Qh-dlH"/>
                                             <constraint firstItem="98c-iN-EzL" firstAttribute="top" secondItem="H1t-59-7Kn" secondAttribute="bottom" constant="16" id="YnS-QF-vyd"/>
+                                            <constraint firstItem="TK3-8T-BbU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7Y-6s-AiW" secondAttribute="trailing" constant="8" symbolic="YES" id="c7C-vw-aHd"/>
+                                            <constraint firstItem="D7Y-6s-AiW" firstAttribute="top" secondItem="98c-iN-EzL" secondAttribute="bottom" constant="32" id="cub-RR-yR9"/>
+                                            <constraint firstAttribute="trailing" secondItem="TK3-8T-BbU" secondAttribute="trailing" constant="16" id="dvG-hs-pCO"/>
                                             <constraint firstItem="AoB-jw-zFK" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="f9h-tk-hyA"/>
+                                            <constraint firstItem="D7Y-6s-AiW" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="gFs-zX-Rfe"/>
                                             <constraint firstItem="rAD-hQ-2ef" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" id="jMf-Ld-7gI"/>
                                             <constraint firstItem="H1t-59-7Kn" firstAttribute="top" secondItem="AoB-jw-zFK" secondAttribute="bottom" constant="16" id="jNE-KW-NSo"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QjP-ki-pag" secondAttribute="trailing" constant="20" symbolic="YES" id="jP9-aJ-6L1"/>
                                             <constraint firstItem="98c-iN-EzL" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="ucl-PN-yCY"/>
                                             <constraint firstItem="QjP-ki-pag" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="xM6-9i-x6R"/>
-                                            <constraint firstAttribute="width" constant="375" id="xTz-Hn-AKW"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1354,7 +1356,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYB-y1-OP4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="143" y="-1271"/>
+            <point key="canvasLocation" x="142.5" y="-1271.8309859154929"/>
         </scene>
         <!--入力内容確認-->
         <scene sceneID="Dch-sw-eK7">
@@ -1792,7 +1794,8 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pHU-pk-b4U"/>
+        <segue reference="llm-0e-jhh"/>
+        <segue reference="euD-hk-qwI"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="EVb-Zv-0QA"/>
         <segue reference="PgR-1F-fd2"/>
