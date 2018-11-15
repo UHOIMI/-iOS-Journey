@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import RSKImageCropper
+import Photos
 
-class EditUserViewController: UIViewController ,UITabBarDelegate {
+class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
   var imgView:UIImageView!
   let myFrameSize:CGSize = UIScreen.main.bounds.size
@@ -26,6 +28,8 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
   let globalVar = GlobalVar.shared
   let boundary = "----WebKitFormBoundaryZLdHZy8HNaBmUX0d"
   var generation:Int = 0
+  var editImage : UIImage? = nil
+  var editImageNum = 1
   
     override func viewDidLoad() {
       
@@ -189,6 +193,80 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
     }
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    for touch: UITouch in touches {
+      let tag = touch.view!.tag
+      switch (tag) {
+      case 1:
+        setImage(num: 1)
+        break
+      case 2:
+        setImage(num: 2)
+        break
+      default:
+        break
+      }
+    }
+  }
+  
+  func setImage(num : Int) {
+    editImageNum = num
+    checkPermission()
+    if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+      let ipc = UIImagePickerController()
+      ipc.delegate = self
+      ipc.sourceType = UIImagePickerController.SourceType.photoLibrary
+      ipc.allowsEditing = false
+      self.present(ipc,animated: true)
+    }
+  }
+  
+  func cutImage(image : UIImage){
+      let imageCropVC = RSKImageCropViewController(image: image, cropMode: .square)
+    if(editImageNum == 2){
+      let imageCropVC2 = RSKImageCropViewController(image: image, cropMode: .custom)
+      imageCropVC2.dataSource = self
+    }
+    imageCropVC.moveAndScaleLabel.text = "切り取り範囲を選択"
+    imageCropVC.cancelButton.setTitle("キャンセル", for: .normal)
+    imageCropVC.chooseButton.setTitle("完了", for: .normal)
+    imageCropVC.delegate = self
+    present(imageCropVC, animated: true)
+  }
+  
+  func checkPermission(){
+    let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+    
+    switch photoAuthorizationStatus {
+    case .authorized:
+      print("auth")
+    case .notDetermined:
+      PHPhotoLibrary.requestAuthorization({
+        (newStatus) in
+        print("status is \(newStatus)")
+        if newStatus ==  PHAuthorizationStatus.authorized {
+          /* do stuff here */
+          print("success")
+        }
+      })
+      print("not Determined")
+    case .restricted:
+      print("restricted")
+    case .denied:
+      print("denied")
+    }
+  }
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+    let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage
+    editImage = image
+    
+    dismiss(animated: true, completion: {
+      self.cutImage(image: self.editImage!)
+    })
+  }
+  
   @IBAction func tappedSaveButton(_ sender: Any) {
     settingData(userGeneration: userGenerationTextField.text!)
     updateUser()
@@ -323,6 +401,97 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
       performSegue(withIdentifier: "backDetailUserView", sender: nil)
     default : return
       
+    }
+  }
+}
+
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+  return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+  return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+  return input.rawValue
+}
+
+extension EditUserViewController: RSKImageCropViewControllerDelegate, RSKImageCropViewControllerDataSource{
+  
+  func imageCropViewControllerCustomMaskRect(_ controller: RSKImageCropViewController) -> CGRect {
+    
+    print("マスク")
+    
+    var maskSize: CGSize
+    var width, height: CGFloat!
+    
+    width = self.view.frame.width
+    print(width)
+    
+    // 縦横比 = 1 : 2でトリミングしたい場合
+    height = self.view.frame.width / 3
+    print(height)
+    
+    // 正方形でトリミングしたい場合
+    //height = self.view.frame.width
+    
+    maskSize = CGSize(width: width, height: height)
+    
+    let viewWidth: CGFloat = controller.view.frame.width
+    let viewHeight: CGFloat = controller.view.frame.height
+    
+    let maskRect: CGRect = CGRect(x: (viewWidth - maskSize.width) * 0.5, y: (viewHeight - maskSize.height) * 0.5, width: maskSize.width, height: maskSize.height)
+    print(maskRect)
+    return maskRect
+  }
+  
+  func imageCropViewControllerCustomMaskPath(_ controller: RSKImageCropViewController) -> UIBezierPath {
+    
+    print("マスク２")
+    
+    let rect: CGRect = controller.maskRect
+    print(rect)
+    
+    let point1: CGPoint = CGPoint(x: rect.minX, y: rect.maxY)
+    let point2: CGPoint = CGPoint(x: rect.maxX, y: rect.maxY)
+    let point3: CGPoint = CGPoint(x: rect.maxX, y: rect.minY)
+    let point4: CGPoint = CGPoint(x: rect.minX, y: rect.minY)
+    
+    print(point1)
+    print(point2)
+    print(point3)
+    print(point4)
+    
+    let square: UIBezierPath = UIBezierPath()
+    square.move(to: point1)
+    square.addLine(to: point2)
+    square.addLine(to: point3)
+    square.addLine(to: point4)
+    square.close()
+    
+    return square
+  }
+  
+  func imageCropViewControllerCustomMovementRect(_ controller: RSKImageCropViewController) -> CGRect {
+    return controller.maskRect
+  }
+  
+  //キャンセルを押した時の処理
+  func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  //完了を押した後の処理
+  func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
+    
+    dismiss(animated: true)
+    
+    if controller.cropMode == .square {
+      imgView.image = croppedImage
+    }else if controller.cropMode == .custom{
+      headerImageView.image = croppedImage
     }
   }
 }
