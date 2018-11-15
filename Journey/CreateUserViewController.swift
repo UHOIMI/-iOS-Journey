@@ -77,6 +77,9 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
       //scrollViewsetScrollEnabled
       scrollView.isScrollEnabled = false
     }
+    if let validImage = globalVar.userIcon{
+      iconImageView.image = validImage
+    }
     
     if(globalVar.userId != ""){
       userIdTextField.text = globalVar.userId
@@ -117,9 +120,6 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     generationPickerView.delegate = self
     generationTextField.inputView = generationPickerView
     
-    /*iconImageView.frame = CGRect(x: iconImageView.frame.origin.x, y: iconImageView.frame.origin.y, width: 100, height: 100)
-    iconImageView.image = UIImage(named: "no-image.png")
-    iconImageView.frame.origin.y -= self.imgView.frame.height / 2*/
     
     self.iconImageView.layer.cornerRadius = 100 * 0.5
     self.iconImageView.clipsToBounds = true
@@ -147,13 +147,6 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     }
   }
   
-//  private func textFieldDidBeginEditing(textField: UITextField) {
-//    if(textField.tag == 0 || textField.tag == 1){
-//      keyboardFlag = 1
-//    }else{
-//      keyboardFlag = 0
-//    }
-//  }
   override func viewWillAppear(_ animated: Bool) {
     
     super.viewWillAppear(animated)
