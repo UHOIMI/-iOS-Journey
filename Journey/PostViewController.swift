@@ -32,8 +32,6 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
  
   var transportation = ["0,","0,","0,","0,","0,","0,","0"]
   var spotData : ListSpotModel = ListSpotModel()
-  let ipAddress = "172.20.10.2:3000"
-//  let ipAddress = "35.200.26.70:443"
   
   var imageFlag1 = 0
   var imageFlag2 = 0
