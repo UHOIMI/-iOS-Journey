@@ -28,9 +28,9 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-      if (myFrameSize.height >= 6){
+      if (myFrameSize.height >= 667){
         //scrollViewsetScrollEnabled
-        scrollView.isScrollEnabled = true
+        scrollView.isScrollEnabled = false
       }
       if(globalVar.userHeaderPath == ""){
         headerImageView.image = UIImage(named: "mountain")

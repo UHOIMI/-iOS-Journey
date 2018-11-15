@@ -138,7 +138,7 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
         case 3:
             print("３")
         case 4:
-            print("４")
+            performSegue(withIdentifier: "toDetailUserView", sender: nil)
         default : return
             
         }

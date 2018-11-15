@@ -25,7 +25,7 @@ DEPENDENCIES:
   - RSKImageCropper
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - GoogleMaps
     - GooglePlacePicker
     - GooglePlaces
@@ -43,4 +43,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cb8ff40ebf9d561cc12db6ec5c581e06068be3e9
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.5.0
