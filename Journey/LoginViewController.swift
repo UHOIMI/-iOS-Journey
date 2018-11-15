@@ -28,6 +28,8 @@ class LoginViewController: UIViewController {
     }
     
   @IBAction func tappedLoginButton(_ sender: Any) {
+    userIdTextField.endEditing(true)
+    userPassTextField.endEditing(true)
     if (userIdTextField.text == ""){
       showAlert(title: "ユーザーIDが入力されていません", message: "ユーザーIDを入力してください")
     }else if(userPassTextField.text == ""){
