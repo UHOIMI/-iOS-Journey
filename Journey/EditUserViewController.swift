@@ -42,9 +42,12 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
       }
       
       self.imgView = UIImageView()
-      self.imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
+      self.imgView.frame = CGRect(x: 30, y: headerImageView.frame.width / 3, width: 100, height: 100)
+      print("aaaaaa", headerImageView.frame.origin.y)
       self.imgView.image = UIImage(named: "no-image.png")
-      self.imgView.frame.origin.y -= self.imgView.frame.height / 2
+      self.imgView.frame.origin.y -= 50
+      imgView.isUserInteractionEnabled = true
+      imgView.tag = 1
       
       //headerImageView.contentMode = UIView.ContentMode.scaleAspectFit
       headerImageView.image = UIImage(named: "mountain")
@@ -222,10 +225,10 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
   }
   
   func cutImage(image : UIImage){
-      let imageCropVC = RSKImageCropViewController(image: image, cropMode: .square)
+    var imageCropVC = RSKImageCropViewController(image: image, cropMode: .square)
     if(editImageNum == 2){
-      let imageCropVC2 = RSKImageCropViewController(image: image, cropMode: .custom)
-      imageCropVC2.dataSource = self
+      imageCropVC = RSKImageCropViewController(image: image, cropMode: .custom)
+      imageCropVC.dataSource = self
     }
     imageCropVC.moveAndScaleLabel.text = "切り取り範囲を選択"
     imageCropVC.cancelButton.setTitle("キャンセル", for: .normal)
@@ -434,9 +437,6 @@ extension EditUserViewController: RSKImageCropViewControllerDelegate, RSKImageCr
     // 縦横比 = 1 : 2でトリミングしたい場合
     height = self.view.frame.width / 3
     print(height)
-    
-    // 正方形でトリミングしたい場合
-    //height = self.view.frame.width
     
     maskSize = CGSize(width: width, height: height)
     
