@@ -35,6 +35,9 @@ class ConfirmationViewController: UIViewController {
       userGenderLabel.text = globalVar.userGender
       setIconImageView.image = globalVar.userIcon
       settingData()
+      
+      self.setIconImageView.layer.cornerRadius = 100 * 0.5
+      self.setIconImageView.clipsToBounds = true
         // Do any additional setup after loading the view.
     }
   @IBAction func tappedModificationButton(_ sender: Any) {
