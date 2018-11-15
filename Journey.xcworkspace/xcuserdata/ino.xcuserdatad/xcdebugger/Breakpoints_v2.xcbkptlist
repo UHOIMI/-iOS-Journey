@@ -74,7 +74,7 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.661719"
+                  timestampString = "563951598.835572"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "81"
@@ -89,7 +89,7 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.664469"
+                  timestampString = "563951598.837301"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "82"
@@ -250,12 +250,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.70968"
+                  timestampString = "563951598.862957"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "90"
                   endingLineNumber = "90"
-                  offsetFromSymbolStart = "3282">
+                  offsetFromSymbolStart = "3290">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -265,12 +265,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.7119401"
+                  timestampString = "563951598.864643"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "90"
                   endingLineNumber = "90"
-                  offsetFromSymbolStart = "14751">
+                  offsetFromSymbolStart = "13579">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -298,12 +298,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.7189651"
+                  timestampString = "563951598.869399"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "91"
                   endingLineNumber = "91"
-                  offsetFromSymbolStart = "4217">
+                  offsetFromSymbolStart = "4226">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -313,12 +313,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.721033"
+                  timestampString = "563951598.871069"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "91"
                   endingLineNumber = "91"
-                  offsetFromSymbolStart = "14761">
+                  offsetFromSymbolStart = "13589">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -362,12 +362,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.741127"
+                  timestampString = "563951598.8797441"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "95"
-                  endingLineNumber = "95"
-                  offsetFromSymbolStart = "11484">
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "9843">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -377,12 +377,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.743582"
+                  timestampString = "563951598.8814059"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "95"
-                  endingLineNumber = "95"
-                  offsetFromSymbolStart = "14811">
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "13649">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -410,12 +410,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.753288"
+                  timestampString = "563951598.88669"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "96"
-                  endingLineNumber = "96"
-                  offsetFromSymbolStart = "12234">
+                  startingLineNumber = "94"
+                  endingLineNumber = "94"
+                  offsetFromSymbolStart = "10597">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -425,12 +425,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.756178"
+                  timestampString = "563951598.8889509"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "96"
-                  endingLineNumber = "96"
-                  offsetFromSymbolStart = "14821">
+                  startingLineNumber = "94"
+                  endingLineNumber = "94"
+                  offsetFromSymbolStart = "13659">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -458,12 +458,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.763083"
+                  timestampString = "563951598.893293"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "13587">
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "11966">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -473,12 +473,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.765974"
+                  timestampString = "563951598.894956"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "14841">
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "13679">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -506,11 +506,11 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.772113"
+                  timestampString = "563951598.90018"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "100"
-                  endingLineNumber = "100"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
                   offsetFromSymbolStart = "1187">
                </Location>
                <Location
@@ -521,12 +521,12 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.774984"
+                  timestampString = "563951598.902891"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "100"
-                  endingLineNumber = "100"
-                  offsetFromSymbolStart = "14605">
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "13436">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -666,7 +666,7 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.817145"
+                  timestampString = "563951598.937812"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "50"
@@ -681,7 +681,7 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.820295"
+                  timestampString = "563951598.940081"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "51"
@@ -1002,7 +1002,7 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.907349"
+                  timestampString = "563951599.020241"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "74"
@@ -1017,14 +1017,158 @@
                   moduleName = "Journey"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ino/Downloads/iOSJourney/Journey/LoginViewController.swift"
-                  timestampString = "563858480.909827"
+                  timestampString = "563951599.022988"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "74"
                   endingLineNumber = "74"
-                  offsetFromSymbolStart = "5534">
+                  offsetFromSymbolStart = "5063">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/CreateUserViewController.swift"
+            timestampString = "563951539.311686"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
+            landmarkName = "touchesBegan(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/CreateUserViewController.swift"
+            timestampString = "563951539.312247"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
+            landmarkName = "touchesBegan(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/CreateUserViewController.swift"
+            timestampString = "563951539.3125761"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
+            landmarkName = "touchesBegan(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/CreateUserViewController.swift"
+            timestampString = "563951539.312879"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "touchesBegan(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/CreateUserViewController.swift"
+            timestampString = "563951539.313179"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
+            landmarkName = "touchesBegan(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/CreateUserViewController.swift"
+            timestampString = "563951539.31355"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
+            landmarkName = "touchesBegan(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/CreateUserViewController.swift"
+            timestampString = "563951539.3138601"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
+            landmarkName = "cutImage(image:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/CreateUserViewController.swift"
+            timestampString = "563951539.314145"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "touchesBegan(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/CreateUserViewController.swift"
+            timestampString = "563951539.314438"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
+            landmarkName = "touchesBegan(_:with:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
