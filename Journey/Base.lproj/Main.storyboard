@@ -104,16 +104,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gky-eb-NaJ" userLabel="SubView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-image.png" translatesAutoresizingMaskIntoConstraints="NO" id="sjX-V1-KD3">
+                                            <imageView tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-image.png" translatesAutoresizingMaskIntoConstraints="NO" id="sjX-V1-KD3">
                                                 <rect key="frame" x="137.5" y="16" width="100" height="100"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="Y7x-aV-Qn6"/>
                                                     <constraint firstAttribute="width" constant="100" id="zZs-te-I2u"/>
                                                 </constraints>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="f4Z-fH-djl" appends="YES" id="P50-n1-0wS"/>
-                                                </connections>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザーID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2V-UD-90b">
                                                 <rect key="frame" x="16" y="148" width="101" height="24"/>
@@ -318,11 +315,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="suS-15-x6g" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="f4Z-fH-djl">
-                    <connections>
-                        <action selector="tappedIcon:" destination="9O0-ua-uXk" id="JJf-tB-Ueb"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-2479.1999999999998" y="482.51231527093597"/>
         </scene>
@@ -1787,13 +1779,14 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="hV9-uI-wJ9"/>
         <segue reference="euD-hk-qwI"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="EVb-Zv-0QA"/>
         <segue reference="SAI-tm-OCo"/>
         <segue reference="j0d-eN-8yJ"/>
         <segue reference="Ngc-W0-UHN"/>
-        <segue reference="lfn-x3-RFi"/>
+        <segue reference="FsQ-GA-J3d"/>
         <segue reference="F4q-09-NOQ"/>
         <segue reference="kFc-cm-I4M"/>
     </inferredMetricsTieBreakers>

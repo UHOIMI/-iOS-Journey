@@ -8,8 +8,9 @@
 
 import UIKit
 import RSKImageCropper
+import Photos
 
-class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerViewDataSource, UIPickerViewDelegate{
+class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
   @IBOutlet weak var scrollView: UIScrollView!
   @IBOutlet weak var userIdTextField: UITextField!
@@ -36,6 +37,8 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   var nextPass : String = ""
   
   let myFrameSize:CGSize = UIScreen.main.bounds.size
+  var imageCropVC = RSKImageCropViewController()
+  var editImage : UIImage? = nil
   
   let ipAddress = "172.20.10.2:3000"
   //  let ipAddress = "35.200.26.70:443"
@@ -114,6 +117,12 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     generationPickerView.delegate = self
     generationTextField.inputView = generationPickerView
     
+    /*iconImageView.frame = CGRect(x: iconImageView.frame.origin.x, y: iconImageView.frame.origin.y, width: 100, height: 100)
+    iconImageView.image = UIImage(named: "no-image.png")
+    iconImageView.frame.origin.y -= self.imgView.frame.height / 2*/
+    
+    self.iconImageView.layer.cornerRadius = 100 * 0.5
+    self.iconImageView.clipsToBounds = true
 
         // Do any additional setup after loading the view.
     }
@@ -172,16 +181,6 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     notification.removeObserver(self)
   }
   
-  
-  @IBAction func tappedIcon(_ sender: Any) {
-    let image = UIImage(named: "img2")!
-    let imageCropVC = RSKImageCropViewController(image: image, cropMode: .circle)
-    imageCropVC.moveAndScaleLabel.text = "切り取り範囲を選択"
-    imageCropVC.cancelButton.setTitle("キャンセル", for: .normal)
-    imageCropVC.chooseButton.setTitle("完了", for: .normal)
-    imageCropVC.delegate = self
-    present(imageCropVC, animated: true)
-  }
   
   // キーボードが消えたときに、画面を戻す
   @objc func keyboardWillHide(notification: Notification?) {
@@ -289,7 +288,81 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     if (self.userIdTextField.isFirstResponder) {
       print("びぎん")
       checkId()
+    }else{
+      for touch: UITouch in touches {
+        let tag = touch.view!.tag
+        switch (tag) {
+        case 1:
+          checkPermission()
+          if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            let ipc = UIImagePickerController()
+            ipc.delegate = self
+            ipc.sourceType = UIImagePickerController.SourceType.photoLibrary
+            ipc.allowsEditing = false
+            self.present(ipc,animated: true)
+          }
+          break
+        default:
+          break
+        }
+      }
     }
+  }
+  
+  func cutImage(image : UIImage){
+    let imageCropVC = RSKImageCropViewController(image: image, cropMode: .square)
+    imageCropVC.moveAndScaleLabel.text = "切り取り範囲を選択"
+    imageCropVC.cancelButton.setTitle("キャンセル", for: .normal)
+    imageCropVC.chooseButton.setTitle("完了", for: .normal)
+    imageCropVC.delegate = self
+    present(imageCropVC, animated: true)
+  }
+  
+  func checkPermission(){
+    let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+    
+    switch photoAuthorizationStatus {
+    case .authorized:
+      print("auth")
+    case .notDetermined:
+      PHPhotoLibrary.requestAuthorization({
+        (newStatus) in
+        print("status is \(newStatus)")
+        if newStatus ==  PHAuthorizationStatus.authorized {
+          /* do stuff here */
+          print("success")
+        }
+      })
+      print("not Determined")
+    case .restricted:
+      print("restricted")
+    case .denied:
+      print("denied")
+    }
+  }
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    // Local variable inserted by Swift 4.2 migrator.
+    let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+    
+    
+    //編集機能を表示させない場合
+    let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage
+    editImage = image
+    let imageUrl = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.referenceURL)] as? NSURL
+    
+    //iconImageView.image = image
+    print("画像通過２")
+    /*imageCropVC = RSKImageCropViewController(image: image!, cropMode: .square)
+    imageCropVC.moveAndScaleLabel.text = "切り取り範囲を選択"
+    imageCropVC.cancelButton.setTitle("キャンセル", for: .normal)
+    imageCropVC.chooseButton.setTitle("完了", for: .normal)
+    imageCropVC.delegate = self*/
+    print("画像通過４")
+    
+    dismiss(animated: true, completion: {
+      self.cutImage(image: self.editImage!)
+    })
   }
   
   
@@ -336,6 +409,20 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
 
 }
 
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+  return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+  return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+  return input.rawValue
+}
+
 extension CreateUserViewController: RSKImageCropViewControllerDelegate{
   
   func imageCropViewControllerCustomMovementRect(_ controller: RSKImageCropViewController) -> CGRect {
@@ -351,20 +438,10 @@ extension CreateUserViewController: RSKImageCropViewControllerDelegate{
     
     dismiss(animated: true)
     
-    if controller.cropMode == .circle {
-      UIGraphicsBeginImageContext(croppedImage.size)
-      let layerView = UIImageView(image: croppedImage)
-      layerView.frame.size = croppedImage.size
-      layerView.layer.cornerRadius = layerView.frame.size.width * 0.5
-      layerView.clipsToBounds = true
-      let context = UIGraphicsGetCurrentContext()!
-      layerView.layer.render(in: context)
-      let capturedImage = UIGraphicsGetImageFromCurrentImageContext()!
-      UIGraphicsEndImageContext()
-      let pngData = capturedImage.pngData()!
-      //このImageは円形で余白は透過です。
-      let png = UIImage(data: pngData)!
-      iconImageView.image = png
+    print("画像通過３")
+    
+    if controller.cropMode == .square {
+      iconImageView.image = croppedImage
     }
   }
 }
