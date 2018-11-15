@@ -192,7 +192,17 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
       })
       
       if(idCheckFlag){
-        checkId()
+        let halfString = NSMutableString(string: userIdTextField.text!) as CFMutableString
+        CFStringTransform(halfString, nil, kCFStringTransformFullwidthHalfwidth, false)
+        let result = halfString as String
+        print(result)
+        let pattern = "^[A-Za-z0-9]{1,}$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
+        if(!predicate.evaluate(with: result)){
+          showAlert(title: "ユーザーIDに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
+        }else{
+          checkId()
+        }
         idCheckFlag = false
       }
       
@@ -205,13 +215,17 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   }
 
   @IBAction func tappedConfirmationButton(_ sender: Any) {
+    let halfString = NSMutableString(string: userIdTextField.text!) as CFMutableString
+    CFStringTransform(halfString, nil, kCFStringTransformFullwidthHalfwidth, false)
+    let result = halfString as String
+    print(result)
     let pattern = "^[A-Za-z0-9]{1,}$"
     let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
     if(userIdTextField.text == ""){
       showAlert(title: "ユーザーIDが入力されていません", message: "ユーザーIDを入力してください")
     }else if((userIdTextField.text?.count)! > 20){
       showAlert(title: "ユーザーIDが20文字を超えています", message: "文字数を20文字以内にしてください")
-    }else if(!predicate.evaluate(with: userIdTextField.text)){
+    }else if(!predicate.evaluate(with: result)){
       showAlert(title: "ユーザーIDに半角英数字以外の文字が含まれています", message: "半角英数字で入力してください")
     }else if(userNameTextField.text == ""){
       showAlert(title: "ユーザー名が入力されていません", message: "ユーザー名を入力してください")
