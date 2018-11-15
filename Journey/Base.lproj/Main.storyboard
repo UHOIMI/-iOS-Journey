@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVX-iF-CIv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVX-iF-CIv">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -689,6 +689,7 @@
                         <segue destination="dUa-pH-V8z" kind="show" identifier="toSelectSpotView" id="wPv-3s-Ppv"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="TeA-Xz-GIE"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="6mO-Qw-wNq"/>
+                        <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="HL7-as-HMM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -914,11 +915,12 @@
                         <outlet property="subView" destination="dKk-8e-Now" id="BJF-Xk-sSm"/>
                         <segue destination="wbt-C5-9Ws" kind="show" identifier="changeSpotListView" id="q0P-y1-Ch3"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="j0d-eN-8yJ"/>
+                        <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="9Jy-Ob-wAd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gMl-9k-jnq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="592.79999999999995" y="1105.9970014992505"/>
+            <point key="canvasLocation" x="905" y="1106"/>
         </scene>
         <!--スポット詳細-->
         <scene sceneID="zYv-3k-9LN">
@@ -1015,6 +1017,7 @@
                         <outlet property="spotImageView3" destination="Ryt-wy-s7d" id="1wl-hA-npZ"/>
                         <outlet property="spotNameLabel" destination="LO6-iP-sLS" id="j6r-rS-f4e"/>
                         <segue destination="dYc-gx-w37" kind="show" identifier="changePutSpotView" id="PgR-1F-fd2"/>
+                        <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="mge-75-edV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jUk-ug-WzD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1145,6 +1148,7 @@
                         <outlet property="sortButton" destination="Haz-yz-bqc" id="QyU-Dl-nBg"/>
                         <outlet property="userSpotTable" destination="Tme-a3-yHO" id="FRC-VB-ZFK"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="changePostView" id="Ngc-W0-UHN"/>
+                        <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="hfK-46-OAX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXV-kU-vyc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1210,6 +1214,7 @@
                         <outlet property="sortButton" destination="Lqx-2m-hAa" id="9s2-95-Trh"/>
                         <outlet property="spotTableView" destination="sw8-jr-74k" id="QeV-JR-Dah"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="EVb-Zv-0QA"/>
+                        <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="pHU-pk-b4U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ujv-ty-37u" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1778,10 +1783,10 @@
         <image name="s_walk.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="euD-hk-qwI"/>
+        <segue reference="pHU-pk-b4U"/>
         <segue reference="q0P-y1-Ch3"/>
         <segue reference="EVb-Zv-0QA"/>
-        <segue reference="SAI-tm-OCo"/>
+        <segue reference="PgR-1F-fd2"/>
         <segue reference="j0d-eN-8yJ"/>
         <segue reference="Ngc-W0-UHN"/>
         <segue reference="lfn-x3-RFi"/>

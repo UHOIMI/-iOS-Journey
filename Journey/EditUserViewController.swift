@@ -320,7 +320,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate {
     case 3:
       print("３")
     case 4:
-      print("４")
+      performSegue(withIdentifier: "backDetailUserView", sender: nil)
     default : return
       
     }
