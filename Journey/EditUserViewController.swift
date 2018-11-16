@@ -130,10 +130,10 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
           print(String(data: data!, encoding: .utf8) ?? "")
           if(self.iconFlag == 1){
             self.iconFlag = 0
-            self.globalVar.userIconPath = imageStr
+            self.globalVar.userIconPath = "http://35.200.26.70:8080/test1/\(imageStr)"
           }else if(self.headerFlag == 1){
             self.headerFlag = 0
-            self.globalVar.userHeaderPath = imageStr
+            self.globalVar.userHeaderPath = "http://35.200.26.70:8080/test1/\(imageStr)"
           }
           if(self.iconFlag == 0 && self.headerFlag == 0){
             self.updateUser()
