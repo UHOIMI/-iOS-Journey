@@ -42,7 +42,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
       }
       
       self.imgView = UIImageView()
-      self.imgView.frame = CGRect(x: 30, y: headerImageView.frame.width / 3, width: 100, height: 100)
+      self.imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
       print("aaaaaa", headerImageView.frame.origin.y)
       self.imgView.image = UIImage(named: "no-image.png")
       self.imgView.frame.origin.y -= 50

@@ -43,17 +43,19 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       if(globalVar.userIconPath == ""){
         imgView.image = UIImage(named: "no-image.png")
         self.imgView = UIImageView()
-        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
+        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
         imgView.frame.origin.y -= self.imgView.frame.height / 2
       }else{
         let iconUrl = URL(string: globalVar.userIconPath)!
         let iconData = try? Data(contentsOf: iconUrl)
         let iconImage = UIImage(data:iconData!)
         self.imgView = UIImageView()
-        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
+        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
         imgView.image = iconImage
         imgView.frame.origin.y -= self.imgView.frame.height / 2
       }
+      
+      
 //      self.imgView = UIImageView()
 //      imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
 //      imgView.frame.origin.y -= self.imgView.frame.height / 2
@@ -77,6 +79,13 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
 
         // Do any additional setup after loading the view.
     }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    print("headerImageView.frame.origin.y : ", headerImageView.frame.origin.y)
+    print("headerImageView.frame.height : ", headerImageView.frame.height)
+    print("HIVheaderImageView.frame.origin.y : ", headerImageView.bounds.origin.y)
+    print("HIVheaderImageView.frame.height : ", headerImageView.bounds.height)
+  }
   
   
   @IBAction func tappedEditButton(_ sender: Any) {
