@@ -54,12 +54,6 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         imgView.image = iconImage
         imgView.frame.origin.y -= self.imgView.frame.height / 2
       }
-//      self.imgView = UIImageView()
-//      imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
-//      imgView.frame.origin.y -= self.imgView.frame.height / 2
-      
-      //headerImageView.contentMode = UIView.ContentMode.scaleAspectFit
-//      headerImageView.image = UIImage(named: "mountain")
       
       // 角を丸くする
       self.imgView.layer.cornerRadius = 100 * 0.5

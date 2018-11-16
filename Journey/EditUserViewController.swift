@@ -9,6 +9,8 @@
 import UIKit
 import RSKImageCropper
 import Photos
+import Realm
+import RealmSwift
 
 class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
@@ -30,7 +32,19 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
   var generation:Int = 0
   var editImage : UIImage? = nil
   var editImageNum = 1
+  var iconFlag = 0
+  var headerFlag = 0
+  let generationList = ["-年代を選択-","10歳未満","10代","20代","30代","40代","50代","60代","70代","80代","90代","100歳以上"]
   
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+      return generationList.count
+  }
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+      return generationList[row]
+  }
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+      userGenerationTextField.text = generationList[row]
+  }
     override func viewDidLoad() {
       
       print("token",globalVar.token)
@@ -41,16 +55,28 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
         scrollView.isScrollEnabled = false
       }
       
-      self.imgView = UIImageView()
-      self.imgView.frame = CGRect(x: 30, y: headerImageView.frame.width / 3, width: 100, height: 100)
-      print("aaaaaa", headerImageView.frame.origin.y)
-      self.imgView.image = UIImage(named: "no-image.png")
-      self.imgView.frame.origin.y -= 50
-      imgView.isUserInteractionEnabled = true
-      imgView.tag = 1
-      
-      //headerImageView.contentMode = UIView.ContentMode.scaleAspectFit
-      headerImageView.image = UIImage(named: "mountain")
+      if(globalVar.userHeaderPath == "" || globalVar.userHeaderPath == "nil"){
+        headerImageView.image = UIImage(named: "mountain")
+      }else{
+        let url = URL(string: globalVar.userHeaderPath)!
+        let imageData = try? Data(contentsOf: url)
+        let image = UIImage(data:imageData!)
+        headerImageView.image = image
+      }
+      if(globalVar.userIconPath == ""){
+        imgView.image = UIImage(named: "no-image.png")
+        self.imgView = UIImageView()
+        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
+        imgView.frame.origin.y -= self.imgView.frame.height / 2
+      }else{
+        let iconUrl = URL(string: globalVar.userIconPath)!
+        let iconData = try? Data(contentsOf: iconUrl)
+        let iconImage = UIImage(data:iconData!)
+        self.imgView = UIImageView()
+        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
+        imgView.image = iconImage
+        imgView.frame.origin.y -= self.imgView.frame.height / 2
+      }
       
       // 角を丸くする
       self.imgView.layer.cornerRadius = 100 * 0.5
@@ -78,10 +104,10 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
     self.resignFirstResponder()
   }
   
-  func postImage(){
-    let imageData = imgView.image?.jpegData(compressionQuality: 1.0)
+  func postImage(setImage:UIImage){
+    let imageData = setImage.jpegData(compressionQuality: 1.0)
     let body = httpBody(imageData!, fileName: "\(globalVar.userId).jpg")
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/image/upload")!
+    let url = URL(string: "http://35.200.26.70:443/api/v1/image/upload")!
     fileUpload(url, data: body) {(data, response, error) in
       if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
         if response.statusCode == 200 {
@@ -102,6 +128,16 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
           }
           print("Upload done",data as Any)
           print(String(data: data!, encoding: .utf8) ?? "")
+          if(self.iconFlag == 1){
+            self.iconFlag = 0
+            self.globalVar.userIconPath = imageStr
+          }else if(self.headerFlag == 1){
+            self.headerFlag = 0
+            self.globalVar.userHeaderPath = imageStr
+          }
+          if(self.iconFlag == 0 && self.headerFlag == 0){
+            self.updateUser()
+          }
         } else {
           print(response.statusCode)
         }
@@ -135,7 +171,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
   }
   
   func updateUser(){
-    let str = "user_name=\(userNameTextField.text!)&generation=\(generation)&comment=\(userCommentTextView.text!)&token=\(globalVar.token)"
+    let str = "user_name=\(userNameTextField.text!)&generation=\(generation)&comment=\(userCommentTextView.text!)&user_icon=\(globalVar.userIconPath)&user_header=\(globalVar.userHeaderPath)&token=\(globalVar.token)"
     print("表示",str)
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/update")
     var request = URLRequest(url: url!)
@@ -152,6 +188,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
+        self.saveUser(name: self.globalVar.userName, generation: self.generation, icon: self.globalVar.userIconPath, header: self.globalVar.userHeaderPath, comment: self.globalVar.userComment)
       }
     }.resume()
   }
@@ -271,9 +308,27 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
   }
   
   @IBAction func tappedSaveButton(_ sender: Any) {
+    if(userNameTextField.text == ""){
+      showAlert(title: "ユーザー名が入力されていません", message: "ユーザー名を入力してください")
+    }else if((userNameTextField.text?.count)! > 20){
+      showAlert(title: "ユーザー名が20文字を超えています", message: "文字数を20文字以内にしてください")
+    }else if(userGenerationTextField.text == "" || userGenerationTextField.text == "-年代を選択-"){
+      showAlert(title: "年代が選択されていません", message: "年代を選択してください")
+    }
+  
     settingData(userGeneration: userGenerationTextField.text!)
-    updateUser()
-//    performSegue(withIdentifier: "backDetailUserView", sender: nil)
+    globalVar.userName = userNameTextField.text!
+    globalVar.userGeneration = userGenerationTextField.text!
+    globalVar.userComment = userCommentTextView.text
+    if(iconFlag == 1){
+      postImage(setImage: imgView.image!)
+    }
+    if(headerFlag == 1){
+      postImage(setImage: headerImageView.image!)
+    }
+    if(iconFlag == 0 && headerFlag == 0){
+      updateUser()
+    }
   }
   @IBAction func tappedShowPasswordButton(_ sender: Any) {
     let ac = UIAlertController(title: "パスワード表示", message: "ユーザーIDを入力してください", preferredStyle: .alert)
@@ -489,9 +544,30 @@ extension EditUserViewController: RSKImageCropViewControllerDelegate, RSKImageCr
     dismiss(animated: true)
     
     if controller.cropMode == .square {
+      iconFlag = 1
       imgView.image = croppedImage
     }else if controller.cropMode == .custom{
       headerImageView.image = croppedImage
+      headerFlag = 1
+    }
+  }
+  func saveUser(name : String,generation : Int, icon : String, header:String, comment:String){
+    let realm = try! Realm()
+    let userModel = UserModel()
+    let users = realm.objects(UserModel.self)
+    for _user in users{
+      try! realm.write() {
+        realm.delete(_user)
+      }
+    }
+    userModel.user_name = name
+    userModel.user_generation = generation
+    userModel.user_comment = comment
+    userModel.user_header = header
+    userModel.user_image = icon
+    
+    try! realm.write() {
+      realm.add(userModel, update: true)
     }
   }
 }
