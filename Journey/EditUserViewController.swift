@@ -66,14 +66,14 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
       if(globalVar.userIconPath == ""){
         imgView.image = UIImage(named: "no-image.png")
         self.imgView = UIImageView()
-        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
+        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
         imgView.frame.origin.y -= self.imgView.frame.height / 2
       }else{
         let iconUrl = URL(string: globalVar.userIconPath)!
         let iconData = try? Data(contentsOf: iconUrl)
         let iconImage = UIImage(data:iconData!)
         self.imgView = UIImageView()
-        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
+        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
         imgView.image = iconImage
         imgView.frame.origin.y -= self.imgView.frame.height / 2
       }
