@@ -12,7 +12,7 @@ import Photos
 import Realm
 import RealmSwift
 
-class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDelegate,UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
   var imgView:UIImageView!
   let myFrameSize:CGSize = UIScreen.main.bounds.size
@@ -35,7 +35,9 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
   var iconFlag = 0
   var headerFlag = 0
   let generationList = ["-年代を選択-","10歳未満","10代","20代","30代","40代","50代","60代","70代","80代","90代","100歳以上"]
-  
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    return 1
+  }
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
       return generationList.count
   }
@@ -49,6 +51,11 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
       
       print("token",globalVar.token)
         super.viewDidLoad()
+      
+      let generationPickerView = UIPickerView()
+      generationPickerView.tag = 1
+      generationPickerView.delegate = self
+      userGenerationTextField.inputView = generationPickerView
       
       if myFrameSize.height >= 812{
         //scrollViewsetScrollEnabled
