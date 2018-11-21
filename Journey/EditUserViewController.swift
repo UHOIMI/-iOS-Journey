@@ -321,6 +321,8 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
       showAlert(title: "ユーザー名が20文字を超えています", message: "文字数を20文字以内にしてください")
     }else if(userGenerationTextField.text == "" || userGenerationTextField.text == "-年代を選択-"){
       showAlert(title: "年代が選択されていません", message: "年代を選択してください")
+    }else if((userCommentTextView.text?.count)! > 200){
+      showAlert(title: "コメントが200文字を超えています", message: "文字数を200文字以内にしてください")
     }
   
     settingData(userGeneration: userGenerationTextField.text!)
