@@ -122,8 +122,10 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      if(segue.identifier == "changePutSpotView"){
         let nextViewController = segue.destination as! PutSpotViewController
         nextViewController.spotData = sender as! ListSpotModel
+      }
     }
     
     

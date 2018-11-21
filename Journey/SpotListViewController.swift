@@ -91,8 +91,10 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      if(segue.identifier == "toDetailSpotView"){
         let nextViewController = segue.destination as! DetailSpotViewController
         nextViewController.spotData = sender as! ListSpotModel
+      }
     }
     
     

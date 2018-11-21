@@ -12,7 +12,7 @@ import Photos
 import Realm
 import RealmSwift
 
-class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDelegate,UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
   var imgView:UIImageView!
   let myFrameSize:CGSize = UIScreen.main.bounds.size
@@ -35,7 +35,9 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
   var iconFlag = 0
   var headerFlag = 0
   let generationList = ["-年代を選択-","10歳未満","10代","20代","30代","40代","50代","60代","70代","80代","90代","100歳以上"]
-  
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    return 1
+  }
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
       return generationList.count
   }
@@ -49,6 +51,11 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
       
       print("token",globalVar.token)
         super.viewDidLoad()
+      
+      let generationPickerView = UIPickerView()
+      generationPickerView.tag = 1
+      generationPickerView.delegate = self
+      userGenerationTextField.inputView = generationPickerView
       
       if myFrameSize.height >= 812{
         //scrollViewsetScrollEnabled
@@ -191,6 +198,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
         self.saveUser(name: self.globalVar.userName, generation: self.generation, icon: self.globalVar.userIconPath, header: self.globalVar.userHeaderPath, comment: self.globalVar.userComment)
+        self.performSegue(withIdentifier: "backDetaileUserView", sender: nil)
       }
     }.resume()
   }
@@ -316,6 +324,8 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
       showAlert(title: "ユーザー名が20文字を超えています", message: "文字数を20文字以内にしてください")
     }else if(userGenerationTextField.text == "" || userGenerationTextField.text == "-年代を選択-"){
       showAlert(title: "年代が選択されていません", message: "年代を選択してください")
+    }else if((userCommentTextView.text?.count)! > 200){
+      showAlert(title: "コメントが200文字を超えています", message: "文字数を200文字以内にしてください")
     }
   
     settingData(userGeneration: userGenerationTextField.text!)
