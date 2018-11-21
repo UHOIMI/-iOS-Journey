@@ -196,7 +196,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
         self.saveUser(name: self.globalVar.userName, generation: self.generation, icon: self.globalVar.userIconPath, header: self.globalVar.userHeaderPath, comment: self.globalVar.userComment)
-        performSegue(withIdentifier: "backDetaileUserView", sender: nil)
+        self.performSegue(withIdentifier: "backDetaileUserView", sender: nil)
       }
     }.resume()
   }
