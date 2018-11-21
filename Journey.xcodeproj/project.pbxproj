@@ -46,6 +46,7 @@
 		00D7D44F21285A2B00C507B7 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D7D44E21285A2B00C507B7 /* settings.png */; };
 		00D7D45121285AAB00C507B7 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D7D45021285AAB00C507B7 /* home.png */; };
 		45E16F0FE3FC7BC835323696 /* Pods_Journey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4ACEDC8050F8641E5C887B /* Pods_Journey.framework */; };
+		913B777521A4EC2800E5769B /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913B777421A4EC2800E5769B /* TimelineViewController.swift */; };
 		914BEE97218ABC3D009EF3BC /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BEE96218ABC3D009EF3BC /* UserModel.swift */; };
 		9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB69211D14E300B8753B /* SpotListViewController.swift */; };
 		9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */; };
@@ -98,6 +99,7 @@
 		00D7D45021285AAB00C507B7 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		0C4ACEDC8050F8641E5C887B /* Pods_Journey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Journey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A40B88CAC0DF750481E3380 /* Pods-Journey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.debug.xcconfig"; sourceTree = "<group>"; };
+		913B777421A4EC2800E5769B /* TimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		914BEE96218ABC3D009EF3BC /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		9151DB69211D14E300B8753B /* SpotListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotListViewController.swift; sourceTree = "<group>"; };
 		9151DB6B211D65C300B8753B /* DetailSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSpotViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				914BEE96218ABC3D009EF3BC /* UserModel.swift */,
 				9155367E2191596300581837 /* DetailUserViewController.swift */,
 				91D6442B219286F3005FF11E /* EditUserViewController.swift */,
+				913B777421A4EC2800E5769B /* TimelineViewController.swift */,
 			);
 			path = Journey;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9151DB6A211D14E300B8753B /* SpotListViewController.swift in Sources */,
+				913B777521A4EC2800E5769B /* TimelineViewController.swift in Sources */,
 				00D7D431212821CE00C507B7 /* ListSpotModel.swift in Sources */,
 				9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */,
 				9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */,

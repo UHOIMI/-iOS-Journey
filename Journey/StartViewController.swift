@@ -42,7 +42,11 @@ class StartViewController: UIViewController {
   @IBAction func tappedUserDetailButton(_ sender: Any) {
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
-    
+  
+  @IBAction func tappedTimelineBurtton(_ sender: Any) {
+    performSegue(withIdentifier: "toTimelineView", sender: nil)
+  }
+  
   @IBAction func tappedDeleteUser(_ sender: Any) {
     let realm = try! Realm()
     let users = realm.objects(UserModel.self)

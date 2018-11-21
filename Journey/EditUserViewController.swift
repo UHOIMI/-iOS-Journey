@@ -81,6 +81,8 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UIPickerViewDe
       // 角を丸くする
       self.imgView.layer.cornerRadius = 100 * 0.5
       self.imgView.clipsToBounds = true
+      imgView.isUserInteractionEnabled = true
+      imgView.tag = 1
       
       subView.addSubview(self.imgView)
       
