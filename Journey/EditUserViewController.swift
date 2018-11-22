@@ -34,6 +34,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
   var editImageNum = 1
   var iconFlag = 0
   var headerFlag = 0
+  var editFlag = 0
   let generationList = ["-年代を選択-","10歳未満","10代","20代","30代","40代","50代","60代","70代","80代","90代","100歳以上"]
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
@@ -123,15 +124,8 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
     globalVar.userName = userNameTextField.text!
     globalVar.userGeneration = userGenerationTextField.text!
     globalVar.userComment = userCommentTextView.text
-    if(iconFlag == 1){
-      postImage(setImage: imgView.image!)
-    }
-    if(headerFlag == 1){
-      postImage(setImage: headerImageView.image!)
-    }
-    if(iconFlag == 0 && headerFlag == 0){
-      updateUser()
-    }
+    editFlag = 1
+    self.performSegue(withIdentifier: "backDetailUserView", sender: nil)
   }
   @IBAction func tappedShowPasswordButton(_ sender: Any) {
     let ac = UIAlertController(title: "パスワード表示", message: "ユーザーIDを入力してください", preferredStyle: .alert)
@@ -153,7 +147,6 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
       }
     })
     let cancel = UIAlertAction(title: "閉じる", style: .cancel, handler: nil)
-    
     //textfiled1の追加
     ac.addTextField(configurationHandler: {(text:UITextField!) -> Void in
       text.tag  = 1
@@ -169,6 +162,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
   @IBAction func tappedCancelButton(_ sender: Any) {
     performSegue(withIdentifier: "backDetailUserView", sender: nil)
   }
+  
   func showAlert(title:String,message:String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
     let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
@@ -279,9 +273,24 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
         self.saveUser(name: self.globalVar.userName, generation: self.generation, icon: self.globalVar.userIconPath, header: self.globalVar.userHeaderPath, comment: self.globalVar.userComment)
-        self.performSegue(withIdentifier: "backDetailUserView", sender: nil)
       }
       }.resume()
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if(editFlag == 1){
+      globalVar.userHeader = headerImageView.image!
+      globalVar.userIcon = imgView.image!
+      if(iconFlag == 0 && headerFlag == 0){
+        updateUser()
+      }
+      if(iconFlag == 1){
+        postImage(setImage: imgView.image!)
+      }
+      if(headerFlag == 1){
+        postImage(setImage: headerImageView.image!)
+      }
+    }
   }
   
   func settingData(userGeneration : String){
@@ -572,6 +581,8 @@ extension EditUserViewController: RSKImageCropViewControllerDelegate, RSKImageCr
         realm.delete(_user)
       }
     }
+    userModel.user_id = globalVar.userId
+    userModel.user_pass = globalVar.userPass
     userModel.user_name = name
     userModel.user_generation = generation
     userModel.user_comment = comment
