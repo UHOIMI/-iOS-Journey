@@ -55,6 +55,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         globalVar.userHeaderPath = _user.user_header
         settingData(gender: _user.user_gender, generation: _user.user_generation)
         loginUser(id: _user.user_id, pass: _user.user_pass)
+        if(globalVar.userHeaderPath == "" || globalVar.userHeaderPath == "nil"){
+          globalVar.userHeader = UIImage(named: "mountain")!
+        }else{
+          let url = URL(string: globalVar.userHeaderPath)!
+          let imageData = try? Data(contentsOf: url)
+          let image = UIImage(data:imageData!)
+          globalVar.userHeader = image!
+        }
+        if(globalVar.userIconPath == ""){
+          globalVar.userIcon = UIImage(named: "no-image.png")
+        }else{
+          let iconUrl = URL(string: globalVar.userIconPath)!
+          let iconData = try? Data(contentsOf: iconUrl)
+          let iconImage = UIImage(data:iconData!)
+          globalVar.userIcon = iconImage!
+        }
       }
     }
     return true
