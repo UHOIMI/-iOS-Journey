@@ -69,6 +69,8 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   }
   override func viewDidLoad() {
         super.viewDidLoad()
+    
+    
 //    subVIew.isUserInteractionEnabled = true
     self.userIdTextField.delegate = self
     self.userNameTextField.delegate = self
@@ -77,7 +79,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
       //scrollViewsetScrollEnabled
       scrollView.isScrollEnabled = false
     }
-    if let validImage = globalVar.userIcon{
+    if let validImage = UIImage(named: "no-image.png"){
       iconImageView.image = validImage
     }
     

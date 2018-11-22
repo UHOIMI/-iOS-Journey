@@ -180,7 +180,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
   }
   
   func updateUser(){
-    let str = "user_name=\(userNameTextField.text!)&generation=\(generation)&comment=\(userCommentTextView.text!)&user_icon=\(globalVar.userIconPath)&user_header=\(globalVar.userHeaderPath)&token=\(globalVar.token)"
+    let str = "user_name=\(globalVar.userName)&generation=\(generation)&comment=\(globalVar.userComment)&user_icon=\(globalVar.userIconPath)&user_header=\(globalVar.userHeaderPath)&token=\(globalVar.token)"
     print("表示",str)
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/update")
     var request = URLRequest(url: url!)
@@ -198,7 +198,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
         self.saveUser(name: self.globalVar.userName, generation: self.generation, icon: self.globalVar.userIconPath, header: self.globalVar.userHeaderPath, comment: self.globalVar.userComment)
-        self.performSegue(withIdentifier: "backDetaileUserView", sender: nil)
+        self.performSegue(withIdentifier: "backDetailUserView", sender: nil)
       }
     }.resume()
   }
