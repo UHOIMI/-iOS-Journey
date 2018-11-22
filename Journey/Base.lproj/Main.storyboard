@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVX-iF-CIv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVX-iF-CIv">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1242,7 +1242,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8AP-lE-NA7">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lkc-eX-UHd">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
@@ -1731,7 +1731,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KiQ-k0-UsF">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uub-Q9-neZ">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
@@ -1816,8 +1816,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="tappedConfirmationButton:" destination="9O0-ua-uXk" eventType="touchUpInside" id="wkJ-Bh-xr5"/>
-                                                    <action selector="tappedSaveButton:" destination="AUq-od-qik" eventType="touchUpInside" id="uJ8-Et-8aG"/>
+                                                    <action selector="tappedSaveButton:" destination="AUq-od-qik" eventType="touchUpInside" id="Ct2-qp-rEh"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QnE-lb-2CM" customClass="ButtonSettings" customModule="Journey" customModuleProvider="target">
@@ -1951,7 +1950,7 @@
         <image name="star" width="540" height="540"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yAr-Yi-aS4"/>
+        <segue reference="euD-hk-qwI"/>
         <segue reference="0Xj-CK-ZoO"/>
         <segue reference="EVb-Zv-0QA"/>
         <segue reference="SAI-tm-OCo"/>
@@ -1959,6 +1958,6 @@
         <segue reference="ScF-Q7-9Tm"/>
         <segue reference="lfn-x3-RFi"/>
         <segue reference="XJN-4F-Krb"/>
-        <segue reference="WUr-zW-5jT"/>
+        <segue reference="kFc-cm-I4M"/>
     </inferredMetricsTieBreakers>
 </document>

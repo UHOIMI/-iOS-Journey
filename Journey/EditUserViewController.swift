@@ -34,6 +34,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
   var editImageNum = 1
   var iconFlag = 0
   var headerFlag = 0
+  var editFlag = 0
   let generationList = ["-年代を選択-","10歳未満","10代","20代","30代","40代","50代","60代","70代","80代","90代","100歳以上"]
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
@@ -62,28 +63,28 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
         scrollView.isScrollEnabled = false
       }
       
-      if(globalVar.userHeaderPath == "" || globalVar.userHeaderPath == "nil"){
-        headerImageView.image = UIImage(named: "mountain")
-      }else{
-        let url = URL(string: globalVar.userHeaderPath)!
-        let imageData = try? Data(contentsOf: url)
-        let image = UIImage(data:imageData!)
-        headerImageView.image = image
-      }
-      if(globalVar.userIconPath == ""){
-        imgView.image = UIImage(named: "no-image.png")
+//      if(globalVar.userHeaderPath == "" || globalVar.userHeaderPath == "nil"){
+//        headerImageView.image = UIImage(named: "mountain")
+//      }else{
+//        let url = URL(string: globalVar.userHeaderPath)!
+//        let imageData = try? Data(contentsOf: url)
+//        let image = UIImage(data:imageData!)
+        headerImageView.image = globalVar.userHeader
+//      }
+//      if(globalVar.userIconPath == ""){
+//        imgView.image = UIImage(named: "no-image.png")
+//        self.imgView = UIImageView()
+//        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
+//        imgView.frame.origin.y -= self.imgView.frame.height / 2
+//      }else{
+//        let iconUrl = URL(string: globalVar.userIconPath)!
+//        let iconData = try? Data(contentsOf: iconUrl)
+//        let iconImage = UIImage(data:iconData!)
         self.imgView = UIImageView()
         imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
+        imgView.image = globalVar.userIcon
         imgView.frame.origin.y -= self.imgView.frame.height / 2
-      }else{
-        let iconUrl = URL(string: globalVar.userIconPath)!
-        let iconData = try? Data(contentsOf: iconUrl)
-        let iconImage = UIImage(data:iconData!)
-        self.imgView = UIImageView()
-        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
-        imgView.image = iconImage
-        imgView.frame.origin.y -= self.imgView.frame.height / 2
-      }
+//      }
       
       // 角を丸くする
       self.imgView.layer.cornerRadius = 100 * 0.5
@@ -107,6 +108,80 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
       createTabBar()
         // Do any additional setup after loading the view.
     }
+
+  @IBAction func tappedSaveButton(_ sender: Any) {
+    if(userNameTextField.text == ""){
+      showAlert(title: "ユーザー名が入力されていません", message: "ユーザー名を入力してください")
+    }else if((userNameTextField.text?.count)! > 20){
+      showAlert(title: "ユーザー名が20文字を超えています", message: "文字数を20文字以内にしてください")
+    }else if(userGenerationTextField.text == "" || userGenerationTextField.text == "-年代を選択-"){
+      showAlert(title: "年代が選択されていません", message: "年代を選択してください")
+    }else if((userCommentTextView.text?.count)! > 200){
+      showAlert(title: "コメントが200文字を超えています", message: "文字数を200文字以内にしてください")
+    }
+  
+    settingData(userGeneration: userGenerationTextField.text!)
+    globalVar.userName = userNameTextField.text!
+    globalVar.userGeneration = userGenerationTextField.text!
+    globalVar.userComment = userCommentTextView.text
+    editFlag = 1
+    self.performSegue(withIdentifier: "backDetailUserView", sender: nil)
+  }
+  @IBAction func tappedShowPasswordButton(_ sender: Any) {
+    let ac = UIAlertController(title: "パスワード表示", message: "ユーザーIDを入力してください", preferredStyle: .alert)
+    let ok = UIAlertAction(title: "表示", style: .default, handler: {[weak ac] (action) -> Void in
+      guard let textFields = ac?.textFields else {
+        return
+      }
+      guard !textFields.isEmpty else {
+        return
+      }
+      for text in textFields {
+        if text.tag == 1 {
+          if(text.text! == self.globalVar.userId){
+            self.showAlert(title: "パスワード表示", message: self.globalVar.userPass)
+          }else{
+            self.showAlert(title: "ユーザーIDが間違っています", message: "入力し直してください")
+          }
+        }
+      }
+    })
+    let cancel = UIAlertAction(title: "閉じる", style: .cancel, handler: nil)
+    //textfiled1の追加
+    ac.addTextField(configurationHandler: {(text:UITextField!) -> Void in
+      text.tag  = 1
+      text.placeholder = "ユーザーID"
+    })
+    
+    ac.addAction(ok)
+    ac.addAction(cancel)
+    
+    present(ac, animated: true, completion: nil)
+  }
+  
+  @IBAction func tappedCancelButton(_ sender: Any) {
+    performSegue(withIdentifier: "backDetailUserView", sender: nil)
+  }
+  
+  func showAlert(title:String,message:String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+    let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+    alert.addAction(cancelButton)
+    self.present(alert, animated: true, completion: nil)
+  }
+  
+  func keyboardSettings(){
+    // 仮のサイズでツールバー生成
+    let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
+    kbToolBar.barStyle = UIBarStyle.default  // スタイルを設定
+    kbToolBar.sizeToFit()  // 画面幅に合わせてサイズを変更
+    // スペーサー
+    let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+    // 閉じるボタン
+    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(self.commitButtonTapped))
+    kbToolBar.items = [spacer, commitButton]
+    userCommentTextView.inputAccessoryView = kbToolBar
+  }
   
   @objc func commitButtonTapped (){
     self.view.endEditing(true)
@@ -180,7 +255,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
   }
   
   func updateUser(){
-    let str = "user_name=\(userNameTextField.text!)&generation=\(generation)&comment=\(userCommentTextView.text!)&user_icon=\(globalVar.userIconPath)&user_header=\(globalVar.userHeaderPath)&token=\(globalVar.token)"
+    let str = "user_name=\(globalVar.userName)&generation=\(generation)&comment=\(globalVar.userComment)&user_icon=\(globalVar.userIconPath)&user_header=\(globalVar.userHeaderPath)&token=\(globalVar.token)"
     print("表示",str)
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/update")
     var request = URLRequest(url: url!)
@@ -198,9 +273,24 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
         self.saveUser(name: self.globalVar.userName, generation: self.generation, icon: self.globalVar.userIconPath, header: self.globalVar.userHeaderPath, comment: self.globalVar.userComment)
-        self.performSegue(withIdentifier: "backDetaileUserView", sender: nil)
       }
-    }.resume()
+      }.resume()
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if(editFlag == 1){
+      globalVar.userHeader = headerImageView.image!
+      globalVar.userIcon = imgView.image!
+      if(iconFlag == 0 && headerFlag == 0){
+        updateUser()
+      }
+      if(iconFlag == 1){
+        postImage(setImage: imgView.image!)
+      }
+      if(headerFlag == 1){
+        postImage(setImage: headerImageView.image!)
+      }
+    }
   }
   
   func settingData(userGeneration : String){
@@ -315,87 +405,6 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
     dismiss(animated: true, completion: {
       self.cutImage(image: self.editImage!)
     })
-  }
-  
-  @IBAction func tappedSaveButton(_ sender: Any) {
-    if(userNameTextField.text == ""){
-      showAlert(title: "ユーザー名が入力されていません", message: "ユーザー名を入力してください")
-    }else if((userNameTextField.text?.count)! > 20){
-      showAlert(title: "ユーザー名が20文字を超えています", message: "文字数を20文字以内にしてください")
-    }else if(userGenerationTextField.text == "" || userGenerationTextField.text == "-年代を選択-"){
-      showAlert(title: "年代が選択されていません", message: "年代を選択してください")
-    }else if((userCommentTextView.text?.count)! > 200){
-      showAlert(title: "コメントが200文字を超えています", message: "文字数を200文字以内にしてください")
-    }
-  
-    settingData(userGeneration: userGenerationTextField.text!)
-    globalVar.userName = userNameTextField.text!
-    globalVar.userGeneration = userGenerationTextField.text!
-    globalVar.userComment = userCommentTextView.text
-    if(iconFlag == 1){
-      postImage(setImage: imgView.image!)
-    }
-    if(headerFlag == 1){
-      postImage(setImage: headerImageView.image!)
-    }
-    if(iconFlag == 0 && headerFlag == 0){
-      updateUser()
-    }
-  }
-  @IBAction func tappedShowPasswordButton(_ sender: Any) {
-    let ac = UIAlertController(title: "パスワード表示", message: "ユーザーIDを入力してください", preferredStyle: .alert)
-    let ok = UIAlertAction(title: "表示", style: .default, handler: {[weak ac] (action) -> Void in
-      guard let textFields = ac?.textFields else {
-        return
-      }
-      guard !textFields.isEmpty else {
-        return
-      }
-      for text in textFields {
-        if text.tag == 1 {
-          if(text.text! == self.globalVar.userId){
-            self.showAlert(title: "パスワード表示", message: self.globalVar.userPass)
-          }else{
-            self.showAlert(title: "ユーザーIDが間違っています", message: "入力し直してください")
-          }
-        }
-      }
-    })
-    let cancel = UIAlertAction(title: "閉じる", style: .cancel, handler: nil)
-    
-    //textfiled1の追加
-    ac.addTextField(configurationHandler: {(text:UITextField!) -> Void in
-      text.tag  = 1
-      text.placeholder = "ユーザーID"
-    })
-    
-    ac.addAction(ok)
-    ac.addAction(cancel)
-    
-    present(ac, animated: true, completion: nil)
-  }
-  
-  @IBAction func tappedCancelButton(_ sender: Any) {
-    performSegue(withIdentifier: "backDetailUserView", sender: nil)
-  }
-  func showAlert(title:String,message:String) {
-    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-    let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
-    alert.addAction(cancelButton)
-    self.present(alert, animated: true, completion: nil)
-  }
-  
-  func keyboardSettings(){
-    // 仮のサイズでツールバー生成
-    let kbToolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 40))
-    kbToolBar.barStyle = UIBarStyle.default  // スタイルを設定
-    kbToolBar.sizeToFit()  // 画面幅に合わせてサイズを変更
-    // スペーサー
-    let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-    // 閉じるボタン
-    let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(self.commitButtonTapped))
-    kbToolBar.items = [spacer, commitButton]
-    userCommentTextView.inputAccessoryView = kbToolBar
   }
   
   // キーボードが現れた時に、画面全体をずらす。
@@ -572,6 +581,8 @@ extension EditUserViewController: RSKImageCropViewControllerDelegate, RSKImageCr
         realm.delete(_user)
       }
     }
+    userModel.user_id = globalVar.userId
+    userModel.user_pass = globalVar.userPass
     userModel.user_name = name
     userModel.user_generation = generation
     userModel.user_comment = comment

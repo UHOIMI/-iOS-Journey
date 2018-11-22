@@ -45,16 +45,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       self.window?.makeKeyAndVisible()
     }else{
       for _user in user {
+        globalVar.token = _user.user_token
         globalVar.userName = _user.user_name
         globalVar.userPass = _user.user_pass
         globalVar.userComment = _user.user_comment
         globalVar.userId = _user.user_id
+        print("is,pass1",_user.user_id,_user.user_pass,_user.user_name)
         globalVar.userIconPath = _user.user_image
         globalVar.userHeaderPath = _user.user_header
         settingData(gender: _user.user_gender, generation: _user.user_generation)
+        loginUser(id: _user.user_id, pass: _user.user_pass)
+        if(globalVar.userHeaderPath == "" || globalVar.userHeaderPath == "nil"){
+          globalVar.userHeader = UIImage(named: "mountain")!
+        }else{
+          let url = URL(string: globalVar.userHeaderPath)!
+          let imageData = try? Data(contentsOf: url)
+          let image = UIImage(data:imageData!)
+          globalVar.userHeader = image!
+        }
+        if(globalVar.userIconPath == ""){
+          globalVar.userIcon = UIImage(named: "no-image.png")
+        }else{
+          let iconUrl = URL(string: globalVar.userIconPath)!
+          let iconData = try? Data(contentsOf: iconUrl)
+          let iconImage = UIImage(data:iconData!)
+          globalVar.userIcon = iconImage!
+        }
       }
     }
     return true
+  }
+  
+  func loginUser(id:String,pass:String){
+    print("id,pass",id,pass)
+    let str = "user_id=\(id)&user_pass=\(pass)"
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/login")
+    var request = URLRequest(url: url!)
+    request.httpMethod = "POST"
+    // POSTするデータをBodyとして設定
+    request.httpBody = str.data(using: .utf8)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: .utf8) ?? "")
+        var strData:String = String(data: data, encoding: .utf8)!
+          for _ in 0...1{
+            if let range = strData.range(of: "\""){
+              strData.removeSubrange(range)
+            }
+          print("出力",strData)
+          self.globalVar.token = strData
+        }
+      }
+      }.resume()
   }
   
   func settingData(gender:String,generation:Int){
@@ -200,7 +247,7 @@ class GlobalVar{
   var userGeneration : String = ""
   var userIconPath : String = ""
   var userIcon:UIImage?
-  let ipAddress = "192.168.43.221:3000"
+  let ipAddress = "172.20.10.2:3000"
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()

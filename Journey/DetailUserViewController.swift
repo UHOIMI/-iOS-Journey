@@ -32,28 +32,12 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         //scrollViewsetScrollEnabled
         scrollView.isScrollEnabled = false
       }
-      if(globalVar.userHeaderPath == "" || globalVar.userHeaderPath == "nil"){
-        headerImageView.image = UIImage(named: "mountain")
-      }else{
-        let url = URL(string: globalVar.userHeaderPath)!
-        let imageData = try? Data(contentsOf: url)
-        let image = UIImage(data:imageData!)
-        headerImageView.image = image
-      }
-      if(globalVar.userIconPath == ""){
-        imgView.image = UIImage(named: "no-image.png")
-        self.imgView = UIImageView()
-        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
-        imgView.frame.origin.y -= self.imgView.frame.height / 2
-      }else{
-        let iconUrl = URL(string: globalVar.userIconPath)!
-        let iconData = try? Data(contentsOf: iconUrl)
-        let iconImage = UIImage(data:iconData!)
-        self.imgView = UIImageView()
-        imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
-        imgView.image = iconImage
-        imgView.frame.origin.y -= self.imgView.frame.height / 2
-      }
+      headerImageView.image = globalVar.userHeader
+      self.imgView = UIImageView()
+      imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
+      imgView.frame.origin.y -= self.imgView.frame.height / 2
+      imgView.image = globalVar.userIcon
+      
       
       
 //      self.imgView = UIImageView()
