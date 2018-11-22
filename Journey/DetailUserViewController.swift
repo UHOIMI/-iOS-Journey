@@ -34,14 +34,17 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       }
       if(globalVar.userHeaderPath == "" || globalVar.userHeaderPath == "nil"){
         headerImageView.image = UIImage(named: "mountain")
+        globalVar.userHeader = headerImageView.image!
       }else{
         let url = URL(string: globalVar.userHeaderPath)!
         let imageData = try? Data(contentsOf: url)
         let image = UIImage(data:imageData!)
         headerImageView.image = image
+        globalVar.userHeader = image!
       }
       if(globalVar.userIconPath == ""){
         imgView.image = UIImage(named: "no-image.png")
+        globalVar.userIcon = imgView.image!
         self.imgView = UIImageView()
         imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
         imgView.frame.origin.y -= self.imgView.frame.height / 2
@@ -52,6 +55,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         self.imgView = UIImageView()
         imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
         imgView.image = iconImage
+        globalVar.userIcon = iconImage!
         imgView.frame.origin.y -= self.imgView.frame.height / 2
       }
       
