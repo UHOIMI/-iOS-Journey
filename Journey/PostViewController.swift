@@ -494,8 +494,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         let x : Double
         let y : Double
         enum CodingKeys: String, CodingKey {
-          case x
-          case y
+          case x = "lat"
+          case y = "lng"
         }
       }
     }
