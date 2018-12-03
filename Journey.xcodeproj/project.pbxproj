@@ -57,6 +57,8 @@
 		91C890C621A6939C0098517B /* LoaddingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C890C421A6939C0098517B /* LoaddingTableViewCell.swift */; };
 		91C890C721A6939C0098517B /* LoaddingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91C890C521A6939C0098517B /* LoaddingTableViewCell.xib */; };
 		91D6442C219286F3005FF11E /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D6442B219286F3005FF11E /* EditUserViewController.swift */; };
+		91F086D721AD127A00BFAE1E /* SearchPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F086D621AD127A00BFAE1E /* SearchPlanViewController.swift */; };
+		91F086DB21AD1E2C00BFAE1E /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F086DA21AD1E2C00BFAE1E /* HistoryModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +115,8 @@
 		91C890C421A6939C0098517B /* LoaddingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaddingTableViewCell.swift; sourceTree = "<group>"; };
 		91C890C521A6939C0098517B /* LoaddingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoaddingTableViewCell.xib; sourceTree = "<group>"; };
 		91D6442B219286F3005FF11E /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
+		91F086D621AD127A00BFAE1E /* SearchPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlanViewController.swift; sourceTree = "<group>"; };
+		91F086DA21AD1E2C00BFAE1E /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		B20F244F4273514E843810B1 /* Pods-Journey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Journey.release.xcconfig"; path = "Pods/Target Support Files/Pods-Journey/Pods-Journey.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,6 +185,8 @@
 				913B777621A652A800E5769B /* PlanTableViewCell.swift */,
 				91C890C421A6939C0098517B /* LoaddingTableViewCell.swift */,
 				91C890C521A6939C0098517B /* LoaddingTableViewCell.xib */,
+				91F086D621AD127A00BFAE1E /* SearchPlanViewController.swift */,
+				91F086DA21AD1E2C00BFAE1E /* HistoryModel.swift */,
 			);
 			path = Journey;
 			sourceTree = "<group>";
@@ -396,6 +402,7 @@
 				9151DB6C211D65C300B8753B /* DetailSpotViewController.swift in Sources */,
 				9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */,
 				00C4129E217853AA006B5ABC /* ButtonSettings.swift in Sources */,
+				91F086DB21AD1E2C00BFAE1E /* HistoryModel.swift in Sources */,
 				003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */,
 				9155367F2191596300581837 /* DetailUserViewController.swift in Sources */,
 				00D7D433212821F400C507B7 /* SpotModel.swift in Sources */,
@@ -409,6 +416,7 @@
 				00D7D43D212846B500C507B7 /* TabBar.swift in Sources */,
 				00C412A6217DB118006B5ABC /* ConfirmationViewController.swift in Sources */,
 				003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */,
+				91F086D721AD127A00BFAE1E /* SearchPlanViewController.swift in Sources */,
 				00C412A2217DB0EE006B5ABC /* LoginViewController.swift in Sources */,
 				914BEE97218ABC3D009EF3BC /* UserModel.swift in Sources */,
 				0020A4D82127FD71005FC16C /* NavigationController.swift in Sources */,
