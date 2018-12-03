@@ -65,6 +65,10 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var imageFlagList = Array(repeating:0, count:60)
   var imageNumber = 0
   
+  var imageA = ""
+  var imageB = ""
+  var imageC = ""
+  
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
@@ -352,7 +356,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       let imageData = pickedImage.jpegData(compressionQuality: 1.0)
       print("FlagA",number,":",flag,":",imageFlagList[number])
       let body = httpBody(imageData!, fileName: "\(number)-\(flag).jpg")
-      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/image/upload")!
+      let url = URL(string: "http://35.200.26.70:443/api/v1/image/upload")!
       fileUpload(url, data: body) {(data, response, error) in
         if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
           print("FlagB",number,":",flag,":",self.imageFlagList[number])
@@ -375,18 +379,18 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
             }
             switch flag{
             case 0:
-              self.globalVar.spotImageA[number] = imageStr
+              self.globalVar.spotImageA[number] = "http://35.200.26.70:8080/test1/\(imageStr)"
               self.setImageCount += 1
               print(self.imageFlagList[number])
               print(number,":",flag,":",self.globalVar.spotImageA)
               break
             case 1:
-              self.globalVar.spotImageB[number] = imageStr
+              self.globalVar.spotImageB[number] = "http://35.200.26.70:8080/test1/\(imageStr)"
               self.setImageCount += 1
               print(number,":",flag,":",self.globalVar.spotImageB)
               break
             case 2:
-              self.globalVar.spotImageC[number] = imageStr
+              self.globalVar.spotImageC[number] = "http://35.200.26.70:8080/test1/\(imageStr)"
               self.setImageCount += 1
               print(number,":",flag,":",self.globalVar.spotImageC)
               break
@@ -437,7 +441,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func postSpot(){
     for i in 0...globalVar.spotDataList.count - 1{
       self.postSpotCount += 1
-      let str = "token=\(globalVar.token)&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=http://35.200.26.70:8080/test1/\(globalVar.spotImageA[i])&spot_image_b=http://35.200.26.70:8080/test1/\(globalVar.spotImageB[i])&spot_image_c=http://35.200.26.70:8080/test1/\(globalVar.spotImageC[i])"
+      let str = "token=\(globalVar.token)&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=\(globalVar.spotImageA[i])&spot_image_b=\(globalVar.spotImageB[i])&spot_image_c=\(globalVar.spotImageC[i])"
       let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/register")
       var request = URLRequest(url: url!)
       // POSTを指定
@@ -494,8 +498,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         let x : Double
         let y : Double
         enum CodingKeys: String, CodingKey {
-          case x
-          case y
+          case x = "lat"
+          case y = "lng"
         }
       }
     }

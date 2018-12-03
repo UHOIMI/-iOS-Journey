@@ -1908,6 +1908,7 @@
                                             <outlet property="planFavoriteLabel" destination="5JD-YD-EC0" id="nOh-87-hMg"/>
                                             <outlet property="planImageView" destination="5fG-Fi-fdc" id="dju-DX-QMO"/>
                                             <outlet property="planNameLabel" destination="trc-a5-seJ" id="j1K-N5-img"/>
+                                            <outlet property="planSpotCountLabel" destination="nyi-k1-ajz" id="ioI-9J-Jlp"/>
                                             <outlet property="planSpotNameLabel1" destination="fep-2a-9Bi" id="udm-w4-ZoJ"/>
                                             <outlet property="planSpotNameLabel2" destination="8aT-Wx-tZm" id="h13-i3-gpf"/>
                                             <outlet property="planUserIconImageView" destination="tt1-oX-Fra" id="GSV-zr-c5M"/>

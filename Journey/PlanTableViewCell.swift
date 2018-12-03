@@ -18,6 +18,7 @@ class PlanTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewDataSo
   @IBOutlet weak var planSpotNameLabel2: UILabel!
   @IBOutlet weak var planDateLabel: UILabel!
   @IBOutlet weak var planFavoriteLabel: UILabel!
+  @IBOutlet weak var planSpotCountLabel: UILabel!
   
   
   override func awakeFromNib() {

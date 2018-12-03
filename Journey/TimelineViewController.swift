@@ -18,16 +18,18 @@ import RealmSwift
 class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
   @IBOutlet weak var tableView: UITableView!
+  var ActivityIndicator: UIActivityIndicatorView!
+  let formatter = DateFormatter()
   
   let globalVar = GlobalVar.shared
   
-  var sampledatas = [1,2,3,4,5,6,7,8,9,10]
+  var sampledatas = [1,2]
   var isaddload:Bool = true
   var planIdList : [Int] = []
   var userIdList : [String] = []
   var planTitleList : [String] = []
   var userImagePathList : [String] = []
-  var dateList : [Date] = []
+  var dateList : [String] = []
   var spotImageSetFlag : [Int] = []
   var spotCountList : [Int] = []
   var spotNameListA : [String] = []
@@ -37,38 +39,81 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   override func viewDidLoad() {
     super.viewDidLoad()
     getPlan()
+//    tableView.reloadData()
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(TimelineViewController.refreshControlValueChanged(sender:)), for: .valueChanged)
-    //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
     tableView.register(cellType: LoaddingTableViewCell.self)
     let footerCell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "LoaddingTableViewCell")!
     (footerCell as! LoaddingTableViewCell).startAnimationg()
     let footerView: UIView = footerCell.contentView
     tableView.tableFooterView = footerView
     tableView.addSubview(refreshControl)
+    // ActivityIndicatorを作成＆中央に配置
+    ActivityIndicator = UIActivityIndicatorView()
+    ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+    ActivityIndicator.center = self.view.center
+    
+    // クルクルをストップした時に非表示する
+    ActivityIndicator.hidesWhenStopped = true
+    
+    // 色を設定
+    ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+    
+    //Viewに追加
+    self.view.addSubview(ActivityIndicator)
+    ActivityIndicator.startAnimating()
     
   }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    tableView.reloadData()
+  }
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return sampledatas.count
+    return planTitleList.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: PlanTableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for : indexPath) as! PlanTableViewCell
     //let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for: indexPath)
-    cell.planNameLabel.text = sampledatas[indexPath.row].description + "プラン名"
-    cell.planSpotNameLabel1.text = "スポット名"
-    cell.planSpotNameLabel2.text = "スポット名"
+    cell.planNameLabel.text = sampledatas[indexPath.row].description + planTitleList[indexPath.row]
+    cell.planSpotNameLabel1.text = spotNameListA[indexPath.row]
+    if (spotNameListB![indexPath.row] == "nil"){
+      cell.planSpotNameLabel2.text = ""
+    }else{
+      cell.planSpotNameLabel2.text = spotNameListB![indexPath.row]
+    }
+    print("画像パス:\(indexPath.row)",spotImagePathList![indexPath.row])
     cell.planFavoriteLabel.text = 99999.description
-    cell.planImageView.image = UIImage(named: "no-image.png")
-    cell.planUserIconImageView.image = UIImage(named: "no-image.png")
+    if(spotImagePathList![indexPath.row] != ""){
+      let url = URL(string: spotImagePathList![indexPath.row])!
+      let imageData = try? Data(contentsOf: url)
+      let image = UIImage(data:imageData!)
+      cell.planImageView.image = image!
+    }else{
+      cell.planImageView.image = UIImage(named: "no-image.png")
+    }
+    if(spotCountList[indexPath.row] != 0){
+      cell.planSpotCountLabel.text = "他\(spotCountList[indexPath.row])件"
+    }else{
+      cell.planSpotCountLabel.text = ""
+    }
+    cell.planDateLabel.text = dateList[indexPath.row]
+    let iconUrl = URL(string: userImagePathList[indexPath.row])!
+    let iconData = try? Data(contentsOf: iconUrl)
+    cell.planUserIconImageView.image = UIImage(data:iconData!)
     cell.planUserIconImageView.layer.cornerRadius = 40 * 0.5
     print(cell.planUserIconImageView.frame.width)
     cell.planUserIconImageView.clipsToBounds = true
+//    cell.planDateLabel.text = String(date:dateList[indexPath.row])
     //cell.textLabel?.text = "\(sampledatas[indexPath.row])"
+    self.ActivityIndicator.stopAnimating()
     return cell
   }
   @objc func refreshControlValueChanged(sender: UIRefreshControl) {
@@ -84,7 +129,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height && self.tableView.isDragging && isaddload == true){
       self.isaddload = false
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-        for _ in 0..<2{
+        for _ in 0..<0{
           self.sampledatas.append(self.sampledatas.last! + 1)
         }
         if(self.sampledatas.count > 50){
@@ -135,6 +180,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       let spotIdR : Int?
       let spotIdS : Int?
       let spotIdT : Int?
+      let planDate : String
       let date : Date? = NSDate() as Date
       enum CodingKeys: String, CodingKey {
         case planId = "plan_id"
@@ -164,6 +210,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         case spotIdR = "spot_id_r"
         case spotIdS = "spot_id_s"
         case spotIdT = "spot_id_t"
+        case planDate = "plan_date"
         case date
       }
     }
@@ -226,7 +273,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         case spotImageA = "spot_image_a"
         case spotImageB = "spot_image_b"
         case spotImageC = "spot_image_c"
-        case date
+        case date = "date"
       }
       struct SpotAddress : Codable{
         let x : Double
@@ -256,109 +303,122 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             self.planIdList.append(planData!.record![i].planId)
             self.planTitleList.append(planData!.record![i].planTitle)
             self.userIdList.append(planData!.record![i].userId)
-            self.dateList.append(planData!.record![i].date!)
+            
+            var strDate = planData!.record![i].planDate
+            for _ in 0...1{
+              if let range = strDate.range(of: "-") {
+                strDate.replaceSubrange(range, with: "/")
+                print("日付:",strDate)
+              }
+            }
+            let prefixDate = strDate.prefix(11)
+            var suffixDate = prefixDate.suffix(6)
+            if let range = suffixDate.range(of: "/") {
+              suffixDate.replaceSubrange(range, with: "月")
+              print("日付:",suffixDate)
+            }
+            if let range = suffixDate.range(of: "T") {
+              suffixDate.replaceSubrange(range, with: "日")
+              print("日付:",suffixDate)
+            }
+            print("日付",planData!.record![i].planDate)
+            self.dateList.append(String(suffixDate))
             self.getUserImage(userId: self.userIdList[i], number: i)
             self.spotImageSetFlag.append(0)
             var count = 0
             self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "A", number: i)
             print("プランID",self.planIdList[i])
             if(planData!.record![i].spotIdB != nil){
-              self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "B", number: i)
+              self.getSpot(spotId: (planData?.record![i].spotIdB)!, flag: self.spotImageSetFlag[i], spot: "B", number: i)
               if(planData!.record![i].spotIdC != nil){
                 count += 1
                 if(self.spotImageSetFlag[i] == 0){
-                  self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                  self.getSpot(spotId: (planData?.record![i].spotIdC)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                 }
-                if(planData!.record![i].spotIdC != nil){
+                if(planData!.record![i].spotIdD != nil){
                   count += 1
                   if(self.spotImageSetFlag[i] == 0){
-                    self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                    self.getSpot(spotId: (planData?.record![i].spotIdD)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                   }
-                  if(planData!.record![i].spotIdD != nil){
+                  if(planData!.record![i].spotIdE != nil){
                     count += 1
                     if(self.spotImageSetFlag[i] == 0){
-                      self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                      self.getSpot(spotId: (planData?.record![i].spotIdE)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                     }
-                    if(planData!.record![i].spotIdE != nil){
+                    if(planData!.record![i].spotIdF != nil){
                       count += 1
                       if(self.spotImageSetFlag[i] == 0){
-                        self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                        self.getSpot(spotId: (planData?.record![i].spotIdF)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                       }
-                      if(planData!.record![i].spotIdF != nil){
+                      if(planData!.record![i].spotIdG != nil){
                         count += 1
                         if(self.spotImageSetFlag[i] == 0){
-                          self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                          self.getSpot(spotId: (planData?.record![i].spotIdG)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                         }
-                        if(planData!.record![i].spotIdG != nil){
+                        if(planData!.record![i].spotIdH != nil){
                           count += 1
                           if(self.spotImageSetFlag[i] == 0){
-                            self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                            self.getSpot(spotId: (planData?.record![i].spotIdH)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                           }
-                          if(planData!.record![i].spotIdH != nil){
+                          if(planData!.record![i].spotIdI != nil){
                             count += 1
                             if(self.spotImageSetFlag[i] == 0){
-                              self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                              self.getSpot(spotId: (planData?.record![i].spotIdI)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                             }
-                            if(planData!.record![i].spotIdI != nil){
+                            if(planData!.record![i].spotIdJ != nil){
                               count += 1
                               if(self.spotImageSetFlag[i] == 0){
-                                self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                self.getSpot(spotId: (planData?.record![i].spotIdJ)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                               }
-                              if(planData!.record![i].spotIdJ != nil){
+                              if(planData!.record![i].spotIdK != nil){
                                 count += 1
                                 if(self.spotImageSetFlag[i] == 0){
-                                  self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                  self.getSpot(spotId: (planData?.record![i].spotIdK)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                 }
-                                if(planData!.record![i].spotIdK != nil){
+                                if(planData!.record![i].spotIdL != nil){
                                   count += 1
                                   if(self.spotImageSetFlag[i] == 0){
-                                    self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                    self.getSpot(spotId: (planData?.record![i].spotIdL)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                   }
-                                  if(planData!.record![i].spotIdL != nil){
+                                  if(planData!.record![i].spotIdM != nil){
                                     count += 1
                                     if(self.spotImageSetFlag[i] == 0){
-                                      self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                      self.getSpot(spotId: (planData?.record![i].spotIdM)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                     }
-                                    if(planData!.record![i].spotIdM != nil){
+                                    if(planData!.record![i].spotIdN != nil){
                                       count += 1
                                       if(self.spotImageSetFlag[i] == 0){
-                                        self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                        self.getSpot(spotId: (planData?.record![i].spotIdN)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                       }
-                                      if(planData!.record![i].spotIdN != nil){
+                                      if(planData!.record![i].spotIdO != nil){
                                         count += 1
                                         if(self.spotImageSetFlag[i] == 0){
-                                          self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                          self.getSpot(spotId: (planData?.record![i].spotIdO)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                         }
-                                        if(planData!.record![i].spotIdO != nil){
+                                        if(planData!.record![i].spotIdP != nil){
                                           count += 1
                                           if(self.spotImageSetFlag[i] == 0){
-                                            self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                            self.getSpot(spotId: (planData?.record![i].spotIdP)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                           }
-                                          if(planData!.record![i].spotIdP != nil){
+                                          if(planData!.record![i].spotIdQ != nil){
                                             count += 1
                                             if(self.spotImageSetFlag[i] == 0){
-                                              self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                              self.getSpot(spotId: (planData?.record![i].spotIdQ)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                             }
-                                            if(planData!.record![i].spotIdQ != nil){
+                                            if(planData!.record![i].spotIdR != nil){
                                               count += 1
                                               if(self.spotImageSetFlag[i] == 0){
-                                                self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                                self.getSpot(spotId: (planData?.record![i].spotIdR)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                               }
-                                              if(planData!.record![i].spotIdR != nil){
+                                              if(planData!.record![i].spotIdS != nil){
                                                 count += 1
                                                 if(self.spotImageSetFlag[i] == 0){
-                                                  self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
+                                                  self.getSpot(spotId: (planData?.record![i].spotIdS)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                                 }
-                                                if(planData!.record![i].spotIdS != nil){
+                                                if(planData!.record![i].spotIdT != nil){
                                                   count += 1
                                                   if(self.spotImageSetFlag[i] == 0){
-                                                    self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
-                                                  }
-                                                  if(planData!.record![i].spotIdT != nil){
-                                                    count += 1
-                                                    if(self.spotImageSetFlag[i] == 0){
-                                                      self.getSpot(spotId: (planData?.record![i].spotIdA)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
-                                                    }
+                                                    self.getSpot(spotId: (planData?.record![i].spotIdT)!, flag: self.spotImageSetFlag[i], spot: "C", number: i)
                                                   }
                                                 }
                                               }
@@ -381,6 +441,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             }else{
               self.spotNameListB?.append("nil")
             }
+            self.spotCountList.append(count)
           }
         }
       }
@@ -458,6 +519,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
           print("画像",self.spotImagePathList!)
           print("A",self.spotNameListA)
           print("B",self.spotNameListB!)
+          if(number == 1){
+            self.tableView.reloadData()
+          }
         }
       }
     }.resume()
