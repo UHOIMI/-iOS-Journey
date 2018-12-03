@@ -47,6 +47,11 @@ class StartViewController: UIViewController {
     performSegue(withIdentifier: "toTimelineView", sender: nil)
   }
   
+  
+  @IBAction func tappedSearchButton(_ sender: Any) {
+    performSegue(withIdentifier: "toSearchView", sender: nil)
+  }
+  
   @IBAction func tappedDeleteUser(_ sender: Any) {
     let realm = try! Realm()
     let users = realm.objects(UserModel.self)
