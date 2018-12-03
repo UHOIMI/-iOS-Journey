@@ -23,7 +23,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   
   let globalVar = GlobalVar.shared
   
-  var sampledatas = [1,2]
+  var sampledatas = [1,2,3,4,5,6,7,8,9,10]
   var isaddload:Bool = true
   var planIdList : [Int] = []
   var userIdList : [String] = []
@@ -35,10 +35,11 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var spotNameListA : [String] = []
   var spotNameListB : [String]? = []
   var spotImagePathList : [String]? = []
+  var planCount = 0
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    getPlan()
+    getPlan(offset: planCount)
 //    tableView.reloadData()
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(TimelineViewController.refreshControlValueChanged(sender:)), for: .valueChanged)
@@ -68,7 +69,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    tableView.reloadData()
+//    tableView.reloadData()
   }
   
   override func didReceiveMemoryWarning() {
@@ -82,7 +83,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: PlanTableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for : indexPath) as! PlanTableViewCell
     //let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for: indexPath)
-    cell.planNameLabel.text = sampledatas[indexPath.row].description + planTitleList[indexPath.row]
+    cell.planNameLabel.text =  planTitleList[indexPath.row]
     cell.planSpotNameLabel1.text = spotNameListA[indexPath.row]
     if (spotNameListB![indexPath.row] == "nil"){
       cell.planSpotNameLabel2.text = ""
@@ -114,12 +115,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
 //    cell.planDateLabel.text = String(date:dateList[indexPath.row])
     //cell.textLabel?.text = "\(sampledatas[indexPath.row])"
     self.ActivityIndicator.stopAnimating()
+    planCount = indexPath.row + 1
     return cell
   }
   @objc func refreshControlValueChanged(sender: UIRefreshControl) {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
       self.sampledatas.insert(self.sampledatas[0] - 1, at: 0)
       self.sampledatas.insert(self.sampledatas[0] - 1, at: 0)
+//      self.getPlan(offset: self.planCount)
       self.tableView.reloadData()
       sender.endRefreshing()
     })
@@ -129,8 +132,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height && self.tableView.isDragging && isaddload == true){
       self.isaddload = false
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-        for _ in 0..<0{
+        for _ in 0..<2{
           self.sampledatas.append(self.sampledatas.last! + 1)
+          self.getPlan(offset: self.planCount)
         }
         if(self.sampledatas.count > 50){
           self.isaddload = false
@@ -138,7 +142,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         }else{
           self.isaddload = true
         }
-        self.tableView.reloadData()
+//        self.tableView.reloadData()
       }
     }
   }
@@ -286,8 +290,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }
   }
   
-  func getPlan(){
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find")
+  func getPlan(offset:Int){
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -299,13 +303,13 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let planData = try? JSONDecoder().decode(PlanData.self, from: data)
         if(planData!.status == 200){
-          for i in 0...1{
+          for i in 0...9{
             self.planIdList.append(planData!.record![i].planId)
             self.planTitleList.append(planData!.record![i].planTitle)
             self.userIdList.append(planData!.record![i].userId)
             
             var strDate = planData!.record![i].planDate
-            for _ in 0...1{
+            for _ in 0...9{
               if let range = strDate.range(of: "-") {
                 strDate.replaceSubrange(range, with: "/")
                 print("日付:",strDate)

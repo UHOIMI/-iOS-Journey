@@ -261,8 +261,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       showAlert(title: "交通手段が選択されていません", message: "交通手段を1つ以上選択してください")
     }else if(pickerTextField.text! == ""){
       showAlert(title: "金額が選択されていません", message: "金額を選択してください")
-    }
-    if(globalVar.spotDataList.count >= 1 && titleTextField.text != "" && prefecturesTextField.text != "" && pickerTextField.text != ""){
+    }else if(globalVar.spotDataList.count >= 1 && titleTextField.text != "" && prefecturesTextField.text != "" && pickerTextField.text != ""){
       globalVar.planTitle = titleTextField.text!
       globalVar.planArea = prefecturesTextField.text!
       globalVar.planPrice = pickerTextField.text!
