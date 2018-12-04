@@ -27,6 +27,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var isaddload:Bool = true
   var planIdList : [Int] = []
   var userIdList : [String] = []
+  var userNameList : [String] = []
   var planTitleList : [String] = []
   var userImagePathList : [String] = []
   var dateList : [String] = []
@@ -35,6 +36,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var spotNameListA : [String] = []
   var spotNameListB : [String]? = []
   var spotImagePathList : [String]? = []
+  var spotImageList : [UIImage]? = []
+  var userImageList : [UIImage] = []
   var planCount = 0
   
   override func viewDidLoad() {
@@ -90,30 +93,20 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }else{
       cell.planSpotNameLabel2.text = spotNameListB![indexPath.row]
     }
-    print("画像パス:\(indexPath.row)",spotImagePathList![indexPath.row])
-    cell.planFavoriteLabel.text = 99999.description
-    if(spotImagePathList![indexPath.row] != ""){
-      let url = URL(string: spotImagePathList![indexPath.row])!
-      let imageData = try? Data(contentsOf: url)
-      let image = UIImage(data:imageData!)
-      cell.planImageView.image = image!
-    }else{
-      cell.planImageView.image = UIImage(named: "no-image.png")
-    }
     if(spotCountList[indexPath.row] != 0){
       cell.planSpotCountLabel.text = "他\(spotCountList[indexPath.row])件"
     }else{
       cell.planSpotCountLabel.text = ""
     }
+    print("画像パス:\(indexPath.row)",spotImagePathList![indexPath.row])
+    cell.planFavoriteLabel.text = 99999.description
+    cell.planImageView.image = spotImageList![indexPath.row]
     cell.planDateLabel.text = dateList[indexPath.row]
-    let iconUrl = URL(string: userImagePathList[indexPath.row])!
-    let iconData = try? Data(contentsOf: iconUrl)
-    cell.planUserIconImageView.image = UIImage(data:iconData!)
+    cell.planUserIconImageView.image = userImageList[indexPath.row]
     cell.planUserIconImageView.layer.cornerRadius = 40 * 0.5
     print(cell.planUserIconImageView.frame.width)
     cell.planUserIconImageView.clipsToBounds = true
-//    cell.planDateLabel.text = String(date:dateList[indexPath.row])
-    //cell.textLabel?.text = "\(sampledatas[indexPath.row])"
+    cell.planUserNameLabel.text = userNameList[indexPath.row]
     self.ActivityIndicator.stopAnimating()
     planCount = indexPath.row + 1
     return cell
@@ -142,7 +135,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         }else{
           self.isaddload = true
         }
-//        self.tableView.reloadData()
+        self.tableView.reloadData()
       }
     }
   }
@@ -291,6 +284,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   }
   
   func getPlan(offset:Int){
+    
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
@@ -325,6 +319,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               suffixDate.replaceSubrange(range, with: "日")
               print("日付:",suffixDate)
             }
+            self.spotImagePathList?.append("no-image")
+            self.spotImageList?.append(UIImage(named: "no-image.png")!)
+            self.userImageList.append(UIImage(named: "no-image.png")!)
             print("日付",planData!.record![i].planDate)
             self.dateList.append(String(suffixDate))
             self.getUserImage(userId: self.userIdList[i], number: i)
@@ -466,6 +463,12 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         if(userData!.status == 200){
           self.userImagePathList.append((userData?.record![0].userIcon)!)
           print(self.userImagePathList[0])
+//          self.userImageList[number] = (userData?.record![0].userIcon)!
+          let url = URL(string: (userData?.record![0].userIcon)!)!
+          let imageData = try? Data(contentsOf: url)
+          let image = UIImage(data:imageData!)
+          self.userImageList[number] = image!
+          self.userNameList.append((userData?.record![0].userName)!)
         }
       }
     }.resume()
@@ -486,44 +489,81 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         if (spotData.status == 200){
           if(spot == "A"){
             self.spotNameListA.append(spotData.record![0].spotTitle)
-            if(spotData.record![0].spotImageA != nil){
+            if(spotData.record![0].spotImageA != nil && spotData.record![0].spotImageA != ""){
               self.spotImageSetFlag[number] = 1
-              self.spotImagePathList?.append(spotData.record![0].spotImageA!)
-            }else if(spotData.record![0].spotImageB != nil){
+              self.spotImagePathList![number] = spotData.record![0].spotImageA!
+              let url = URL(string: spotData.record![0].spotImageA!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageList![number] = image!
+            }else if(spotData.record![0].spotImageB != nil && spotData.record![0].spotImageB != ""){
               self.spotImageSetFlag[number] = 1
+              self.spotImagePathList![number] = spotData.record![0].spotImageB!
+              let url = URL(string: spotData.record![0].spotImageB!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageList![number] = image!
               self.spotImagePathList?.append(spotData.record![0].spotImageB!)
-            }else if(spotData.record![0].spotImageC != nil){
+            }else if(spotData.record![0].spotImageC != nil && spotData.record![0].spotImageC != ""){
               self.spotImageSetFlag[number] = 1
-              self.spotImagePathList?.append(spotData.record![0].spotImageC!)
+              self.spotImagePathList![number] = spotData.record![0].spotImageC!
+              let url = URL(string: spotData.record![0].spotImageC!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageList![number] = image!
             }
           }else if(spot == "B"){
             self.spotNameListB?.append(spotData.record![0].spotTitle)
-            if(spotData.record![0].spotImageA != nil && self.spotImageSetFlag[number] == 0){
+            if(spotData.record![0].spotImageA != nil && self.spotImageSetFlag[number] == 0 && spotData.record![0].spotImageA != ""){
               self.spotImageSetFlag[number] = 1
-              self.spotImagePathList?.append(spotData.record![0].spotImageA!)
-            }else if(spotData.record![0].spotImageB != nil && self.spotImageSetFlag[number] == 0){
+              self.spotImagePathList![number] = spotData.record![0].spotImageA!
+              let url = URL(string: spotData.record![0].spotImageA!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageList![number] = image!
+            }else if(spotData.record![0].spotImageB != nil && self.spotImageSetFlag[number] == 0 && spotData.record![0].spotImageB != ""){
               self.spotImageSetFlag[number] = 1
-              self.spotImagePathList?.append(spotData.record![0].spotImageB!)
-            }else if(spotData.record![0].spotImageC != nil && self.spotImageSetFlag[number] == 0){
+              self.spotImagePathList![number] = spotData.record![0].spotImageB!
+              let url = URL(string: spotData.record![0].spotImageB!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageList![number] = image!
+            }else if(spotData.record![0].spotImageC != nil && self.spotImageSetFlag[number] == 0 && spotData.record![0].spotImageC != ""){
               self.spotImageSetFlag[number] = 1
-              self.spotImagePathList?.append(spotData.record![0].spotImageC!)
+              self.spotImagePathList![number] = spotData.record![0].spotImageC!
+              let url = URL(string: spotData.record![0].spotImageC!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageList![number] = image!
             }
           }else{
-            if(spotData.record![0].spotImageA != nil && self.spotImageSetFlag[number] == 0){
+            if(spotData.record![0].spotImageA != nil && self.spotImageSetFlag[number] == 0 && spotData.record![0].spotImageA != ""){
               self.spotImageSetFlag[number] = 1
-              self.spotImagePathList?.append(spotData.record![0].spotImageA!)
-            }else if(spotData.record![0].spotImageB != nil && self.spotImageSetFlag[number] == 0){
+              self.spotImagePathList![number] = spotData.record![0].spotImageA!
+              let url = URL(string: spotData.record![0].spotImageA!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageList![number] = image!
+            }else if(spotData.record![0].spotImageB != nil && self.spotImageSetFlag[number] == 0 && spotData.record![0].spotImageB != ""){
               self.spotImageSetFlag[number] = 1
-              self.spotImagePathList?.append(spotData.record![0].spotImageB!)
-            }else if(spotData.record![0].spotImageC != nil && self.spotImageSetFlag[number] == 0){
+              self.spotImagePathList![number] = spotData.record![0].spotImageB!
+              let url = URL(string: spotData.record![0].spotImageB!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageList![number] = image!
+            }else if(spotData.record![0].spotImageC != nil && self.spotImageSetFlag[number] == 0 && spotData.record![0].spotImageC != ""){
               self.spotImageSetFlag[number] = 1
-              self.spotImagePathList?.append(spotData.record![0].spotImageC!)
+              self.spotImagePathList![number] = spotData.record![0].spotImageC!
+              let url = URL(string: spotData.record![0].spotImageC!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageList![number] = image!
             }
           }
           print("画像",self.spotImagePathList!)
           print("A",self.spotNameListA)
           print("B",self.spotNameListB!)
-          if(number == 1){
+          if(number == 9){
             self.tableView.reloadData()
           }
         }
