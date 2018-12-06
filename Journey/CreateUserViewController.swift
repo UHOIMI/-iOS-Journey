@@ -215,6 +215,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
     let result = halfString as String
     print(result)
     let pattern = "^[A-Za-z0-9]{1,}$"
+    //user_nameに%等禁止
     let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
     if(userIdTextField.text == ""){
       showAlert(title: "ユーザーIDが入力されていません", message: "ユーザーIDを入力してください")
