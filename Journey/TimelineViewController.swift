@@ -111,6 +111,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     planCount = indexPath.row + 1
     return cell
   }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    //tableView.deselectRow(at: indexPath, animated: true)
+    self.present(DetailSpotViewController(), animated: true, completion: nil)
+    
+  }
+  
   @objc func refreshControlValueChanged(sender: UIRefreshControl) {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
       self.sampledatas.insert(self.sampledatas[0] - 1, at: 0)
