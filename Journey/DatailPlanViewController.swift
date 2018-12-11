@@ -8,9 +8,12 @@
 
 import UIKit
 import GoogleMaps
+import Foundation
+import Photos
+import CoreLocation
+import CoreMotion
 
-class DatailPlanViewController: UIViewController {
-  
+class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate,UITextFieldDelegate,UITextViewDelegate, UITableViewDataSource,UITableViewDelegate {
   
   @IBOutlet weak var subView: UIView!
   @IBOutlet weak var userIconImageView: UIImageView!
@@ -20,6 +23,11 @@ class DatailPlanViewController: UIViewController {
   @IBOutlet weak var trafficLabel: UILabel!
   @IBOutlet weak var moneyLabel: UILabel!
   @IBOutlet weak var commentTextView: UITextView!
+  @IBOutlet weak var spotTableView: UITableView!
+  @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+  @IBOutlet weak var superViewHeight: NSLayoutConstraint!
+  
+  var planId : Int = 0
   
   var pickOption = ["500円以下", "501円 ~ 1000円", "1001円 ~ 5000円", "5001円 ~ 10000円", "10001円以上"]
   let prefectures:Array = [ "北海道", "青森県", "岩手県", "宮城県", "秋田県","山形県", "福島県", "茨城県", "栃木県", "群馬県","埼玉県", "千葉県", "東京都", "神奈川県", "新潟県","富山県", "石川県", "福井県", "山梨県", "長野県","岐阜県", "静岡県", "愛知県", "三重県", "滋賀県","京都府", "大阪府", "兵庫県", "奈良県", "和歌山県","鳥取県", "島根県", "岡山県", "広島県", "山口県","徳島県", "香川県", "愛媛県", "高知県", "福岡県","佐賀県", "長崎県", "熊本県", "大分県", "宮崎県","鹿児島県", "沖縄県"]
@@ -42,9 +50,72 @@ class DatailPlanViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:0,width:myFrameSize.width,height:300),camera:camera)
-    self.subView.addSubview(mapView)
+    moneyLabel.text = "1000"
+    
+    commentTextView.layer.borderColor = UIColor.gray.cgColor
+    commentTextView.layer.borderWidth = 0.5
+    commentTextView.layer.cornerRadius = 10.0
+    commentTextView.layer.masksToBounds = true
+    
+    let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:commentTextView.frame.origin.y + commentTextView.frame.size.height + 16,width:myFrameSize.width,height:300),camera:camera)
+    subView.addSubview(mapView)
+    tableViewHeight.constant = 128 + 100 * 9
+    superViewHeight.constant = 1280 + 100 * 9
     // Do any additional setup after loading the view.
+  }
+  
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    return 1
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    print("セル追加")
+    return 10
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell: SpotTableViewCell = tableView.dequeueReusableCell(withIdentifier: "spotCell", for : indexPath) as! SpotTableViewCell
+    cell.spotNameLabel.text =  "スポット名"
+    cell.spotCommentLabel.text = "コメント"
+    cell.spotImageView.image = UIImage(named:"画像を選択")!
+//    if (spotNameListB![indexPath.row] == "nil"){
+//      cell.planSpotNameLabel2.text = ""
+//    }else{
+//      cell.planSpotNameLabel2.text = spotNameListB![indexPath.row]
+//    }
+//    if(spotCountList[indexPath.row] != 0){
+//      cell.planSpotCountLabel.text = "他\(spotCountList[indexPath.row])件"
+//    }else{
+//      cell.planSpotCountLabel.text = ""
+//    }
+//    print("画像パス:\(indexPath.row)",spotImagePathList![indexPath.row])
+//    cell.planFavoriteLabel.text = 99999.description
+//    cell.planImageView.image = spotImageList![indexPath.row]
+//    cell.planDateLabel.text = dateList[indexPath.row]
+//    cell.planUserIconImageView.image = userImageList[indexPath.row]
+//    cell.planUserIconImageView.layer.cornerRadius = 40 * 0.5
+//    print(cell.planUserIconImageView.frame.width)
+//    cell.planUserIconImageView.clipsToBounds = true
+//    cell.planUserNameLabel.text = userNameList[indexPath.row]
+//    self.ActivityIndicator.stopAnimating()
+//    planCount = indexPath.row + 1
+    // 角を丸くする
+    self.userIconImageView.layer.cornerRadius = 40 * 0.5
+    self.userIconImageView.clipsToBounds = true
+    userIconImageView.isUserInteractionEnabled = true
+    userIconImageView.tag = 1
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    //tableView.deselectRow(at: indexPath, animated: true)
+    self.performSegue(withIdentifier: "toDetailPlanView", sender: nil)
+    
   }
   
   enum actionTag: Int {

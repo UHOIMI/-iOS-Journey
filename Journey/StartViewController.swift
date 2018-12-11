@@ -63,4 +63,9 @@ class StartViewController: UIViewController {
     }
     performSegue(withIdentifier: "toStartView", sender: nil)
   }
+  
+  
+  @IBAction func test(_ sender: Any) {
+    performSegue(withIdentifier: "test", sender: nil)
+  }
 }

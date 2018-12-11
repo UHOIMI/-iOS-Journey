@@ -55,6 +55,7 @@
 		9155367F2191596300581837 /* DetailUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9155367E2191596300581837 /* DetailUserViewController.swift */; };
 		9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */; };
 		9197627D21B8D9AC00F0890C /* DatailPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197627C21B8D9AC00F0890C /* DatailPlanViewController.swift */; };
+		919DE75121BDFB80001C863A /* SpotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919DE75021BDFB80001C863A /* SpotTableViewCell.swift */; };
 		91C890C621A6939C0098517B /* LoaddingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C890C421A6939C0098517B /* LoaddingTableViewCell.swift */; };
 		91C890C721A6939C0098517B /* LoaddingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91C890C521A6939C0098517B /* LoaddingTableViewCell.xib */; };
 		91D6442C219286F3005FF11E /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D6442B219286F3005FF11E /* EditUserViewController.swift */; };
@@ -114,6 +115,7 @@
 		9155367E2191596300581837 /* DetailUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUserViewController.swift; sourceTree = "<group>"; };
 		9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutSpotViewController.swift; sourceTree = "<group>"; };
 		9197627C21B8D9AC00F0890C /* DatailPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatailPlanViewController.swift; sourceTree = "<group>"; };
+		919DE75021BDFB80001C863A /* SpotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotTableViewCell.swift; sourceTree = "<group>"; };
 		91C890C421A6939C0098517B /* LoaddingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaddingTableViewCell.swift; sourceTree = "<group>"; };
 		91C890C521A6939C0098517B /* LoaddingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoaddingTableViewCell.xib; sourceTree = "<group>"; };
 		91D6442B219286F3005FF11E /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				91F086D621AD127A00BFAE1E /* SearchPlanViewController.swift */,
 				91F086DA21AD1E2C00BFAE1E /* HistoryModel.swift */,
 				9197627C21B8D9AC00F0890C /* DatailPlanViewController.swift */,
+				919DE75021BDFB80001C863A /* SpotTableViewCell.swift */,
 			);
 			path = Journey;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */,
 				00C4129E217853AA006B5ABC /* ButtonSettings.swift in Sources */,
 				91F086DB21AD1E2C00BFAE1E /* HistoryModel.swift in Sources */,
+				919DE75121BDFB80001C863A /* SpotTableViewCell.swift in Sources */,
 				003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */,
 				9155367F2191596300581837 /* DetailUserViewController.swift in Sources */,
 				00D7D433212821F400C507B7 /* SpotModel.swift in Sources */,

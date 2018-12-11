@@ -15,13 +15,14 @@ import CoreLocation
 import CoreMotion
 import RealmSwift
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
 
   @IBOutlet weak var tableView: UITableView!
   var ActivityIndicator: UIActivityIndicatorView!
   let formatter = DateFormatter()
   
   let globalVar = GlobalVar.shared
+  private var tabBar:TabBar!
   
   var sampledatas = [1,2,3,4,5,6,7,8,9,10]
   var isaddload:Bool = true
@@ -115,8 +116,18 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
     //tableView.deselectRow(at: indexPath, animated: true)
-    self.present(DetailSpotViewController(), animated: true, completion: nil)
+    self.performSegue(withIdentifier: "toDetailPlanView", sender: planIdList[indexPath.row])
     
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if(segue.identifier == "toDetailPlanView"){
+      print("プランIdは")
+      print(sender as! Int)
+      print("プランIdは")
+      let nextViewController = segue.destination as! DatailPlanViewController
+      nextViewController.planId = sender as! Int
+    }
   }
   
   @objc func refreshControlValueChanged(sender: UIRefreshControl) {
@@ -133,7 +144,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height && self.tableView.isDragging && isaddload == true){
       self.isaddload = false
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-        for _ in 0..<2{
+        for _ in 0..<0{
           self.sampledatas.append(self.sampledatas.last! + 1)
           self.getPlan(offset: self.planCount)
         }
@@ -185,7 +196,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       let spotIdR : Int?
       let spotIdS : Int?
       let spotIdT : Int?
-      let planDate : String
+//      let planDate : String
       let date : Date? = NSDate() as Date
       enum CodingKeys: String, CodingKey {
         case planId = "plan_id"
@@ -215,7 +226,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         case spotIdR = "spot_id_r"
         case spotIdS = "spot_id_s"
         case spotIdT = "spot_id_t"
-        case planDate = "plan_date"
+//        case planDate = "plan_date"
         case date
       }
     }
@@ -310,7 +321,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             self.planTitleList.append(planData!.record![i].planTitle)
             self.userIdList.append(planData!.record![i].userId)
             
-            var strDate = planData!.record![i].planDate
+            var strDate = "2018-12-03T16:21:55"
             for _ in 0...9{
               if let range = strDate.range(of: "-") {
                 strDate.replaceSubrange(range, with: "/")
@@ -330,7 +341,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             self.spotImagePathList?.append("no-image")
             self.spotImageList?.append(UIImage(named: "no-image.png")!)
             self.userImageList.append(UIImage(named: "no-image.png")!)
-            print("日付",planData!.record![i].planDate)
+//            print("日付",planData!.record![i].planDate)
             self.dateList.append(String(suffixDate))
             self.getUserImage(userId: self.userIdList[i], number: i)
             self.spotImageSetFlag.append(0)
@@ -577,6 +588,55 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         }
       }
     }.resume()
+  }
+  
+  func createTabBar(){
+    let width = self.view.frame.width
+    let height = self.view.frame.height
+    //デフォルトは49
+    let tabBarHeight:CGFloat = 58
+    /**   TabBarを設置   **/
+    tabBar = TabBar()
+    if UIDevice().userInterfaceIdiom == .phone {
+      switch UIScreen.main.nativeBounds.height {
+      case 2436:
+        tabBar.frame = CGRect(x:0,y:height - tabBarHeight - 34.1,width:width,height:tabBarHeight)
+      default:
+        tabBar.frame = CGRect(x:0,y:height - tabBarHeight,width:width,height:tabBarHeight)
+      }
+    }
+    //バーの色
+    tabBar.barTintColor = UIColor.lightGray
+    //選択されていないボタンの色
+    tabBar.unselectedItemTintColor = UIColor.black
+    //ボタンを押した時の色
+    tabBar.tintColor = UIColor.black
+    //ボタンを生成
+    let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 1)
+    let search:UITabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 2)
+    let favorites:UITabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 3)
+    let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 4)
+    //ボタンをタブバーに配置する
+    tabBar.items = [home,search,favorites,setting]
+    //デリゲートを設定する
+    tabBar.delegate = self
+    
+    self.view.addSubview(tabBar)
+  }
+  
+  func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    switch item.tag{
+    case 1:
+      print("１")
+    case 2:
+      print("２")
+    case 3:
+      print("３")
+    case 4:
+      performSegue(withIdentifier: "backDetailUserView", sender: nil)
+    default : return
+      
+    }
   }
 }
 
