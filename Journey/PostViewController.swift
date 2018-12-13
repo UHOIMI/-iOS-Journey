@@ -64,6 +64,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   var setImageCount = 0
   var imageFlagList = Array(repeating:0, count:60)
   var imageNumber = 0
+  var setPlanId = 0
   
   var imageA = ""
   var imageB = ""
@@ -336,7 +337,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
             print(i,":",f,":",globalVar.spotImageC)
             if(i == globalVar.spotDataList.count - 1 && imageCount == 0){
               print("EndBBB")
-              postSpot()
+              postPlan()
             }
             break
           default:
@@ -401,7 +402,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
             if(self.setImageCount == self.imageCount){
               print("EndAAA")
               self.setImageCount += 100
-              self.postSpot()
+              self.postPlan()
             }
           } else {
             print(response.statusCode)
@@ -436,115 +437,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     let task = session.uploadTask(with: request, from: data, completionHandler: completionHandler)
     task.resume()
   }
-
-  func postSpot(){
-    for i in 0...globalVar.spotDataList.count - 1{
-      self.postSpotCount += 1
-      let str = "token=\(globalVar.token)&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=\(globalVar.spotImageA[i])&spot_image_b=\(globalVar.spotImageB[i])&spot_image_c=\(globalVar.spotImageC[i])"
-      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/register")
-      var request = URLRequest(url: url!)
-      // POSTを指定
-      request.httpMethod = "POST"
-      // POSTするデータをBodyとして設定
-      request.httpBody = str.data(using: .utf8)
-      let session = URLSession.shared
-      session.dataTask(with: request) { (data, response, error) in
-        if error == nil, let data = data, let response = response as? HTTPURLResponse {
-          // HTTPヘッダの取得
-          print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
-          // HTTPステータスコード
-          print("statusCode: \(response.statusCode)")
-          print(String(data: data, encoding: .utf8) ?? "")
-          if (i == self.globalVar.spotDataList.count - 1){
-            self.getSpot()
-          }
-        }
-      }.resume()
-    }
-  }
-  
-  struct AllData : Codable{
-    let status : Int
-    let record : [Record]?
-    let message : String?
-    enum CodingKeys: String, CodingKey {
-      case status
-      case record
-      case message
-    }
-    struct Record : Codable{
-      let spotId : Int
-      let userId : String
-      let spotTitle : String
-      let spotAddress : SpotAddress
-      let spotComment : String?
-      let spotImageA : String?
-      let spotImageB : String?
-      let spotImageC : String?
-      let date : Date? = NSDate() as Date
-      enum CodingKeys: String, CodingKey {
-        case spotId = "spot_id"
-        case userId = "user_id"
-        case spotTitle = "spot_title"
-        case spotAddress = "spot_address"
-        case spotComment = "spot_comment"
-        case spotImageA = "spot_image_a"
-        case spotImageB = "spot_image_b"
-        case spotImageC = "spot_image_c"
-        case date
-      }
-      struct SpotAddress : Codable{
-        let x : Double
-        let y : Double
-        enum CodingKeys: String, CodingKey {
-          case x = "lat"
-          case y = "lng"
-        }
-      }
-    }
-  }
-  
-  func getSpot(){
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/find?user_id=\(globalVar.userId)")
-    let request = URLRequest(url: url!)
-    let session = URLSession.shared
-    session.dataTask(with: request) { (data, response, error) in
-      if error == nil, let data = data, let response = response as? HTTPURLResponse {
-        // HTTPヘッダの取得
-        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
-        // HTTPステータスコード
-        print("statusCode: \(response.statusCode)")
-        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
-        let allData = try! JSONDecoder().decode(AllData.self, from: data)
-        if (allData.message == ""){
-          let max : Int = allData.record!.count - 1
-          var backCount = 0
-          print(self.postSpotCount)
-          for index in 0 ... self.postSpotCount - 1{
-            backCount = max - index
-            self.spotList.append(allData.record![backCount].spotId)
-            print(self.spotList)
-            if(index == self.postSpotCount - 1){
-              self.spotList.reverse()
-              self.postPlan()
-            }
-          }
-        }else{
-          self.showAlert(title: allData.message!, message: "再ログインしてください")
-        }
-      }
-    }.resume()
-  }
-  
   func postPlan(){
     let transportationString = transportation.reduce("") { $0 + String($1) }
-    var str : String = "token=\(globalVar.token)&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)"
-    for i in 0 ... spotList.count{
-      if (i != spotList.count){
-        str = str + "&spot_id_\(spotFlagList[i])=\(spotList[i])"
-      }
-    }
-    print(str)
+    let str : String = "token=\(globalVar.token)&plan_title=\(globalVar.planTitle)&plan_comment=\(globalVar.planText)&transportation=\(transportationString)&price=\(globalVar.planPrice)&area=\(globalVar.planArea)"
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/plan/register")
     var request = URLRequest(url: url!)
     // POSTを指定
@@ -563,17 +458,101 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
         self.globalVar.planPrice = ""
         self.globalVar.planText = ""
         self.globalVar.planTitle = ""
-        self.globalVar.selectSpot = ["スポットを追加"]
-        self.globalVar.spotDataList = []
-        self.imageCount = 0
-        self.setImageCount = 0
-        for i in 0 ... 19{
-          self.globalVar.spotImageA[i] = ""
-          self.globalVar.spotImageB[i] = ""
-          self.globalVar.spotImageC[i] = ""
+        self.getPlan()
+    //        self.globalVar.selectSpot = ["スポットを追加"]
+    //        self.globalVar.spotDataList = []
+    //        self.imageCount = 0
+    //        self.setImageCount = 0
+    //        for i in 0 ... 19{
+    //          self.globalVar.spotImageA[i] = ""
+    //          self.globalVar.spotImageB[i] = ""
+    //          self.globalVar.spotImageC[i] = ""
+    //        }
+        }
+      }.resume()
+  }
+    struct AllData : Codable{
+      let status : Int
+      let record : [Record]?
+      let message : String?
+      enum CodingKeys: String, CodingKey {
+        case status
+        case record
+        case message
+      }
+      struct Record : Codable{
+        let planId : Int
+        let userId : String
+        let planTitle : String
+        let planArea : String
+        let planComment : String?
+        let planPrice : String
+        let transportation : String
+//        let planDate : String
+        let date : Date? = NSDate() as Date
+        enum CodingKeys: String, CodingKey {
+          case planId = "plan_id"
+          case userId = "user_id"
+          case planTitle = "plan_title"
+          case planArea = "area"
+          case planComment = "plan_comment"
+          case planPrice = "price"
+          case transportation = "transportation"
+//          case planDate = "pla_date"
+          case date
+        }
+      }
+    }
+  
+  func getPlan(){
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/plan/find?user_id=\(globalVar.userId)")
+    let request = URLRequest(url: url!)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let allData = try! JSONDecoder().decode(AllData.self, from: data)
+        if(allData.message == ""){
+          let setNumber = allData.record!.count - 1
+          self.setPlanId = allData.record![setNumber].planId
+          self.postSpot()
+        }else{
+          self.showAlert(title: allData.message!, message: "再ログインしてください")
         }
       }
     }.resume()
+  }
+
+  func postSpot(){
+    for i in 0...globalVar.spotDataList.count - 1{
+      let dateFormater = DateFormatter()
+      dateFormater.locale = Locale(identifier: "ja_JP")
+      dateFormater.dateFormat = "yyyy-MM-dd"
+      let date = dateFormater.string(from: globalVar.spotDataList[i].datetime)
+      print(date)
+      self.postSpotCount += 1
+      let str = "token=\(globalVar.token)&spot_title=\(globalVar.spotDataList[i].spot_name)&spot_address=\(globalVar.spotDataList[i].latitude),\(globalVar.spotDataList[i].longitude)&spot_comment=\(globalVar.spotDataList[i].comment)&spot_image_a=\(globalVar.spotImageA[i])&spot_image_b=\(globalVar.spotImageB[i])&spot_image_c=\(globalVar.spotImageC[i])&plan_id=\(setPlanId)&user_id=\(globalVar.userId)&spot_date=\(date)"
+      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/register")
+      var request = URLRequest(url: url!)
+      // POSTを指定
+      request.httpMethod = "POST"
+      // POSTするデータをBodyとして設定
+      request.httpBody = str.data(using: .utf8)
+      let session = URLSession.shared
+      session.dataTask(with: request) { (data, response, error) in
+        if error == nil, let data = data, let response = response as? HTTPURLResponse {
+          // HTTPヘッダの取得
+          print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+          // HTTPステータスコード
+          print("statusCode: \(response.statusCode)")
+          print(String(data: data, encoding: .utf8) ?? "")
+        }
+      }.resume()
+    }
   }
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
