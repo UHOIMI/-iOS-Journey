@@ -155,10 +155,10 @@ class ConfirmationViewController: UIViewController {
   func settingData(){
     switch globalVar.userGender {
     case "男性":
-      gender = "男"
+      gender = "男性"
       break
     case "女性":
-      gender = "女"
+      gender = "女性"
       break
     default:
       break
