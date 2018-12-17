@@ -124,4 +124,9 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       
     }
   }
+  
+  @IBAction func tappeddSpotList(_ sender: Any) {
+    performSegue(withIdentifier: "toSpotListView", sender: nil)
+  }
+  
 }

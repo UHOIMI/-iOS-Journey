@@ -56,6 +56,9 @@
 		9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */; };
 		9197627D21B8D9AC00F0890C /* DatailPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197627C21B8D9AC00F0890C /* DatailPlanViewController.swift */; };
 		919DE75121BDFB80001C863A /* SpotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919DE75021BDFB80001C863A /* SpotTableViewCell.swift */; };
+		919DE75321BF85AC001C863A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919DE75221BF85AC001C863A /* HomeViewController.swift */; };
+		919DE75521C6099B001C863A /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919DE75421C6099B001C863A /* TopView.swift */; };
+		919DE75721C609D3001C863A /* TopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 919DE75621C609D3001C863A /* TopView.xib */; };
 		91C890C621A6939C0098517B /* LoaddingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C890C421A6939C0098517B /* LoaddingTableViewCell.swift */; };
 		91C890C721A6939C0098517B /* LoaddingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91C890C521A6939C0098517B /* LoaddingTableViewCell.xib */; };
 		91D6442C219286F3005FF11E /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D6442B219286F3005FF11E /* EditUserViewController.swift */; };
@@ -116,6 +119,9 @@
 		9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutSpotViewController.swift; sourceTree = "<group>"; };
 		9197627C21B8D9AC00F0890C /* DatailPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatailPlanViewController.swift; sourceTree = "<group>"; };
 		919DE75021BDFB80001C863A /* SpotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotTableViewCell.swift; sourceTree = "<group>"; };
+		919DE75221BF85AC001C863A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		919DE75421C6099B001C863A /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
+		919DE75621C609D3001C863A /* TopView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopView.xib; sourceTree = "<group>"; };
 		91C890C421A6939C0098517B /* LoaddingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaddingTableViewCell.swift; sourceTree = "<group>"; };
 		91C890C521A6939C0098517B /* LoaddingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoaddingTableViewCell.xib; sourceTree = "<group>"; };
 		91D6442B219286F3005FF11E /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +199,9 @@
 				91F086DA21AD1E2C00BFAE1E /* HistoryModel.swift */,
 				9197627C21B8D9AC00F0890C /* DatailPlanViewController.swift */,
 				919DE75021BDFB80001C863A /* SpotTableViewCell.swift */,
+				919DE75221BF85AC001C863A /* HomeViewController.swift */,
+				919DE75421C6099B001C863A /* TopView.swift */,
+				919DE75621C609D3001C863A /* TopView.xib */,
 			);
 			path = Journey;
 			sourceTree = "<group>";
@@ -322,6 +331,7 @@
 				0028242920FD90410082EC7E /* s_boat.png in Resources */,
 				0028242820FD90410082EC7E /* s_train.png in Resources */,
 				00D7D45121285AAB00C507B7 /* home.png in Resources */,
+				919DE75721C609D3001C863A /* TopView.xib in Resources */,
 				0028242B20FD90410082EC7E /* s_walk.png in Resources */,
 				0028241920FD900D0082EC7E /* s_airplane_on.png in Resources */,
 				91C890C721A6939C0098517B /* LoaddingTableViewCell.xib in Resources */,
@@ -418,9 +428,11 @@
 				9197627D21B8D9AC00F0890C /* DatailPlanViewController.swift in Sources */,
 				91C890C621A6939C0098517B /* LoaddingTableViewCell.swift in Sources */,
 				913B777721A652A800E5769B /* PlanTableViewCell.swift in Sources */,
+				919DE75521C6099B001C863A /* TopView.swift in Sources */,
 				0021CDBA20F3415F00224865 /* AppDelegate.swift in Sources */,
 				00C412A4217DB103006B5ABC /* CreateUserViewController.swift in Sources */,
 				91D6442C219286F3005FF11E /* EditUserViewController.swift in Sources */,
+				919DE75321BF85AC001C863A /* HomeViewController.swift in Sources */,
 				00D7D43D212846B500C507B7 /* TabBar.swift in Sources */,
 				00C412A6217DB118006B5ABC /* ConfirmationViewController.swift in Sources */,
 				003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */,
