@@ -223,5 +223,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     performSegue(withIdentifier: "toPutSpotView", sender: nil)
   }
   
+  @IBAction func tappedCreatePlanButton(_ sender: Any) {
+    performSegue(withIdentifier: "toPostView", sender: nil)
+  }
   
 }
