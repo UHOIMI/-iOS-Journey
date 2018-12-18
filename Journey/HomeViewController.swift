@@ -46,7 +46,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     postBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 24.0).isActive = true
     postBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 24.0).isActive = true
   
-    userIconImageView.imageView?.layer.cornerRadius = 44 * 0.5
+    userIconImageView.imageView?.layer.cornerRadius = 40 * 0.5
     userIconImageView.imageView?.clipsToBounds = true
     
     let page = 3
@@ -92,7 +92,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     pageControl.currentPage = 0
     
     generationPageControl = UIPageControl()
-    generationPageControl.frame = CGRect(x:0, y:generationScroll.frame.origin.y + 150, width:width, height:50)
+    generationPageControl.frame = CGRect(x:0, y:generationScroll.frame.origin.y + 170, width:width, height:50)
     generationPageControl.backgroundColor = UIColor.white
     generationPageControl.pageIndicatorTintColor = UIColor.gray
     generationPageControl.currentPageIndicatorTintColor = UIColor.black
@@ -114,7 +114,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     regionImageScroll.delegate = self
     
     let regionList = ["北海道", "東北", "関東", "中部", "近畿", "中国", "四国", "九州"]
-    let imageList = ["関東","関東","no-image.png","no-image.png","no-image.png","no-image.png","no-image.png","no-image.png"]
+    let imageList = ["北海道", "東北", "関東", "中部", "近畿", "中国", "四国", "九州"]
     
     let tabImageHeight:CGFloat = regionImageScroll.frame.height
     let dummyImageWidth = regionImageScroll.frame.size.width/4 - tabImageWidth/2
