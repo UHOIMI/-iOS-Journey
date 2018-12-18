@@ -19,6 +19,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   @IBOutlet weak var newScroll: UIScrollView!
   @IBOutlet weak var generationScroll: UIScrollView!
   
+  
   //let buttonImageDefault :UIImage? = UIImage(named:"no-image.png")
   let buttonImageSelected :UIImage? = UIImage(named:"pen")
   
@@ -195,7 +196,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     case 2:
       print("２")
     case 3:
-      print("３")
+      performSegue(withIdentifier: "toTimelineView", sender: nil)
     case 4:
       performSegue(withIdentifier: "toDetailUserView", sender: nil)
     default : return

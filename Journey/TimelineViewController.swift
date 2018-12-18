@@ -88,6 +88,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: PlanTableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for : indexPath) as! PlanTableViewCell
     //let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for: indexPath)
+    cell.isUserInteractionEnabled = true
     cell.planNameLabel.text =  planTitleList[indexPath.row]
     cell.planSpotNameLabel1.text = spotNameListA[indexPath.row]
     if (spotNameListB![indexPath.row] == "nil"){
@@ -106,6 +107,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     cell.planDateLabel.text = dateList[indexPath.row]
     cell.planUserIconImageView.image = userImageList[indexPath.row]
     cell.planUserIconImageView.layer.cornerRadius = 40 * 0.5
+    cell.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TimelineViewController.userImageViewTapped(_:))))
+    cell.planUserIconImageView.isUserInteractionEnabled = true
     print(cell.planUserIconImageView.frame.width)
     cell.planUserIconImageView.clipsToBounds = true
     cell.planUserNameLabel.text = userNameList[indexPath.row]
@@ -128,6 +131,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       print("プランIdは")
       let nextViewController = segue.destination as! DatailPlanViewController
       nextViewController.planId = sender as! Int
+    }else if(segue.identifier == "toDetailUserView"){
+      let nextViewController = segue.destination as! DetailUserViewController
+      nextViewController.editFlag = false
     }
   }
   
@@ -715,6 +721,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
 //        }
 //      }
 //    }.resume()
+  }
+  
+  @objc func userImageViewTapped(_ sender: UITapGestureRecognizer) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
   
   func createTabBar(){

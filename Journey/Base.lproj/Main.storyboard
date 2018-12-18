@@ -779,7 +779,7 @@
                                     <constraint firstAttribute="height" constant="70" id="DqM-1F-JhK"/>
                                     <constraint firstAttribute="width" constant="70" id="HO5-xW-FYO"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="star"/>
+                                <state key="normal" title="Button" image="plus"/>
                                 <connections>
                                     <action selector="tappedPutSpot:" destination="Qxu-g9-ag6" eventType="touchUpInside" id="2n9-Yk-O6b"/>
                                 </connections>
@@ -1611,8 +1611,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="SNJ-O0-PHR" id="Qft-Pw-6Xg"/>
                         <outlet property="headerImageView" destination="rAD-hQ-2ef" id="URB-lF-4wP"/>
                         <outlet property="scrollView" destination="8AP-lE-NA7" id="se9-pK-Se4"/>
+                        <outlet property="spotListButton" destination="tmS-S4-Y0A" id="Z9i-25-7YH"/>
                         <outlet property="subView" destination="lkc-eX-UHd" id="SKf-po-Hph"/>
                         <outlet property="userCommentTextView" destination="98c-iN-EzL" id="iCS-LD-tVQ"/>
                         <outlet property="userGenderTextView" destination="AoB-jw-zFK" id="lxT-vD-3SJ"/>
@@ -1983,6 +1985,7 @@
                     <connections>
                         <outlet property="tableView" destination="l40-yl-Knl" id="kbl-IJ-jL4"/>
                         <segue destination="Lfq-nI-jcD" kind="show" identifier="toDetailPlanView" id="Orn-8k-3es"/>
+                        <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="Zge-aV-3pR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7sU-lV-dre" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2479,6 +2482,7 @@
         <image name="eye" width="256" height="256"/>
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
+        <image name="plus" width="256" height="256"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2489,9 +2493,9 @@
         <image name="star" width="540" height="540"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xie-oa-hgH"/>
-        <segue reference="yAr-Yi-aS4"/>
-        <segue reference="0Xj-CK-ZoO"/>
+        <segue reference="Orn-8k-3es"/>
+        <segue reference="Zge-aV-3pR"/>
+        <segue reference="0Ny-WU-Sio"/>
         <segue reference="TeA-Xz-GIE"/>
         <segue reference="SAI-tm-OCo"/>
         <segue reference="YOr-31-rlW"/>
