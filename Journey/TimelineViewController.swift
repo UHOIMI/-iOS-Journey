@@ -408,8 +408,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               }
               if(f == 0){
                 self.spotNameListA.append((timelineData?.record![i].spots[f].spotTitle)!)
+                self.spotNameListB?.append("nil")
               }else if(f == 1){
-                self.spotNameListB?.append((timelineData?.record![i].spots[f].spotTitle)!)
+                self.spotNameListB?[i] = (timelineData?.record![i].spots[f].spotTitle)!
               }else{
                 count += 1
               }

@@ -550,6 +550,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
           // HTTPステータスコード
           print("statusCode: \(response.statusCode)")
           print(String(data: data, encoding: .utf8) ?? "")
+          self.globalVar.spotDataList.removeAll()
+          self.globalVar.selectSpot.removeAll()
+          self.globalVar.selectSpot.append("スポットを追加")
         }
       }.resume()
     }
