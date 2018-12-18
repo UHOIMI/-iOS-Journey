@@ -70,6 +70,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     self.view.addSubview(ActivityIndicator)
     ActivityIndicator.startAnimating()
     
+//    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+//      self.tableView.reloadData()
+//    }
+    
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -382,7 +386,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(timelineData!.status == 200){
-          for i in 0...0{
+          for i in 0...3{
             var count = 0
             self.planIdList.append((timelineData?.record![i].planId)!)
             self.userIdList.append((timelineData?.record![i].userId)!)
@@ -417,7 +421,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             }
             self.spotImagePathList?.append("")
             self.spotCountList.append(count)
-            self.trueSpotImagePathList?.append(self.spotImagePathList![i])
+            self.trueSpotImagePathList?.append(self.spotImagePathList![0])
             if(self.trueSpotImagePathList![i] != ""){
               let url = URL(string: self.trueSpotImagePathList![i])!
               let imageData = try? Data(contentsOf: url)
@@ -428,7 +432,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             }
             self.spotImagePathList?.removeAll()
           }
-          self.tableView.reloadData()
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            print("リロードテーブル")
+            self.tableView.reloadData()
+          }
         }else{
           print("status",timelineData!.status)
         }
