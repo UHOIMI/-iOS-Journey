@@ -147,13 +147,13 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     }else if(segue.identifier == "toDetailUserView"){
       let nextViewController = segue.destination as! DetailUserViewController
       nextViewController.editFlag = false
-    }else if(segue.identifier == "toTimelineView"){
-      let nextViewController = segue.destination as! TimelineViewController
-      nextViewController.searchArea = searchArea
       if(!userEditFlag){
         nextViewController.editFlag = false
         userEditFlag = true
       }
+    }else if(segue.identifier == "toTimelineView"){
+      let nextViewController = segue.destination as! TimelineViewController
+      nextViewController.searchArea = searchArea
     }
   }
   
