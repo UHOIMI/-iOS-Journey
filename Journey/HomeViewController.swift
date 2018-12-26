@@ -52,7 +52,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     postBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 24.0).isActive = true
     postBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 24.0).isActive = true
   
-    userIconImageView.imageView?.image = globalVar.userIcon
+    userIconImageView.setImage(globalVar.userIcon, for: UIControl.State.normal)
     userIconImageView.imageView?.layer.cornerRadius = 40 * 0.5
     userIconImageView.imageView?.clipsToBounds = true
     
