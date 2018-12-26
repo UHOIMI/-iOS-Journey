@@ -51,7 +51,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
     tableView.register(cellType: LoaddingTableViewCell.self)
     let footerCell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "LoaddingTableViewCell")!
-    (footerCell as! LoaddingTableViewCell).startAnimationg()
+    //(footerCell as! LoaddingTableViewCell).startAnimationg()
     let footerView: UIView = footerCell.contentView
     tableView.tableFooterView = footerView
     tableView.addSubview(refreshControl)
