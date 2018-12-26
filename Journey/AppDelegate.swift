@@ -248,7 +248,7 @@ class GlobalVar{
   var userGeneration : String = ""
   var userIconPath : String = ""
   var userIcon:UIImage?
-  let ipAddress = "192.168.100.161:3000"
+  let ipAddress = "192.168.0.18:3000"
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()

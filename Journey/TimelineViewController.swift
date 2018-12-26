@@ -40,7 +40,23 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var trueSpotImagePathList : [String]? = []
   var spotImageList : [UIImage]? = []
   var userImageList : [UIImage] = []
+  var planAreaList : [String] = []
+  var planTransportationList : [String] = []
+  var planPriceList : [String] = []
+  var planCommentList : [String] = []
   var planCount = 0
+  
+  //受け渡し用
+  var planId = 0
+  var planTitle = ""
+  var userId = ""
+  var userImage = UIImage()
+  var userName = ""
+  var planArea = ""
+  var planTransportation = ""
+  var planPrice = ""
+  var planComment = ""
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -118,18 +134,32 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-    //tableView.deselectRow(at: indexPath, animated: true)
+    planId = planIdList[indexPath.row]
+    planTitle = planTitleList[indexPath.row]
+    planArea = planAreaList[indexPath.row]
+    planComment = planCommentList[indexPath.row]
+    planTransportation = planTransportationList[indexPath.row]
+    planPrice = planPriceList[indexPath.row]
+    userId = userIdList[indexPath.row]
+    userImage = userImageList[indexPath.row]
+    userName = userNameList[indexPath.row]
     self.performSegue(withIdentifier: "toDetailPlanView", sender: planIdList[indexPath.row])
     
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if(segue.identifier == "toDetailPlanView"){
-      print("プランIdは")
-      print(sender as! Int)
-      print("プランIdは")
       let nextViewController = segue.destination as! DatailPlanViewController
-      nextViewController.planId = sender as! Int
+      nextViewController.planId = planId
+      nextViewController.userId = userId
+      nextViewController.userName = userName
+      nextViewController.userImage = userImage
+      nextViewController.planTitle = planTitle
+      nextViewController.planArea = planArea
+      nextViewController.planTransportationString = planTransportation
+      nextViewController.planComment = planComment
+      nextViewController.planPrice = planPrice
+      
     }else if(segue.identifier == "toDetailUserView"){
       let nextViewController = segue.destination as! DetailUserViewController
       nextViewController.editFlag = false
@@ -140,7 +170,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
       //上スクロール
       self.getTimeline(offset: 0, flag: 1)
-      self.tableView.reloadData()
+//      self.tableView.reloadData()
       sender.endRefreshing()
     })
   }
@@ -242,6 +272,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 self.userIdList.insert((timelineData?.record![i].userId)!, at: i)
                 self.planTitleList.insert((timelineData?.record![i].planTitle)!, at: i)
                 self.userNameList.insert((timelineData?.record![i].user.userName)!, at: i)
+                self.planAreaList.insert((timelineData?.record![i].area)!, at: i)
+                self.planTransportationList.insert((timelineData?.record![i].transportation)!, at: i)
+                self.planPriceList.insert((timelineData?.record![i].price)!, at: i)
+                self.planCommentList.insert((timelineData?.record![i].planComment)!, at: i)
                 let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
                 let imageData = try? Data(contentsOf: url)
                 let image = UIImage(data:imageData!)
@@ -292,6 +326,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.userIdList.append((timelineData?.record![i].userId)!)
               self.planTitleList.append((timelineData?.record![i].planTitle)!)
               self.userNameList.append((timelineData?.record![i].user.userName)!)
+              self.planAreaList.append((timelineData?.record![i].area)!)
+              self.planTransportationList.append((timelineData?.record![i].transportation)!)
+              self.planPriceList.append((timelineData?.record![i].price)!)
+              self.planCommentList.append((timelineData?.record![i].planComment)!)
               let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
@@ -334,7 +372,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.planCount += 1
             }
           }
-          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
             print("リロードテーブル")
             self.tableView.reloadData()
           }
@@ -345,7 +383,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }.resume()
   }
   
-
   
   @objc func userImageViewTapped(_ sender: UITapGestureRecognizer) {
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
