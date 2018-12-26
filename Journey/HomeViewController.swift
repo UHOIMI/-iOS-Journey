@@ -30,6 +30,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   
   var didPrepareMenu = false
   let tabImageWidth:CGFloat = 160
+  var userEditFlag = true
   
   private var pageControl: UIPageControl!
   private var generationPageControl: UIPageControl!
@@ -149,6 +150,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     }else if(segue.identifier == "toTimelineView"){
       let nextViewController = segue.destination as! TimelineViewController
       nextViewController.searchArea = searchArea
+      if(!userEditFlag){
+        nextViewController.editFlag = false
+        userEditFlag = true
+      }
     }
   }
   
@@ -267,6 +272,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   }
   
   @objc func planUserImageViewTapped(_ sender: UITapGestureRecognizer) {
+    userEditFlag = false
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
   

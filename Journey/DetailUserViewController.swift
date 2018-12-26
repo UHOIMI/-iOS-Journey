@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class DetailUserViewController: UIViewController, UITabBarDelegate {
   
@@ -21,6 +22,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   @IBOutlet weak var userCommentTextView: UILabel!
   @IBOutlet weak var editButton: UIBarButtonItem!
   @IBOutlet weak var spotListButton: UIButton!
+  @IBOutlet weak var logoutButton: UIButton!
   
   let globalVar = GlobalVar.shared
   var editFlag = true
@@ -134,6 +136,19 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   
   @IBAction func tappeddSpotList(_ sender: Any) {
     performSegue(withIdentifier: "toSpotListView", sender: nil)
+  }
+  
+  
+  @IBAction func tappedLogout(_ sender: Any) {
+    let realm = try! Realm()
+    let users = realm.objects(UserModel.self)
+    
+    for _user in users{
+      try! realm.write() {
+        realm.delete(_user)
+      }
+    }
+    //performSegue(withIdentifier: "toIndexView", sender: nil)
   }
   
 }
