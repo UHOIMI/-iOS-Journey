@@ -2253,6 +2253,7 @@
                                                                 <constraint firstAttribute="bottomMargin" secondItem="pkU-T6-Hkd" secondAttribute="bottom" constant="8" id="A3M-Hx-mJi"/>
                                                                 <constraint firstItem="Rc4-af-2lL" firstAttribute="top" secondItem="Tuh-YF-VwQ" secondAttribute="top" id="Ak6-at-1up"/>
                                                                 <constraint firstItem="pkU-T6-Hkd" firstAttribute="leading" secondItem="Kdh-xS-xkC" secondAttribute="leadingMargin" constant="8" id="JV2-M4-Qc7"/>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Rc4-af-2lL" secondAttribute="trailing" constant="20" symbolic="YES" id="Nds-9l-Pdz"/>
                                                                 <constraint firstItem="Tuh-YF-VwQ" firstAttribute="leading" secondItem="Kdh-xS-xkC" secondAttribute="leadingMargin" constant="8" id="hOH-ui-5RV"/>
                                                                 <constraint firstItem="pkU-T6-Hkd" firstAttribute="top" secondItem="Tuh-YF-VwQ" secondAttribute="bottom" constant="8" id="k1I-Zi-2Bx"/>
                                                                 <constraint firstItem="Rc4-af-2lL" firstAttribute="leading" secondItem="Tuh-YF-VwQ" secondAttribute="trailing" constant="8" id="xls-7n-ie2"/>
@@ -2292,76 +2293,30 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="t1G-wI-b0h">
                                                 <rect key="frame" x="8" y="190" width="359" height="37"/>
                                                 <subviews>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Me-QZ-v6S">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_walk.png" translatesAutoresizingMaskIntoConstraints="NO" id="wOG-8z-rk1">
                                                         <rect key="frame" x="0.0" y="0.0" width="51.5" height="37"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="37" id="r3x-hi-c19"/>
+                                                            <constraint firstAttribute="height" constant="37" id="5Fs-6x-RIC"/>
                                                         </constraints>
-                                                        <state key="normal" image="s_walk.png"/>
-                                                        <connections>
-                                                            <action selector="pushButton:" destination="Lfq-nI-jcD" eventType="touchUpInside" id="ytk-Ae-pwJ"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eae-VC-OdD">
+                                                    </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_bicycle.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xgu-Jc-4WN">
                                                         <rect key="frame" x="51.5" y="0.0" width="51" height="37"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="37" id="Og9-Pp-WUs"/>
-                                                        </constraints>
-                                                        <state key="normal" image="s_bicycle.png"/>
-                                                        <connections>
-                                                            <action selector="pushButton:" destination="Lfq-nI-jcD" eventType="touchUpInside" id="Ua0-cf-h48"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KvX-SD-GUE">
+                                                    </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_car.png" translatesAutoresizingMaskIntoConstraints="NO" id="8nA-G9-r4f">
                                                         <rect key="frame" x="102.5" y="0.0" width="51.5" height="37"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="37" id="weq-C0-dNL"/>
-                                                        </constraints>
-                                                        <state key="normal" image="s_car.png"/>
-                                                        <connections>
-                                                            <action selector="pushButton:" destination="Lfq-nI-jcD" eventType="touchUpInside" id="UIy-un-fhS"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76x-Ah-kwT">
+                                                    </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_bus.png" translatesAutoresizingMaskIntoConstraints="NO" id="lgB-6i-nMF">
                                                         <rect key="frame" x="154" y="0.0" width="51" height="37"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="37" id="1N4-xP-Jch"/>
-                                                        </constraints>
-                                                        <state key="normal" image="s_bus.png"/>
-                                                        <connections>
-                                                            <action selector="pushButton:" destination="Lfq-nI-jcD" eventType="touchUpInside" id="O66-Va-w40"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vCe-0v-uub">
+                                                    </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_train.png" translatesAutoresizingMaskIntoConstraints="NO" id="XNg-81-mls">
                                                         <rect key="frame" x="205" y="0.0" width="51.5" height="37"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="37" id="CUO-XY-Pqx"/>
-                                                        </constraints>
-                                                        <state key="normal" image="s_train.png"/>
-                                                        <connections>
-                                                            <action selector="pushButton:" destination="Lfq-nI-jcD" eventType="touchUpInside" id="cVr-nj-DoI"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGC-Nb-d4U">
+                                                    </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_boat.png" translatesAutoresizingMaskIntoConstraints="NO" id="Arc-dg-HLU">
                                                         <rect key="frame" x="256.5" y="0.0" width="51" height="37"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="37" id="Gsf-4w-kmH"/>
-                                                        </constraints>
-                                                        <state key="normal" title="Button" image="s_airplane.png"/>
-                                                        <connections>
-                                                            <action selector="pushButton:" destination="Lfq-nI-jcD" eventType="touchUpInside" id="gKd-QK-ZxK"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MrN-yB-eyX">
+                                                    </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s_airplane.png" translatesAutoresizingMaskIntoConstraints="NO" id="vWV-8R-zR8">
                                                         <rect key="frame" x="307.5" y="0.0" width="51.5" height="37"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="37" id="p5e-s1-EID"/>
-                                                        </constraints>
-                                                        <state key="normal" title="Button" image="s_boat.png"/>
-                                                        <connections>
-                                                            <action selector="pushButton:" destination="Lfq-nI-jcD" eventType="touchUpInside" id="BtS-3M-5Z3"/>
-                                                        </connections>
-                                                    </button>
+                                                    </imageView>
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="コメント" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udy-UD-gQ5">
@@ -2410,6 +2365,7 @@
                                             <constraint firstItem="t1G-wI-b0h" firstAttribute="leading" secondItem="IwC-Nt-f7V" secondAttribute="leading" constant="8" id="avw-mC-uIq"/>
                                             <constraint firstAttribute="trailing" secondItem="t1G-wI-b0h" secondAttribute="trailing" constant="8" id="bZ1-BI-i1a"/>
                                             <constraint firstItem="ruh-Rd-7Nc" firstAttribute="leading" secondItem="IwC-Nt-f7V" secondAttribute="leading" constant="8" id="cfD-0l-9wR"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="udy-UD-gQ5" secondAttribute="trailing" constant="20" symbolic="YES" id="eTn-8k-zYe"/>
                                             <constraint firstItem="DWh-2N-Ir2" firstAttribute="leading" secondItem="Alc-6n-P7A" secondAttribute="trailing" constant="8" id="f3W-rD-ksa"/>
                                             <constraint firstAttribute="trailing" secondItem="uf3-z5-RYJ" secondAttribute="trailing" constant="8" id="ip6-n7-WXf"/>
                                             <constraint firstAttribute="trailing" secondItem="H1j-BH-aVn" secondAttribute="trailing" constant="8" id="kaR-Lt-Tz6"/>
@@ -2455,6 +2411,11 @@
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
                         <outlet property="PrefecturesLabel" destination="rdu-Fn-LHc" id="zls-Bt-9ed"/>
+                        <outlet property="airplanImageView" destination="vWV-8R-zR8" id="d7W-p7-zxL"/>
+                        <outlet property="bicycleImageView" destination="Xgu-Jc-4WN" id="CBf-AN-wiH"/>
+                        <outlet property="boatImageView" destination="Arc-dg-HLU" id="9hy-mY-lz0"/>
+                        <outlet property="busImageView" destination="lgB-6i-nMF" id="5HE-1q-u0G"/>
+                        <outlet property="carImageView" destination="8nA-G9-r4f" id="pMz-H4-MCz"/>
                         <outlet property="commentTextView" destination="H1j-BH-aVn" id="pmb-hS-V7h"/>
                         <outlet property="moneyLabel" destination="zUZ-gQ-zE5" id="hCy-M3-6I2"/>
                         <outlet property="planNameLabel" destination="i6a-xz-qaA" id="hbt-yu-aHU"/>
@@ -2463,8 +2424,10 @@
                         <outlet property="superViewHeight" destination="xAv-yW-UE0" id="pIv-fa-sLJ"/>
                         <outlet property="tableViewHeight" destination="BdV-zL-PeY" id="Se1-wF-ydf"/>
                         <outlet property="trafficLabel" destination="uf3-z5-RYJ" id="Wp9-ik-Hv3"/>
+                        <outlet property="trainImageView" destination="XNg-81-mls" id="0Uz-vf-lzm"/>
                         <outlet property="userIconImageView" destination="Alc-6n-P7A" id="mAA-XB-A6W"/>
                         <outlet property="userNameLabel" destination="DWh-2N-Ir2" id="isW-iQ-bnn"/>
+                        <outlet property="walkImageView" destination="wOG-8z-rk1" id="rAV-hD-KmU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SEA-Qu-H4d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2477,7 +2440,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="256" height="256"/>
+        <image name="plus" width="192" height="192"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>

@@ -26,6 +26,13 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   @IBOutlet weak var spotTableView: UITableView!
   @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
   @IBOutlet weak var superViewHeight: NSLayoutConstraint!
+  @IBOutlet weak var walkImageView: UIImageView!
+  @IBOutlet weak var bicycleImageView: UIImageView!
+  @IBOutlet weak var carImageView: UIImageView!
+  @IBOutlet weak var busImageView: UIImageView!
+  @IBOutlet weak var trainImageView: UIImageView!
+  @IBOutlet weak var boatImageView: UIImageView!
+  @IBOutlet weak var airplanImageView: UIImageView!
   
   var planId = 0
   var userId = ""
@@ -62,6 +69,27 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       print(str)
       transportation[i] = str
       print(transportation)
+    }
+    if(transportation[0] == "1,"){
+      walkImageView.image = UIImage(named: "s_walk_on.png")
+    }
+    if(transportation[1] == "1,"){
+      bicycleImageView.image = UIImage(named: "s_bicycle_on.png")
+    }
+    if(transportation[2] == "1,"){
+      carImageView.image = UIImage(named: "s_car_on.png")
+    }
+    if(transportation[3] == "1,"){
+      busImageView.image = UIImage(named: "s_bus_on.png")
+    }
+    if(transportation[4] == "1,"){
+      trainImageView.image = UIImage(named: "s_train_on.png")
+    }
+    if(transportation[5] == "1,"){
+      boatImageView.image = UIImage(named: "s_boat_on.png")
+    }
+    if(transportation[6] == "1"){
+      airplanImageView.image = UIImage(named: "s_airplan_on.png")
     }
     
     moneyLabel.text = "1000"
