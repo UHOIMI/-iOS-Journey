@@ -32,7 +32,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   @IBOutlet weak var busImageView: UIImageView!
   @IBOutlet weak var trainImageView: UIImageView!
   @IBOutlet weak var boatImageView: UIImageView!
-  @IBOutlet weak var airplanImageView: UIImageView!
+  @IBOutlet weak var airplaneImageView: UIImageView!
   
   var planId = 0
   var userId = ""
@@ -65,10 +65,14 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     var arr:[String] = planTransportationString.components(separatedBy: ",")
     print(arr)
     for i in 0...6{
-      let str = arr[i] + ","
-      print(str)
-      transportation[i] = str
-      print(transportation)
+      if(i != 6){
+        let str = arr[i] + ","
+        print(str)
+        transportation[i] = str
+        print(transportation)
+      }else{
+        transportation[i] = arr[i]
+      }
     }
     if(transportation[0] == "1,"){
       walkImageView.image = UIImage(named: "s_walk_on.png")
@@ -89,7 +93,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       boatImageView.image = UIImage(named: "s_boat_on.png")
     }
     if(transportation[6] == "1"){
-      airplanImageView.image = UIImage(named: "s_airplan_on.png")
+      airplaneImageView.image = UIImage(named: "s_airplane_on.png")
     }
     
     moneyLabel.text = "1000"

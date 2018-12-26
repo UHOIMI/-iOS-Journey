@@ -2411,7 +2411,7 @@
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
                         <outlet property="PrefecturesLabel" destination="rdu-Fn-LHc" id="zls-Bt-9ed"/>
-                        <outlet property="airplanImageView" destination="vWV-8R-zR8" id="d7W-p7-zxL"/>
+                        <outlet property="airplaneImageView" destination="vWV-8R-zR8" id="2Cg-xi-jSn"/>
                         <outlet property="bicycleImageView" destination="Xgu-Jc-4WN" id="CBf-AN-wiH"/>
                         <outlet property="boatImageView" destination="Arc-dg-HLU" id="9hy-mY-lz0"/>
                         <outlet property="busImageView" destination="lgB-6i-nMF" id="5HE-1q-u0G"/>
