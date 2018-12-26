@@ -45,6 +45,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var planPriceList : [String] = []
   var planCommentList : [String] = []
   var planCount = 0
+  var reloadFlag = 0
   
   //受け渡し用
   var planId = 0
@@ -102,33 +103,35 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: PlanTableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for : indexPath) as! PlanTableViewCell
-    //let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for: indexPath)
-    cell.isUserInteractionEnabled = true
-    cell.planNameLabel.text =  planTitleList[indexPath.row]
-    cell.planSpotNameLabel1.text = spotNameListA[indexPath.row]
-    if (spotNameListB![indexPath.row] == "nil"){
-      cell.planSpotNameLabel2.text = ""
-    }else{
-      cell.planSpotNameLabel2.text = spotNameListB![indexPath.row]
+    if(reloadFlag == 1){
+      cell.isUserInteractionEnabled = true
+      cell.planNameLabel.text =  planTitleList[indexPath.row]
+      cell.planSpotNameLabel1.text = spotNameListA[indexPath.row]
+      if (spotNameListB![indexPath.row] == "nil"){
+        cell.planSpotNameLabel2.text = ""
+      }else{
+        cell.planSpotNameLabel2.text = spotNameListB![indexPath.row]
+      }
+      if(spotCountList[indexPath.row] != 0){
+        cell.planSpotCountLabel.text = "他\(spotCountList[indexPath.row])件"
+      }else{
+        cell.planSpotCountLabel.text = ""
+      }
+  //    print("画像パス:\(indexPath.row)",spotImagePathList![indexPath.row])
+      cell.planFavoriteLabel.text = 99999.description
+      cell.planImageView.image = spotImageList![indexPath.row]
+      cell.planDateLabel.text = dateList[indexPath.row]
+      cell.planUserIconImageView.image = userImageList[indexPath.row]
+      cell.planUserIconImageView.layer.cornerRadius = 40 * 0.5
+      cell.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TimelineViewController.userImageViewTapped(_:))))
+      cell.planUserIconImageView.isUserInteractionEnabled = true
+      print(cell.planUserIconImageView.frame.width)
+      cell.planUserIconImageView.clipsToBounds = true
+      cell.planUserNameLabel.text = userNameList[indexPath.row]
+      self.ActivityIndicator.stopAnimating()
+      planCount = indexPath.row + 1
     }
-    if(spotCountList[indexPath.row] != 0){
-      cell.planSpotCountLabel.text = "他\(spotCountList[indexPath.row])件"
-    }else{
-      cell.planSpotCountLabel.text = ""
-    }
-//    print("画像パス:\(indexPath.row)",spotImagePathList![indexPath.row])
-    cell.planFavoriteLabel.text = 99999.description
-    cell.planImageView.image = spotImageList![indexPath.row]
-    cell.planDateLabel.text = dateList[indexPath.row]
-    cell.planUserIconImageView.image = userImageList[indexPath.row]
-    cell.planUserIconImageView.layer.cornerRadius = 40 * 0.5
-    cell.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TimelineViewController.userImageViewTapped(_:))))
-    cell.planUserIconImageView.isUserInteractionEnabled = true
-    print(cell.planUserIconImageView.frame.width)
-    cell.planUserIconImageView.clipsToBounds = true
-    cell.planUserNameLabel.text = userNameList[indexPath.row]
-    self.ActivityIndicator.stopAnimating()
-    planCount = indexPath.row + 1
+    print(reloadFlag)
     return cell
   }
   
@@ -372,8 +375,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.planCount += 1
             }
           }
-          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
             print("リロードテーブル")
+            self.reloadFlag = 1
             self.tableView.reloadData()
           }
         }else{
