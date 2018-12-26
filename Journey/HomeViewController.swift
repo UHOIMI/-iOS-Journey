@@ -22,6 +22,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   var generationScroll = UIScrollView()
   var newScroll = UIScrollView()
   
+  var searchArea = ""
+  var globalVar = GlobalVar.shared
+  
   //let buttonImageDefault :UIImage? = UIImage(named:"no-image.png")
   let buttonImageSelected :UIImage? = UIImage(named:"pen")
   
@@ -48,6 +51,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     postBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 24.0).isActive = true
     postBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 24.0).isActive = true
   
+    userIconImageView.imageView?.image = globalVar.userIcon
     userIconImageView.imageView?.layer.cornerRadius = 40 * 0.5
     userIconImageView.imageView?.clipsToBounds = true
     
@@ -76,8 +80,22 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     
     for i in 0 ..< page {
       let newPlanView = TopView(frame: CGRect(x: CGFloat(i) * (width - 16), y: 0, width: width - 16, height: height))
-      newPlanView.planImageView.image = UIImage(named: "no-image.png")
-      newPlanView.planUserIconImageView.image = UIImage(named: "no-image.png")
+      newPlanView.planNameLabel.text = globalVar.newPlanTitleList[i]
+      newPlanView.planUserNameLabel.text = globalVar.newUserNameList[i]
+      newPlanView.planSpotNameLabel1.text = globalVar.newSpotNameListA[i]
+      if(globalVar.newSpotNameListB![i] != "nil"){
+        newPlanView.planSpotNameLabel2.text = globalVar.newSpotNameListB![i]
+      }else{
+        newPlanView.planSpotNameLabel2.text = ""
+      }
+      if(globalVar.newSpotCountList[i] == 0){
+        newPlanView.planSpotCountLabel.text = ""
+      }else{
+        newPlanView.planSpotCountLabel.text = "他\(globalVar.newSpotCountList[i])件"
+      }
+      newPlanView.planDateLabel.text = globalVar.newDateList[i]
+      newPlanView.planImageView.image = globalVar.newSpotImageList![i]
+      newPlanView.planUserIconImageView.image = globalVar.newUserImageList[i]
       newPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
       newPlanView.planUserIconImageView.clipsToBounds = true
       newPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
@@ -128,6 +146,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     }else if(segue.identifier == "toDetailUserView"){
       let nextViewController = segue.destination as! DetailUserViewController
       nextViewController.editFlag = false
+    }else if(segue.identifier == "toTimelineView"){
+      let nextViewController = segue.destination as! TimelineViewController
+      nextViewController.searchArea = searchArea
     }
   }
   
@@ -252,20 +273,28 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   @objc func regionTapped(_ sender: UITapGestureRecognizer) {
     let region = sender.view as? UIImageView
     if(region?.tag == 1){
+      searchArea = "area=北海道"
       print("area=北海道")
     }else if(region?.tag == 2){
+      searchArea = "area=青森県&area=岩手県&area=宮城県&area=山形県&area=秋田県&area=福島県"
       print("area=青森県&area=岩手県&area=宮城県&area=山形県&area=秋田県&area=福島県")
     }else if(region?.tag == 3){
+      searchArea = "area=東京都&area=茨城県&area=栃木県&area=群馬県&area=埼玉県&area=千葉県&area=神奈川県"
       print("area=東京都&area=茨城県&area=栃木県&area=群馬県&area=埼玉県&area=千葉県&area=神奈川県")
     }else if(region?.tag == 4){
+      searchArea = "area=新潟県&area=富山県&area=石川県&area=福井県&area=山梨県&area=長野県&area=岐阜県&area=静岡県&area=愛知県"
       print("area=新潟県&area=富山県&area=石川県&area=福井県&area=山梨県&area=長野県&area=岐阜県&area=静岡県&area=愛知県")
     }else if(region?.tag == 5){
+      searchArea = "area=京都府&area=大阪府&area=三重県&area=滋賀県&area=兵庫県&area=奈良県&area=和歌山県"
       print("area=京都府&area=大阪府&area=三重県&area=滋賀県&area=兵庫県&area=奈良県&area=和歌山県")
     }else if(region?.tag == 6){
+      searchArea = "area=鳥取県&area=島根県&area=岡山県&area=広島県&area=山口県"
       print("area=鳥取県&area=島根県&area=岡山県&area=広島県&area=山口県")
     }else if(region?.tag == 7){
+      searchArea = "area=徳島県&area=香川県&area=愛媛県&area=高知県"
       print("area=徳島県&area=香川県&area=愛媛県&area=高知県")
     }else if(region?.tag == 8){
+      searchArea = "area=福岡県&area=佐賀県&area=長崎県&area=大分県&area=熊本県&area=宮崎県&area=鹿児島県&area=沖縄県"
       print("area=福岡県&area=佐賀県&area=長崎県&area=大分県&area=熊本県&area=宮崎県&area=鹿児島県&area=沖縄県")
     }
   }

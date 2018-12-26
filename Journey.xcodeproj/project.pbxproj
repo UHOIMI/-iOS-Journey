@@ -32,6 +32,7 @@
 		0028242C20FD90410082EC7E /* s_bicycle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0028242520FD90410082EC7E /* s_bicycle.png */; };
 		003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAA21173E7500A48959 /* Keyboard.swift */; };
 		003C6DAD2117411F00A48959 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C6DAC2117411F00A48959 /* StartViewController.swift */; };
+		00790CDC21D38D6500BFAC1C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00790CDB21D38D6500BFAC1C /* SplashViewController.swift */; };
 		00C4129C21784FBC006B5ABC /* journey.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C4129B21784FBB006B5ABC /* journey.png */; };
 		00C4129E217853AA006B5ABC /* ButtonSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4129D217853AA006B5ABC /* ButtonSettings.swift */; };
 		00C412A0217DB0D7006B5ABC /* IndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4129F217DB0D7006B5ABC /* IndexViewController.swift */; };
@@ -94,6 +95,7 @@
 		0028242520FD90410082EC7E /* s_bicycle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s_bicycle.png; sourceTree = "<group>"; };
 		003C6DAA21173E7500A48959 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		003C6DAC2117411F00A48959 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		00790CDB21D38D6500BFAC1C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		00C4129B21784FBB006B5ABC /* journey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = journey.png; sourceTree = "<group>"; };
 		00C4129D217853AA006B5ABC /* ButtonSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonSettings.swift; sourceTree = "<group>"; };
 		00C4129F217DB0D7006B5ABC /* IndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				919DE75221BF85AC001C863A /* HomeViewController.swift */,
 				919DE75421C6099B001C863A /* TopView.swift */,
 				919DE75621C609D3001C863A /* TopView.xib */,
+				00790CDB21D38D6500BFAC1C /* SplashViewController.swift */,
 			);
 			path = Journey;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				003C6DAB21173E7500A48959 /* Keyboard.swift in Sources */,
 				91F086D721AD127A00BFAE1E /* SearchPlanViewController.swift in Sources */,
 				00C412A2217DB0EE006B5ABC /* LoginViewController.swift in Sources */,
+				00790CDC21D38D6500BFAC1C /* SplashViewController.swift in Sources */,
 				914BEE97218ABC3D009EF3BC /* UserModel.swift in Sources */,
 				0020A4D82127FD71005FC16C /* NavigationController.swift in Sources */,
 				9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */,

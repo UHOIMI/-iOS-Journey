@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VVX-iF-CIv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6uD-TC-Kd3">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -316,7 +316,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="suS-15-x6g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2479.1999999999998" y="482.51231527093597"/>
+            <point key="canvasLocation" x="-2847" y="527"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="CdM-0K-Yfm">
@@ -409,7 +409,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JM2-Uj-aoP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2481" y="-180"/>
+            <point key="canvasLocation" x="-2959" y="-196"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gAC-H0-zzl">
@@ -426,6 +426,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z57-Vq-vWW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3358" y="482"/>
+        </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="2m0-SB-vro">
+            <objects>
+                <viewController id="6uD-TC-Kd3" customClass="SplashViewController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ogq-o3-dnU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="猪岡任せた" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKY-dD-t9d">
+                                <rect key="frame" x="144" y="323" width="87" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="YVs-3x-hw5"/>
+                    </view>
+                    <connections>
+                        <segue destination="VVX-iF-CIv" kind="show" identifier="toHomeView" id="Mcq-lN-1b2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JBA-CL-HZ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2254" y="-74"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DGx-tU-mJE">
@@ -2458,7 +2485,7 @@
         <segue reference="PgR-1F-fd2"/>
         <segue reference="YOr-31-rlW"/>
         <segue reference="ScF-Q7-9Tm"/>
-        <segue reference="lfn-x3-RFi"/>
+        <segue reference="Mcq-lN-1b2"/>
         <segue reference="XJN-4F-Krb"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       //表示
       self.window?.makeKeyAndVisible()
     }else{
+      getTimeline(offset: 0)
       for _user in user {
         globalVar.token = _user.user_token
         globalVar.userName = _user.user_name
@@ -223,6 +224,139 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           }
       }
   }
+  struct TimelineData : Codable{
+    let status : Int
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+      let planId : Int
+      let userId : String
+      let planTitle : String
+      let planComment : String?
+      let transportation : String
+      let price : String
+      let area : String
+      let planDate : String
+      let user : User
+      let spots : [Spots]
+      let date : Date? = NSDate() as Date
+      enum CodingKeys: String, CodingKey {
+        case planId = "plan_id"
+        case userId = "user_id"
+        case planTitle = "plan_title"
+        case planComment = "plan_comment"
+        case transportation = "transportation"
+        case price = "price"
+        case area = "area"
+        case planDate = "plan_date"
+        case user = "user"
+        case spots = "spots"
+        case date
+      }
+      struct User : Codable{
+        let userName : String
+        let userIcon : String
+        enum CodingKeys: String, CodingKey {
+          case userName = "user_name"
+          case userIcon = "user_icon"
+        }
+      }
+      struct Spots : Codable{
+        let spotId : Int
+        let spotTitle : String
+        let spotImageA : String?
+        let spotImageB : String?
+        let spotImageC : String?
+        enum CodingKeys: String, CodingKey {
+          case spotId = "spot_id"
+          case spotTitle = "spot_title"
+          case spotImageA = "spot_image_a"
+          case spotImageB = "spot_image_b"
+          case spotImageC = "spot_image_c"
+        }
+      }
+    }
+  }
+  func getTimeline(offset:Int){
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)")
+    let request = URLRequest(url: url!)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
+        if(timelineData!.status == 200){
+          for i in 0 ... (timelineData?.record?.count)! - 1{
+            var count = 0
+            self.globalVar.newPlanIdList.append((timelineData?.record![i].planId)!)
+            self.globalVar.newUserIdList.append((timelineData?.record![i].userId)!)
+            self.globalVar.newPlanTitleList.append((timelineData?.record![i].planTitle)!)
+            self.globalVar.newUserNameList.append((timelineData?.record![i].user.userName)!)
+            self.globalVar.newPlanAreaList.append((timelineData?.record![i].area)!)
+            self.globalVar.newPlanTransportationList.append((timelineData?.record![i].transportation)!)
+            self.globalVar.newPlanPriceList.append((timelineData?.record![i].price)!)
+            self.globalVar.newPlanCommentList.append((timelineData?.record![i].planComment)!)
+            let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
+            let imageData = try? Data(contentsOf: url)
+            let image = UIImage(data:imageData!)
+            self.globalVar.newUserImageList.append(image!)
+            let planDate = (timelineData?.record![i].planDate)!.prefix(10)
+            var date = planDate.suffix(5)
+            if let range = date.range(of: "-"){
+              date.replaceSubrange(range, with: "月")
+            }
+            self.globalVar.newDateList.append("\(date)日")
+            for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
+              if((timelineData?.record![i].spots[f].spotImageA)! != ""){
+                self.globalVar.newSpotImagePathList?.append((timelineData?.record![i].spots[f].spotImageA)!)
+              }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
+                self.globalVar.newSpotImagePathList?.append((timelineData?.record![i].spots[f].spotImageB)!)
+              }else if((timelineData?.record![i].spots[f].spotImageC)! != ""){
+                self.globalVar.newSpotImagePathList?.append((timelineData?.record![i].spots[f].spotImageC)!)
+              }
+              if(f == 0){
+                self.globalVar.newSpotNameListA.append((timelineData?.record![i].spots[f].spotTitle)!)
+                self.globalVar.newSpotNameListB?.append("nil")
+              }else if(f == 1){
+                self.globalVar.newSpotNameListB?[i] = (timelineData?.record![i].spots[f].spotTitle)!
+              }else{
+                count += 1
+              }
+            }
+            self.globalVar.newSpotImagePathList?.append("")
+            self.globalVar.newSpotCountList.append(count)
+            self.globalVar.newTrueSpotImagePathList?.append(self.globalVar.newSpotImagePathList![0])
+            if(self.globalVar.newTrueSpotImagePathList![i] != ""){
+              let url = URL(string: self.globalVar.newTrueSpotImagePathList![i])!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.globalVar.newSpotImageList?.append(image!)
+            }else{
+              self.globalVar.newSpotImageList?.append(UIImage(named: "no-image.png")!)
+            }
+            self.globalVar.newSpotImagePathList?.removeAll()
+            self.globalVar.newPlanCount += 1
+          }
+        }
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+//          print("リロードテーブル")
+//          self.reloadFlag = 1
+//          self.tableView.reloadData()
+//        }
+      }else{
+//        print("status",timelineData!.status)
+      }
+    }.resume()
+  }
 
 }
 
@@ -248,10 +382,30 @@ class GlobalVar{
   var userGeneration : String = ""
   var userIconPath : String = ""
   var userIcon:UIImage?
-  let ipAddress = "192.168.10.104:3000"
+  let ipAddress = "192.168.0.18:3000"
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()
+  
+  var newPlanIdList : [Int] = []
+  var newUserIdList : [String] = []
+  var newUserNameList : [String] = []
+  var newPlanTitleList : [String] = []
+  var newUserImagePathList : [String] = []
+  var newDateList : [String] = []
+  var newSpotImageSetFlag : [Int] = []
+  var newSpotCountList : [Int] = []
+  var newSpotNameListA : [String] = []
+  var newSpotNameListB : [String]? = []
+  var newSpotImagePathList : [String]? = []
+  var newTrueSpotImagePathList : [String]? = []
+  var newSpotImageList : [UIImage]? = []
+  var newUserImageList : [UIImage] = []
+  var newPlanAreaList : [String] = []
+  var newPlanTransportationList : [String] = []
+  var newPlanPriceList : [String] = []
+  var newPlanCommentList : [String] = []
+  var newPlanCount = 0
   
   var token : String = ""
 //  let ipAddress = "35.200.26.70:443"

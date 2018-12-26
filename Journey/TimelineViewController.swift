@@ -46,7 +46,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var planCommentList : [String] = []
   var planCount = 0
   var reloadFlag = 0
-  
+  var searchArea : String = ""
   //受け渡し用
   var planId = 0
   var planTitle = ""
@@ -254,7 +254,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   }
   
   func getTimeline(offset:Int,flag:Int){
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)")
+    var url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)")
+    if(searchArea != ""){
+      url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&\(searchArea)")
+    }
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
