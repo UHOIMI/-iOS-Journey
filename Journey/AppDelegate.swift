@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     //currentuser = nil
     //ユーザーがいない場合IndexViewに遷移
+    getTimeline(offset: 0)
     if (currentUser == ""){
       //windowを生成
       self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -45,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       //表示
       self.window?.makeKeyAndVisible()
     }else{
-      getTimeline(offset: 0)
       for _user in user {
         globalVar.token = _user.user_token
         globalVar.userName = _user.user_name
