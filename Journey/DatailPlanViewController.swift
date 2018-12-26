@@ -96,7 +96,9 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       airplaneImageView.image = UIImage(named: "s_airplane_on.png")
     }
     
-    moneyLabel.text = "1000"
+    commentTextView.text = planComment
+    PrefecturesLabel.text = planArea
+    moneyLabel.text = planPrice
     userIconImageView.image = userImage
     userNameLabel.text = userName
     planNameLabel.text = planTitle
