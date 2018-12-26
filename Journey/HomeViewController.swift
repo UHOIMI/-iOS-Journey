@@ -10,15 +10,17 @@ import UIKit
 
 class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelegate {
 
-
   @IBOutlet weak var subView: UIView!
   @IBOutlet weak var userIconImageView: UIButton!
   @IBOutlet weak var postBarButtonItem: UIBarButtonItem!
   @IBOutlet weak var userIconButton: UIButton!
-  @IBOutlet weak var regionImageScroll: UIScrollView!
-  @IBOutlet weak var newScroll: UIScrollView!
-  @IBOutlet weak var generationScroll: UIScrollView!
+  @IBOutlet weak var regionLabel: UILabel!
+  @IBOutlet weak var newLabel: UILabel!
+  @IBOutlet weak var generationLabel: UILabel!
   
+  var regionImageScroll = UIScrollView()
+  var generationScroll = UIScrollView()
+  var newScroll = UIScrollView()
   
   //let buttonImageDefault :UIImage? = UIImage(named:"no-image.png")
   let buttonImageSelected :UIImage? = UIImage(named:"pen")
@@ -53,47 +55,59 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     let width = self.view.frame.width
     let height : CGFloat = 150
     
+    regionImageScroll.frame = CGRect(x: 8, y: regionLabel.frame.origin.y + newLabel.frame.height + 16, width: width - 16, height: height)
+    subView.addSubview(regionImageScroll)
+    
+    newScroll.frame = CGRect(x: 8, y: newLabel.frame.origin.y + newLabel.frame.height + 16, width: width - 16, height: height)
+    newScroll.layer.cornerRadius = 10
     newScroll.isPagingEnabled = true
     newScroll.delegate = self
-    newScroll.contentSize = CGSize(width: CGFloat(page) * width, height: 0)
+    newScroll.contentSize = CGSize(width: CGFloat(page) * width - CGFloat(page) * 16, height: height)
+    newScroll.tag = 1
+    subView.addSubview(newScroll)
     
+    generationScroll.frame = CGRect(x: 8, y: generationLabel.frame.origin.y + generationLabel.frame.height + 16, width: width - 16, height: height)
+    generationScroll.layer.cornerRadius = 10
     generationScroll.isPagingEnabled = true
     generationScroll.delegate = self
-    generationScroll.contentSize = CGSize(width: CGFloat(page) * width, height: 0)
+    generationScroll.contentSize = CGSize(width: CGFloat(page) * width - CGFloat(page) * 16, height: height)
+    generationScroll.tag = 2
+    subView.addSubview(generationScroll)
     
     for i in 0 ..< page {
-      let newPlanView = TopView(frame: CGRect(x: CGFloat(i) * width, y: 0, width: width, height: height))
+      let newPlanView = TopView(frame: CGRect(x: CGFloat(i) * (width - 16), y: 0, width: width - 16, height: height))
       newPlanView.planImageView.image = UIImage(named: "no-image.png")
       newPlanView.planUserIconImageView.image = UIImage(named: "no-image.png")
       newPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
       newPlanView.planUserIconImageView.clipsToBounds = true
-      newPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "newPlanTapped:"))
+      newPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
+      newPlanView.planUserIconImageView.isUserInteractionEnabled = true
+      newPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.newPlanTapped(_ :))))
       newScroll.addSubview(newPlanView)
       
-      let generationPlanView = TopView(frame: CGRect(x: CGFloat(i) * width, y: 0, width: width, height: height))
+      let generationPlanView = TopView(frame: CGRect(x: CGFloat(i) * (width - 16), y: 0, width: width - 16, height: height))
       generationPlanView.planImageView.image = UIImage(named: "no-image.png")
       generationPlanView.planUserIconImageView.image = UIImage(named: "no-image.png")
       generationPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
       generationPlanView.planUserIconImageView.clipsToBounds = true
+      generationPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
+      generationPlanView.planUserIconImageView.isUserInteractionEnabled = true
+      generationPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.generationPlanTapped(_ :))))
       generationScroll.addSubview(generationPlanView)
 
-//      let label:UILabel = UILabel()
-//      label.frame = CGRect(x: CGFloat(i) * width + width/2 - 60, y: height/2 - 40, width: 120, height: 150)
-//      label.textAlignment = NSTextAlignment.center
-//      label.text = "\(i+1)つ目のページ"
-//      newScroll.addSubview(label)
     }
     pageControl = UIPageControl()
     pageControl.frame = CGRect(x:0, y:newScroll.frame.origin.y + 150, width:width, height:50)
-    pageControl.backgroundColor = UIColor.white
+    print(newScroll.frame.height)
+    pageControl.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
     pageControl.pageIndicatorTintColor = UIColor.gray
     pageControl.currentPageIndicatorTintColor = UIColor.black
     pageControl.numberOfPages = page
     pageControl.currentPage = 0
     
     generationPageControl = UIPageControl()
-    generationPageControl.frame = CGRect(x:0, y:generationScroll.frame.origin.y + 170, width:width, height:50)
-    generationPageControl.backgroundColor = UIColor.white
+    generationPageControl.frame = CGRect(x:0, y:generationScroll.frame.origin.y + 150, width:width, height:50)
+    generationPageControl.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
     generationPageControl.pageIndicatorTintColor = UIColor.gray
     generationPageControl.currentPageIndicatorTintColor = UIColor.black
     generationPageControl.numberOfPages = page
@@ -103,7 +117,18 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     self.subView.addSubview(generationPageControl)
 
     createTabBar()
+    subView.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
 
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if(segue.identifier == "toDetailPlanView"){
+      let nextViewController = segue.destination as! DatailPlanViewController
+      nextViewController.planId = sender as! Int
+    }else if(segue.identifier == "toDetailUserView"){
+      let nextViewController = segue.destination as! DetailUserViewController
+      nextViewController.editFlag = false
+    }
   }
   
   override func viewDidLayoutSubviews() {
@@ -113,7 +138,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     
     regionImageScroll.delegate = self
     
-    let regionList = ["北海道", "東北", "関東", "中部", "近畿", "中国", "四国", "九州"]
     let imageList = ["北海道", "東北", "関東", "中部", "近畿", "中国", "四国", "九州"]
     
     let tabImageHeight:CGFloat = regionImageScroll.frame.height
@@ -124,11 +148,13 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     
     var imageOriginX:CGFloat = dummyImageWidth
     
-    for imageName in imageList{
+    for (index, imageName) in imageList.enumerated(){
       
       let imageView = UIImageView()
       imageView.frame = CGRect(x:imageOriginX, y:0, width:tabImageWidth, height:tabImageHeight)
-      
+      imageView.tag = index + 1
+      imageView.isUserInteractionEnabled = true
+      imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.regionTapped(_:))))
       let image = UIImage(named: imageName)
       imageView.image = image
       
@@ -171,7 +197,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
       }
     }
     //バーの色
-    tabBar.barTintColor = UIColor.lightGray
+    tabBar.barTintColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
     //選択されていないボタンの色
     tabBar.unselectedItemTintColor = UIColor.black
     //ボタンを押した時の色
@@ -211,12 +237,20 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     performSegue(withIdentifier: "toPostView", sender: nil)
   }
   
-  func newPlanTapped(sender: UITapGestureRecognizer) {
-    performSegue(withIdentifier: "toDetailPlanView", sender: nil)
+  @objc func newPlanTapped(_ sender: UITapGestureRecognizer) {
+    performSegue(withIdentifier: "toDetailPlanView", sender: 0)
   }
   
-  func generationPlanTapped(sender: UITapGestureRecognizer) {
-    performSegue(withIdentifier: "toDetailPlanView", sender: nil)
+  @objc func generationPlanTapped(_ sender: UITapGestureRecognizer) {
+    performSegue(withIdentifier: "toDetailPlanView", sender: 0)
+  }
+  
+  @objc func planUserImageViewTapped(_ sender: UITapGestureRecognizer) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
+  
+  @objc func regionTapped(_ sender: UITapGestureRecognizer) {
+    //地方画像タップ
   }
   
   @IBAction func tappedPutSpot(_ sender: Any) {

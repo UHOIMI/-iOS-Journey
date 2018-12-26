@@ -78,6 +78,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     subView.addSubview(mapView)
     tableViewHeight.constant = 128 + 100 * 9
     superViewHeight.constant = 1280 + 100 * 9
+    createTabBar()
     // Do any additional setup after loading the view.
   }
   
@@ -134,6 +135,56 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     self.performSegue(withIdentifier: "toDetailPlanView", sender: nil)
     
   }
+  
+  func createTabBar(){
+    let width = self.view.frame.width
+    let height = self.view.frame.height
+    //デフォルトは49
+    let tabBarHeight:CGFloat = 58
+    /**   TabBarを設置   **/
+    tabBar = TabBar()
+    if UIDevice().userInterfaceIdiom == .phone {
+      switch UIScreen.main.nativeBounds.height {
+      case 2436:
+        tabBar.frame = CGRect(x:0,y:height - tabBarHeight - 34.1,width:width,height:tabBarHeight)
+      default:
+        tabBar.frame = CGRect(x:0,y:height - tabBarHeight,width:width,height:tabBarHeight)
+      }
+    }
+    //バーの色
+    tabBar.barTintColor = UIColor.lightGray
+    //選択されていないボタンの色
+    tabBar.unselectedItemTintColor = UIColor.black
+    //ボタンを押した時の色
+    tabBar.tintColor = UIColor.black
+    //ボタンを生成
+    let home:UITabBarItem = UITabBarItem(title: "home", image: UIImage(named:"home.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 1)
+    let search:UITabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 2)
+    let favorites:UITabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 3)
+    let setting:UITabBarItem = UITabBarItem(title: "setting", image: UIImage(named:"settings.png")!.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), tag: 4)
+    //ボタンをタブバーに配置する
+    tabBar.items = [home,search,favorites,setting]
+    //デリゲートを設定する
+    tabBar.delegate = self
+    
+    self.view.addSubview(tabBar)
+  }
+  
+  func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    switch item.tag{
+    case 1:
+      print("１")
+    case 2:
+      print("２")
+    case 3:
+      print("３")
+    case 4:
+      performSegue(withIdentifier: "backDetailUserView", sender: nil)
+    default : return
+      
+    }
+  }
+
   
   enum actionTag: Int {
     case action1 = 1
