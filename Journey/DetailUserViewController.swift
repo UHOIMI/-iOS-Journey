@@ -47,6 +47,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         editButton.title = ""
         editButton.isEnabled = false
         spotListButton.isHidden = true
+        logoutButton.isHidden = true
       }
       
 //      self.imgView = UIImageView()

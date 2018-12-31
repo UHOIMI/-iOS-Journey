@@ -11,9 +11,10 @@ import UIKit
 class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelegate {
 
   @IBOutlet weak var subView: UIView!
-  @IBOutlet weak var userIconImageView: UIButton!
+  //@IBOutlet weak var userIconImageView: UIButton!
+  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
   @IBOutlet weak var postBarButtonItem: UIBarButtonItem!
-  @IBOutlet weak var userIconButton: UIButton!
+  //@IBOutlet weak var userIconButton: UIButton!
   @IBOutlet weak var regionLabel: UILabel!
   @IBOutlet weak var newLabel: UILabel!
   @IBOutlet weak var generationLabel: UILabel!
@@ -47,14 +48,25 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     let rightButton: UIButton = UIButton()
     rightButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
     rightButton.setImage(UIImage(named: "pen"), for: .normal)
-    rightButton.addTarget(self, action: #selector(HomeViewController.buttonTapped(sender:)), for: .touchUpInside)
+    rightButton.addTarget(self, action: #selector(HomeViewController.postButtonTapped(sender:)), for: .touchUpInside)
     postBarButtonItem.customView = rightButton
     postBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 24.0).isActive = true
     postBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 24.0).isActive = true
   
-    userIconImageView.setImage(globalVar.userIcon, for: UIControl.State.normal)
-    userIconImageView.imageView?.layer.cornerRadius = 40 * 0.5
-    userIconImageView.imageView?.clipsToBounds = true
+    
+    let leftButton: UIButton = UIButton()
+    leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+    leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+    leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+    leftButton.imageView?.clipsToBounds = true
+    leftButton.addTarget(self, action: #selector(HomeViewController.userIconTapped(sender:)), for: .touchUpInside)
+    userBarButtonItem.customView = leftButton
+    userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+    userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+//    userIconImageView.setImage(globalVar.userIcon, for: UIControl.State.normal)
+//    userIconImageView.imageView!.contentMode = UIView.ContentMode.scaleAspectFit
+//    userIconImageView.imageView?.layer.cornerRadius = 40 * 0.5
+//    userIconImageView.imageView?.clipsToBounds = true
     
     let page = 3
     let width = self.view.frame.width
@@ -146,7 +158,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
       nextViewController.planId = sender as! Int
     }else if(segue.identifier == "toDetailUserView"){
       let nextViewController = segue.destination as! DetailUserViewController
-      nextViewController.editFlag = false
       if(!userEditFlag){
         nextViewController.editFlag = false
         userEditFlag = true
@@ -255,11 +266,11 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     }
   }
   
-  @IBAction func tappedUserIcon(_ sender: Any) {
+  @objc func userIconTapped(sender : AnyObject) {
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
   
-  @objc func buttonTapped(sender : AnyObject) {
+  @objc func postButtonTapped(sender : AnyObject) {
     performSegue(withIdentifier: "toPostView", sender: nil)
   }
   
