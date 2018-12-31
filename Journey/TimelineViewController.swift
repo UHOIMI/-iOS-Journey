@@ -254,8 +254,11 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   }
   
   func getTimeline(offset:Int,flag:Int,searchArea:String){
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&\(searchArea)")
-    let request = URLRequest(url: url!)
+    var text = "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&\(searchArea)"
+    text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+//    let decodedString:String = text.removingPercentEncoding!
+    let url = URL(string: text)!
+    let request = URLRequest(url: url)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
       if error == nil, let data = data, let response = response as? HTTPURLResponse {
