@@ -61,7 +61,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    getTimeline(offset: planCount,flag: 0)
+    getTimeline(offset: planCount,flag: 0, searchArea: searchArea)
 //    tableView.reloadData()
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(TimelineViewController.refreshControlValueChanged(sender:)), for: .valueChanged)
@@ -172,7 +172,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   @objc func refreshControlValueChanged(sender: UIRefreshControl) {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
       //上スクロール
-      self.getTimeline(offset: 0, flag: 1)
+      self.getTimeline(offset: 0, flag: 1, searchArea: self.searchArea)
 //      self.tableView.reloadData()
       sender.endRefreshing()
     })
@@ -182,7 +182,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height && self.tableView.isDragging && isaddload == true){
       self.isaddload = false
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-        self.getTimeline(offset: self.planCount, flag: 0)
+        self.getTimeline(offset: self.planCount, flag: 0, searchArea: self.searchArea)
         if(self.sampledatas.count > 50){
           self.isaddload = false
           self.tableView.tableFooterView = UIView()
@@ -253,12 +253,12 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }
   }
   
-  func getTimeline(offset:Int,flag:Int){
-    var url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)")
-    if(searchArea != ""){
-      url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&\(searchArea)")
-    }
-    let request = URLRequest(url: url!)
+  func getTimeline(offset:Int,flag:Int,searchArea:String){
+    var text = "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&\(searchArea)"
+    text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+//    let decodedString:String = text.removingPercentEncoding!
+    let url = URL(string: text)!
+    let request = URLRequest(url: url)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
       if error == nil, let data = data, let response = response as? HTTPURLResponse {

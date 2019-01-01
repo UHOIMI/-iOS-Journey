@@ -314,6 +314,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
       searchArea = "area=福岡県&area=佐賀県&area=長崎県&area=大分県&area=熊本県&area=宮崎県&area=鹿児島県&area=沖縄県"
       print("area=福岡県&area=佐賀県&area=長崎県&area=大分県&area=熊本県&area=宮崎県&area=鹿児島県&area=沖縄県")
     }
+    performSegue(withIdentifier: "toTimelineView", sender: nil)
   }
   
   @IBAction func tappedPutSpot(_ sender: Any) {
