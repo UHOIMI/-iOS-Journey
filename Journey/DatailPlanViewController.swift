@@ -15,6 +15,8 @@ import CoreMotion
 
 class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate,UITextFieldDelegate,UITextViewDelegate, UITableViewDataSource,UITableViewDelegate {
   
+  let globalVar = GlobalVar.shared
+  
   @IBOutlet weak var subView: UIView!
   @IBOutlet weak var userIconImageView: UIImageView!
   @IBOutlet weak var userNameLabel: UILabel!
@@ -33,6 +35,16 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   @IBOutlet weak var trainImageView: UIImageView!
   @IBOutlet weak var boatImageView: UIImageView!
   @IBOutlet weak var airplaneImageView: UIImageView!
+  
+  var spotIdList : [Int] = []
+  var planIdList : [Int] = []
+  var spotTitleList : [String] = []
+  var planTitleList : [String] = []
+  var spotCommentList : [String] = []
+  var spotImageAList : [UIImage] = []
+  var spotImageBList : [UIImage] = []
+  var spotImageCList : [UIImage] = []
+  var spotImageSetFlag : [Int] = []
   
   var planId = 0
   var userId = ""
@@ -62,6 +74,10 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    for i in 0 ... 2 {
+      makerList.insert(GMSMarker(), at: i)
+    }
+    getSpot()
     var arr:[String] = planTransportationString.components(separatedBy: ",")
     print(arr)
     for i in 0...6{
@@ -125,15 +141,18 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    print("セル追加")
-    return 10
+    print("テーブルの数", spotTitleList.count)
+    return spotTitleList.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: SpotTableViewCell = tableView.dequeueReusableCell(withIdentifier: "spotCell", for : indexPath) as! SpotTableViewCell
-    cell.spotNameLabel.text =  "スポット名"
-    cell.spotCommentLabel.text = "コメント"
-    cell.spotImageView.image = UIImage(named:"画像を選択")!
+    cell.spotNameLabel.text =  spotTitleList[indexPath.row]
+    cell.spotImageView.image = spotImageAList[indexPath.row]
+    cell.spotCommentLabel.text =  spotCommentList[indexPath.row]
+//    cell.spotNameLabel.text =  "スポット名"
+//    cell.spotCommentLabel.text = "コメント"
+//    cell.spotImageView.image = UIImage(named:"画像を選択")!
 //    if (spotNameListB![indexPath.row] == "nil"){
 //      cell.planSpotNameLabel2.text = ""
 //    }else{
@@ -168,6 +187,121 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     //tableView.deselectRow(at: indexPath, animated: true)
     self.performSegue(withIdentifier: "toDetailPlanView", sender: nil)
     
+  }
+  
+  struct SpotData : Codable{
+    let status : Int
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+      let spotAddress : SpotAddress
+      let spotId : Int
+      let planId : Int
+      let spotTitle : String
+      let spotComment : String?
+      let spotImageA : String?
+      let spotImageB : String?
+      let spotImageC : String?
+      enum CodingKeys: String, CodingKey {
+        case spotAddress = "spot_address"
+        case spotId = "spot_id"
+        case planId = "plan_id"
+        case spotTitle = "spot_title"
+        case spotComment = "spot_comment"
+        case spotImageA = "spot_image_a"
+        case spotImageB = "spot_image_b"
+        case spotImageC = "spot_image_c"
+      }
+      struct SpotAddress : Codable{
+        let lat : Double
+        let lng : Double
+        enum CodingKeys: String, CodingKey {
+          case lat = "lat"
+          case lng = "lng"
+        }
+      }
+    }
+  }
+  
+  func getSpot(){
+    var text = "http://\(globalVar.ipAddress)/api/v1/spot/find?spot_id=143&spot_id=146"
+    text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+    //    let decodedString:String = text.removingPercentEncoding!
+    print("URLのテスト", text)
+    let url = URL(string: text)!
+    let request = URLRequest(url: url)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let spotData = try? JSONDecoder().decode(SpotData.self, from: data)
+        if(spotData!.status == 200){
+          for i in 0 ... (spotData?.record?.count)! - 1{
+//                1var count = 0
+            //self.makerList.insert(GMSMarker(), at: i)
+            //let test = (spotData?.record![i].spotAddress.lat)!
+            //let test2 = (spotData?.record![i].spotAddress.lat)!
+            self.makerList[i].position = CLLocationCoordinate2D(latitude: (spotData?.record![i].spotAddress.lat)!, longitude: (spotData?.record![i].spotAddress.lng)!)
+            self.spotIdList.insert((spotData?.record![i].spotId)!, at: i)
+            self.planIdList.insert((spotData?.record![i].planId)!, at: i)
+            self.spotTitleList.insert((spotData?.record![i].spotTitle)!, at: i)
+            self.spotCommentList.insert((spotData?.record![i].spotComment)!, at: i)
+            if((spotData?.record![i].spotImageA)! != ""){
+              let url = URL(string: (spotData?.record![i].spotImageA)!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageAList.append(image!)
+            }else{
+              self.spotImageAList.append(UIImage(named:"no-image.png")!)
+            }
+            if((spotData?.record![i].spotImageB)! != ""){
+              let url = URL(string: (spotData?.record![i].spotImageB)!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageBList.append(image!)
+            }else{
+              self.spotImageBList.append(UIImage(named:"no-image.png")!)
+            }
+            if((spotData?.record![i].spotImageC)! != ""){
+              let url = URL(string: (spotData?.record![i].spotImageC)!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.spotImageCList.append(image!)
+            }else{
+              self.spotImageCList.append(UIImage(named:"no-image.png")!)
+            }
+//            var url = URL(string: (spotData?.record![i].spotImageA)!)!
+//            var imageData = try? Data(contentsOf: url)
+//            var image = UIImage(data:imageData!)
+//            self.spotImageAList.append(image!)
+//            url = URL(string: (spotData?.record![i].spotImageB)!)!
+//            imageData = try? Data(contentsOf: url)
+//            image = UIImage(data:imageData!)
+//            self.spotImageBList.append(image!)
+//            url = URL(string: (spotData?.record![i].spotImageC)!)!
+//            imageData = try? Data(contentsOf: url)
+//            image = UIImage(data:imageData!)
+//            self.spotImageCList.append(image!)
+          }
+          
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            print("リロードテーブル")
+            self.spotTableView.reloadData()
+          }
+        }else{
+          print("status",spotData!.status)
+        }
+      }
+    }.resume()
   }
   
   func createTabBar(){

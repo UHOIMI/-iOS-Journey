@@ -57,7 +57,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var planTransportation = ""
   var planPrice = ""
   var planComment = ""
-  
+  var spotIdList : [Int] = []
+  var spotImageList2 : [String] = []
+  var spotCommentList : [String] = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -257,6 +259,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     var text = "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&\(searchArea)"
     text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
 //    let decodedString:String = text.removingPercentEncoding!
+    print("URLのテスト", text)
     let url = URL(string: text)!
     let request = URLRequest(url: url)
     let session = URLSession.shared

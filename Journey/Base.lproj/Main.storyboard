@@ -2271,20 +2271,20 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="コメント" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rc4-af-2lL">
-                                                                    <rect key="frame" x="118" y="11" width="70" height="21"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <rect key="frame" x="93.5" y="40" width="57.5" height="17"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstAttribute="bottomMargin" secondItem="pkU-T6-Hkd" secondAttribute="bottom" constant="8" id="A3M-Hx-mJi"/>
-                                                                <constraint firstItem="Rc4-af-2lL" firstAttribute="top" secondItem="Tuh-YF-VwQ" secondAttribute="top" id="Ak6-at-1up"/>
                                                                 <constraint firstItem="pkU-T6-Hkd" firstAttribute="leading" secondItem="Kdh-xS-xkC" secondAttribute="leadingMargin" constant="8" id="JV2-M4-Qc7"/>
                                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Rc4-af-2lL" secondAttribute="trailing" constant="20" symbolic="YES" id="Nds-9l-Pdz"/>
+                                                                <constraint firstItem="Rc4-af-2lL" firstAttribute="top" secondItem="pkU-T6-Hkd" secondAttribute="top" id="Qoh-WK-ufQ"/>
+                                                                <constraint firstItem="Rc4-af-2lL" firstAttribute="leading" secondItem="pkU-T6-Hkd" secondAttribute="trailing" constant="16" id="TTx-C2-Shu"/>
                                                                 <constraint firstItem="Tuh-YF-VwQ" firstAttribute="leading" secondItem="Kdh-xS-xkC" secondAttribute="leadingMargin" constant="8" id="hOH-ui-5RV"/>
                                                                 <constraint firstItem="pkU-T6-Hkd" firstAttribute="top" secondItem="Tuh-YF-VwQ" secondAttribute="bottom" constant="8" id="k1I-Zi-2Bx"/>
-                                                                <constraint firstItem="Rc4-af-2lL" firstAttribute="leading" secondItem="Tuh-YF-VwQ" secondAttribute="trailing" constant="8" id="xls-7n-ie2"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
