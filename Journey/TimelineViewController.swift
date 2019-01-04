@@ -46,7 +46,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var planCommentList : [String] = []
   var planCount = 0
   var reloadFlag = 0
-  var searchArea : String = ""
+  var area : String = ""
   //受け渡し用
   var planId = 0
   var planTitle = ""
@@ -61,9 +61,20 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var spotImageList2 : [String] = []
   var spotCommentList : [String] = []
   
+  //SearchViewから受け取る値
+  var searchText = ""
+  var searchTransportationString = ""
+  var searchPrice = ""
+  var searchArea = ""
+  var searchGeneration = ""
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    getTimeline(offset: planCount,flag: 0, searchArea: searchArea)
+    print(searchTransportationString)
+    print(searchPrice)
+    print(searchGeneration)
+    getTimeline(offset: planCount,flag: 0, area: area)
 //    tableView.reloadData()
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(TimelineViewController.refreshControlValueChanged(sender:)), for: .valueChanged)
@@ -174,7 +185,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   @objc func refreshControlValueChanged(sender: UIRefreshControl) {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
       //上スクロール
-      self.getTimeline(offset: 0, flag: 1, searchArea: self.searchArea)
+      self.getTimeline(offset: 0, flag: 1, area: self.area)
 //      self.tableView.reloadData()
       sender.endRefreshing()
     })
@@ -184,7 +195,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height && self.tableView.isDragging && isaddload == true){
       self.isaddload = false
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-        self.getTimeline(offset: self.planCount, flag: 0, searchArea: self.searchArea)
+        self.getTimeline(offset: self.planCount, flag: 0, area: self.area)
         if(self.sampledatas.count > 50){
           self.isaddload = false
           self.tableView.tableFooterView = UIView()
@@ -255,8 +266,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }
   }
   
-  func getTimeline(offset:Int,flag:Int,searchArea:String){
-    var text = "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&\(searchArea)"
+  func getTimeline(offset:Int,flag:Int,area:String){
+    var text = "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&\(area)"
     text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
 //    let decodedString:String = text.removingPercentEncoding!
     print("URLのテスト", text)

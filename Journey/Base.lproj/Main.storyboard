@@ -1101,6 +1101,9 @@
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EWX-Js-vpw">
                                 <rect key="frame" x="336" y="96" width="31" height="30"/>
                                 <state key="normal" title="検索"/>
+                                <connections>
+                                    <action selector="tappedSearchButton:" destination="IlB-DN-gnh" eventType="touchUpInside" id="ano-P8-n0B"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="いいね" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BmT-sL-maX">
                                 <rect key="frame" x="8" y="158" width="52" height="20.5"/>
@@ -1276,11 +1279,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="検索" id="fG9-38-0BW"/>
                     <connections>
-                        <outlet property="SearchBarTextField" destination="SHg-Yt-rUV" id="Gcg-3w-JDf"/>
                         <outlet property="generationTextField" destination="Dnl-LH-l3e" id="Oms-S2-YVA"/>
                         <outlet property="goodTextField" destination="KNy-nt-zdH" id="X8A-Wi-HqO"/>
                         <outlet property="moneyTextField" destination="eop-Ms-xNU" id="ddj-Y8-l5o"/>
                         <outlet property="regionTextField" destination="yfn-yw-oZp" id="v4Y-Yl-bqx"/>
+                        <outlet property="searchBarTextField" destination="SHg-Yt-rUV" id="u5f-hA-1K2"/>
+                        <segue destination="2Ny-Ye-ySz" kind="show" identifier="toTimelineView" id="CI5-CI-NdO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8lx-x8-HBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1635,7 +1639,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYB-y1-OP4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="142.5" y="-1271.8309859154929"/>
+            <point key="canvasLocation" x="364" y="-1297"/>
         </scene>
         <!--入力内容確認-->
         <scene sceneID="Dch-sw-eK7">
@@ -1999,7 +2003,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7sU-lV-dre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2570.4000000000001" y="-918.89055472263874"/>
+            <point key="canvasLocation" x="-2655" y="-1394"/>
         </scene>
         <!--ユーザー編集-->
         <scene sceneID="iTe-3a-Q5c">
@@ -2468,7 +2472,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="256" height="256"/>
+        <image name="plus" width="192" height="192"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2480,6 +2484,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xie-oa-hgH"/>
+        <segue reference="WEB-tb-m4z"/>
         <segue reference="yAr-Yi-aS4"/>
         <segue reference="0Xj-CK-ZoO"/>
         <segue reference="TeA-Xz-GIE"/>
