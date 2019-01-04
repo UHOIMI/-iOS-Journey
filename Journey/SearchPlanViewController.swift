@@ -15,7 +15,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     return 1
   }
   
-  @IBOutlet weak var SearchBarTextField: UITextField!
+  @IBOutlet weak var searchBarTextField: UITextField!
   @IBOutlet weak var goodTextField: UITextField!
   @IBOutlet weak var moneyTextField: UITextField!
   @IBOutlet weak var regionTextField: UITextField!
@@ -30,7 +30,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   
   var goodList = ["-非選択-","10以下", "11 ~ 50", "51 ~ 100", "101 ~ 500", "500以上"]
   var moneyList = ["-非選択-","500円以下", "501円 ~ 1000円", "1001円 ~ 5000円", "5001円 ~ 10000円", "10001円以上"]
-  var regionList = ["-非選択-","北海道", "東北", "関東", "中部", "近畿", "中国", "四国", "九州"]
+  var regionList = ["-非選択-","北海道", "青森県", "岩手県", "宮城県", "秋田県","山形県", "福島県", "茨城県", "栃木県", "群馬県","埼玉県", "千葉県", "東京都", "神奈川県", "新潟県","富山県", "石川県", "福井県", "山梨県", "長野県","岐阜県", "静岡県", "愛知県", "三重県", "滋賀県","京都府", "大阪府", "兵庫県", "奈良県", "和歌山県","鳥取県", "島根県", "岡山県", "広島県", "山口県","徳島県", "香川県", "愛媛県", "高知県", "福岡県","佐賀県", "長崎県", "熊本県", "大分県", "宮崎県","鹿児島県", "沖縄県"]
   var generationList = ["-非選択-","10歳未満","10代","20代","30代","40代","50代","60代","70代","80代","90代","100歳以上"]
   
   var transportation = ["0,","0,","0,","0,","0,","0,","0"]
@@ -42,14 +42,16 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   var imageFlag6 = 0
   var imageFlag7 = 0
   
+  var transportationString = ""
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     navigationBarHeight = (self.navigationController?.navigationBar.frame.size.height)!
-    textFieldHeight = SearchBarTextField.layer.bounds.height
-    textFieldY = SearchBarTextField.frame.origin.y
-    SearchBarTextField.placeholder = "検索枠"
-    SearchBarTextField.backgroundColor = UIColor.white
+    textFieldHeight = searchBarTextField.layer.bounds.height
+    textFieldY = searchBarTextField.frame.origin.y
+    searchBarTextField.placeholder = "検索枠"
+    searchBarTextField.backgroundColor = UIColor.white
     //SearchBarTextField.returnKeyType = .search
     
     let goodPickerView = UIPickerView()
@@ -77,7 +79,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     regionTextField.placeholder = "地方を選択してください"
     generationTextField.placeholder = "年代を選択してください"
     
-    SearchBarTextField.delegate = self
+    searchBarTextField.delegate = self
     
     //textViewSetteings()
     keyboardSettings()
@@ -87,9 +89,9 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   @objc func commitButtonTapped (){
     self.view.endEditing(true)
     self.resignFirstResponder()
-    SearchBarTextField.resignFirstResponder()
+    searchBarTextField.resignFirstResponder()
     tableView.removeFromSuperview()
-    addHistory(text: SearchBarTextField.text!)
+    addHistory(text: searchBarTextField.text!)
   }
   
   func keyboardSettings(){
@@ -102,7 +104,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     // 閉じるボタン
     let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(self.commitButtonTapped))
     kbToolBar.items = [spacer, commitButton]
-    SearchBarTextField.inputAccessoryView = kbToolBar
+    searchBarTextField.inputAccessoryView = kbToolBar
   }
   
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -195,7 +197,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   // UITableViewCellから履歴を入力
   @objc func inputFromHistory(sender: UITapGestureRecognizer) {
     if let cell = sender.view as? UITableViewCell {
-      SearchBarTextField.text = cell.textLabel?.text
+      searchBarTextField.text = cell.textLabel?.text
     }
   }
   
@@ -365,6 +367,34 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     case 4:
       performSegue(withIdentifier: "toDetailUserView", sender: nil)
     default : return
+    }
+  }
+  
+  func showAlert(title:String,message:String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+    let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+    alert.addAction(cancelButton)
+    self.present(alert, animated: true, completion: nil)
+  }
+  
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if(segue.identifier == "toTimelineView"){
+      let nextViewController = segue.destination as! TimelineViewController
+      nextViewController.searchText = searchBarTextField.text!
+      nextViewController.searchArea = regionTextField.text!
+      nextViewController.searchGeneration = generationTextField.text!
+      nextViewController.searchPrice = moneyTextField.text!
+      nextViewController.searchTransportationString = transportationString
+      nextViewController.searchFlag = 1
+    }
+  }
+  
+  @IBAction func tappedSearchButton(_ sender: Any) {
+    transportationString = transportation.reduce("") { $0 + String($1) }
+    if(searchBarTextField.text == "" && moneyTextField.text == "" && regionTextField.text == "" && generationTextField.text == "" && transportationString == "0,0,0,0,0,0,0"){
+      showAlert(title: "検索条件が指定されていません", message: "条件を入力してください")
+    }else{
+      performSegue(withIdentifier: "toTimelineView", sender: nil)
     }
   }
   

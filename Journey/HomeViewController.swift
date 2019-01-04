@@ -257,7 +257,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     case 1:
       print("１")
     case 2:
-      print("２")
+      performSegue(withIdentifier: "toSearchView", sender: nil)
     case 3:
       performSegue(withIdentifier: "toTimelineView", sender: nil)
     case 4:
