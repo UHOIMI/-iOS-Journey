@@ -206,7 +206,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   @objc func refreshControlValueChanged(sender: UIRefreshControl) {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
       //上スクロール
-      self.getTimeline(offset: 0, flag: 1, area: self.area)
+      if(self.searchFlag == 0){
+        self.getTimeline(offset: self.planCount,flag: 1, area: self.area)
+      }else if(self.searchFlag == 1){
+        if(self.searchTransportationString == "0,0,0,0,0,0,0"){
+          self.searchTransportationString = ""
+        }
+        self.searchTimeline(offset: self.planCount, flag: 1, area: self.searchArea, transportation: self.searchTransportationString, praice: self.searchPrice, text: self.searchText, generation: self.searchGeneration)
+      }
 //      self.tableView.reloadData()
       sender.endRefreshing()
     })
@@ -216,7 +223,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height && self.tableView.isDragging && isaddload == true){
       self.isaddload = false
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-        self.getTimeline(offset: self.planCount, flag: 0, area: self.area)
+        if(self.searchFlag == 0){
+          self.getTimeline(offset: self.planCount,flag: 0, area: self.area)
+        }else if(self.searchFlag == 1){
+          if(self.searchTransportationString == "0,0,0,0,0,0,0"){
+            self.searchTransportationString = ""
+          }
+          self.searchTimeline(offset: self.planCount, flag: 0, area: self.searchArea, transportation: self.searchTransportationString, praice: self.searchPrice, text: self.searchText, generation: self.searchGeneration)
+        }
         if(self.sampledatas.count > 50){
           self.isaddload = false
           self.tableView.tableFooterView = UIView()
@@ -381,7 +395,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               }
               self.dateList.append("\(date)日")
               for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
-                self.spotIdList.insert((timelineData?.record![i].spots[f].spotId)!, at: i)
+                self.spotIdList.append((timelineData?.record![i].spots[f].spotId)!)
                 if((timelineData?.record![i].spots[f].spotImageA)! != ""){
                   self.spotImagePathList?.append((timelineData?.record![i].spots[f].spotImageA)!)
                 }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
@@ -464,6 +478,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 self.dateList.append("\(date)日")
                 for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
+                  self.spotIdList.insert((timelineData?.record![i].spots[f].spotId)!, at: i)
                   if((timelineData?.record![i].spots[f].spotImageA)! != ""){
                     self.spotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageA)!, at: i)
                   }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
@@ -518,6 +533,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               }
               self.dateList.append("\(date)日")
               for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
+                self.spotIdList.append((timelineData?.record![i].spots[f].spotId)!)
                 if((timelineData?.record![i].spots[f].spotImageA)! != ""){
                   self.spotImagePathList?.append((timelineData?.record![i].spots[f].spotImageA)!)
                 }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
