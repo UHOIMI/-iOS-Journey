@@ -34,6 +34,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var dateList : [String] = []
   var spotImageSetFlag : [Int] = []
   var spotCountList : [Int] = []
+  var spotIdList : [Int] = []
   var spotNameListA : [String] = []
   var spotNameListB : [String]? = []
   var spotImagePathList : [String]? = []
@@ -57,9 +58,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var planTransportation = ""
   var planPrice = ""
   var planComment = ""
-  var spotIdList : [Int] = []
-  var spotImageList2 : [String] = []
-  var spotCommentList : [String] = []
+  var spotCountList2 : [Int] = []
+  var spotIdList2 : [Int] = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -148,6 +148,17 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     userId = userIdList[indexPath.row]
     userImage = userImageList[indexPath.row]
     userName = userNameList[indexPath.row]
+    var spotCount = 0
+    for i in 0 ... indexPath.row {
+      spotCount += spotCountList[i] + 1
+    }
+    for i in 0 ... spotCountList[indexPath.row] {
+      spotIdList2.append(spotIdList[spotCount - 1])
+      print("indexパス：",indexPath.row)
+      print("スポットCount：",spotCount)
+      print("スポットid：",spotIdList2[i])
+      spotCount += 1
+    }
     self.performSegue(withIdentifier: "toDetailPlanView", sender: planIdList[indexPath.row])
     
   }
@@ -164,6 +175,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       nextViewController.planTransportationString = planTransportation
       nextViewController.planComment = planComment
       nextViewController.planPrice = planPrice
+      nextViewController.spotIdList = spotIdList2
+      spotIdList2.removeAll()
       
     }else if(segue.identifier == "toDetailUserView"){
       let nextViewController = segue.destination as! DetailUserViewController
@@ -296,6 +309,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 self.dateList.append("\(date)日")
                 for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
+                  self.spotIdList.insert((timelineData?.record![i].spots[f].spotId)!, at: i)
                   if((timelineData?.record![i].spots[f].spotImageA)! != ""){
                     self.spotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageA)!, at: i)
                   }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
@@ -350,6 +364,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               }
               self.dateList.append("\(date)日")
               for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
+                self.spotIdList.insert((timelineData?.record![i].spots[f].spotId)!, at: i)
                 if((timelineData?.record![i].spots[f].spotImageA)! != ""){
                   self.spotImagePathList?.append((timelineData?.record![i].spots[f].spotImageA)!)
                 }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
