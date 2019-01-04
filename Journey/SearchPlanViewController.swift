@@ -385,6 +385,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
       nextViewController.searchGeneration = generationTextField.text!
       nextViewController.searchPrice = moneyTextField.text!
       nextViewController.searchTransportationString = transportationString
+      nextViewController.searchFlag = 1
     }
   }
   
