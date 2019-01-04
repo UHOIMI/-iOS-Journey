@@ -230,6 +230,9 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   func getSpot(){
     var text = "http://\(globalVar.ipAddress)/api/v1/spot/find?spot_id=143&spot_id=146"
+    for _sId in spotIdList {
+      text += "&spot_id=" + _sId.description
+    }
     text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
     //    let decodedString:String = text.removingPercentEncoding!
     print("URLのテスト", text)
