@@ -125,6 +125,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: PlanTableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for : indexPath) as! PlanTableViewCell
     if(reloadFlag == 1){
+      print(spotNameListB!)
+      print(spotCountList)
       cell.isUserInteractionEnabled = true
       cell.planNameLabel.text =  planTitleList[indexPath.row]
       cell.planSpotNameLabel1.text = spotNameListA[indexPath.row]
@@ -350,9 +352,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                   }
                   if(f == 0){
                     self.spotNameListA.insert((timelineData?.record![i].spots[f].spotTitle)!, at: i)
-                    self.spotNameListB?.insert("nil", at: i)
+                    self.spotNameListB?.insert("nil", at: offset + i)
                   }else if(f == 1){
-                    self.spotNameListB?[i] = (timelineData?.record![i].spots[f].spotTitle)!
+                    self.spotNameListB?[offset + i] = (timelineData?.record![i].spots[f].spotTitle)!
                   }else{
                     count += 1
                   }
@@ -407,7 +409,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                   self.spotNameListA.append((timelineData?.record![i].spots[f].spotTitle)!)
                   self.spotNameListB?.append("nil")
                 }else if(f == 1){
-                  self.spotNameListB?[i] = (timelineData?.record![i].spots[f].spotTitle)!
+                  self.spotNameListB?[offset + i] = (timelineData?.record![i].spots[f].spotTitle)!
                 }else{
                   count += 1
                 }
@@ -488,9 +490,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                   }
                   if(f == 0){
                     self.spotNameListA.insert((timelineData?.record![i].spots[f].spotTitle)!, at: i)
-                    self.spotNameListB?.insert("nil", at: i)
+                    self.spotNameListB?.insert("nil", at: offset + i)
                   }else if(f == 1){
-                    self.spotNameListB?[i] = (timelineData?.record![i].spots[f].spotTitle)!
+                    self.spotNameListB?[offset + i] = (timelineData?.record![i].spots[f].spotTitle)!
                   }else{
                     count += 1
                   }
@@ -545,7 +547,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                   self.spotNameListA.append((timelineData?.record![i].spots[f].spotTitle)!)
                   self.spotNameListB?.append("nil")
                 }else if(f == 1){
-                  self.spotNameListB?[i] = (timelineData?.record![i].spots[f].spotTitle)!
+                  self.spotNameListB?[offset + i] = (timelineData?.record![i].spots[f].spotTitle)!
                 }else{
                   count += 1
                 }
