@@ -168,11 +168,29 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     userImage = userImageList[indexPath.row]
     userName = userNameList[indexPath.row]
     var spotCount = 0
-    for i in 0 ... indexPath.row {
-      spotCount += spotCountList[i] + 1
+    for i in 0 ..< indexPath.row {
+      if(spotCountList[i] == 0){
+        if(spotNameListB![i] == "nil"){//
+          spotCount += 1
+        }else{
+          spotCount += 2
+        }
+      }else{
+        spotCount += spotCountList[i] + 2
+      }
     }
-    for i in 0 ... spotCountList[indexPath.row] {
-      spotIdList2.append(spotIdList[spotCount - 1])
+    
+    var spotLoop = 0
+    if(spotCountList[indexPath.row] == 0){
+      if(spotNameListB![indexPath.row] != "nil"){//
+        spotLoop = 1
+      }
+    }else{
+      spotLoop += spotCountList[indexPath.row] + 1
+    }
+    
+    for i in 0 ... spotLoop {
+      spotIdList2.append(spotIdList[spotCount])
       print("indexパス：",indexPath.row)
       print("スポットCount：",spotCount)
       print("スポットid：",spotIdList2[i])

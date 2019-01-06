@@ -18,6 +18,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   let globalVar = GlobalVar.shared
   
   @IBOutlet weak var subView: UIView!
+  @IBOutlet weak var subViewHeight: NSLayoutConstraint!
   @IBOutlet weak var userIconImageView: UIImageView!
   @IBOutlet weak var userNameLabel: UILabel!
   @IBOutlet weak var planNameLabel: UILabel!
@@ -44,7 +45,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   var spotImageAList : [UIImage] = []
   var spotImageBList : [UIImage] = []
   var spotImageCList : [UIImage] = []
-  var spotImageSetFlag : [Int] = []
+  var spotImageNum : [Int] = []
   
   var planId = 0
   var userId = ""
@@ -66,6 +67,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   var imageFlag6 = 0
   var imageFlag7 = 0
   
+  var viewHeight = 1000
   var camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
   var makerList : [GMSMarker] = []
   let myFrameSize:CGSize = UIScreen.main.bounds.size
@@ -74,8 +76,10 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    for i in 0 ... 2 {
+    viewHeight = Int(spotTableView.frame.origin.y) + 100
+    for i in 0 ... spotIdList.count - 1 {
       makerList.insert(GMSMarker(), at: i)
+      spotImageNum.insert(-1, at: i)
     }
     getSpot()
     var arr:[String] = planTransportationString.components(separatedBy: ",")
@@ -142,13 +146,22 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     print("テーブルの数", spotTitleList.count)
-    return spotTitleList.count
+    return spotImageCList.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: SpotTableViewCell = tableView.dequeueReusableCell(withIdentifier: "spotCell", for : indexPath) as! SpotTableViewCell
     cell.spotNameLabel.text =  spotTitleList[indexPath.row]
-    cell.spotImageView.image = spotImageAList[indexPath.row]
+    switch spotImageNum[indexPath.row] {
+    case 0:
+      cell.spotImageView.image = spotImageAList[indexPath.row]
+      break
+    case 1:
+      cell.spotImageView.image = spotImageBList[indexPath.row]
+      break
+    default:
+      cell.spotImageView.image = spotImageCList[indexPath.row]
+    }
     cell.spotCommentLabel.text =  spotCommentList[indexPath.row]
 //    cell.spotNameLabel.text =  "スポット名"
 //    cell.spotCommentLabel.text = "コメント"
@@ -229,7 +242,8 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   
   func getSpot(){
-    var text = "http://\(globalVar.ipAddress)/api/v1/spot/find?spot_id=143&spot_id=146"
+    var text = "http://\(globalVar.ipAddress)/api/v1/spot/find?spot_id="
+    text += spotIdList[0].description
     for _sId in spotIdList {
       text += "&spot_id=" + _sId.description
     }
@@ -263,6 +277,9 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
               self.spotImageAList.append(image!)
+              if(self.spotImageNum[i] == -1){
+                self.spotImageNum[i] = 0
+              }
             }else{
               self.spotImageAList.append(UIImage(named:"no-image.png")!)
             }
@@ -271,6 +288,9 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
               self.spotImageBList.append(image!)
+              if(self.spotImageNum[i] == -1){
+                self.spotImageNum[i] = 1
+              }
             }else{
               self.spotImageBList.append(UIImage(named:"no-image.png")!)
             }
@@ -281,6 +301,9 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
               self.spotImageCList.append(image!)
             }else{
               self.spotImageCList.append(UIImage(named:"no-image.png")!)
+            }
+            if(self.spotImageNum[i] == -1){
+              self.spotImageNum[i] = 2
             }
 //            var url = URL(string: (spotData?.record![i].spotImageA)!)!
 //            var imageData = try? Data(contentsOf: url)
@@ -298,6 +321,9 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
           
           DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
             print("リロードテーブル")
+            self.viewHeight += 100 * self.spotImageCList.count
+            self.subViewHeight.constant = CGFloat(self.viewHeight)
+            self.subView.frame = CGRect(x:0, y: 0, width:375, height:self.viewHeight)
             self.spotTableView.reloadData()
           }
         }else{
