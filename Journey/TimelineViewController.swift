@@ -573,11 +573,18 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
           }
         }else{
-          print("status",timelineData!.status)
+          self.showAlert(title: "該当する結果がありません", message: "検索をやり直してください")
         }
       }
       }.resume()
   }
+  func showAlert(title:String,message:String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+    let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+    alert.addAction(cancelButton)
+    self.present(alert, animated: true, completion: nil)
+  }
+  
   
   
   @objc func userImageViewTapped(_ sender: UITapGestureRecognizer) {
