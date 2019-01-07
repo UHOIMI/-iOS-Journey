@@ -22,7 +22,7 @@ class ConfirmationViewController: UIViewController {
   let boundary = "----WebKitFormBoundaryZLdHZy8HNaBmUX0d"
   
   let ipAddress = "172.20.10.2:3000"
-  //  let ipAddress = "35.200.26.70:443"
+  //  let ipAddress = "api.mino.asia:443"
   var gender:String = ""
   var generation:Int = 0
   
@@ -53,7 +53,7 @@ class ConfirmationViewController: UIViewController {
   func postImage(){
     let imageData = setIconImageView.image?.jpegData(compressionQuality: 1.0)
     let body = httpBody(imageData!, fileName: "\(globalVar.userId).jpg")
-    let url = URL(string: "http://35.200.26.70:443/api/v1/image/upload")!
+    let url = URL(string: "http://api.mino.asia:443/api/v1/image/upload")!
     fileUpload(url, data: body) {(data, response, error) in
       if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
         if response.statusCode == 200 {
@@ -109,7 +109,7 @@ class ConfirmationViewController: UIViewController {
   
   func postUser(imageStr:String){
     print("imageStr",imageStr)
-    let imgPath = "http://35.200.26.70:8080/test1/\(imageStr)"
+    let imgPath = "http://api.mino.asia:8080/test1/\(imageStr)"
     let str = "user_id=\(globalVar.userId)&user_pass=\(globalVar.userPass)&user_name=\(globalVar.userName)&generation=\(generation)&gender=\(gender)&comment=こんにちは&user_icon=\(imgPath)"
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/register")
     var request = URLRequest(url: url!)
@@ -218,12 +218,12 @@ class ConfirmationViewController: UIViewController {
     userModel.user_generation = generation
     userModel.user_gender = gender
     userModel.user_comment = "こんにちは"
-    userModel.user_header = "http://35.200.26.70:8080/test1/netherland-1-860x573.jpg"
+    userModel.user_header = "http://api.mino.asia:8080/test1/netherland-1-860x573.jpg"
     userModel.user_image = icon
     userModel.user_token = token
     globalVar.userComment = "こんにちは"
     globalVar.userIconPath = icon
-    globalVar.userHeaderPath = "http://35.200.26.70:8080/test1/netherland-1-860x573.jpg"
+    globalVar.userHeaderPath = "http://api.mino.asia:8080/test1/netherland-1-860x573.jpg"
     
     try! realm.write() {
       realm.add(userModel, update: true)

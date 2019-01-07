@@ -356,7 +356,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       let imageData = pickedImage.jpegData(compressionQuality: 1.0)
       print("FlagA",number,":",flag,":",imageFlagList[number])
       let body = httpBody(imageData!, fileName: "\(number)-\(flag).jpg")
-      let url = URL(string: "http://35.200.26.70:443/api/v1/image/upload")!
+      let url = URL(string: "http://api.mino.asia:3000/api/v1/image/upload")!
       fileUpload(url, data: body) {(data, response, error) in
         if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
           print("FlagB",number,":",flag,":",self.imageFlagList[number])
@@ -379,18 +379,18 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
             }
             switch flag{
             case 0:
-              self.globalVar.spotImageA[number] = "http://35.200.26.70:8080/test1/\(imageStr)"
+              self.globalVar.spotImageA[number] = "http://api.mino.asia:8080/test1/\(imageStr)"
               self.setImageCount += 1
               print(self.imageFlagList[number])
               print(number,":",flag,":",self.globalVar.spotImageA)
               break
             case 1:
-              self.globalVar.spotImageB[number] = "http://35.200.26.70:8080/test1/\(imageStr)"
+              self.globalVar.spotImageB[number] = "http://api.mino.asia:8080/test1/\(imageStr)"
               self.setImageCount += 1
               print(number,":",flag,":",self.globalVar.spotImageB)
               break
             case 2:
-              self.globalVar.spotImageC[number] = "http://35.200.26.70:8080/test1/\(imageStr)"
+              self.globalVar.spotImageC[number] = "http://api.mino.asia:8080/test1/\(imageStr)"
               self.setImageCount += 1
               print(number,":",flag,":",self.globalVar.spotImageC)
               break
