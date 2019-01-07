@@ -76,7 +76,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     subView.addSubview(regionImageScroll)
     
     newScroll.frame = CGRect(x: 8, y: newLabel.frame.origin.y + newLabel.frame.height + 16, width: width - 16, height: height)
-    newScroll.layer.cornerRadius = 10
+    newScroll.layer.cornerRadius = 5
     newScroll.isPagingEnabled = true
     newScroll.delegate = self
     newScroll.contentSize = CGSize(width: CGFloat(page) * width - CGFloat(page) * 16, height: height)
@@ -84,7 +84,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     subView.addSubview(newScroll)
     
     generationScroll.frame = CGRect(x: 8, y: generationLabel.frame.origin.y + generationLabel.frame.height + 16, width: width - 16, height: height)
-    generationScroll.layer.cornerRadius = 10
+    generationScroll.layer.cornerRadius = 5
     generationScroll.isPagingEnabled = true
     generationScroll.delegate = self
     generationScroll.contentSize = CGSize(width: CGFloat(page) * width - CGFloat(page) * 16, height: height)
@@ -194,6 +194,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
       imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.regionTapped(_:))))
       let image = UIImage(named: imageName)
       imageView.image = image
+      imageView.clipsToBounds = true
+      imageView.layer.cornerRadius = 5
       
       regionImageScroll.addSubview(imageView)
       imageOriginX += tabImageWidth + dummyImageWidth

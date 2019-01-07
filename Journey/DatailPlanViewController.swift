@@ -293,7 +293,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     struct Record : Codable{
       let favDate : String
       let planId : Int
-      let userId : Int
+      let userId : String
       enum CodingKeys: String, CodingKey {
         case favDate = "fav_date"
         case planId = "plan_id"
@@ -443,7 +443,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   
   func postFavorite(){
-    if(favoriteFlag) {
+    if(!favoriteFlag) {
       let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
       let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/register")
       var request = URLRequest(url: url!)
