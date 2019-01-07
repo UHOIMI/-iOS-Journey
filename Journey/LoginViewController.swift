@@ -91,13 +91,13 @@ class LoginViewController: UIViewController {
         let allData = try? JSONDecoder().decode(AllData.self, from: data)
         if(allData!.status == 200){
           print("名前!!!!",(allData?.record![0].userName)!)
-          self.saveUser(id: self.globalVar.userId, pass: self.globalVar.userPass, token: token, name: (allData?.record![0].userName)!, generation:  (allData?.record![0].generation)!, gender:  (allData?.record![0].gender)!, header:  (allData?.record![0].userHeader ?? "http://35.200.26.70:8080/test1/netherland-1-860x573.jpg"), icon:  (allData?.record![0].userIcon)!, comment:  (allData?.record![0].comment)!)
+          self.saveUser(id: self.globalVar.userId, pass: self.globalVar.userPass, token: token, name: (allData?.record![0].userName)!, generation:  (allData?.record![0].generation)!, gender:  (allData?.record![0].gender)!, header:  (allData?.record![0].userHeader ?? "http:/api.mino.asia:8080/test1/netherland-1-860x573.jpg"), icon:  (allData?.record![0].userIcon)!, comment:  (allData?.record![0].comment)!)
           self.globalVar.token = token
           self.globalVar.userName = (allData?.record![0].userName)!
           self.settingData(gender: (allData?.record![0].gender)!, generation: (allData?.record![0].generation)!)
           self.globalVar.userComment = (allData?.record![0].comment)!
           self.globalVar.userIconPath = (allData?.record![0].userIcon)!
-          self.globalVar.userHeaderPath = (allData?.record![0].userHeader ?? "http://35.200.26.70:8080/test1/netherland-1-860x573.jpg")
+          self.globalVar.userHeaderPath = (allData?.record![0].userHeader ?? "http://api.mino.asia:8080/test1/netherland-1-860x573.jpg")
           self.performSegue(withIdentifier: "toStartView", sender: nil)
         }
       }

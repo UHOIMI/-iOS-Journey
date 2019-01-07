@@ -598,8 +598,15 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   }
   func showAlert(title:String,message:String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-    let cancelButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
-    alert.addAction(cancelButton)
+    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{(action: UIAlertAction!) in
+      //アラートが消えるのと画面遷移が重ならないように0.5秒後に画面遷移するようにしてる
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        // 0.5秒後に実行したい処理
+        self.performSegue(withIdentifier: "toSearchView", sender: nil)
+      }
+    }
+    )
+    alert.addAction(okAction)
     self.present(alert, animated: true, completion: nil)
   }
   
@@ -648,8 +655,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     case 1:
       print("１")
     case 2:
-      print("２")
-    case 3:
+      performSegue(withIdentifier: "toSearchView", sender: nil)    case 3:
       print("３")
     case 4:
       performSegue(withIdentifier: "backDetailUserView", sender: nil)
