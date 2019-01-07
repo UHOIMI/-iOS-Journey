@@ -36,9 +36,12 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   @IBOutlet weak var trainImageView: UIImageView!
   @IBOutlet weak var boatImageView: UIImageView!
   @IBOutlet weak var airplaneImageView: UIImageView!
+  @IBOutlet weak var favoriteButton: UIButton!
   
   var spotIdList : [Int] = []
   var planIdList : [Int] = []
+  var spotLatList : [Double] = []
+  var spotLngList : [Double] = []
   var spotTitleList : [String] = []
   var planTitleList : [String] = []
   var spotCommentList : [String] = []
@@ -68,6 +71,8 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   var imageFlag7 = 0
   
   var viewHeight = 1000
+  var spotNum = 0
+  var favoriteFlag = false
   var camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
   var makerList : [GMSMarker] = []
   let myFrameSize:CGSize = UIScreen.main.bounds.size
@@ -82,6 +87,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       spotImageNum.insert(-1, at: i)
     }
     getSpot()
+    getFavorite()
     var arr:[String] = planTransportationString.components(separatedBy: ",")
     print(arr)
     for i in 0...6{
@@ -128,8 +134,11 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     commentTextView.layer.cornerRadius = 10.0
     commentTextView.layer.masksToBounds = true
     
-    let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:commentTextView.frame.origin.y + commentTextView.frame.size.height + 16,width:myFrameSize.width,height:300),camera:camera)
-    subView.addSubview(mapView)
+//    let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:commentTextView.frame.origin.y + commentTextView.frame.size.height + 16,width:myFrameSize.width,height:300),camera:camera)
+//    for i in 0 ..< self.spotIdList.count - 1{
+//      self.makerList[i].map = mapView
+//    }
+//    subView.addSubview(mapView)
     tableViewHeight.constant = 128 + 100 * 9
     superViewHeight.constant = 1280 + 100 * 9
     createTabBar()
@@ -196,10 +205,41 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
-    //tableView.deselectRow(at: indexPath, animated: true)
-    self.performSegue(withIdentifier: "toDetailPlanView", sender: nil)
-    
+    print("テーブータップ")
+    self.spotNum = indexPath.row
+    self.performSegue(withIdentifier: "toDetailSpotView", sender: nil)
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if(segue.identifier == "toDetailSpotView"){
+      let nextViewController = segue.destination as! DetailSpotViewController
+      let listSpotModel = ListSpotModel()
+      listSpotModel.spot_id = self.spotIdList[spotNum]
+      listSpotModel.spot_name = self.spotTitleList[spotNum]
+      listSpotModel.latitude = self.spotLatList[spotNum]
+      listSpotModel.longitude = self.spotLngList[spotNum]
+      listSpotModel.comment = self.spotCommentList[spotNum]
+      listSpotModel.datetime = Date()
+      listSpotModel.image_A = "Another"
+      listSpotModel.image_B = "Another"
+      listSpotModel.image_C = "Another"
+      let postImages = [spotImageAList[spotNum], spotImageBList[spotNum], spotImageCList[spotNum]]
+      nextViewController.getImages = postImages
+      nextViewController.spotData = listSpotModel
+      nextViewController.editFlag = true
+
+//      spotIdList2.removeAll()
+      
+    }else if(segue.identifier == "toDetailUserView"){
+      let nextViewController = segue.destination as! DetailUserViewController
+      nextViewController.editFlag = false
+    }
+  }
+  
+  
+  @IBAction func tappedFavoriteButton(_ sender: Any) {
+    postFavorite()
+    getFavorite()
   }
   
   struct SpotData : Codable{
@@ -241,6 +281,27 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     }
   }
   
+  struct FavoriteData : Codable{
+    let status : Int
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+      let favDate : String
+      let planId : Int
+      let userId : Int
+      enum CodingKeys: String, CodingKey {
+        case favDate = "fav_date"
+        case planId = "plan_id"
+        case userId = "user_id"
+      }
+    }
+  }
+  
   func getSpot(){
     var text = "http://\(globalVar.ipAddress)/api/v1/spot/find?spot_id="
     text += spotIdList[0].description
@@ -267,6 +328,8 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
             //self.makerList.insert(GMSMarker(), at: i)
             //let test = (spotData?.record![i].spotAddress.lat)!
             //let test2 = (spotData?.record![i].spotAddress.lat)!
+            self.spotLatList.insert((spotData?.record![i].spotAddress.lat)!, at: i)
+            self.spotLngList.insert((spotData?.record![i].spotAddress.lng)!, at: i)
             self.makerList[i].position = CLLocationCoordinate2D(latitude: (spotData?.record![i].spotAddress.lat)!, longitude: (spotData?.record![i].spotAddress.lng)!)
             self.spotIdList.insert((spotData?.record![i].spotId)!, at: i)
             self.planIdList.insert((spotData?.record![i].planId)!, at: i)
@@ -325,12 +388,100 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
             self.subViewHeight.constant = CGFloat(self.viewHeight)
             self.subView.frame = CGRect(x:0, y: 0, width:375, height:self.viewHeight)
             self.spotTableView.reloadData()
+            self.camera = GMSCameraPosition.camera(withLatitude: self.makerList[0].position.latitude,longitude:self.makerList[0].position.longitude, zoom:15)
+            let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:self.commentTextView.frame.origin.y + self.commentTextView.frame.size.height + 16,width:self.myFrameSize.width,height:300),camera:self.camera)
+            print("commentTextView.frame.origin.yはああ", self.commentTextView.frame.origin.y)
+            print("spotisカウント", self.spotTitleList.count)
+            for i in 0 ... (self.spotTitleList.count - 1){
+              print("spotidは", self.spotTitleList[i])
+              self.makerList[i].map = mapView
+            }
+            self.subView.addSubview(mapView)
+
           }
         }else{
           print("status",spotData!.status)
         }
       }
     }.resume()
+  }
+  
+  func getFavorite(){
+    var text = "http://\(globalVar.ipAddress)/api/v1/favorite/find?plan_id=\(planId)&user_id=\(globalVar.userId)"
+    text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+    print("URLのテスト", text)
+    let url = URL(string: text)!
+    let request = URLRequest(url: url)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let favoriteData = try? JSONDecoder().decode(FavoriteData.self, from: data)
+        if(response.statusCode == 404){
+          self.favoriteFlag = false
+          
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            self.favoriteButton.setImage(UIImage(named:"offstar")!, for: .normal)
+          }
+        }else{
+          if(favoriteData!.status == 200){
+            self.favoriteFlag = true
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+              self.favoriteButton.setImage(UIImage(named:"onstar")!, for: .normal)
+            }
+          }else{
+            print("status",favoriteData!.status)
+          }
+        }
+      }
+    }.resume()
+  }
+  
+  func postFavorite(){
+    if(favoriteFlag) {
+      let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
+      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/register")
+      var request = URLRequest(url: url!)
+      // POSTを指定
+      request.httpMethod = "POST"
+      // POSTするデータをBodyとして設定
+      request.httpBody = str.data(using: .utf8)
+      let session = URLSession.shared
+      session.dataTask(with: request) { (data, response, error) in
+        if error == nil, let data = data, let response = response as? HTTPURLResponse {
+          // HTTPヘッダの取得
+          print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+          // HTTPステータスコード
+          print("statusCode: \(response.statusCode)")
+          print(String(data: data, encoding: .utf8) ?? "")
+          
+        }
+      }.resume()
+    }else{
+      let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
+      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/delete")
+      var request = URLRequest(url: url!)
+      // POSTを指定
+      request.httpMethod = "DELETE"
+      // POSTするデータをBodyとして設定
+      request.httpBody = str.data(using: .utf8)
+      let session = URLSession.shared
+      session.dataTask(with: request) { (data, response, error) in
+        if error == nil, let data = data, let response = response as? HTTPURLResponse {
+          // HTTPヘッダの取得
+          print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+          // HTTPステータスコード
+          print("statusCode: \(response.statusCode)")
+          print(String(data: data, encoding: .utf8) ?? "")
+          
+        }
+      }.resume()
+    }
   }
   
   func createTabBar(){

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Journey/DatailPlanViewController.swift"
-            timestampString = "568458653.791301"
+            timestampString = "568522126.8400739"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "getSpot()"
             landmarkType = "7">
             <Locations>

@@ -25,11 +25,14 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
     
     var locationManager: CLLocationManager!
     let motionManager = CMMotionManager()
-    
+  
+    var editFlag : Bool = false
+    var getImages : [UIImage] = []
     var spotData : ListSpotModel = ListSpotModel()
     
     let myFrameSize:CGSize = UIScreen.main.bounds.size
     
+    @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var spotNameLabel: UILabel!
     @IBOutlet weak var spotCommentLabel: UILabel!
     
@@ -39,7 +42,7 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+      
         let camera = GMSCameraPosition.camera(withLatitude: spotData.latitude,longitude:spotData.longitude, zoom:15)
         let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)
         let marker = GMSMarker()
@@ -62,7 +65,27 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
         
         spotNameLabel.text = spotData.spot_name
         spotCommentLabel.text = spotData.comment
-        
+      
+      if editFlag {
+        editButton.title = ""
+        editButton.isEnabled = true
+        for i in 0..<3 {
+          switch i{
+          case 0:
+            self.spotImageView1.image = getImages[i]
+            break
+          case 1:
+            self.spotImageView2.image = getImages[i]
+            break
+          case 2:
+            self.spotImageView3.image = getImages[i]
+            break
+          default:
+            break
+          }
+        }
+      }else{
+      
         for i in 0..<3 {
             
             var url = NSURL()
@@ -101,10 +124,9 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
                         break
                     }
                 }
-                
             }
-            
         }
+      }
         
         createTabBar()
 
