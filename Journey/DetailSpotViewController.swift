@@ -42,6 +42,7 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      self.navigationItem.hidesBackButton = true
       
         let camera = GMSCameraPosition.camera(withLatitude: spotData.latitude,longitude:spotData.longitude, zoom:15)
         let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)

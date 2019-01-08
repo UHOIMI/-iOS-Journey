@@ -31,6 +31,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   
     override func viewDidLoad() {
+      self.navigationItem.hidesBackButton = true
         super.viewDidLoad()
 
       if (myFrameSize.height >= 667){

@@ -39,7 +39,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    self.navigationItem.hidesBackButton = true
     let titleView = UIImageView(frame : CGRect(x:0, y: 0, width:30, height:30))
     titleView.image = UIImage(named: "journey.png")
     titleView.contentMode = .scaleAspectFit

@@ -46,7 +46,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    self.navigationItem.hidesBackButton = true
     navigationBarHeight = (self.navigationController?.navigationBar.frame.size.height)!
     textFieldHeight = searchBarTextField.layer.bounds.height
     textFieldY = searchBarTextField.frame.origin.y

@@ -52,7 +52,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
       
       print("token",globalVar.token)
         super.viewDidLoad()
-      
+      self.navigationItem.hidesBackButton = true
       let generationPickerView = UIPickerView()
       generationPickerView.tag = 1
       generationPickerView.delegate = self

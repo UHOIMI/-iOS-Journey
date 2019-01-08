@@ -44,6 +44,7 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+      self.navigationItem.hidesBackButton = true
         fmt.dateFormat = "yyyy/MM/dd"
         /*for _sd in spotDataList{
          spotNameList.append(fmt.string(from: _sd.date) + "：" + _sd.name)
