@@ -681,6 +681,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
     switch item.tag{
     case 1:
+      performSegue(withIdentifier: "toStartView", sender: nil)
       print("１")
     case 2:
       print("２")

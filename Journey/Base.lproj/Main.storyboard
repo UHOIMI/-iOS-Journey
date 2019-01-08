@@ -425,7 +425,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z57-Vq-vWW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3358" y="482"/>
+            <point key="canvasLocation" x="-4556" y="527"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="2m0-SB-vro">
@@ -449,7 +449,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.37254901959999998" green="0.90980392160000001" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="YVs-3x-hw5" firstAttribute="trailing" secondItem="Vbg-G1-pMc" secondAttribute="trailing" id="455-yf-pW1"/>
                             <constraint firstItem="Vbg-G1-pMc" firstAttribute="top" secondItem="YVs-3x-hw5" secondAttribute="top" id="XIt-fH-nm0"/>
@@ -2490,7 +2490,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="192" height="192"/>
+        <image name="plus" width="256" height="256"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2502,8 +2502,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Orn-8k-3es"/>
-        <segue reference="CI5-CI-NdO"/>
-        <segue reference="euD-hk-qwI"/>
+        <segue reference="WEB-tb-m4z"/>
+        <segue reference="HL7-as-HMM"/>
         <segue reference="0Xj-CK-ZoO"/>
         <segue reference="gCs-Ba-VyA"/>
         <segue reference="TeA-Xz-GIE"/>
