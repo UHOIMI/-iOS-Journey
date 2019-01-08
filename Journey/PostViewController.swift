@@ -683,9 +683,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     switch item.tag{
     case 1:
       performSegue(withIdentifier: "toStartView", sender: nil)
-      print("１")
     case 2:
-      print("２")
+      performSegue(withIdentifier: "toSearchView", sender: nil)
     case 3:
       print("３")
     case 4:

@@ -99,7 +99,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iFt-RN-kfR">
-                                <rect key="frame" x="0.0" y="64" width="375" height="748"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="792"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gky-eb-NaJ" userLabel="SubView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
@@ -726,6 +726,7 @@
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="TeA-Xz-GIE"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="6mO-Qw-wNq"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="HL7-as-HMM"/>
+                        <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="0fD-WQ-n3v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -985,6 +986,7 @@
                         <segue destination="wbt-C5-9Ws" kind="show" identifier="changeSpotListView" id="q0P-y1-Ch3"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="j0d-eN-8yJ"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="9Jy-Ob-wAd"/>
+                        <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="d7c-kW-kjd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gMl-9k-jnq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1089,6 +1091,7 @@
                         <segue destination="dYc-gx-w37" kind="show" identifier="changePutSpotView" id="PgR-1F-fd2"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="mge-75-edV"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="aY0-xu-7qc"/>
+                        <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="hBe-Qm-rhI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jUk-ug-WzD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1304,7 +1307,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8lx-x8-HBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2641" y="-2256"/>
+            <point key="canvasLocation" x="-2436" y="-2371"/>
         </scene>
         <!--スポット登録-->
         <scene sceneID="fKT-WW-36p">
@@ -1432,6 +1435,7 @@
                         <segue destination="BYZ-38-t0r" kind="show" identifier="changePostView" id="Ngc-W0-UHN"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="hfK-46-OAX"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="A2l-Jh-yNS"/>
+                        <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="SJw-w4-jWX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXV-kU-vyc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1499,6 +1503,7 @@
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="EVb-Zv-0QA"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="pHU-pk-b4U"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="uIj-e2-GAg"/>
+                        <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="8Qr-vP-M42"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ujv-ty-37u" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1653,6 +1658,7 @@
                         <segue destination="AUq-od-qik" kind="show" identifier="toEditUserView" id="llm-0e-jhh"/>
                         <segue destination="wbt-C5-9Ws" kind="show" identifier="toSpotListView" id="0Ny-WU-Sio"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="w35-bH-KHu"/>
+                        <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="lAe-ZU-lsv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYB-y1-OP4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1668,7 +1674,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="wtz-ch-ohP">
-                                <rect key="frame" x="0.0" y="80" width="375" height="476"/>
+                                <rect key="frame" x="0.0" y="36" width="375" height="520"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Xo-Sp-8Qb">
                                         <rect key="frame" x="137.5" y="0.0" width="100" height="100"/>
@@ -1678,7 +1684,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="24B-Cm-M7h">
-                                        <rect key="frame" x="16" y="138" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="149" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザーID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zw-bI-wdq">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1705,7 +1711,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ANS-Rx-aUn">
-                                        <rect key="frame" x="16" y="232" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="254" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザー名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlz-9P-Frs">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1732,7 +1738,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pJz-98-06r">
-                                        <rect key="frame" x="16" y="326" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="359" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの年代" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKL-Bj-6zp">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1759,7 +1765,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dpR-59-I7w">
-                                        <rect key="frame" x="16" y="420" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="464" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの性別" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHR-hj-mW6">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -2233,6 +2239,7 @@
                         <outlet property="userPassLabel" destination="SjS-mF-sbk" id="Aad-ON-iov"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="backDetailUserView" id="euD-hk-qwI"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="vTE-fb-8Ah"/>
+                        <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="4Wi-Db-tly"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pM-23-PR1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2486,6 +2493,7 @@
                         <outlet property="walkImageView" destination="wOG-8z-rk1" id="rAV-hD-KmU"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="Y1p-dC-o0y"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="8B5-Mb-NoT"/>
+                        <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="efM-dk-zhE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SEA-Qu-H4d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2498,7 +2506,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="192" height="192"/>
+        <image name="plus" width="256" height="256"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2510,15 +2518,15 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Orn-8k-3es"/>
-        <segue reference="WEB-tb-m4z"/>
-        <segue reference="mge-75-edV"/>
-        <segue reference="q0P-y1-Ch3"/>
-        <segue reference="gCs-Ba-VyA"/>
+        <segue reference="CI5-CI-NdO"/>
+        <segue reference="Zge-aV-3pR"/>
+        <segue reference="0Ny-WU-Sio"/>
+        <segue reference="lAe-ZU-lsv"/>
         <segue reference="Y1p-dC-o0y"/>
         <segue reference="PgR-1F-fd2"/>
-        <segue reference="aY0-xu-7qc"/>
+        <segue reference="w35-bH-KHu"/>
         <segue reference="Ngc-W0-UHN"/>
-        <segue reference="Mcq-lN-1b2"/>
-        <segue reference="XJN-4F-Krb"/>
+        <segue reference="FsQ-GA-J3d"/>
+        <segue reference="F4q-09-NOQ"/>
     </inferredMetricsTieBreakers>
 </document>

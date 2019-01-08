@@ -379,13 +379,15 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   
    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if(segue.identifier == "toTimelineView"){
-      let nextViewController = segue.destination as! TimelineViewController
-      nextViewController.searchText = searchBarTextField.text!
-      nextViewController.searchArea = regionTextField.text!
-      nextViewController.searchGeneration = generationTextField.text!
-      nextViewController.searchPrice = moneyTextField.text!
-      nextViewController.searchTransportationString = transportationString
-      nextViewController.searchFlag = 1
+      if((sender as! Int ) == 1){
+        let nextViewController = segue.destination as! TimelineViewController
+        nextViewController.searchText = searchBarTextField.text!
+        nextViewController.searchArea = regionTextField.text!
+        nextViewController.searchGeneration = generationTextField.text!
+        nextViewController.searchPrice = moneyTextField.text!
+        nextViewController.searchTransportationString = transportationString
+        nextViewController.searchFlag = 1
+      }
     }
   }
   
@@ -394,7 +396,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     if(searchBarTextField.text == "" && moneyTextField.text == "" && regionTextField.text == "" && generationTextField.text == "" && transportationString == "0,0,0,0,0,0,0"){
       showAlert(title: "検索条件が指定されていません", message: "条件を入力してください")
     }else{
-      performSegue(withIdentifier: "toTimelineView", sender: nil)
+      performSegue(withIdentifier: "toTimelineView", sender: 1)
     }
   }
   
