@@ -69,7 +69,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
 //    userIconImageView.imageView?.clipsToBounds = true
     
     let page = 3
-    let width = self.view.frame.width
+    let width = UIScreen.main.bounds.size.width
     let height : CGFloat = 150
     
     regionImageScroll.frame = CGRect(x: 8, y: regionLabel.frame.origin.y + newLabel.frame.height + 16, width: width - 16, height: height)
@@ -178,7 +178,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     let imageList = ["北海道", "東北", "関東", "中部", "近畿", "中国", "四国", "九州"]
     
     let tabImageHeight:CGFloat = regionImageScroll.frame.height
-    let dummyImageWidth = regionImageScroll.frame.size.width/4 - tabImageWidth/2
+//    let dummyImageWidth = regionImageScroll.frame.size.width/4 - tabImageWidth/2
+    let dummyImageWidth = regionImageScroll.frame.size.width / 30
     let headDummyImage = UIImageView()
     let rect:CGRect = CGRect(x:0, y:0, width:dummyImageWidth, height:tabImageHeight)
     headDummyImage.frame = rect
