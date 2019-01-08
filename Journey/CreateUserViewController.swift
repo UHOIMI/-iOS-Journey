@@ -70,7 +70,7 @@ class CreateUserViewController: UIViewController , UITextFieldDelegate,UIPickerV
   override func viewDidLoad() {
         super.viewDidLoad()
     
-    
+    self.navigationItem.hidesBackButton = true
 //    subVIew.isUserInteractionEnabled = true
     self.userIdTextField.delegate = self
     self.userNameTextField.delegate = self

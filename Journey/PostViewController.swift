@@ -175,6 +175,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.navigationItem.hidesBackButton = true
     
     idSetRealm()
     

@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
   override func viewDidLoad() {
         super.viewDidLoad()
     
+    self.navigationItem.hidesBackButton = true
     userIdTextField.placeholder = "ユーザーIDを入力"
     userPassTextField.placeholder = "パスワードを入力"
     userPassTextField.isSecureTextEntry = true

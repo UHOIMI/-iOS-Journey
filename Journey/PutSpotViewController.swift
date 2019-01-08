@@ -66,7 +66,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+      
+      self.navigationItem.hidesBackButton = true
         print("画面高さ")
         print(myFrameSize.height)
         

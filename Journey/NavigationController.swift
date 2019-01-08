@@ -12,6 +12,7 @@ class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
       super.viewDidLoad()
+      self.navigationItem.hidesBackButton = true
       //　ナビゲーションバーの背景色
       let image:UIImage = UIImage(named: "s_gradation.png")!
       navigationBar.setBackgroundImage(image, for: .default)

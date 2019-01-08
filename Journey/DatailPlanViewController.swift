@@ -81,6 +81,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.navigationItem.hidesBackButton = true
     viewHeight = Int(spotTableView.frame.origin.y) + 100
     for i in 0 ... spotIdList.count - 1 {
       makerList.insert(GMSMarker(), at: i)

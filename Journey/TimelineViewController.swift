@@ -73,6 +73,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   override func viewDidLoad() {
     super.viewDidLoad()
     createTabBar()
+    self.navigationItem.hidesBackButton = true
     print(searchTransportationString)
     print(searchPrice)
     print(searchGeneration)
