@@ -730,7 +730,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="937" y="-71"/>
+            <point key="canvasLocation" x="1215" y="-507"/>
         </scene>
         <!--ホーム-->
         <scene sceneID="bqO-ZY-vMx">
@@ -839,7 +839,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f45-W8-ZAN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-462" y="-101"/>
+            <point key="canvasLocation" x="-3524" y="-2349"/>
         </scene>
         <!--スポット追加-->
         <scene sceneID="c8E-au-y9x">
@@ -1088,11 +1088,12 @@
                         <outlet property="spotNameLabel" destination="LO6-iP-sLS" id="j6r-rS-f4e"/>
                         <segue destination="dYc-gx-w37" kind="show" identifier="changePutSpotView" id="PgR-1F-fd2"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="mge-75-edV"/>
+                        <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="aY0-xu-7qc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jUk-ug-WzD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-334" y="1107"/>
+            <point key="canvasLocation" x="-759" y="1374"/>
         </scene>
         <!--検索-->
         <scene sceneID="08F-ED-xsk">
@@ -1298,11 +1299,12 @@
                         <outlet property="regionTextField" destination="yfn-yw-oZp" id="v4Y-Yl-bqx"/>
                         <outlet property="searchBarTextField" destination="SHg-Yt-rUV" id="u5f-hA-1K2"/>
                         <segue destination="2Ny-Ye-ySz" kind="show" identifier="toTimelineView" id="CI5-CI-NdO"/>
+                        <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="e9b-K1-k6z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8lx-x8-HBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1369" y="-2661"/>
+            <point key="canvasLocation" x="-2641" y="-2256"/>
         </scene>
         <!--スポット登録-->
         <scene sceneID="fKT-WW-36p">
@@ -1429,11 +1431,12 @@
                         <outlet property="userSpotTable" destination="Tme-a3-yHO" id="FRC-VB-ZFK"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="changePostView" id="Ngc-W0-UHN"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="hfK-46-OAX"/>
+                        <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="A2l-Jh-yNS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXV-kU-vyc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912.5" y="-73.943661971830991"/>
+            <point key="canvasLocation" x="2974" y="-550"/>
         </scene>
         <!--スポット一覧-->
         <scene sceneID="64K-0c-yQd">
@@ -1495,11 +1498,12 @@
                         <outlet property="spotTableView" destination="sw8-jr-74k" id="QeV-JR-Dah"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="EVb-Zv-0QA"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="pHU-pk-b4U"/>
+                        <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="uIj-e2-GAg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ujv-ty-37u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1242.4000000000001" y="1106.8965517241379"/>
+            <point key="canvasLocation" x="-3052" y="-838"/>
         </scene>
         <!--ユーザー詳細-->
         <scene sceneID="wg8-kS-GK0">
@@ -1648,11 +1652,12 @@
                         <outlet property="userNameTextView" destination="QjP-ki-pag" id="CwZ-go-w9o"/>
                         <segue destination="AUq-od-qik" kind="show" identifier="toEditUserView" id="llm-0e-jhh"/>
                         <segue destination="wbt-C5-9Ws" kind="show" identifier="toSpotListView" id="0Ny-WU-Sio"/>
+                        <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="w35-bH-KHu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYB-y1-OP4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="364" y="-1297"/>
+            <point key="canvasLocation" x="-1170" y="-2370"/>
         </scene>
         <!--入力内容確認-->
         <scene sceneID="Dch-sw-eK7">
@@ -2013,11 +2018,12 @@
                         <segue destination="Lfq-nI-jcD" kind="show" identifier="toDetailPlanView" id="Orn-8k-3es"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="Zge-aV-3pR"/>
                         <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="gCs-Ba-VyA"/>
+                        <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="V3j-Fe-9bE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7sU-lV-dre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2052" y="-1971"/>
+            <point key="canvasLocation" x="-4185" y="-1468"/>
         </scene>
         <!--ユーザー編集-->
         <scene sceneID="iTe-3a-Q5c">
@@ -2226,11 +2232,12 @@
                         <outlet property="userNameTextField" destination="nAD-j3-s4F" id="cJM-g3-WXS"/>
                         <outlet property="userPassLabel" destination="SjS-mF-sbk" id="Aad-ON-iov"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="backDetailUserView" id="euD-hk-qwI"/>
+                        <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="vTE-fb-8Ah"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pM-23-PR1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1242" y="-1147"/>
+            <point key="canvasLocation" x="-1529" y="-1281"/>
         </scene>
         <!--プラン詳細-->
         <scene sceneID="szI-Mm-7jk">
@@ -2478,11 +2485,12 @@
                         <outlet property="userNameLabel" destination="DWh-2N-Ir2" id="isW-iQ-bnn"/>
                         <outlet property="walkImageView" destination="wOG-8z-rk1" id="rAV-hD-KmU"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="Y1p-dC-o0y"/>
+                        <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="8B5-Mb-NoT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SEA-Qu-H4d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2917.5999999999999" y="664.76761619190415"/>
+            <point key="canvasLocation" x="3222" y="665"/>
         </scene>
     </scenes>
     <resources>
@@ -2490,7 +2498,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="256" height="256"/>
+        <image name="plus" width="192" height="192"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2503,13 +2511,13 @@
     <inferredMetricsTieBreakers>
         <segue reference="Orn-8k-3es"/>
         <segue reference="WEB-tb-m4z"/>
-        <segue reference="HL7-as-HMM"/>
-        <segue reference="0Xj-CK-ZoO"/>
+        <segue reference="mge-75-edV"/>
+        <segue reference="q0P-y1-Ch3"/>
         <segue reference="gCs-Ba-VyA"/>
-        <segue reference="TeA-Xz-GIE"/>
-        <segue reference="SAI-tm-OCo"/>
-        <segue reference="6mO-Qw-wNq"/>
-        <segue reference="ScF-Q7-9Tm"/>
+        <segue reference="Y1p-dC-o0y"/>
+        <segue reference="PgR-1F-fd2"/>
+        <segue reference="aY0-xu-7qc"/>
+        <segue reference="Ngc-W0-UHN"/>
         <segue reference="Mcq-lN-1b2"/>
         <segue reference="XJN-4F-Krb"/>
     </inferredMetricsTieBreakers>

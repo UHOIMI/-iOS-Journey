@@ -135,7 +135,7 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag{
         case 1:
-            print("１")
+            performSegue(withIdentifier: "toStartView", sender: nil)
         case 2:
             print("２")
         case 3:
