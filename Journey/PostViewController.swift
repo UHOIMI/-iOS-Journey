@@ -16,6 +16,7 @@ import RealmSwift
 
 class PostViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate,UITextFieldDelegate,UITextViewDelegate{
 
+  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
   @IBOutlet weak var titleTextField: UITextField!
   @IBOutlet weak var subView: UIView!
   @IBOutlet weak var spotTable: UITableView!
@@ -231,6 +232,17 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     textViewSetteings()
     keyboardSettings()
     createTabBar()
+    
+    let leftButton: UIButton = UIButton()
+    leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+    leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+    leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+    leftButton.imageView?.clipsToBounds = true
+    leftButton.addTarget(self, action: #selector(PostViewController.userIconTapped(sender:)), for: .touchUpInside)
+    userBarButtonItem.customView = leftButton
+    userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+    userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+    
     if(globalVar.selectSpot.count != 1){
       for _ in globalVar.selectSpot{
         height += 43
@@ -711,6 +723,11 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       globalVar.userId = _user.user_id
     }
   }
+  
+  @objc func userIconTapped(sender : AnyObject) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
+  
   @IBAction func pushButton(_ sender: Any) {
     if let button = sender as? UIButton {
       if let tag = actionTag(rawValue: button.tag) {

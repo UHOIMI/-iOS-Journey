@@ -18,7 +18,8 @@ import Photos
 
 class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate{
     
-      private var tabBar:TabBar!
+    private var tabBar:TabBar!
+    var globalVar = GlobalVar.shared
     
     var lat:Double = 0
     var lng:Double = 0
@@ -43,7 +44,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     var selectImg = UIImage(named:"画像を選択")!
     var selectImgNum = 1
     
-    @IBOutlet weak var mapButton: UIBarButtonItem!
+  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
+  @IBOutlet weak var mapButton: UIBarButtonItem!
     @IBOutlet weak var subView: UIView!
     @IBOutlet weak var mapPositionView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -171,6 +173,16 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             locationManager.delegate = self as CLLocationManagerDelegate
             locationManager.startUpdatingLocation()
         }
+      
+      let leftButton: UIButton = UIButton()
+      leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+      leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+      leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+      leftButton.imageView?.clipsToBounds = true
+      leftButton.addTarget(self, action: #selector(PutSpotViewController.userIconTapped(sender:)), for: .touchUpInside)
+      userBarButtonItem.customView = leftButton
+      userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+      userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
       
         keyboardSettings()
         createTabBar()
@@ -545,6 +557,10 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             
         }
     }
+  
+  @objc func userIconTapped(sender : AnyObject) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
 
 }
 

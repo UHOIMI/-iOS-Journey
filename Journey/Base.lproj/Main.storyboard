@@ -711,7 +711,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="プラン投稿" id="CJd-MB-koX"/>
+                    <navigationItem key="navigationItem" title="プラン投稿" id="CJd-MB-koX">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="1PT-US-tgp"/>
+                    </navigationItem>
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
                         <outlet property="pickerTextField" destination="z5F-az-ZLQ" id="bog-xp-42w"/>
@@ -722,6 +724,7 @@
                         <outlet property="tableHeight" destination="Itt-0w-4LP" id="fv4-yX-O2z"/>
                         <outlet property="textView" destination="5Y9-fq-mqb" id="1ea-7r-EEq"/>
                         <outlet property="titleTextField" destination="Lgb-V3-Xx3" id="0Zc-EK-Fgk"/>
+                        <outlet property="userBarButtonItem" destination="1PT-US-tgp" id="O1s-eX-k9i"/>
                         <segue destination="dUa-pH-V8z" kind="show" identifier="toSelectSpotView" id="wPv-3s-Ppv"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="TeA-Xz-GIE"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="6mO-Qw-wNq"/>
@@ -967,6 +970,7 @@
                         <viewLayoutGuide key="safeArea" id="bhH-SZ-oGw"/>
                     </view>
                     <navigationItem key="navigationItem" title="スポット追加" id="00R-H9-5Hw">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="66x-o6-eSA"/>
                         <barButtonItem key="rightBarButtonItem" title="保存" id="Frx-nU-z6T">
                             <connections>
                                 <action selector="tappedMapButton:" destination="dYc-gx-w37" id="LH7-Pv-Fid"/>
@@ -983,6 +987,7 @@
                         <outlet property="spotImageView2" destination="weg-k8-Eyt" id="5GO-8d-o1z"/>
                         <outlet property="spotImageView3" destination="VlC-eX-svm" id="gWQ-cZ-7qv"/>
                         <outlet property="subView" destination="dKk-8e-Now" id="BJF-Xk-sSm"/>
+                        <outlet property="userBarButtonItem" destination="66x-o6-eSA" id="nVV-jZ-nOs"/>
                         <segue destination="wbt-C5-9Ws" kind="show" identifier="changeSpotListView" id="q0P-y1-Ch3"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="j0d-eN-8yJ"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="9Jy-Ob-wAd"/>
@@ -1075,6 +1080,7 @@
                         <viewLayoutGuide key="safeArea" id="Awo-n5-tIM"/>
                     </view>
                     <navigationItem key="navigationItem" title="スポット詳細" id="hDZ-2s-aTN">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="dgZ-us-tGG"/>
                         <barButtonItem key="rightBarButtonItem" title="編集" id="Z7Q-sM-qCP">
                             <connections>
                                 <action selector="putEditButton:" destination="cMD-wf-H1X" id="GN7-OS-7N4"/>
@@ -1088,6 +1094,7 @@
                         <outlet property="spotImageView2" destination="DCd-S6-b6Q" id="vYU-M6-dyj"/>
                         <outlet property="spotImageView3" destination="Ryt-wy-s7d" id="1wl-hA-npZ"/>
                         <outlet property="spotNameLabel" destination="LO6-iP-sLS" id="j6r-rS-f4e"/>
+                        <outlet property="userBarButtonItem" destination="dgZ-us-tGG" id="eUY-Uh-sZP"/>
                         <segue destination="dYc-gx-w37" kind="show" identifier="changePutSpotView" id="PgR-1F-fd2"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="mge-75-edV"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="aY0-xu-7qc"/>
@@ -1294,15 +1301,19 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pwj-dR-Sve"/>
                     </view>
-                    <navigationItem key="navigationItem" title="検索" id="fG9-38-0BW"/>
+                    <navigationItem key="navigationItem" title="検索" id="fG9-38-0BW">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="fVT-c4-J92"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="generationTextField" destination="Dnl-LH-l3e" id="Oms-S2-YVA"/>
                         <outlet property="goodTextField" destination="KNy-nt-zdH" id="X8A-Wi-HqO"/>
                         <outlet property="moneyTextField" destination="eop-Ms-xNU" id="ddj-Y8-l5o"/>
                         <outlet property="regionTextField" destination="yfn-yw-oZp" id="v4Y-Yl-bqx"/>
                         <outlet property="searchBarTextField" destination="SHg-Yt-rUV" id="u5f-hA-1K2"/>
+                        <outlet property="userBarButtonItem" destination="fVT-c4-J92" id="sJL-4Y-LJD"/>
                         <segue destination="2Ny-Ye-ySz" kind="show" identifier="toTimelineView" id="CI5-CI-NdO"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="e9b-K1-k6z"/>
+                        <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="35s-op-Sqh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8lx-x8-HBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1422,6 +1433,7 @@
                         <viewLayoutGuide key="safeArea" id="OfZ-HM-nFR"/>
                     </view>
                     <navigationItem key="navigationItem" title="スポット登録" id="zGu-7k-VBW">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="DRs-dr-8GG"/>
                         <barButtonItem key="rightBarButtonItem" title="登録" id="pBY-pM-F5F">
                             <connections>
                                 <action selector="tappedMapButton:" destination="dUa-pH-V8z" id="c3E-t3-TXa"/>
@@ -1431,6 +1443,7 @@
                     <connections>
                         <outlet property="selectSpotTable" destination="r9d-tY-v2h" id="6co-3c-k9T"/>
                         <outlet property="sortButton" destination="Haz-yz-bqc" id="QyU-Dl-nBg"/>
+                        <outlet property="userBarButtonItem" destination="DRs-dr-8GG" id="wq0-1G-Le7"/>
                         <outlet property="userSpotTable" destination="Tme-a3-yHO" id="FRC-VB-ZFK"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="changePostView" id="Ngc-W0-UHN"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="hfK-46-OAX"/>
@@ -1496,10 +1509,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Rca-92-0GT"/>
                     </view>
-                    <navigationItem key="navigationItem" title="スポット一覧" id="zFN-Ow-rzU"/>
+                    <navigationItem key="navigationItem" title="スポット一覧" id="zFN-Ow-rzU">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="4cA-dB-hHJ"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="sortButton" destination="Lqx-2m-hAa" id="9s2-95-Trh"/>
                         <outlet property="spotTableView" destination="sw8-jr-74k" id="QeV-JR-Dah"/>
+                        <outlet property="userBarButtonItem" destination="4cA-dB-hHJ" id="Aff-4w-hAm"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="EVb-Zv-0QA"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="pHU-pk-b4U"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="uIj-e2-GAg"/>
@@ -2018,9 +2034,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zEO-E5-vo0"/>
                     </view>
-                    <navigationItem key="navigationItem" title="タイムライン" id="5fy-Hv-63S"/>
+                    <navigationItem key="navigationItem" title="タイムライン" id="5fy-Hv-63S">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="EB1-FW-7Px"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="l40-yl-Knl" id="kbl-IJ-jL4"/>
+                        <outlet property="userBarButtonItem" destination="EB1-FW-7Px" id="LVv-FT-yHW"/>
                         <segue destination="Lfq-nI-jcD" kind="show" identifier="toDetailPlanView" id="Orn-8k-3es"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="Zge-aV-3pR"/>
                         <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="gCs-Ba-VyA"/>
@@ -2468,7 +2487,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HbH-YE-X2B"/>
                     </view>
-                    <navigationItem key="navigationItem" title="プラン詳細" id="Qsy-bp-QtS"/>
+                    <navigationItem key="navigationItem" title="プラン詳細" id="Qsy-bp-QtS">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="AWQ-Aa-Blp"/>
+                    </navigationItem>
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
                         <outlet property="PrefecturesLabel" destination="rdu-Fn-LHc" id="zls-Bt-9ed"/>
@@ -2488,12 +2509,14 @@
                         <outlet property="tableViewHeight" destination="BdV-zL-PeY" id="Se1-wF-ydf"/>
                         <outlet property="trafficLabel" destination="uf3-z5-RYJ" id="Wp9-ik-Hv3"/>
                         <outlet property="trainImageView" destination="XNg-81-mls" id="0Uz-vf-lzm"/>
+                        <outlet property="userBarButtonItem" destination="AWQ-Aa-Blp" id="MCD-TZ-kkH"/>
                         <outlet property="userIconImageView" destination="Alc-6n-P7A" id="mAA-XB-A6W"/>
                         <outlet property="userNameLabel" destination="DWh-2N-Ir2" id="isW-iQ-bnn"/>
                         <outlet property="walkImageView" destination="wOG-8z-rk1" id="rAV-hD-KmU"/>
                         <segue destination="cMD-wf-H1X" kind="show" identifier="toDetailSpotView" id="Y1p-dC-o0y"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="8B5-Mb-NoT"/>
                         <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="efM-dk-zhE"/>
+                        <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="jcv-3u-Qe9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SEA-Qu-H4d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2519,12 +2542,12 @@
     <inferredMetricsTieBreakers>
         <segue reference="Orn-8k-3es"/>
         <segue reference="CI5-CI-NdO"/>
-        <segue reference="Zge-aV-3pR"/>
-        <segue reference="0Ny-WU-Sio"/>
+        <segue reference="35s-op-Sqh"/>
+        <segue reference="q0P-y1-Ch3"/>
         <segue reference="lAe-ZU-lsv"/>
-        <segue reference="Y1p-dC-o0y"/>
+        <segue reference="EVb-Zv-0QA"/>
         <segue reference="PgR-1F-fd2"/>
-        <segue reference="w35-bH-KHu"/>
+        <segue reference="e9b-K1-k6z"/>
         <segue reference="Ngc-W0-UHN"/>
         <segue reference="FsQ-GA-J3d"/>
         <segue reference="F4q-09-NOQ"/>

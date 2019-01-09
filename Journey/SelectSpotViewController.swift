@@ -37,8 +37,9 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
     var tableFlag = 0
     var changePostViewFlag = 0
     var count = 0
-    
-    @IBOutlet weak var selectSpotTable: UITableView!
+  
+  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
+  @IBOutlet weak var selectSpotTable: UITableView!
     @IBOutlet weak var userSpotTable: UITableView!
     @IBOutlet weak var sortButton: UIButton!
     
@@ -71,6 +72,17 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             spotNameList.append(_sm.spot_name + "\n" + format.string(from: _sm.datetime))
             grayList.append(false)
         }
+      
+      let leftButton: UIButton = UIButton()
+      leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+      leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+      leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+      leftButton.imageView?.clipsToBounds = true
+      leftButton.addTarget(self, action: #selector(SelectSpotViewController.userIconTapped(sender:)), for: .touchUpInside)
+      userBarButtonItem.customView = leftButton
+      userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+      userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+
         
         createTabBar()
     }
@@ -382,5 +394,9 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
             
         }
     }
+  
+  @objc func userIconTapped(sender : AnyObject) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
     
 }

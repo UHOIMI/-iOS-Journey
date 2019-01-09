@@ -20,6 +20,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   @IBOutlet weak var moneyTextField: UITextField!
   @IBOutlet weak var regionTextField: UITextField!
   @IBOutlet weak var generationTextField: UITextField!
+  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
   var tableView: UITableView!
   let statusBarHeight = UIApplication.shared.statusBarFrame.height
   var navigationBarHeight: CGFloat = 0
@@ -27,6 +28,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   var textFieldY: CGFloat = 0
   
   private var tabBar:TabBar!
+  var globalVar = GlobalVar.shared
   
   var goodList = ["-非選択-","10以下", "11 ~ 50", "51 ~ 100", "101 ~ 500", "500以上"]
   var moneyList = ["-非選択-","500円以下", "501円 ~ 1000円", "1001円 ~ 5000円", "5001円 ~ 10000円", "10001円以上"]
@@ -80,6 +82,16 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     generationTextField.placeholder = "年代を選択してください"
     
     searchBarTextField.delegate = self
+    
+    let leftButton: UIButton = UIButton()
+    leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+    leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+    leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+    leftButton.imageView?.clipsToBounds = true
+    leftButton.addTarget(self, action: #selector(SearchPlanViewController.userIconTapped(sender:)), for: .touchUpInside)
+    userBarButtonItem.customView = leftButton
+    userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+    userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
     
     //textViewSetteings()
     keyboardSettings()
@@ -477,6 +489,10 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
         }
       }
     }
+  }
+  
+  @objc func userIconTapped(sender : AnyObject) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
 }
 

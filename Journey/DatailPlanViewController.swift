@@ -19,6 +19,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   @IBOutlet weak var subView: UIView!
   @IBOutlet weak var subViewHeight: NSLayoutConstraint!
+  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
   @IBOutlet weak var userIconImageView: UIImageView!
   @IBOutlet weak var userNameLabel: UILabel!
   @IBOutlet weak var planNameLabel: UILabel!
@@ -142,6 +143,17 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
 //    subView.addSubview(mapView)
     tableViewHeight.constant = 128 + 100 * 9
     superViewHeight.constant = 1280 + 100 * 9
+    
+    let leftButton: UIButton = UIButton()
+    leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+    leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+    leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+    leftButton.imageView?.clipsToBounds = true
+    leftButton.addTarget(self, action: #selector(DatailPlanViewController.userIconTapped(sender:)), for: .touchUpInside)
+    userBarButtonItem.customView = leftButton
+    userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+    userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+    
     createTabBar()
     // Do any additional setup after loading the view.
   }
@@ -545,6 +557,9 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     case action7 = 7
   }
   
+  @objc func userIconTapped(sender : AnyObject) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
 //  @IBAction func pushButton(_ sender: Any) {
 //    if let button = sender as? UIButton {
 //      if let tag = actionTag(rawValue: button.tag) {

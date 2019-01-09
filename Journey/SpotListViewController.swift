@@ -12,11 +12,13 @@ import RealmSwift
 class SpotListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate{
     
       private var tabBar:TabBar!
+  var globalVar = GlobalVar.shared
     
     var spotDataList : [ListSpotModel] = []
     var spotNameList : [String] = []
     
-    @IBOutlet weak var spotTableView: UITableView!
+  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
+  @IBOutlet weak var spotTableView: UITableView!
     @IBOutlet weak var sortButton: UIButton!
     
     override func viewDidLoad() {
@@ -45,6 +47,16 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
             spotNameList.append(_sm.spot_name + "\n" + format.string(from: _sm.datetime))
             
         }
+      
+      let leftButton: UIButton = UIButton()
+      leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+      leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+      leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+      leftButton.imageView?.clipsToBounds = true
+      leftButton.addTarget(self, action: #selector(SpotListViewController.userIconTapped(sender:)), for: .touchUpInside)
+      userBarButtonItem.customView = leftButton
+      userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+      userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
         
         createTabBar()
     }
@@ -146,5 +158,9 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
             
         }
     }
+  
+  @objc func userIconTapped(sender : AnyObject) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
 
 }
