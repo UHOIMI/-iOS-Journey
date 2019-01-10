@@ -327,6 +327,16 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     performSegue(withIdentifier: "toTimelineView", sender: nil)
   }
   
+  
+  @IBAction func tappedNewMoreButton(_ sender: Any) {
+    //新着のもっと見る
+  }
+  
+  
+  @IBAction func tappedGemerationMoreButton(_ sender: Any) {
+    //年代のもっと見る
+  }
+  
   @IBAction func tappedPutSpot(_ sender: Any) {
     performSegue(withIdentifier: "toPutSpotView", sender: nil)
   }

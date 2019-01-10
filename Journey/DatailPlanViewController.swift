@@ -538,7 +538,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     case 2:
       performSegue(withIdentifier: "toSearchView", sender: nil)
     case 3:
-      print("３")
+      performSegue(withIdentifier: "toTimelineView", sender: nil)
     case 4:
       performSegue(withIdentifier: "backDetailUserView", sender: nil)
     default : return

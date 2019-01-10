@@ -119,7 +119,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
     }else if((userCommentTextView.text?.count)! > 200){
       showAlert(title: "コメントが200文字を超えています", message: "文字数を200文字以内にしてください")
     }
-  
+    
     settingData(userGeneration: userGenerationTextField.text!)
     globalVar.userName = userNameTextField.text!
     globalVar.userGeneration = userGenerationTextField.text!
@@ -278,7 +278,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if(editFlag == 1){
+    if(editFlag == 1 && segue.identifier=="backDetailUserView"){
       globalVar.userHeader = headerImageView.image!
       globalVar.userIcon = imgView.image!
       if(iconFlag == 0 && headerFlag == 0){

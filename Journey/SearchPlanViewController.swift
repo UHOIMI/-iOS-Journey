@@ -375,7 +375,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     case 2:
       print("２")
     case 3:
-      print("３")
+      performSegue(withIdentifier: "toTimelineView", sender: nil)
     case 4:
       performSegue(withIdentifier: "toDetailUserView", sender: nil)
     default : return
