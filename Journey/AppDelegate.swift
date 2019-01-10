@@ -31,9 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     for _user in user {
       print("名前",_user.user_name)
       currentUser = _user.user_name
+      searchTimeline(offset: 0, generation: _user.user_generation)
     }
     //currentuser = nil
     //ユーザーがいない場合IndexViewに遷移
+//    searchTimeline(offset: 0, generation: _user.user_generation)
     getTimeline(offset: 0)
     if (currentUser == ""){
       //windowを生成
@@ -295,7 +297,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(timelineData!.status == 200){
-          for i in 0 ... (timelineData?.record?.count)! - 1{
+          for i in 0 ... 2{
             var count = 0
             self.globalVar.newPlanIdList.append((timelineData?.record![i].planId)!)
             self.globalVar.newUserIdList.append((timelineData?.record![i].userId)!)
@@ -347,15 +349,138 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.globalVar.newPlanCount += 1
           }
         }
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-//          print("リロードテーブル")
-//          self.reloadFlag = 1
-//          self.tableView.reloadData()
-//        }
       }else{
-//        print("status",timelineData!.status)
       }
     }.resume()
+  }
+  struct SearchData : Codable{
+    let status : Int
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+      let planId : Int
+      let userId : String
+      let planTitle : String
+      let planComment : String?
+      let transportation : String
+      let price : String
+      let area : String
+      let planDate : String
+      let user : User
+      let spots : [Spots]
+      let date : Date? = NSDate() as Date
+      enum CodingKeys: String, CodingKey {
+        case planId = "plan_id"
+        case userId = "user_id"
+        case planTitle = "plan_title"
+        case planComment = "plan_comment"
+        case transportation = "transportation"
+        case price = "price"
+        case area = "area"
+        case planDate = "plan_date"
+        case user = "user"
+        case spots = "spots"
+        case date
+      }
+      struct User : Codable{
+        let userName : String
+        let userIcon : String
+        enum CodingKeys: String, CodingKey {
+          case userName = "user_name"
+          case userIcon = "user_icon"
+        }
+      }
+      struct Spots : Codable{
+        let spotId : Int
+        let spotTitle : String
+        let spotImageA : String?
+        let spotImageB : String?
+        let spotImageC : String?
+        enum CodingKeys: String, CodingKey {
+          case spotId = "spot_id"
+          case spotTitle = "spot_title"
+          case spotImageA = "spot_image_a"
+          case spotImageB = "spot_image_b"
+          case spotImageC = "spot_image_c"
+        }
+      }
+    }
+  }
+  
+  func searchTimeline(offset:Int,generation:Int){
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/search/find?generation=\(generation)")
+    let request = URLRequest(url: url!)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let searchData = try? JSONDecoder().decode(SearchData.self, from: data)
+        if(searchData!.status == 200){
+          for i in 0 ... 2{
+            var count = 0
+            self.globalVar.searchPlanIdList.append((searchData?.record![i].planId)!)
+            self.globalVar.searchUserIdList.append((searchData?.record![i].userId)!)
+            self.globalVar.searchPlanTitleList.append((searchData?.record![i].planTitle)!)
+            self.globalVar.searchUserNameList.append((searchData?.record![i].user.userName)!)
+            self.globalVar.searchPlanAreaList.append((searchData?.record![i].area)!)
+            self.globalVar.searchPlanTransportationList.append((searchData?.record![i].transportation)!)
+            self.globalVar.searchPlanPriceList.append((searchData?.record![i].price)!)
+            self.globalVar.searchPlanCommentList.append((searchData?.record![i].planComment)!)
+            let url = URL(string: (searchData?.record![i].user.userIcon)!)!
+            let imageData = try? Data(contentsOf: url)
+            let image = UIImage(data:imageData!)
+            self.globalVar.searchUserImageList.append(image!)
+            let planDate = (searchData?.record![i].planDate)!.prefix(10)
+            var date = planDate.suffix(5)
+            if let range = date.range(of: "-"){
+              date.replaceSubrange(range, with: "月")
+            }
+            self.globalVar.searchDateList.append("\(date)日")
+            for f in 0 ... (searchData?.record![i].spots.count)! - 1{
+              if((searchData?.record![i].spots[f].spotImageA)! != ""){
+                self.globalVar.searchSpotImagePathList?.append((searchData?.record![i].spots[f].spotImageA)!)
+              }else if((searchData?.record![i].spots[f].spotImageB)! != ""){
+                self.globalVar.searchSpotImagePathList?.append((searchData?.record![i].spots[f].spotImageB)!)
+              }else if((searchData?.record![i].spots[f].spotImageC)! != ""){
+                self.globalVar.searchSpotImagePathList?.append((searchData?.record![i].spots[f].spotImageC)!)
+              }
+              if(f == 0){
+                self.globalVar.searchSpotNameListA.append((searchData?.record![i].spots[f].spotTitle)!)
+                self.globalVar.searchSpotNameListB?.append("nil")
+              }else if(f == 1){
+                self.globalVar.searchSpotNameListB?[i] = (searchData?.record![i].spots[f].spotTitle)!
+              }else{
+                count += 1
+              }
+            }
+            self.globalVar.searchSpotImagePathList?.append("")
+            self.globalVar.searchSpotCountList.append(count)
+            self.globalVar.searchTrueSpotImagePathList?.append(self.globalVar.searchSpotImagePathList![0])
+            if(self.globalVar.searchTrueSpotImagePathList![i] != ""){
+              let url = URL(string: self.globalVar.searchTrueSpotImagePathList![i])!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.globalVar.searchSpotImageList?.append(image!)
+            }else{
+              self.globalVar.searchSpotImageList?.append(UIImage(named: "no-image.png")!)
+            }
+            self.globalVar.searchSpotImagePathList?.removeAll()
+            self.globalVar.searchPlanCount += 1
+          }
+        }
+      }else{
+      }
+      }.resume()
+    
   }
 
 }
@@ -388,6 +513,7 @@ class GlobalVar{
   var userHeaderPath = ""
   var userHeader = UIImage()
   
+  //新着三件用
   var newPlanIdList : [Int] = []
   var newUserIdList : [String] = []
   var newUserNameList : [String] = []
@@ -408,7 +534,29 @@ class GlobalVar{
   var newPlanCommentList : [String] = []
   var newPlanCount = 0
   
+  //年代別新着3件用
+  var searchPlanIdList : [Int] = []
+  var searchUserIdList : [String] = []
+  var searchUserNameList : [String] = []
+  var searchPlanTitleList : [String] = []
+  var searchUserImagePathList : [String] = []
+  var searchDateList : [String] = []
+  var searchSpotImageSetFlag : [Int] = []
+  var searchSpotCountList : [Int] = []
+  var searchSpotNameListA : [String] = []
+  var searchSpotNameListB : [String]? = []
+  var searchSpotImagePathList : [String]? = []
+  var searchTrueSpotImagePathList : [String]? = []
+  var searchSpotImageList : [UIImage]? = []
+  var searchUserImageList : [UIImage] = []
+  var searchPlanAreaList : [String] = []
+  var searchPlanTransportationList : [String] = []
+  var searchPlanPriceList : [String] = []
+  var searchPlanCommentList : [String] = []
+  var searchPlanCount = 0
+  
+  
   var token : String = ""
-//  let ipAddress = "35.200.26.70:443"
+//  let ipAddress = "172.20.10.9:443"
 }
 

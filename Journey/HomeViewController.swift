@@ -118,8 +118,22 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
       newScroll.addSubview(newPlanView)
       
       let generationPlanView = TopView(frame: CGRect(x: CGFloat(i) * (width - 16), y: 0, width: width - 16, height: height))
-      generationPlanView.planImageView.image = UIImage(named: "no-image.png")
-      generationPlanView.planUserIconImageView.image = UIImage(named: "no-image.png")
+      generationPlanView.planNameLabel.text = globalVar.searchPlanTitleList[i]
+      generationPlanView.planUserNameLabel.text = globalVar.searchUserNameList[i]
+      generationPlanView.planSpotNameLabel1.text = globalVar.searchSpotNameListA[i]
+      if(globalVar.searchSpotNameListB![i] != "nil"){
+        generationPlanView.planSpotNameLabel2.text = globalVar.searchSpotNameListB![i]
+      }else{
+        generationPlanView.planSpotNameLabel2.text = ""
+      }
+      if(globalVar.searchSpotCountList[i] == 0){
+        generationPlanView.planSpotCountLabel.text = ""
+      }else{
+        generationPlanView.planSpotCountLabel.text = "他\(globalVar.searchSpotCountList[i])件"
+      }
+      generationPlanView.planDateLabel.text = globalVar.searchDateList[i]
+      generationPlanView.planImageView.image = globalVar.searchSpotImageList![i]
+      generationPlanView.planUserIconImageView.image = globalVar.searchUserImageList[i]
       generationPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
       generationPlanView.planUserIconImageView.clipsToBounds = true
       generationPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
