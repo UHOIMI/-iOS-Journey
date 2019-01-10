@@ -69,7 +69,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
 //    userIconImageView.imageView?.clipsToBounds = true
     
     let page = 3
-    let width = self.view.frame.width
+    let width = UIScreen.main.bounds.size.width
+    print("UIScreen.main.bounds.size.widthは",UIScreen.main.bounds.size.width)
     let height : CGFloat = 150
     
     regionImageScroll.frame = CGRect(x: 8, y: regionLabel.frame.origin.y + newLabel.frame.height + 16, width: width - 16, height: height)
@@ -141,22 +142,28 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
       generationScroll.addSubview(generationPlanView)
 
     }
+    var pageX : CGFloat = 0
+    if(width == 320){
+      pageX = 30
+    }
     pageControl = UIPageControl()
-    pageControl.frame = CGRect(x:0, y:newScroll.frame.origin.y + 150, width:width, height:50)
+    pageControl.frame = CGRect(x:pageX, y:newScroll.frame.origin.y + 150, width:width, height:50)
     print(newScroll.frame.height)
     pageControl.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
     pageControl.pageIndicatorTintColor = UIColor.gray
     pageControl.currentPageIndicatorTintColor = UIColor.black
     pageControl.numberOfPages = page
     pageControl.currentPage = 0
-    
+    pageControl.isUserInteractionEnabled = false
+    print("widthは",width)
     generationPageControl = UIPageControl()
-    generationPageControl.frame = CGRect(x:0, y:generationScroll.frame.origin.y + 150, width:width, height:50)
+    generationPageControl.frame = CGRect(x:pageX, y:generationScroll.frame.origin.y + 150, width:self.view.frame.width, height:50)
     generationPageControl.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
     generationPageControl.pageIndicatorTintColor = UIColor.gray
     generationPageControl.currentPageIndicatorTintColor = UIColor.black
     generationPageControl.numberOfPages = page
     generationPageControl.currentPage = 0
+    generationPageControl.isUserInteractionEnabled = false
     
     self.subView.addSubview(pageControl)
     self.subView.addSubview(generationPageControl)
@@ -192,7 +199,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     let imageList = ["北海道", "東北", "関東", "中部", "近畿", "中国", "四国", "九州"]
     
     let tabImageHeight:CGFloat = regionImageScroll.frame.height
-    let dummyImageWidth = regionImageScroll.frame.size.width/4 - tabImageWidth/2
+//    let dummyImageWidth = regionImageScroll.frame.size.width/4 - tabImageWidth/2
+    let dummyImageWidth = regionImageScroll.frame.size.width / 30
     let headDummyImage = UIImageView()
     let rect:CGRect = CGRect(x:0, y:0, width:dummyImageWidth, height:tabImageHeight)
     headDummyImage.frame = rect

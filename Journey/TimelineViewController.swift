@@ -17,6 +17,7 @@ import RealmSwift
 
 class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
 
+  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
   @IBOutlet weak var tableView: UITableView!
   var ActivityIndicator: UIActivityIndicatorView!
   let formatter = DateFormatter()
@@ -73,6 +74,17 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   override func viewDidLoad() {
     super.viewDidLoad()
     createTabBar()
+    
+    let leftButton: UIButton = UIButton()
+    leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+    leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+    leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+    leftButton.imageView?.clipsToBounds = true
+    leftButton.addTarget(self, action: #selector(TimelineViewController.userIconTapped(sender:)), for: .touchUpInside)
+    userBarButtonItem.customView = leftButton
+    userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+    userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+    
     self.navigationItem.hidesBackButton = true
     print(searchTransportationString)
     print(searchPrice)
@@ -665,6 +677,11 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       
     }
   }
+  
+  @objc func userIconTapped(sender : AnyObject) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
+  
 }
 
 extension UITableView {

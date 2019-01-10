@@ -16,6 +16,7 @@ import Photos
 class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDelegate, CLLocationManagerDelegate{
     
     private var tabBar:TabBar!
+    var globalVar = GlobalVar.shared
     
     var lat:Double = 0
     var lng:Double = 0
@@ -32,6 +33,7 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
     
     let myFrameSize:CGSize = UIScreen.main.bounds.size
     
+    @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var spotNameLabel: UILabel!
     @IBOutlet weak var spotCommentLabel: UILabel!
@@ -42,7 +44,17 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
-      self.navigationItem.hidesBackButton = true
+        self.navigationItem.hidesBackButton = true
+      
+        let leftButton: UIButton = UIButton()
+        leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+        leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+        leftButton.imageView?.clipsToBounds = true
+        leftButton.addTarget(self, action: #selector(DetailSpotViewController.userIconTapped(sender:)), for: .touchUpInside)
+        userBarButtonItem.customView = leftButton
+        userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+        userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
       
         let camera = GMSCameraPosition.camera(withLatitude: spotData.latitude,longitude:spotData.longitude, zoom:15)
         let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:UIApplication.shared.statusBarFrame.size.height +  (self.navigationController?.navigationBar.frame.size.height)!,width:myFrameSize.width,height:myFrameSize.height/3),camera:camera)
@@ -191,7 +203,7 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
         case 1:
             performSegue(withIdentifier: "toStartView", sender: nil)
         case 2:
-            print("２")
+            performSegue(withIdentifier: "toSearchView", sender: nil)
         case 3:
             print("３")
         case 4:
@@ -200,5 +212,9 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
             
         }
     }
+  
+  @objc func userIconTapped(sender : AnyObject) {
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
 
 }
