@@ -88,7 +88,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FlH-ne-3ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3810" y="-291"/>
+            <point key="canvasLocation" x="-4556" y="-487"/>
         </scene>
         <!--ユーザー登録-->
         <scene sceneID="uxu-gT-2PL">
@@ -430,7 +430,7 @@
         <!--Splash View Controller-->
         <scene sceneID="2m0-SB-vro">
             <objects>
-                <viewController id="6uD-TC-Kd3" customClass="SplashViewController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="splash" id="6uD-TC-Kd3" customClass="SplashViewController" customModule="Journey" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ogq-o3-dnU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -464,7 +464,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JBA-CL-HZ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2207" y="-72"/>
+            <point key="canvasLocation" x="-2023" y="425"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DGx-tU-mJE">
@@ -2558,7 +2558,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="256" height="256"/>
+        <image name="plus" width="192" height="192"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2570,13 +2570,13 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xie-oa-hgH"/>
-        <segue reference="b7P-YX-H0q"/>
-        <segue reference="jcv-3u-Qe9"/>
+        <segue reference="CI5-CI-NdO"/>
+        <segue reference="35s-op-Sqh"/>
         <segue reference="0Xj-CK-ZoO"/>
         <segue reference="efM-dk-zhE"/>
         <segue reference="Y1p-dC-o0y"/>
         <segue reference="SAI-tm-OCo"/>
-        <segue reference="8B5-Mb-NoT"/>
+        <segue reference="e9b-K1-k6z"/>
         <segue reference="ScF-Q7-9Tm"/>
         <segue reference="Mcq-lN-1b2"/>
         <segue reference="F4q-09-NOQ"/>

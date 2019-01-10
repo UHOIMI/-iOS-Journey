@@ -31,12 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     for _user in user {
       print("名前",_user.user_name)
       currentUser = _user.user_name
-      globalVar.searchTimeline(offset: 0, generation: _user.user_generation)
+      globalVar.userGenerationInt = _user.user_generation
     }
     //currentuser = nil
     //ユーザーがいない場合IndexViewに遷移
 //    searchTimeline(offset: 0, generation: _user.user_generation)
-    globalVar.getTimeline(offset: 0)
+    
     if (currentUser == ""){
       //windowを生成
       self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -76,6 +76,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           globalVar.userIcon = iconImage!
         }
       }
+      searchTimeline(offset: 0, generation: globalVar.userGenerationInt)
+      getTimeline(offset: 0)
     }
     return true
   }
@@ -486,6 +488,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 class GlobalVar{
+  
+  let splash = SplashViewController.self
   private init(){}
   static let shared = GlobalVar()
   
@@ -512,6 +516,7 @@ class GlobalVar{
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()
+  var userGenerationInt = 0
   
   //新着三件用
   var newPlanIdList : [Int] = []
@@ -808,7 +813,9 @@ class GlobalVar{
             }
             self.searchSpotImagePathList?.removeAll()
             self.searchPlanCount += 1
+            
           }
+          
         }
       }else{
       }
