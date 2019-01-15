@@ -54,7 +54,7 @@ class ConfirmationViewController: UIViewController {
   func postImage(){
     let imageData = setIconImageView.image?.jpegData(compressionQuality: 1.0)
     let body = httpBody(imageData!, fileName: "\(globalVar.userId).jpg")
-    let url = URL(string: "http://api.mino.asia:443/api/v1/image/upload")!
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/image/upload")!
     fileUpload(url, data: body) {(data, response, error) in
       if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
         if response.statusCode == 200 {
