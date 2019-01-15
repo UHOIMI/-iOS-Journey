@@ -23,6 +23,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   @IBOutlet weak var editButton: UIBarButtonItem!
   @IBOutlet weak var spotListButton: UIButton!
   @IBOutlet weak var logoutButton: UIButton!
+  @IBOutlet weak var pastLabel: UILabel!
   
   let globalVar = GlobalVar.shared
   var editFlag = true
@@ -69,6 +70,24 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       userCommentTextView.text = globalVar.userComment
       userCommentTextView.numberOfLines = 0
       userCommentTextView.sizeToFit()
+      
+      let userPlanView = TopView(frame: CGRect(x: 16, y: pastLabel.frame.origin.y + pastLabel.frame.size.height - 8, width: UIScreen.main.bounds.size.width - 32, height: 150))
+      userPlanView.backgroundColor = UIColor.red
+      userPlanView.planNameLabel.text = "テスト"
+      userPlanView.planUserNameLabel.text = "テスト"
+      userPlanView.planSpotNameLabel1.text = "テスト"
+      userPlanView.planSpotNameLabel2.text = "テスト"
+      userPlanView.planSpotCountLabel.text = "テスト"
+      userPlanView.planSpotCountLabel.text = "他件"
+      userPlanView.planDateLabel.text = "テスト"
+      userPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
+      userPlanView.planUserIconImageView.clipsToBounds = true
+      userPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
+      userPlanView.planUserIconImageView.isUserInteractionEnabled = true
+      userPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.generationPlanTapped(_ :))))
+      userPlanView.layer.cornerRadius = 5
+      subView.addSubview(userPlanView)
+      subView.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
       
       createTabBar()
 

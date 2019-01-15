@@ -101,7 +101,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     subView.addSubview(generationScroll)
     
     for i in 0 ..< page {
-      if(globalVar.newSpotNameListA.count >= page){
+      if(globalVar.newSpotNameListA.count >= page && globalVar.searchSpotNameListA.count >= page){
         let newPlanView = TopView(frame: CGRect(x: CGFloat(i) * (width - 16), y: 0, width: width - 16, height: height))
         if(globalVar.newPlanTitleList[i] != ""){
           homeFlag = true
@@ -157,9 +157,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
 
     }
     var pageX : CGFloat = 0
-    if(width == 320){
-      pageX = 30
-    }
+//    if(width == 320){
+//      pageX = 30
+//    }
     pageControl = UIPageControl()
     pageControl.frame = CGRect(x:pageX, y:newScroll.frame.origin.y + 150, width:width, height:50)
     print(newScroll.frame.height)

@@ -48,6 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       //表示
       self.window?.makeKeyAndVisible()
     }else{
+      searchTimeline(offset: 0, generation: globalVar.userGenerationInt)
+      getTimeline(offset: 0)
       for _user in user {
         globalVar.token = _user.user_token
         globalVar.userName = _user.user_name
@@ -76,8 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           globalVar.userIcon = iconImage!
         }
       }
-      searchTimeline(offset: 0, generation: globalVar.userGenerationInt)
-      getTimeline(offset: 0)
     }
     return true
   }
@@ -415,7 +415,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func searchTimeline(offset:Int,generation:Int){
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/search/find?generation=\(generation)&limit=3")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/search/find?generation=\(generation)")
+    print(url)
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in

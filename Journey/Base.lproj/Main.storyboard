@@ -1691,6 +1691,7 @@
                         <outlet property="editButton" destination="SNJ-O0-PHR" id="Qft-Pw-6Xg"/>
                         <outlet property="headerImageView" destination="rAD-hQ-2ef" id="URB-lF-4wP"/>
                         <outlet property="logoutButton" destination="Nzn-9b-suM" id="bcB-wz-NLk"/>
+                        <outlet property="pastLabel" destination="D7Y-6s-AiW" id="mL0-IZ-VB4"/>
                         <outlet property="scrollView" destination="8AP-lE-NA7" id="se9-pK-Se4"/>
                         <outlet property="spotListButton" destination="tmS-S4-Y0A" id="Z9i-25-7YH"/>
                         <outlet property="subView" destination="lkc-eX-UHd" id="SKf-po-Hph"/>
@@ -2571,13 +2572,13 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xie-oa-hgH"/>
-        <segue reference="WEB-tb-m4z"/>
+        <segue reference="vDx-IZ-clZ"/>
         <segue reference="yAr-Yi-aS4"/>
-        <segue reference="0Xj-CK-ZoO"/>
-        <segue reference="bHh-6s-JfW"/>
+        <segue reference="0Ny-WU-Sio"/>
+        <segue reference="lAe-ZU-lsv"/>
         <segue reference="Y1p-dC-o0y"/>
         <segue reference="SAI-tm-OCo"/>
-        <segue reference="e9b-K1-k6z"/>
+        <segue reference="w35-bH-KHu"/>
         <segue reference="ScF-Q7-9Tm"/>
         <segue reference="Mcq-lN-1b2"/>
         <segue reference="F4q-09-NOQ"/>
