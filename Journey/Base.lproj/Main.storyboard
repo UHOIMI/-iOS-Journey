@@ -849,6 +849,7 @@
                         <outlet property="newLabel" destination="943-hI-CIp" id="qhU-fn-5ja"/>
                         <outlet property="postBarButtonItem" destination="FNw-Dv-W6X" id="Zz4-fC-ZFw"/>
                         <outlet property="regionLabel" destination="k7Y-Sq-cPq" id="M4z-hL-8JP"/>
+                        <outlet property="scrollView" destination="wyN-gk-GEh" id="iPm-ex-G2B"/>
                         <outlet property="subView" destination="qay-Kw-JNx" id="GJ0-TX-sR0"/>
                         <outlet property="userBarButtonItem" destination="PC5-uy-tVz" id="P1r-P4-OvP"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="toPostView" id="ScF-Q7-9Tm"/>
@@ -1690,6 +1691,7 @@
                         <outlet property="editButton" destination="SNJ-O0-PHR" id="Qft-Pw-6Xg"/>
                         <outlet property="headerImageView" destination="rAD-hQ-2ef" id="URB-lF-4wP"/>
                         <outlet property="logoutButton" destination="Nzn-9b-suM" id="bcB-wz-NLk"/>
+                        <outlet property="pastLabel" destination="D7Y-6s-AiW" id="mL0-IZ-VB4"/>
                         <outlet property="scrollView" destination="8AP-lE-NA7" id="se9-pK-Se4"/>
                         <outlet property="spotListButton" destination="tmS-S4-Y0A" id="Z9i-25-7YH"/>
                         <outlet property="subView" destination="lkc-eX-UHd" id="SKf-po-Hph"/>
@@ -2558,7 +2560,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="192" height="192"/>
+        <image name="plus" width="256" height="256"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2570,13 +2572,13 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xie-oa-hgH"/>
-        <segue reference="CI5-CI-NdO"/>
-        <segue reference="35s-op-Sqh"/>
-        <segue reference="0Xj-CK-ZoO"/>
-        <segue reference="efM-dk-zhE"/>
+        <segue reference="vDx-IZ-clZ"/>
+        <segue reference="yAr-Yi-aS4"/>
+        <segue reference="0Ny-WU-Sio"/>
+        <segue reference="lAe-ZU-lsv"/>
         <segue reference="Y1p-dC-o0y"/>
         <segue reference="SAI-tm-OCo"/>
-        <segue reference="e9b-K1-k6z"/>
+        <segue reference="w35-bH-KHu"/>
         <segue reference="ScF-Q7-9Tm"/>
         <segue reference="Mcq-lN-1b2"/>
         <segue reference="F4q-09-NOQ"/>

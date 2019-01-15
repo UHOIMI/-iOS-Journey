@@ -11,6 +11,7 @@ import UIKit
 class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelegate {
 
   @IBOutlet weak var subView: UIView!
+  @IBOutlet weak var scrollView: UIScrollView!
   //@IBOutlet weak var userIconImageView: UIButton!
   @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
   @IBOutlet weak var postBarButtonItem: UIBarButtonItem!
@@ -29,16 +30,23 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   //let buttonImageDefault :UIImage? = UIImage(named:"no-image.png")
   let buttonImageSelected :UIImage? = UIImage(named:"pen")
   
+  
   var didPrepareMenu = false
   let tabImageWidth:CGFloat = 160
   var userEditFlag = true
+  var homeFlag = false
   
+  private let refreshControl = UIRefreshControl()
   private var pageControl: UIPageControl!
   private var generationPageControl: UIPageControl!
   private var tabBar:TabBar!
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    scrollView.refreshControl = refreshControl
+    refreshControl.addTarget(self, action: #selector(HomeViewController.refresh(sender:)), for: .valueChanged)
+    
     self.navigationItem.hidesBackButton = true
     let titleView = UIImageView(frame : CGRect(x:0, y: 0, width:30, height:30))
     titleView.image = UIImage(named: "journey.png")
@@ -93,8 +101,11 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     subView.addSubview(generationScroll)
     
     for i in 0 ..< page {
-      if(globalVar.newSpotNameListA.count >= page){
+      if(globalVar.newSpotNameListA.count >= page && globalVar.searchSpotNameListA.count >= page){
         let newPlanView = TopView(frame: CGRect(x: CGFloat(i) * (width - 16), y: 0, width: width - 16, height: height))
+        if(globalVar.newPlanTitleList[i] != ""){
+          homeFlag = true
+        }
         newPlanView.planNameLabel.text = globalVar.newPlanTitleList[i]
         newPlanView.planUserNameLabel.text = globalVar.newUserNameList[i]
         newPlanView.planSpotNameLabel1.text = globalVar.newSpotNameListA[i]
@@ -141,13 +152,14 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
         generationPlanView.planUserIconImageView.isUserInteractionEnabled = true
         generationPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.generationPlanTapped(_ :))))
         generationScroll.addSubview(generationPlanView)
+
       }
 
     }
     var pageX : CGFloat = 0
-    if(width == 320){
-      pageX = 30
-    }
+//    if(width == 320){
+//      pageX = 30
+//    }
     pageControl = UIPageControl()
     pageControl.frame = CGRect(x:pageX, y:newScroll.frame.origin.y + 150, width:width, height:50)
     print(newScroll.frame.height)
@@ -242,6 +254,21 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
         generationPageControl.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
       }
     }
+  }
+  
+  @objc func refresh(sender: UIRefreshControl) {
+    
+//    while true{
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        self.viewDidLoad()
+      }
+//      if(self.homeFlag){
+//        break
+//      }
+//    }
+    
+//    viewDidLoad()
+    sender.endRefreshing()
   }
   
   func createTabBar(){

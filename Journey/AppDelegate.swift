@@ -416,6 +416,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func searchTimeline(offset:Int,generation:Int){
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/search/find?generation=\(generation)")
+    print(url)
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in

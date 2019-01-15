@@ -252,7 +252,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   @IBAction func tappedFavoriteButton(_ sender: Any) {
     postFavorite()
-    getFavorite()
+    //getFavorite()
   }
   
   struct SpotData : Codable{
@@ -434,23 +434,22 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let favoriteData = try? JSONDecoder().decode(FavoriteData.self, from: data)
-        if(response.statusCode == 404){
-          self.favoriteFlag = false
-          
-          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-            self.favoriteButton.setImage(UIImage(named:"offstar")!, for: .normal)
-          }
-        }else{
           if(favoriteData!.status == 200){
             self.favoriteFlag = true
             
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
               self.favoriteButton.setImage(UIImage(named:"onstar")!, for: .normal)
             }
+          }else if(favoriteData!.status == 404){
+            self.favoriteFlag = false
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+              self.favoriteButton.setImage(UIImage(named:"offstar")!, for: .normal)
+            }
           }else{
             print("status",favoriteData!.status)
           }
-        }
+        
       }
     }.resume()
   }
@@ -458,6 +457,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   func postFavorite(){
     if(!favoriteFlag) {
       let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
+      print("うらるstr:",str)
       let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/register")
       var request = URLRequest(url: url!)
       // POSTを指定
@@ -474,14 +474,17 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
           print(String(data: data, encoding: .utf8) ?? "")
           
         }
+        self.getFavorite()
       }.resume()
     }else{
-      let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
+      let str : String = "plan_id=\(planId)&token=\(globalVar.token)"
+      print("うらるstr:",str)
       let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/delete")
+      print("デリートウラル：", url)
       var request = URLRequest(url: url!)
-      // POSTを指定
+      // DELETEを指定
       request.httpMethod = "DELETE"
-      // POSTするデータをBodyとして設定
+      // DELETEするデータをBodyとして設定
       request.httpBody = str.data(using: .utf8)
       let session = URLSession.shared
       session.dataTask(with: request) { (data, response, error) in
@@ -493,6 +496,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
           print(String(data: data, encoding: .utf8) ?? "")
           
         }
+        self.getFavorite()
       }.resume()
     }
   }
