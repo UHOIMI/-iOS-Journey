@@ -287,7 +287,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
   func getTimeline(offset:Int){
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&limit=3")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -415,7 +415,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func searchTimeline(offset:Int,generation:Int){
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/search/find?generation=\(generation)")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/search/find?generation=\(generation)&limit=3")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -623,7 +623,7 @@ class GlobalVar{
     }
   }
   func getTimeline(offset:Int){
-    let url = URL(string: "http://\(ipAddress)/api/v1/timeline/find?offset=\(offset)")
+    let url = URL(string: "http://\(ipAddress)/api/v1/timeline/find?offset=\(offset)&limit=3")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -637,14 +637,14 @@ class GlobalVar{
         if(timelineData!.status == 200){
           for i in 0 ... 2{
             var count = 0
-            self.newPlanIdList.append((timelineData?.record![i].planId)!)
-            self.newUserIdList.append((timelineData?.record![i].userId)!)
-            self.newPlanTitleList.append((timelineData?.record![i].planTitle)!)
-            self.newUserNameList.append((timelineData?.record![i].user.userName)!)
-            self.newPlanAreaList.append((timelineData?.record![i].area)!)
-            self.newPlanTransportationList.append((timelineData?.record![i].transportation)!)
-            self.newPlanPriceList.append((timelineData?.record![i].price)!)
-            self.newPlanCommentList.append((timelineData?.record![i].planComment)!)
+            self.newPlanIdList.insert((timelineData?.record![i].planId)!, at: i)
+            self.newUserIdList.insert((timelineData?.record![i].userId)!, at: i)
+            self.newPlanTitleList.insert((timelineData?.record![i].planTitle)!, at: i)
+            self.newUserNameList.insert((timelineData?.record![i].user.userName)!, at: i)
+            self.newPlanAreaList.insert((timelineData?.record![i].area)!, at: i)
+            self.newPlanTransportationList.insert((timelineData?.record![i].transportation)!, at: i)
+            self.newPlanPriceList.insert((timelineData?.record![i].price)!, at: i)
+            self.newPlanCommentList.insert((timelineData?.record![i].planComment)!, at: i)
             let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
             let imageData = try? Data(contentsOf: url)
             let image = UIImage(data:imageData!)
@@ -657,15 +657,15 @@ class GlobalVar{
             self.newDateList.append("\(date)日")
             for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
               if((timelineData?.record![i].spots[f].spotImageA)! != ""){
-                self.newSpotImagePathList?.append((timelineData?.record![i].spots[f].spotImageA)!)
+                self.newSpotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageA)!, at: i)
               }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
-                self.newSpotImagePathList?.append((timelineData?.record![i].spots[f].spotImageB)!)
+                self.newSpotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageB)!, at: i)
               }else if((timelineData?.record![i].spots[f].spotImageC)! != ""){
-                self.newSpotImagePathList?.append((timelineData?.record![i].spots[f].spotImageC)!)
+                self.newSpotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageC)!, at: i)
               }
               if(f == 0){
-                self.newSpotNameListA.append((timelineData?.record![i].spots[f].spotTitle)!)
-                self.newSpotNameListB?.append("nil")
+                self.newSpotNameListA.insert((timelineData?.record![i].spots[f].spotTitle)!, at: i)
+                self.newSpotNameListB?.insert("nil", at:  i)
               }else if(f == 1){
                 self.newSpotNameListB?[i] = (timelineData?.record![i].spots[f].spotTitle)!
               }else{
@@ -673,15 +673,15 @@ class GlobalVar{
               }
             }
             self.newSpotImagePathList?.append("")
-            self.newSpotCountList.append(count)
+            self.newSpotCountList.insert(count, at: i)
             self.newTrueSpotImagePathList?.append(self.newSpotImagePathList![0])
             if(self.newTrueSpotImagePathList![i] != ""){
               let url = URL(string: self.newTrueSpotImagePathList![i])!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
-              self.newSpotImageList?.append(image!)
+              self.newSpotImageList?.insert(image!, at: i)
             }else{
-              self.newSpotImageList?.append(UIImage(named: "no-image.png")!)
+              self.newSpotImageList?.insert(UIImage(named: "no-image.png")!, at: i)
             }
             self.newSpotImagePathList?.removeAll()
             self.newPlanCount += 1
@@ -751,7 +751,7 @@ class GlobalVar{
   }
   
   func searchTimeline(offset:Int,generation:Int){
-    let url = URL(string: "http://\(ipAddress)/api/v1/search/find?generation=\(generation)")
+    let url = URL(string: "http://\(ipAddress)/api/v1/search/find?generation=\(generation)&limit=3")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -761,66 +761,63 @@ class GlobalVar{
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
-        let searchData = try? JSONDecoder().decode(SearchData.self, from: data)
-        if(searchData!.status == 200){
+        let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
+        if(timelineData!.status == 200){
           for i in 0 ... 2{
             var count = 0
-            self.searchPlanIdList.append((searchData?.record![i].planId)!)
-            self.searchUserIdList.append((searchData?.record![i].userId)!)
-            self.searchPlanTitleList.append((searchData?.record![i].planTitle)!)
-            self.searchUserNameList.append((searchData?.record![i].user.userName)!)
-            self.searchPlanAreaList.append((searchData?.record![i].area)!)
-            self.searchPlanTransportationList.append((searchData?.record![i].transportation)!)
-            self.searchPlanPriceList.append((searchData?.record![i].price)!)
-            self.searchPlanCommentList.append((searchData?.record![i].planComment)!)
-            let url = URL(string: (searchData?.record![i].user.userIcon)!)!
+            self.searchPlanIdList.insert((timelineData?.record![i].planId)!, at: i)
+            self.searchUserIdList.insert((timelineData?.record![i].userId)!, at: i)
+            self.searchPlanTitleList.insert((timelineData?.record![i].planTitle)!, at: i)
+            self.searchUserNameList.insert((timelineData?.record![i].user.userName)!, at: i)
+            self.searchPlanAreaList.insert((timelineData?.record![i].area)!, at: i)
+            self.searchPlanTransportationList.insert((timelineData?.record![i].transportation)!, at: i)
+            self.searchPlanPriceList.insert((timelineData?.record![i].price)!, at: i)
+            self.searchPlanCommentList.insert((timelineData?.record![i].planComment)!, at: i)
+            let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
             let imageData = try? Data(contentsOf: url)
             let image = UIImage(data:imageData!)
             self.searchUserImageList.append(image!)
-            let planDate = (searchData?.record![i].planDate)!.prefix(10)
+            let planDate = (timelineData?.record![i].planDate)!.prefix(10)
             var date = planDate.suffix(5)
             if let range = date.range(of: "-"){
               date.replaceSubrange(range, with: "月")
             }
             self.searchDateList.append("\(date)日")
-            for f in 0 ... (searchData?.record![i].spots.count)! - 1{
-              if((searchData?.record![i].spots[f].spotImageA)! != ""){
-                self.searchSpotImagePathList?.append((searchData?.record![i].spots[f].spotImageA)!)
-              }else if((searchData?.record![i].spots[f].spotImageB)! != ""){
-                self.searchSpotImagePathList?.append((searchData?.record![i].spots[f].spotImageB)!)
-              }else if((searchData?.record![i].spots[f].spotImageC)! != ""){
-                self.searchSpotImagePathList?.append((searchData?.record![i].spots[f].spotImageC)!)
+            for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
+              if((timelineData?.record![i].spots[f].spotImageA)! != ""){
+                self.searchSpotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageA)!, at: i)
+              }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
+                self.searchSpotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageB)!, at: i)
+              }else if((timelineData?.record![i].spots[f].spotImageC)! != ""){
+                self.searchSpotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageC)!, at: i)
               }
               if(f == 0){
-                self.searchSpotNameListA.append((searchData?.record![i].spots[f].spotTitle)!)
-                self.searchSpotNameListB?.append("nil")
+                self.searchSpotNameListA.insert((timelineData?.record![i].spots[f].spotTitle)!, at: i)
+                self.searchSpotNameListB?.insert("nil", at:  i)
               }else if(f == 1){
-                self.searchSpotNameListB?[i] = (searchData?.record![i].spots[f].spotTitle)!
+                self.searchSpotNameListB?[i] = (timelineData?.record![i].spots[f].spotTitle)!
               }else{
                 count += 1
               }
             }
             self.searchSpotImagePathList?.append("")
-            self.searchSpotCountList.append(count)
+            self.searchSpotCountList.insert(count, at: i)
             self.searchTrueSpotImagePathList?.append(self.searchSpotImagePathList![0])
             if(self.searchTrueSpotImagePathList![i] != ""){
               let url = URL(string: self.searchTrueSpotImagePathList![i])!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
-              self.searchSpotImageList?.append(image!)
+              self.searchSpotImageList?.insert(image!, at: i)
             }else{
-              self.searchSpotImageList?.append(UIImage(named: "no-image.png")!)
+              self.searchSpotImageList?.insert(UIImage(named: "no-image.png")!, at: i)
             }
             self.searchSpotImagePathList?.removeAll()
             self.searchPlanCount += 1
-            
           }
-          
         }
       }else{
       }
-      }.resume()
-    
+    }.resume()
   }
 }
 

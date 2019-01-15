@@ -610,6 +610,76 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       }
       }.resume()
   }
+  
+  struct FavoriteData : Codable{
+    let status : Int
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+      let favoritDate : String
+      let planId : Int
+      let userId : String
+      let plan : Plan
+      let user : User
+      let spots : [Spots]
+      let date : Date? = NSDate() as Date
+      enum CodingKeys: String, CodingKey {
+        case favoritDate = "fav_date"
+        case planId = "plan_id"
+        case userId = "user_id"
+        case plan = "plan"
+        case user = "user"
+        case spots = "spots"
+        case date
+      }
+      struct Plan : Codable {
+        let planDate : String
+        let userId : String
+        let planTitle : String
+        let transportation : String
+        let planComment : String
+        let price : String
+        let area : String
+        enum CodingKeys: String, CodingKey {
+          case planDate = "plan_date"
+          case userId = "user_id"
+          case planTitle = "plan_title"
+          case planComment = "plan_comment"
+          case transportation = "transportation"
+          case price = "price"
+          case area = "area"
+        }
+      }
+      struct User : Codable{
+        let userName : String
+        let userIcon : String
+        enum CodingKeys: String, CodingKey {
+          case userName = "user_name"
+          case userIcon = "user_icon"
+        }
+      }
+      struct Spots : Codable{
+        let spotId : Int
+        let spotTitle : String
+        let spotImageA : String?
+        let spotImageB : String?
+        let spotImageC : String?
+        enum CodingKeys: String, CodingKey {
+          case spotId = "spot_id"
+          case spotTitle = "spot_title"
+          case spotImageA = "spot_image_a"
+          case spotImageB = "spot_image_b"
+          case spotImageC = "spot_image_c"
+        }
+      }
+    }
+  }
+  
   func showAlert(title:String,message:String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{(action: UIAlertAction!) in

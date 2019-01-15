@@ -369,7 +369,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       let imageData = pickedImage.jpegData(compressionQuality: 1.0)
       print("FlagA",number,":",flag,":",imageFlagList[number])
       let body = httpBody(imageData!, fileName: "\(number)-\(flag).jpg")
-      let url = URL(string: "http://api.mino.asia:3001/api/v1/image/upload")!
+      let url = URL(string: "\(globalVar.ipAddress)/api/v1/image/upload")!
       fileUpload(url, data: body) {(data, response, error) in
         if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
           print("FlagB",number,":",flag,":",self.imageFlagList[number])
@@ -694,7 +694,11 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
     switch item.tag{
     case 1:
-      performSegue(withIdentifier: "toStartView", sender: nil)
+      globalVar.searchTimeline(offset: 0, generation: globalVar.userGenerationInt)
+      globalVar.getTimeline(offset: 0)
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
+        self.performSegue(withIdentifier: "toStartView", sender: nil)
+      }
     case 2:
       performSegue(withIdentifier: "toSearchView", sender: nil)
     case 3:
