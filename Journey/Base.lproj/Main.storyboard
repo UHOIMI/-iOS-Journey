@@ -2076,7 +2076,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7sU-lV-dre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4185" y="-1468"/>
+            <point key="canvasLocation" x="-4030" y="-1628"/>
         </scene>
         <!--ユーザー編集-->
         <scene sceneID="iTe-3a-Q5c">
@@ -2560,7 +2560,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="256" height="256"/>
+        <image name="plus" width="192" height="192"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2571,14 +2571,14 @@
         <image name="star" width="540" height="540"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xie-oa-hgH"/>
+        <segue reference="Orn-8k-3es"/>
         <segue reference="vDx-IZ-clZ"/>
-        <segue reference="yAr-Yi-aS4"/>
+        <segue reference="Zge-aV-3pR"/>
         <segue reference="0Ny-WU-Sio"/>
-        <segue reference="lAe-ZU-lsv"/>
+        <segue reference="gCs-Ba-VyA"/>
         <segue reference="Y1p-dC-o0y"/>
         <segue reference="SAI-tm-OCo"/>
-        <segue reference="w35-bH-KHu"/>
+        <segue reference="V3j-Fe-9bE"/>
         <segue reference="ScF-Q7-9Tm"/>
         <segue reference="Mcq-lN-1b2"/>
         <segue reference="F4q-09-NOQ"/>

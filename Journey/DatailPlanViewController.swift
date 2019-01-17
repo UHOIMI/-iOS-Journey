@@ -486,6 +486,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       request.httpMethod = "DELETE"
       // DELETEするデータをBodyとして設定
       request.httpBody = str.data(using: .utf8)
+      print(request.httpBody)
       let session = URLSession.shared
       session.dataTask(with: request) { (data, response, error) in
         if error == nil, let data = data, let response = response as? HTTPURLResponse {
