@@ -25,6 +25,8 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   @IBOutlet weak var logoutButton: UIButton!
   @IBOutlet weak var pastLabel: UILabel!
   
+  var timelineFlag = 0
+  
   let globalVar = GlobalVar.shared
   var editFlag = true
   
@@ -169,6 +171,18 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       }
     }
     //performSegue(withIdentifier: "toIndexView", sender: nil)
+  }
+  @IBAction func tappedUserPostListButton(_ sender: Any) {
+    timelineFlag = 1
+    performSegue(withIdentifier: "toTimelineView", sender: nil)
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if(segue.identifier == "toTimelineView" && timelineFlag == 1){
+      let nextViewController = segue.destination as! TimelineViewController
+      nextViewController.detailUserFlag = timelineFlag
+      nextViewController.detailUserId = globalVar.userId
+    }
   }
   
 }

@@ -1611,6 +1611,9 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <state key="normal" title="すべて表示"/>
+                                                <connections>
+                                                    <action selector="tappedUserPostListButton:" destination="KJW-a3-dr8" eventType="touchUpInside" id="ula-2j-U8a"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmS-S4-Y0A">
                                                 <rect key="frame" x="248" y="133" width="111" height="34"/>
