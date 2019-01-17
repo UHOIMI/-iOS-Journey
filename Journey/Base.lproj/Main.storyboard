@@ -1958,19 +1958,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="スポット名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fep-2a-9Bi">
-                                                    <rect key="frame" x="105.5" y="75" width="76.5" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="スポット名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aT-Wx-tZm">
-                                                    <rect key="frame" x="105.5" y="95" width="76.5" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="他2件" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyi-k1-ajz">
-                                                    <rect key="frame" x="105.5" y="115" width="40" height="16"/>
+                                                    <rect key="frame" x="105.5" y="94" width="158.5" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1989,7 +1977,10 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11月22日" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KAF-df-t9F">
-                                                    <rect key="frame" x="190" y="75" width="162" height="21"/>
+                                                    <rect key="frame" x="272" y="75" width="80" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="kAA-gQ-IQl"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2003,35 +1994,25 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="tt1-oX-Fra" firstAttribute="leading" secondItem="KD5-Uy-G5f" secondAttribute="leadingMargin" constant="8" id="0GH-Wb-KNf"/>
-                                                <constraint firstItem="8aT-Wx-tZm" firstAttribute="height" secondItem="fep-2a-9Bi" secondAttribute="height" id="38t-pt-gCC"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="IWQ-PR-iaB" secondAttribute="trailing" constant="8" id="3tU-qw-HSY"/>
                                                 <constraint firstItem="IWQ-PR-iaB" firstAttribute="leading" secondItem="tt1-oX-Fra" secondAttribute="trailing" constant="8" id="5Pj-qe-Lbg"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8aT-Wx-tZm" secondAttribute="trailing" constant="20" symbolic="YES" id="9WH-Cn-nsC"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="KAF-df-t9F" secondAttribute="trailing" constant="8" id="A3q-ac-KMF"/>
                                                 <constraint firstItem="5fG-Fi-fdc" firstAttribute="leading" secondItem="KD5-Uy-G5f" secondAttribute="leadingMargin" constant="8" id="BHu-2f-25A"/>
+                                                <constraint firstItem="fep-2a-9Bi" firstAttribute="centerY" secondItem="5fG-Fi-fdc" secondAttribute="centerY" id="Gcg-HI-44b"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="5JD-YD-EC0" secondAttribute="trailing" constant="8" id="GxM-2v-TPf"/>
-                                                <constraint firstItem="nyi-k1-ajz" firstAttribute="bottom" secondItem="5fG-Fi-fdc" secondAttribute="bottom" id="HN2-Jh-0NN"/>
                                                 <constraint firstItem="KAF-df-t9F" firstAttribute="top" secondItem="5fG-Fi-fdc" secondAttribute="top" id="IcA-dW-jBr"/>
                                                 <constraint firstItem="fep-2a-9Bi" firstAttribute="leading" secondItem="5fG-Fi-fdc" secondAttribute="trailing" constant="8" id="K2D-Gy-5e6"/>
                                                 <constraint firstItem="tt1-oX-Fra" firstAttribute="top" secondItem="IWQ-PR-iaB" secondAttribute="top" id="Ljw-xj-Qw9"/>
-                                                <constraint firstItem="mET-gg-KLp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nyi-k1-ajz" secondAttribute="trailing" constant="8" symbolic="YES" id="Rg5-6O-jpi"/>
                                                 <constraint firstItem="mET-gg-KLp" firstAttribute="centerY" secondItem="5JD-YD-EC0" secondAttribute="centerY" id="XLZ-Q9-6ue"/>
                                                 <constraint firstItem="5JD-YD-EC0" firstAttribute="leading" secondItem="mET-gg-KLp" secondAttribute="trailing" id="bhr-aS-1Cz"/>
-                                                <constraint firstItem="fep-2a-9Bi" firstAttribute="top" secondItem="5fG-Fi-fdc" secondAttribute="top" id="cSI-rG-2sI"/>
-                                                <constraint firstItem="8aT-Wx-tZm" firstAttribute="width" secondItem="fep-2a-9Bi" secondAttribute="width" id="d9t-Qy-fBy"/>
-                                                <constraint firstItem="8aT-Wx-tZm" firstAttribute="top" secondItem="fep-2a-9Bi" secondAttribute="bottom" constant="4" id="g3D-3d-trV"/>
                                                 <constraint firstItem="KAF-df-t9F" firstAttribute="leading" secondItem="fep-2a-9Bi" secondAttribute="trailing" constant="8" id="gjN-3y-9Lb"/>
-                                                <constraint firstItem="8aT-Wx-tZm" firstAttribute="leading" secondItem="5fG-Fi-fdc" secondAttribute="trailing" constant="8" id="gzU-v0-4md"/>
                                                 <constraint firstItem="tt1-oX-Fra" firstAttribute="top" secondItem="KD5-Uy-G5f" secondAttribute="topMargin" constant="8" id="hIc-KO-Fah"/>
-                                                <constraint firstItem="nyi-k1-ajz" firstAttribute="leading" secondItem="5fG-Fi-fdc" secondAttribute="trailing" constant="8" id="k3Y-pd-JM8"/>
                                                 <constraint firstItem="trc-a5-seJ" firstAttribute="leading" secondItem="tt1-oX-Fra" secondAttribute="trailing" constant="8" id="lp3-TY-sHZ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="5fG-Fi-fdc" secondAttribute="bottom" constant="8" id="oG1-eH-yxT"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="trc-a5-seJ" secondAttribute="trailing" constant="8" id="qap-sD-nDV"/>
                                                 <constraint firstItem="trc-a5-seJ" firstAttribute="top" secondItem="IWQ-PR-iaB" secondAttribute="bottom" constant="8" id="s5Y-ps-tyj"/>
                                                 <constraint firstItem="5fG-Fi-fdc" firstAttribute="top" secondItem="tt1-oX-Fra" secondAttribute="bottom" constant="16" id="uqM-Xl-8w8"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="5JD-YD-EC0" secondAttribute="bottom" constant="8" id="vrd-g1-bix"/>
-                                                <constraint firstItem="nyi-k1-ajz" firstAttribute="height" secondItem="fep-2a-9Bi" secondAttribute="height" id="xQR-Hy-fSx"/>
-                                                <constraint firstItem="nyi-k1-ajz" firstAttribute="top" secondItem="8aT-Wx-tZm" secondAttribute="bottom" constant="4" id="zbK-Zb-jQR"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -2039,9 +2020,7 @@
                                             <outlet property="planFavoriteLabel" destination="5JD-YD-EC0" id="nOh-87-hMg"/>
                                             <outlet property="planImageView" destination="5fG-Fi-fdc" id="dju-DX-QMO"/>
                                             <outlet property="planNameLabel" destination="trc-a5-seJ" id="j1K-N5-img"/>
-                                            <outlet property="planSpotCountLabel" destination="nyi-k1-ajz" id="ioI-9J-Jlp"/>
                                             <outlet property="planSpotNameLabel1" destination="fep-2a-9Bi" id="udm-w4-ZoJ"/>
-                                            <outlet property="planSpotNameLabel2" destination="8aT-Wx-tZm" id="h13-i3-gpf"/>
                                             <outlet property="planUserIconImageView" destination="tt1-oX-Fra" id="GSV-zr-c5M"/>
                                             <outlet property="planUserNameLabel" destination="IWQ-PR-iaB" id="fiX-RU-QjO"/>
                                         </connections>
@@ -2560,7 +2539,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="192" height="192"/>
+        <image name="plus" width="256" height="256"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
