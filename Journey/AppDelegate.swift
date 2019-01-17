@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       print("名前",_user.user_name)
       currentUser = _user.user_name
       globalVar.userGenerationInt = _user.user_generation
+      globalVar.userPostPlan(userId: _user.user_id)
     }
     //currentuser = nil
     //ユーザーがいない場合IndexViewに遷移
@@ -548,6 +549,25 @@ class GlobalVar{
   var searchPlanCommentList : [String] = []
   var searchPlanCount = 0
   
+  //投稿した1件のプラン
+  var postPlanId : Int = 0
+  var postUserId : String = ""
+  var postUserName : String = ""
+  var postPlanTitle : String = ""
+  var postUserImagePath : String = ""
+  var postDate : String = ""
+  var postSpotImageSetFlag : Int = 0
+  var postSpotName : String = ""
+  var postSpotImagePathList : [String]? = []
+  var postTrueSpotImagePath : String = ""
+  var postSpotImage : UIImage = UIImage(named: "no-image.png")!
+  var postUserImage : UIImage = UIImage(named: "no-image.png")!
+  var postPlanArea : String = ""
+  var postPlanTransportation : String = ""
+  var postPlanPrice : String = ""
+  var postPlanComment : String = ""
+  
+  
   
   var token : String = ""
 //  let ipAddress = "172.20.10.9:443"
@@ -610,6 +630,66 @@ class GlobalVar{
       }
     }
   }
+  
+  func userPostPlan(userId : String){
+    let url = URL(string: "http://\(ipAddress)/api/v1/search/find?user_id=\(userId)&limit=1")
+    let request = URLRequest(url: url!)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
+        self.postPlanId = (timelineData?.record![0].planId)!
+        self.postUserId = (timelineData?.record![0].userId)!
+        self.postPlanTitle = (timelineData?.record![0].planTitle)!
+        self.postUserName = (timelineData?.record![0].user.userName)!
+        self.postPlanArea = (timelineData?.record![0].area)!
+        self.postPlanTransportation = (timelineData?.record![0].transportation)!
+        self.postPlanPrice = (timelineData?.record![0].price)!
+        self.postPlanComment = (timelineData?.record![0].planComment)!
+        
+        if(timelineData?.record![0].user.userIcon != ""){
+          let url = URL(string: (timelineData?.record![0].user.userIcon)!)!
+          let imageData = try? Data(contentsOf: url)
+          let image = UIImage(data:imageData!)
+          self.postUserImage = image!
+        }else{
+          self.postUserImage = UIImage(named: "no-image.png")!
+        }
+        let planDate = (timelineData?.record![0].planDate)!.prefix(10)
+        var date = planDate.suffix(5)
+        if let range = date.range(of: "-"){
+          date.replaceSubrange(range, with: "月")
+        }
+        self.postDate = "\(date)日"
+        
+        if((timelineData?.record![0].spot.spotImageA)! != ""){
+          self.postSpotImagePathList?.append((timelineData?.record![0].spot.spotImageA)!)
+        }else if((timelineData?.record![0].spot.spotImageB)! != ""){
+          self.postSpotImagePathList?.append((timelineData?.record![0].spot.spotImageB)!)
+        }else if((timelineData?.record![0].spot.spotImageC)! != ""){
+          self.postSpotImagePathList?.append((timelineData?.record![0].spot.spotImageC)!)
+        }
+        self.postSpotName = (timelineData?.record![0].spot.spotTitle)!
+        self.postSpotImagePathList?.append("")
+        self.postTrueSpotImagePath = self.postSpotImagePathList![0]
+        if(self.postTrueSpotImagePath != ""){
+          let url = URL(string: self.postTrueSpotImagePath)!
+          let imageData = try? Data(contentsOf: url)
+          let image = UIImage(data:imageData!)
+          self.postSpotImage = image!
+        }else{
+          self.postSpotImage = UIImage(named: "no-image.png")!
+        }
+        self.postSpotImagePathList?.removeAll()
+      }
+    }.resume()
+  }
+    
   func getTimeline(offset:Int){
     let url = URL(string: "http://\(ipAddress)/api/v1/timeline/find?offset=\(offset)&limit=3")
     let request = URLRequest(url: url!)
@@ -670,8 +750,9 @@ class GlobalVar{
         }
       }else{
       }
-      }.resume()
+    }.resume()
   }
+  
   struct SearchData : Codable{
     let status : Int
     let record : [Record]?
@@ -730,7 +811,6 @@ class GlobalVar{
       }
     }
   }
-  
   func searchTimeline(offset:Int,generation:Int){
     let url = URL(string: "http://\(ipAddress)/api/v1/search/find?generation=\(generation)")
     let request = URLRequest(url: url!)

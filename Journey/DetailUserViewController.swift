@@ -73,10 +73,12 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       
       let userPlanView = TopView(frame: CGRect(x: 16, y: pastLabel.frame.origin.y + pastLabel.frame.size.height - 8, width: UIScreen.main.bounds.size.width - 32, height: 150))
       userPlanView.backgroundColor = UIColor.red
-      userPlanView.planNameLabel.text = "テスト"
-      userPlanView.planUserNameLabel.text = "テスト"
-      userPlanView.planSpotNameLabel1.text = "テスト"
-      userPlanView.planDateLabel.text = "テスト"
+      userPlanView.planUserIconImageView.image = globalVar.postUserImage
+      userPlanView.planImageView.image = globalVar.postSpotImage
+      userPlanView.planNameLabel.text = globalVar.postPlanTitle
+      userPlanView.planUserNameLabel.text = globalVar.postUserName
+      userPlanView.planSpotNameLabel1.text = globalVar.postSpotName
+      userPlanView.planDateLabel.text = globalVar.postDate
       userPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
       userPlanView.planUserIconImageView.clipsToBounds = true
       userPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
