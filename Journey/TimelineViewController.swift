@@ -139,22 +139,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: PlanTableViewCell = tableView.dequeueReusableCell(withIdentifier: "planCell", for : indexPath) as! PlanTableViewCell
     if(reloadFlag == 1){
-      print(spotNameListB!)
-      print(spotCountList)
       cell.isUserInteractionEnabled = true
       cell.planNameLabel.text =  planTitleList[indexPath.row]
       cell.planSpotNameLabel1.text = spotNameListA[indexPath.row]
-      if (spotNameListB![indexPath.row] == "nil"){
-        cell.planSpotNameLabel2.text = ""
-      }else{
-        cell.planSpotNameLabel2.text = spotNameListB![indexPath.row]
-      }
-      if(spotCountList[indexPath.row] != 0){
-        cell.planSpotCountLabel.text = "他\(spotCountList[indexPath.row])件"
-      }else{
-        cell.planSpotCountLabel.text = ""
-      }
-  //    print("画像パス:\(indexPath.row)",spotImagePathList![indexPath.row])
       cell.planFavoriteLabel.text = 99999.description
       cell.planImageView.image = spotImageList![indexPath.row]
       cell.planDateLabel.text = dateList[indexPath.row]
@@ -295,7 +282,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       let area : String
       let planDate : String
       let user : User
-      let spots : [Spots]
+      let spot : Spot
       let date : Date? = NSDate() as Date
       enum CodingKeys: String, CodingKey {
         case planId = "plan_id"
@@ -307,7 +294,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         case area = "area"
         case planDate = "plan_date"
         case user = "user"
-        case spots = "spots"
+        case spot = "spot"
         case date
       }
       struct User : Codable{
@@ -318,7 +305,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
           case userIcon = "user_icon"
         }
       }
-      struct Spots : Codable{
+      struct Spot : Codable{
         let spotId : Int
         let spotTitle : String
         let spotImageA : String?
@@ -354,7 +341,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             let planId = self.planIdList[0]
             for_plan: for i in 0 ... (timelineData?.record?.count)! - 1{
               if(timelineData?.record![i].planId != planId){
-                var count = 0
                 self.planIdList.insert((timelineData?.record![i].planId)!, at: i)
                 self.userIdList.insert((timelineData?.record![i].userId)!, at: i)
                 self.planTitleList.insert((timelineData?.record![i].planTitle)!, at: i)
@@ -373,26 +359,18 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                   date.replaceSubrange(range, with: "月")
                 }
                 self.dateList.append("\(date)日")
-                for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
-                  self.spotIdList.insert((timelineData?.record![i].spots[f].spotId)!, at: i)
-                  if((timelineData?.record![i].spots[f].spotImageA)! != ""){
-                    self.spotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageA)!, at: i)
-                  }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
-                    self.spotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageB)!, at: i)
-                  }else if((timelineData?.record![i].spots[f].spotImageC)! != ""){
-                    self.spotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageC)!, at: i)
-                  }
-                  if(f == 0){
-                    self.spotNameListA.insert((timelineData?.record![i].spots[f].spotTitle)!, at: i)
-                    self.spotNameListB?.insert("nil", at: offset + i)
-                  }else if(f == 1){
-                    self.spotNameListB?[offset + i] = (timelineData?.record![i].spots[f].spotTitle)!
-                  }else{
-                    count += 1
-                  }
+                
+                self.spotIdList.insert((timelineData?.record![i].spot.spotId)!, at: i)
+                if((timelineData?.record![i].spot.spotImageA)! != ""){
+                  self.spotImagePathList?.insert((timelineData?.record![i].spot.spotImageA)!, at: i)
+                }else if((timelineData?.record![i].spot.spotImageB)! != ""){
+                  self.spotImagePathList?.insert((timelineData?.record![i].spot.spotImageB)!, at: i)
+                }else if((timelineData?.record![i].spot.spotImageC)! != ""){
+                  self.spotImagePathList?.insert((timelineData?.record![i].spot.spotImageC)!, at: i)
                 }
+                self.spotNameListA.insert((timelineData?.record![i].spot.spotTitle)!, at: i)
+    
                 self.spotImagePathList?.append("")
-                self.spotCountList.insert(count, at: i)
                 self.trueSpotImagePathList?.append(self.spotImagePathList![0])
                 if(self.trueSpotImagePathList![i] != ""){
                   let url = URL(string: self.trueSpotImagePathList![i])!
@@ -409,7 +387,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             }
           }else{
             for i in 0 ... (timelineData?.record?.count)! - 1{
-              var count = 0
               self.planIdList.append((timelineData?.record![i].planId)!)
               self.userIdList.append((timelineData?.record![i].userId)!)
               self.planTitleList.append((timelineData?.record![i].planTitle)!)
@@ -428,26 +405,16 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 date.replaceSubrange(range, with: "月")
               }
               self.dateList.append("\(date)日")
-              for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
-                self.spotIdList.append((timelineData?.record![i].spots[f].spotId)!)
-                if((timelineData?.record![i].spots[f].spotImageA)! != ""){
-                  self.spotImagePathList?.append((timelineData?.record![i].spots[f].spotImageA)!)
-                }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
-                  self.spotImagePathList?.append((timelineData?.record![i].spots[f].spotImageB)!)
-                }else if((timelineData?.record![i].spots[f].spotImageC)! != ""){
-                  self.spotImagePathList?.append((timelineData?.record![i].spots[f].spotImageC)!)
-                }
-                if(f == 0){
-                  self.spotNameListA.append((timelineData?.record![i].spots[f].spotTitle)!)
-                  self.spotNameListB?.append("nil")
-                }else if(f == 1){
-                  self.spotNameListB?[offset + i] = (timelineData?.record![i].spots[f].spotTitle)!
-                }else{
-                  count += 1
-                }
+              self.spotIdList.append((timelineData?.record![i].spot.spotId)!)
+              if((timelineData?.record![i].spot.spotImageA)! != ""){
+                self.spotImagePathList?.append((timelineData?.record![i].spot.spotImageA)!)
+              }else if((timelineData?.record![i].spot.spotImageB)! != ""){
+                self.spotImagePathList?.append((timelineData?.record![i].spot.spotImageB)!)
+              }else if((timelineData?.record![i].spot.spotImageC)! != ""){
+                self.spotImagePathList?.append((timelineData?.record![i].spot.spotImageC)!)
               }
+              self.spotNameListA.append((timelineData?.record![i].spot.spotTitle)!)
               self.spotImagePathList?.append("")
-              self.spotCountList.append(count)
               self.trueSpotImagePathList?.append(self.spotImagePathList![0])
               if(self.trueSpotImagePathList![i] != ""){
                 let url = URL(string: self.trueSpotImagePathList![i])!
@@ -492,7 +459,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             let planId = self.planIdList[0]
             for_plan: for i in 0 ... (timelineData?.record?.count)! - 1{
               if(timelineData?.record![i].planId != planId){
-                var count = 0
                 self.planIdList.insert((timelineData?.record![i].planId)!, at: i)
                 self.userIdList.insert((timelineData?.record![i].userId)!, at: i)
                 self.planTitleList.insert((timelineData?.record![i].planTitle)!, at: i)
@@ -511,26 +477,16 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                   date.replaceSubrange(range, with: "月")
                 }
                 self.dateList.append("\(date)日")
-                for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
-                  self.spotIdList.insert((timelineData?.record![i].spots[f].spotId)!, at: i)
-                  if((timelineData?.record![i].spots[f].spotImageA)! != ""){
-                    self.spotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageA)!, at: i)
-                  }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
-                    self.spotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageB)!, at: i)
-                  }else if((timelineData?.record![i].spots[f].spotImageC)! != ""){
-                    self.spotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageC)!, at: i)
-                  }
-                  if(f == 0){
-                    self.spotNameListA.insert((timelineData?.record![i].spots[f].spotTitle)!, at: i)
-                    self.spotNameListB?.insert("nil", at: offset + i)
-                  }else if(f == 1){
-                    self.spotNameListB?[offset + i] = (timelineData?.record![i].spots[f].spotTitle)!
-                  }else{
-                    count += 1
-                  }
+                self.spotIdList.insert((timelineData?.record![i].spot.spotId)!, at: i)
+                if((timelineData?.record![i].spot.spotImageA)! != ""){
+                  self.spotImagePathList?.insert((timelineData?.record![i].spot.spotImageA)!, at: i)
+                }else if((timelineData?.record![i].spot.spotImageB)! != ""){
+                  self.spotImagePathList?.insert((timelineData?.record![i].spot.spotImageB)!, at: i)
+                }else if((timelineData?.record![i].spot.spotImageC)! != ""){
+                  self.spotImagePathList?.insert((timelineData?.record![i].spot.spotImageC)!, at: i)
                 }
+                self.spotNameListA.insert((timelineData?.record![i].spot.spotTitle)!, at: i)
                 self.spotImagePathList?.append("")
-                self.spotCountList.insert(count, at: i)
                 self.trueSpotImagePathList?.append(self.spotImagePathList![0])
                 if(self.trueSpotImagePathList![i] != ""){
                   let url = URL(string: self.trueSpotImagePathList![i])!
@@ -547,7 +503,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             }
           }else{
             for i in 0 ... (timelineData?.record?.count)! - 1{
-              var count = 0
               self.planIdList.append((timelineData?.record![i].planId)!)
               self.userIdList.append((timelineData?.record![i].userId)!)
               self.planTitleList.append((timelineData?.record![i].planTitle)!)
@@ -566,26 +521,17 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 date.replaceSubrange(range, with: "月")
               }
               self.dateList.append("\(date)日")
-              for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
-                self.spotIdList.append((timelineData?.record![i].spots[f].spotId)!)
-                if((timelineData?.record![i].spots[f].spotImageA)! != ""){
-                  self.spotImagePathList?.append((timelineData?.record![i].spots[f].spotImageA)!)
-                }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
-                  self.spotImagePathList?.append((timelineData?.record![i].spots[f].spotImageB)!)
-                }else if((timelineData?.record![i].spots[f].spotImageC)! != ""){
-                  self.spotImagePathList?.append((timelineData?.record![i].spots[f].spotImageC)!)
-                }
-                if(f == 0){
-                  self.spotNameListA.append((timelineData?.record![i].spots[f].spotTitle)!)
-                  self.spotNameListB?.append("nil")
-                }else if(f == 1){
-                  self.spotNameListB?[offset + i] = (timelineData?.record![i].spots[f].spotTitle)!
-                }else{
-                  count += 1
-                }
+              self.spotIdList.append((timelineData?.record![i].spot.spotId)!)
+              if((timelineData?.record![i].spot.spotImageA)! != ""){
+                self.spotImagePathList?.append((timelineData?.record![i].spot.spotImageA)!)
+              }else if((timelineData?.record![i].spot.spotImageB)! != ""){
+                self.spotImagePathList?.append((timelineData?.record![i].spot.spotImageB)!)
+              }else if((timelineData?.record![i].spot.spotImageC)! != ""){
+                self.spotImagePathList?.append((timelineData?.record![i].spot.spotImageC)!)
               }
+
+              self.spotNameListA.append((timelineData?.record![i].spot.spotTitle)!)
               self.spotImagePathList?.append("")
-              self.spotCountList.append(count)
               self.trueSpotImagePathList?.append(self.spotImagePathList![0])
               if(self.trueSpotImagePathList![i] != ""){
                 let url = URL(string: self.trueSpotImagePathList![i])!
