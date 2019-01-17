@@ -692,7 +692,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       performSegue(withIdentifier: "toSearchView", sender: nil)    case 3:
       print("３")
     case 4:
-      performSegue(withIdentifier: "backDetailUserView", sender: nil)
+      performSegue(withIdentifier: "toDetailUserView", sender: nil)
     default : return
       
     }
