@@ -15,10 +15,8 @@ class TopView: UIView {
   @IBOutlet weak var planUserNameLabel: UILabel!
   @IBOutlet weak var planImageView: UIImageView!
   @IBOutlet weak var planSpotNameLabel1: UILabel!
-  @IBOutlet weak var planSpotNameLabel2: UILabel!
   @IBOutlet weak var planDateLabel: UILabel!
   @IBOutlet weak var planFavoriteLabel: UILabel!
-  @IBOutlet weak var planSpotCountLabel: UILabel!
 
   override init(frame: CGRect) {
     super.init(frame: frame)
