@@ -76,9 +76,6 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       userPlanView.planNameLabel.text = "テスト"
       userPlanView.planUserNameLabel.text = "テスト"
       userPlanView.planSpotNameLabel1.text = "テスト"
-      userPlanView.planSpotNameLabel2.text = "テスト"
-      userPlanView.planSpotCountLabel.text = "テスト"
-      userPlanView.planSpotCountLabel.text = "他件"
       userPlanView.planDateLabel.text = "テスト"
       userPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
       userPlanView.planUserIconImageView.clipsToBounds = true
