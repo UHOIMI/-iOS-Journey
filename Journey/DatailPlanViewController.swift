@@ -16,6 +16,7 @@ import CoreMotion
 class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPickerViewDelegate,UITabBarDelegate,UITextFieldDelegate,UITextViewDelegate, UITableViewDataSource,UITableViewDelegate {
   
   let globalVar = GlobalVar.shared
+  let boundary = "----WebKitFormBoundaryZLdHZy8HNaBmUX0d"
   
   @IBOutlet weak var subView: UIView!
   @IBOutlet weak var subViewHeight: NSLayoutConstraint!
@@ -464,6 +465,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       request.httpMethod = "POST"
       // POSTするデータをBodyとして設定
       request.httpBody = str.data(using: .utf8)
+      print("ヘッダー", request.allHTTPHeaderFields)
       let session = URLSession.shared
       session.dataTask(with: request) { (data, response, error) in
         if error == nil, let data = data, let response = response as? HTTPURLResponse {
@@ -477,15 +479,31 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
         self.getFavorite()
       }.resume()
     }else{
-      let str : String = "plan_id=\(planId)&token=\(globalVar.token)"
+      let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
       print("うらるstr:",str)
+//      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/delete")
       let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/delete")
+
       print("デリートウラル：", url)
       var request = URLRequest(url: url!)
       // DELETEを指定
       request.httpMethod = "DELETE"
+      //request.setValue(str.data(using: .utf8)?.count.description, forHTTPHeaderField: "Content-Length")
       // DELETEするデータをBodyとして設定
       request.httpBody = str.data(using: .utf8)
+//      request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//      request.addValue("application/json", forHTTPHeaderField: "Accept")
+//      request.addValue("\(request.httpBody!.count)", forHTTPHeaderField: "Content-Length")
+//      request.addValue("\(str.)", forHTTPHeaderField: "Content-Length")
+      
+      // マルチパートでファイルアップロード
+//      let headers = ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
+//      let urlConfig = URLSessionConfiguration.default
+//      urlConfig.httpAdditionalHeaders = headers
+      
+//      let session = Foundation.URLSession(configuration: urlConfig)
+      print("ヘッダー", request.allHTTPHeaderFields)
+      
       let session = URLSession.shared
       session.dataTask(with: request) { (data, response, error) in
         if error == nil, let data = data, let response = response as? HTTPURLResponse {

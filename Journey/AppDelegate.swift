@@ -309,10 +309,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.globalVar.newPlanTransportationList.append((timelineData?.record![i].transportation)!)
             self.globalVar.newPlanPriceList.append((timelineData?.record![i].price)!)
             self.globalVar.newPlanCommentList.append((timelineData?.record![i].planComment)!)
-            let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
-            let imageData = try? Data(contentsOf: url)
-            let image = UIImage(data:imageData!)
-            self.globalVar.newUserImageList.append(image!)
+            if(timelineData?.record![i].user.userIcon != ""){
+              let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.globalVar.newUserImageList.append(image!)
+            }else{
+              self.globalVar.newUserImageList.append(UIImage(named: "no-image.png")!)
+            }
             let planDate = (timelineData?.record![i].planDate)!.prefix(10)
             var date = planDate.suffix(5)
             if let range = date.range(of: "-"){
@@ -512,8 +516,8 @@ class GlobalVar{
   var userGeneration : String = ""
   var userIconPath : String = ""
   var userIcon:UIImage?
-  let ipAddress = "api.mino.asia:3001"
-  //let ipAddress = "192.168.43.221:3000"
+//  let ipAddress = "api.mino.asia:3001"
+  let ipAddress = "192.168.43.221:3000"
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()

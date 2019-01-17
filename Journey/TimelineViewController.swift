@@ -418,10 +418,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.planTransportationList.append((timelineData?.record![i].transportation)!)
               self.planPriceList.append((timelineData?.record![i].price)!)
               self.planCommentList.append((timelineData?.record![i].planComment)!)
-              let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
-              let imageData = try? Data(contentsOf: url)
-              let image = UIImage(data:imageData!)
-              self.userImageList.append(image!)
+              if(timelineData?.record![i].user.userIcon != ""){
+                let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
+                let imageData = try? Data(contentsOf: url)
+                let image = UIImage(data:imageData!)
+                self.userImageList.append(image!)
+              }else{
+                self.userImageList.append(UIImage(named: "no-image.png")!)
+              }
               let planDate = (timelineData?.record![i].planDate)!.prefix(10)
               var date = planDate.suffix(5)
               if let range = date.range(of: "-"){
