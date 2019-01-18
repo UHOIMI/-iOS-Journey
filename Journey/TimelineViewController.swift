@@ -70,6 +70,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var searchGeneration = ""
   var searchFlag = 0
   
+  //DetailUserから受け取る
+  var detailUserFlag = 0
+  var detailUserId = ""
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -89,9 +93,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     print(searchTransportationString)
     print(searchPrice)
     print(searchGeneration)
-    if(searchFlag == 0){
+    if(detailUserFlag == 1){
+      navigationItem.title = "過去のプラン一覧"
+      getUserTimeline(offset: planCount, flag: 0, userId: detailUserId)
+    }else if(searchFlag == 0){
+      navigationItem.title = "新着プラン一覧"
       getTimeline(offset: planCount,flag: 0, area: area)
     }else if(searchFlag == 1){
+      navigationItem.title = "検索結果一覧"
       if(searchTransportationString == "0,0,0,0,0,0,0"){
         searchTransportationString = ""
       }
@@ -201,7 +210,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   @objc func refreshControlValueChanged(sender: UIRefreshControl) {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
       //上スクロール
-      if(self.searchFlag == 0){
+      if(self.detailUserFlag == 1){
+        self.getUserTimeline(offset: self.planCount, flag: 1, userId: self.detailUserId)
+      }else if(self.searchFlag == 0){
         self.getTimeline(offset: self.planCount,flag: 1, area: self.area)
       }else if(self.searchFlag == 1){
         if(self.searchTransportationString == "0,0,0,0,0,0,0"){
@@ -218,7 +229,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height && self.tableView.isDragging && isaddload == true){
       self.isaddload = false
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-        if(self.searchFlag == 0){
+        if(self.detailUserFlag == 1){
+          self.getUserTimeline(offset: self.planCount, flag: 0, userId: self.detailUserId)
+        }else if(self.searchFlag == 0){
           self.getTimeline(offset: self.planCount,flag: 0, area: self.area)
         }else if(self.searchFlag == 1){
           if(self.searchTransportationString == "0,0,0,0,0,0,0"){
@@ -297,7 +310,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   }
   
   func getTimeline(offset:Int,flag:Int,area:String){
-    var text = "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&\(area)"
+    var text = "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&area=\(area)"
     text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
     let url = URL(string: text)!
     let request = URLRequest(url: url)
@@ -530,6 +543,128 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
           }
         }else{
           self.showAlert(title: "該当する結果がありません", message: "検索をやり直してください")
+        }
+      }
+      }.resume()
+  }
+  
+  func getUserTimeline(offset:Int,flag:Int,userId:String){
+    var text = "http://\(globalVar.ipAddress)/api/v1/timeline/find?offset=\(offset)&user_id=\(userId)"
+    text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+    let url = URL(string: text)!
+    let request = URLRequest(url: url)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
+        if(timelineData!.status == 200){
+          if(flag == 1){
+            let planId = self.planIdList[0]
+            for_plan: for i in 0 ... (timelineData?.record?.count)! - 1{
+              if(timelineData?.record![i].planId != planId){
+                self.planIdList.insert((timelineData?.record![i].planId)!, at: i)
+                self.userIdList.insert((timelineData?.record![i].userId)!, at: i)
+                self.planTitleList.insert((timelineData?.record![i].planTitle)!, at: i)
+                self.userNameList.insert((timelineData?.record![i].user.userName)!, at: i)
+                self.planAreaList.insert((timelineData?.record![i].area)!, at: i)
+                self.planTransportationList.insert((timelineData?.record![i].transportation)!, at: i)
+                self.planPriceList.insert((timelineData?.record![i].price)!, at: i)
+                self.planCommentList.insert((timelineData?.record![i].planComment)!, at: i)
+                let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
+                let imageData = try? Data(contentsOf: url)
+                let image = UIImage(data:imageData!)
+                self.userImageList.append(image!)
+                let planDate = (timelineData?.record![i].planDate)!.prefix(10)
+                var date = planDate.suffix(5)
+                if let range = date.range(of: "-"){
+                  date.replaceSubrange(range, with: "月")
+                }
+                self.dateList.append("\(date)日")
+                
+                self.spotIdList.insert((timelineData?.record![i].spot.spotId)!, at: i)
+                if((timelineData?.record![i].spot.spotImageA)! != ""){
+                  self.spotImagePathList?.insert((timelineData?.record![i].spot.spotImageA)!, at: i)
+                }else if((timelineData?.record![i].spot.spotImageB)! != ""){
+                  self.spotImagePathList?.insert((timelineData?.record![i].spot.spotImageB)!, at: i)
+                }else if((timelineData?.record![i].spot.spotImageC)! != ""){
+                  self.spotImagePathList?.insert((timelineData?.record![i].spot.spotImageC)!, at: i)
+                }
+                self.spotNameListA.insert((timelineData?.record![i].spot.spotTitle)!, at: i)
+                
+                self.spotImagePathList?.append("")
+                self.trueSpotImagePathList?.append(self.spotImagePathList![0])
+                if(self.trueSpotImagePathList![i] != ""){
+                  let url = URL(string: self.trueSpotImagePathList![i])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.insert(image!, at: i)
+                }else{
+                  self.spotImageList?.insert(UIImage(named: "no-image.png")!, at: i)
+                }
+                self.spotImagePathList?.removeAll()
+              }else{
+                break for_plan
+              }
+            }
+          }else{
+            for i in 0 ... (timelineData?.record?.count)! - 1{
+              self.planIdList.append((timelineData?.record![i].planId)!)
+              self.userIdList.append((timelineData?.record![i].userId)!)
+              self.planTitleList.append((timelineData?.record![i].planTitle)!)
+              self.userNameList.append((timelineData?.record![i].user.userName)!)
+              self.planAreaList.append((timelineData?.record![i].area)!)
+              self.planTransportationList.append((timelineData?.record![i].transportation)!)
+              self.planPriceList.append((timelineData?.record![i].price)!)
+              self.planCommentList.append((timelineData?.record![i].planComment)!)
+              if(timelineData?.record![i].user.userIcon != ""){
+                let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
+                let imageData = try? Data(contentsOf: url)
+                let image = UIImage(data:imageData!)
+                self.userImageList.append(image!)
+              }else{
+                self.userImageList.append(UIImage(named: "no-image.png")!)
+              }
+              let planDate = (timelineData?.record![i].planDate)!.prefix(10)
+              var date = planDate.suffix(5)
+              if let range = date.range(of: "-"){
+                date.replaceSubrange(range, with: "月")
+              }
+              self.dateList.append("\(date)日")
+              self.spotIdList.append((timelineData?.record![i].spot.spotId)!)
+              if((timelineData?.record![i].spot.spotImageA)! != ""){
+                self.spotImagePathList?.append((timelineData?.record![i].spot.spotImageA)!)
+              }else if((timelineData?.record![i].spot.spotImageB)! != ""){
+                self.spotImagePathList?.append((timelineData?.record![i].spot.spotImageB)!)
+              }else if((timelineData?.record![i].spot.spotImageC)! != ""){
+                self.spotImagePathList?.append((timelineData?.record![i].spot.spotImageC)!)
+              }
+              self.spotNameListA.append((timelineData?.record![i].spot.spotTitle)!)
+              self.spotImagePathList?.append("")
+              self.trueSpotImagePathList?.append(self.spotImagePathList![0])
+              if(self.trueSpotImagePathList![i] != ""){
+                let url = URL(string: self.trueSpotImagePathList![i])!
+                let imageData = try? Data(contentsOf: url)
+                let image = UIImage(data:imageData!)
+                self.spotImageList?.append(image!)
+              }else{
+                self.spotImageList?.append(UIImage(named: "no-image.png")!)
+              }
+              self.spotImagePathList?.removeAll()
+              self.planCount += 1
+            }
+          }
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            print("リロードテーブル")
+            self.reloadFlag = 1
+            self.tableView.reloadData()
+          }
+        }else{
+          print("status",timelineData!.status)
         }
       }
       }.resume()

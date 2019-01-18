@@ -1611,6 +1611,9 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <state key="normal" title="すべて表示"/>
+                                                <connections>
+                                                    <action selector="tappedUserPostListButton:" destination="KJW-a3-dr8" eventType="touchUpInside" id="ula-2j-U8a"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmS-S4-Y0A">
                                                 <rect key="frame" x="248" y="133" width="111" height="34"/>
@@ -1708,7 +1711,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYB-y1-OP4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1170" y="-2370"/>
+            <point key="canvasLocation" x="-593" y="-2431"/>
         </scene>
         <!--入力内容確認-->
         <scene sceneID="Dch-sw-eK7">
@@ -2075,7 +2078,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7sU-lV-dre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4030" y="-1628"/>
+            <point key="canvasLocation" x="-4479" y="-1596"/>
         </scene>
         <!--ユーザー編集-->
         <scene sceneID="iTe-3a-Q5c">
@@ -2559,7 +2562,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="256" height="256"/>
+        <image name="plus" width="192" height="192"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2574,10 +2577,10 @@
         <segue reference="vDx-IZ-clZ"/>
         <segue reference="Zge-aV-3pR"/>
         <segue reference="0Ny-WU-Sio"/>
-        <segue reference="gCs-Ba-VyA"/>
+        <segue reference="lAe-ZU-lsv"/>
         <segue reference="Y1p-dC-o0y"/>
         <segue reference="SAI-tm-OCo"/>
-        <segue reference="V3j-Fe-9bE"/>
+        <segue reference="w35-bH-KHu"/>
         <segue reference="ScF-Q7-9Tm"/>
         <segue reference="Mcq-lN-1b2"/>
         <segue reference="F4q-09-NOQ"/>
