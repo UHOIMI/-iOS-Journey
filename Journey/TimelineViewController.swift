@@ -49,6 +49,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var planCount = 0
   var reloadFlag = 0
   var area : String = ""
+  var userEditFlag = false
+  
   //受け渡し用
   var planId = 0
   var planTitle = ""
@@ -59,8 +61,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var planTransportation = ""
   var planPrice = ""
   var planComment = ""
-  var spotCountList2 : [Int] = []
-  var spotIdList2 : [Int] = []
   
   //SearchViewから受け取る値
   var searchText = ""
@@ -170,35 +170,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     userId = userIdList[indexPath.row]
     userImage = userImageList[indexPath.row]
     userName = userNameList[indexPath.row]
-    var spotCount = 0
-    for i in 0 ..< indexPath.row {
-      if(spotCountList[i] == 0){
-        if(spotNameListB![i] == "nil"){//
-          spotCount += 1
-        }else{
-          spotCount += 2
-        }
-      }else{
-        spotCount += spotCountList[i] + 2
-      }
-    }
     
-    var spotLoop = 0
-    if(spotCountList[indexPath.row] == 0){
-      if(spotNameListB![indexPath.row] != "nil"){//
-        spotLoop = 1
-      }
-    }else{
-      spotLoop += spotCountList[indexPath.row] + 1
-    }
-    
-    for i in 0 ... spotLoop {
-      spotIdList2.append(spotIdList[spotCount])
-      print("indexパス：",indexPath.row)
-      print("スポットCount：",spotCount)
-      print("スポットid：",spotIdList2[i])
-      spotCount += 1
-    }
     self.performSegue(withIdentifier: "toDetailPlanView", sender: planIdList[indexPath.row])
     
   }
@@ -215,12 +187,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       nextViewController.planTransportationString = planTransportation
       nextViewController.planComment = planComment
       nextViewController.planPrice = planPrice
-      nextViewController.spotIdList = spotIdList2
-      spotIdList2.removeAll()
       
     }else if(segue.identifier == "toDetailUserView"){
       let nextViewController = segue.destination as! DetailUserViewController
-      nextViewController.editFlag = false
+      if(userEditFlag){
+        nextViewController.editFlag = true
+      }else{
+        nextViewController.editFlag = userEditFlag
+      }
     }
   }
   
@@ -647,6 +621,13 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   
   
   @objc func userImageViewTapped(_ sender: UITapGestureRecognizer) {
+    self.userEditFlag = false
+    let tappedLocation = sender.location(in: tableView)
+    let tappedIndexPath = tableView.indexPathForRow(at: tappedLocation)
+    let tappedRow = tappedIndexPath?.row
+    if(self.userIdList[tappedRow!] == globalVar.userId){
+      self.userEditFlag = true
+    }
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
   
@@ -692,13 +673,15 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       performSegue(withIdentifier: "toSearchView", sender: nil)    case 3:
       print("３")
     case 4:
-      performSegue(withIdentifier: "backDetailUserView", sender: nil)
+      self.userEditFlag = true
+      performSegue(withIdentifier: "toDetailUserView", sender: nil)
     default : return
       
     }
   }
   
   @objc func userIconTapped(sender : AnyObject) {
+    self.userEditFlag = true
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
   

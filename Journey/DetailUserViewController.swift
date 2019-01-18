@@ -27,6 +27,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   
   let globalVar = GlobalVar.shared
   var editFlag = true
+  var userId : Int = 0
   
   var imgView:UIImageView!
   let myFrameSize:CGSize = UIScreen.main.bounds.size
@@ -44,32 +45,29 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
       imgView.frame.origin.y -= self.imgView.frame.height / 2
       imgView.image = globalVar.userIcon
+      // 角を丸くする
+      self.imgView.layer.cornerRadius = 100 * 0.5
+      self.imgView.clipsToBounds = true
       
       if(!editFlag){
         editButton.title = ""
         editButton.isEnabled = false
         spotListButton.isHidden = true
         logoutButton.isHidden = true
+        subView.addSubview(self.imgView)
+        getUser()
+        userCommentTextView.text = globalVar.userComment
+        userCommentTextView.numberOfLines = 0
+        userCommentTextView.sizeToFit()
+      }else{
+        subView.addSubview(self.imgView)
+        userGenderTextView.text = globalVar.userGender
+        userGenerationTextView.text = globalVar.userGeneration
+        userNameTextView.text = globalVar.userName
+        userCommentTextView.text = globalVar.userComment
+        userCommentTextView.numberOfLines = 0
+        userCommentTextView.sizeToFit()
       }
-      
-//      self.imgView = UIImageView()
-//      imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + headerImageView.frame.height, width: 100, height: 100)
-//      imgView.frame.origin.y -= self.imgView.frame.height / 2
-      
-      //headerImageView.contentMode = UIView.ContentMode.scaleAspectFit
-//      headerImageView.image = UIImage(named: "mountain")
-      
-      // 角を丸くする
-      self.imgView.layer.cornerRadius = 100 * 0.5
-      self.imgView.clipsToBounds = true
-      
-      subView.addSubview(self.imgView)
-      userGenderTextView.text = globalVar.userGender
-      userGenerationTextView.text = globalVar.userGeneration
-      userNameTextView.text = globalVar.userName
-      userCommentTextView.text = globalVar.userComment
-      userCommentTextView.numberOfLines = 0
-      userCommentTextView.sizeToFit()
       
       let userPlanView = TopView(frame: CGRect(x: 16, y: pastLabel.frame.origin.y + pastLabel.frame.size.height - 8, width: UIScreen.main.bounds.size.width - 32, height: 150))
       userPlanView.backgroundColor = UIColor.red
@@ -101,6 +99,85 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   
   @IBAction func tappedEditButton(_ sender: Any) {
     performSegue(withIdentifier: "toEditUserView", sender: nil)
+  }
+  
+  struct UserData : Codable{
+    let status : Int
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+      let userId : String
+      let userName : String
+      let generation : String
+      let gender : String
+      let comment : String?
+      let user_icon : String?
+      let user_header : String?
+      enum CodingKeys: String, CodingKey {
+        case userId = "user_id"
+        case userName = "user_name"
+        case generation = "generation"
+        case gender = "gender"
+        case comment = "comment"
+        case user_icon = "user_icon"
+        case user_header = "user_header"
+      }
+    }
+  }
+  
+  func getUser(){
+    var text = "http://\(globalVar.ipAddress)/api/v1/user/find?user_id=\(userId)"
+    text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+    //    let decodedString:String = text.removingPercentEncoding!
+    print("URLのテスト", text)
+    let url = URL(string: text)!
+    let request = URLRequest(url: url)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let userData = try? JSONDecoder().decode(UserData.self, from: data)
+        if(userData!.status == 200){
+          for i in 0 ... (userData?.record?.count)! - 1{
+            self.userNameTextView.text = (userData?.record![i].userName)!
+            self.userCommentTextView.text = (userData?.record![i].comment)!
+            self.userGenerationTextView.text = (userData?.record![i].generation)!
+            self.userGenderTextView.text = (userData?.record![i].gender)!
+            if((userData?.record![i].user_icon)! != ""){
+              let url = URL(string: (userData?.record![i].user_icon)!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.imgView.image = image
+            }else{
+              self.imgView.image = UIImage(named:"no-image.png")!
+            }
+            if((userData?.record![i].user_header)! != ""){
+              let url = URL(string: (userData?.record![i].user_header)!)!
+              let imageData = try? Data(contentsOf: url)
+              let image = UIImage(data:imageData!)
+              self.headerImageView.image = image
+            }else{
+              self.headerImageView.image = UIImage(named:"no-image.png")!
+            }
+          }
+          
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            
+          }
+        }else{
+          print("status",userData!.status)
+        }
+      }
+    }.resume()
   }
   
   func createTabBar(){
