@@ -29,7 +29,13 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   
   let globalVar = GlobalVar.shared
   var editFlag = true
-  var userId : Int = 0
+  var userId = ""
+  var userName = ""
+  var userGeneration = ""
+  var userGender = ""
+  var userComment = ""
+  var userIcon = UIImage()
+  var userHeader = UIImage()
   
   var imgView:UIImageView!
   let myFrameSize:CGSize = UIScreen.main.bounds.size
@@ -42,11 +48,11 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         //scrollViewsetScrollEnabled
         scrollView.isScrollEnabled = false
       }
-      headerImageView.image = globalVar.userHeader
+      self.headerImageView.image = UIImage(named:"no-image.png")!
       self.imgView = UIImageView()
       imgView.frame = CGRect(x: 30, y: headerImageView.frame.origin.y + (UIScreen.main.bounds.size.width / 3), width: 100, height: 100)
       imgView.frame.origin.y -= self.imgView.frame.height / 2
-      imgView.image = globalVar.userIcon
+      imgView.image = UIImage(named:"no-image.png")!
       // 角を丸くする
       self.imgView.layer.cornerRadius = 100 * 0.5
       self.imgView.clipsToBounds = true
@@ -62,16 +68,18 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         userCommentTextView.numberOfLines = 0
         userCommentTextView.sizeToFit()
       }else{
+        imgView.image = globalVar.userIcon
+        headerImageView.image = globalVar.userHeader
         subView.addSubview(self.imgView)
         userGenderTextView.text = globalVar.userGender
-        userGenerationTextView.text = globalVar.userGeneration
+        userGenerationTextView.text = "\(globalVar.userGeneration)歳"
         userNameTextView.text = globalVar.userName
         userCommentTextView.text = globalVar.userComment
         userCommentTextView.numberOfLines = 0
         userCommentTextView.sizeToFit()
       }
       
-      let userPlanView = TopView(frame: CGRect(x: 16, y: pastLabel.frame.origin.y + pastLabel.frame.size.height - 8, width: UIScreen.main.bounds.size.width - 32, height: 150))
+      let userPlanView = TopView(frame: CGRect(x: 16, y: pastLabel.frame.origin.y + pastLabel.frame.size.height + 8, width: UIScreen.main.bounds.size.width - 32, height: 150))
       userPlanView.backgroundColor = UIColor.red
       userPlanView.planUserIconImageView.image = globalVar.postUserImage
       userPlanView.planImageView.image = globalVar.postSpotImage
@@ -85,6 +93,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       userPlanView.planUserIconImageView.isUserInteractionEnabled = true
       userPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.generationPlanTapped(_ :))))
       userPlanView.layer.cornerRadius = 5
+      userPlanView.layer.masksToBounds = true
       subView.addSubview(userPlanView)
       subView.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
       
@@ -117,7 +126,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
     struct Record : Codable{
       let userId : String
       let userName : String
-      let generation : String
+      let generation : Int
       let gender : String
       let comment : String?
       let user_icon : String?
@@ -135,12 +144,13 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   }
   
   func getUser(){
-    var text = "http://\(globalVar.ipAddress)/api/v1/user/find?user_id=\(userId)"
-    text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
-    //    let decodedString:String = text.removingPercentEncoding!
-    print("URLのテスト", text)
-    let url = URL(string: text)!
-    let request = URLRequest(url: url)
+//    var text = "http://\(globalVar.ipAddress)/api/v1/user/find?user_id=\(userId)"
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/users/find?user_id=\(userId)")
+//    text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+//    //    let decodedString:String = text.removingPercentEncoding!
+//    print("URLのテスト", text)
+//    let url = URL(string: text)!
+    let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
       if error == nil, let data = data, let response = response as? HTTPURLResponse {
@@ -152,30 +162,35 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         let userData = try? JSONDecoder().decode(UserData.self, from: data)
         if(userData!.status == 200){
           for i in 0 ... (userData?.record?.count)! - 1{
-            self.userNameTextView.text = (userData?.record![i].userName)!
-            self.userCommentTextView.text = (userData?.record![i].comment)!
-            self.userGenerationTextView.text = (userData?.record![i].generation)!
-            self.userGenderTextView.text = (userData?.record![i].gender)!
-            if((userData?.record![i].user_icon)! != ""){
+            self.userName = (userData?.record![i].userName)!
+            self.userComment = (userData?.record![i].comment)!
+            self.userGeneration = (userData?.record![i].generation)!.description
+            self.userGender = (userData?.record![i].gender)!
+            if(userData?.record![i].user_icon != nil && (userData?.record![i].user_icon)! != ""){
               let url = URL(string: (userData?.record![i].user_icon)!)!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
-              self.imgView.image = image
+              self.userIcon = image!
             }else{
-              self.imgView.image = UIImage(named:"no-image.png")!
+              self.userIcon = UIImage(named:"no-image.png")!
             }
-            if((userData?.record![i].user_header)! != ""){
+            if(userData?.record![i].user_header != nil && (userData?.record![i].user_header)! != ""){
               let url = URL(string: (userData?.record![i].user_header)!)!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
-              self.headerImageView.image = image
+              self.userHeader = image!
             }else{
-              self.headerImageView.image = UIImage(named:"no-image.png")!
+              self.userHeader = UIImage(named:"no-image.png")!
             }
           }
           
           DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-            
+            self.userNameTextView.text = self.userName
+            self.userGenderTextView.text = self.userGender
+            self.userCommentTextView.text = self.userComment
+            self.userGenerationTextView.text = "\(self.userGeneration)歳"
+            self.imgView.image = self.userIcon
+            self.headerImageView.image = self.userHeader
           }
         }else{
           print("status",userData!.status)

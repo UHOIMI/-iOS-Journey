@@ -482,7 +482,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
 //      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/delete")
       let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/delete")
 
-      print("デリートウラル：", url)
+//      print("デリートウラル：", url)
       var request = URLRequest(url: url!)
       // DELETEを指定
       request.httpMethod = "DELETE"
@@ -500,7 +500,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
 //      urlConfig.httpAdditionalHeaders = headers
       
 //      let session = Foundation.URLSession(configuration: urlConfig)
-      print("ヘッダー", request.allHTTPHeaderFields)
+//      print("ヘッダー", request.allHTTPHeaderFields)
       
       let session = URLSession.shared
       session.dataTask(with: request) { (data, response, error) in
