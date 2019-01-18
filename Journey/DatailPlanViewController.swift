@@ -85,11 +85,11 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     super.viewDidLoad()
     self.navigationItem.hidesBackButton = true
     viewHeight = Int(spotTableView.frame.origin.y) + 100
-    for i in 0 ... spotIdList.count - 1 {
-      makerList.insert(GMSMarker(), at: i)
-      spotImageNum.insert(-1, at: i)
-    }
     getSpot()
+//    for i in 0 ... spotIdList.count {
+//      makerList.insert(GMSMarker(), at: i)
+//      spotImageNum.insert(-1, at: i)
+//    }
     getFavorite()
     var arr:[String] = planTransportationString.components(separatedBy: ",")
     print(arr)
@@ -317,11 +317,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   
   func getSpot(){
-    var text = "http://\(globalVar.ipAddress)/api/v1/spot/find?spot_id="
-    text += spotIdList[0].description
-    for _sId in spotIdList {
-      text += "&spot_id=" + _sId.description
-    }
+    var text = "http://\(globalVar.ipAddress)/api/v1/spot/find?plan_id=\(planId)"
     text = text.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
     //    let decodedString:String = text.removingPercentEncoding!
     print("URLのテスト", text)
@@ -338,10 +334,12 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
         let spotData = try? JSONDecoder().decode(SpotData.self, from: data)
         if(spotData!.status == 200){
           for i in 0 ... (spotData?.record?.count)! - 1{
-//                1var count = 0
+            //                1var count = 0
             //self.makerList.insert(GMSMarker(), at: i)
             //let test = (spotData?.record![i].spotAddress.lat)!
             //let test2 = (spotData?.record![i].spotAddress.lat)!
+            self.makerList.insert(GMSMarker(), at: i)
+            self.spotImageNum.insert(-1, at: i)
             self.spotLatList.insert((spotData?.record![i].spotAddress.lat)!, at: i)
             self.spotLngList.insert((spotData?.record![i].spotAddress.lng)!, at: i)
             self.makerList[i].position = CLLocationCoordinate2D(latitude: (spotData?.record![i].spotAddress.lat)!, longitude: (spotData?.record![i].spotAddress.lng)!)
@@ -382,18 +380,18 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
             if(self.spotImageNum[i] == -1){
               self.spotImageNum[i] = 2
             }
-//            var url = URL(string: (spotData?.record![i].spotImageA)!)!
-//            var imageData = try? Data(contentsOf: url)
-//            var image = UIImage(data:imageData!)
-//            self.spotImageAList.append(image!)
-//            url = URL(string: (spotData?.record![i].spotImageB)!)!
-//            imageData = try? Data(contentsOf: url)
-//            image = UIImage(data:imageData!)
-//            self.spotImageBList.append(image!)
-//            url = URL(string: (spotData?.record![i].spotImageC)!)!
-//            imageData = try? Data(contentsOf: url)
-//            image = UIImage(data:imageData!)
-//            self.spotImageCList.append(image!)
+            //            var url = URL(string: (spotData?.record![i].spotImageA)!)!
+            //            var imageData = try? Data(contentsOf: url)
+            //            var image = UIImage(data:imageData!)
+            //            self.spotImageAList.append(image!)
+            //            url = URL(string: (spotData?.record![i].spotImageB)!)!
+            //            imageData = try? Data(contentsOf: url)
+            //            image = UIImage(data:imageData!)
+            //            self.spotImageBList.append(image!)
+            //            url = URL(string: (spotData?.record![i].spotImageC)!)!
+            //            imageData = try? Data(contentsOf: url)
+            //            image = UIImage(data:imageData!)
+            //            self.spotImageCList.append(image!)
           }
           
           DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
@@ -411,13 +409,13 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
               self.makerList[i].map = mapView
             }
             self.subView.addSubview(mapView)
-
+            
           }
         }else{
           print("status",spotData!.status)
         }
       }
-    }.resume()
+      }.resume()
   }
   
   func getFavorite(){
