@@ -9,13 +9,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Journey/HomeViewController.swift"
-            timestampString = "569469880.2454799"
+            filePath = "Journey/TimelineViewController.swift"
+            timestampString = "569474331.233706"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "475"
+            endingLineNumber = "475"
+            landmarkName = "getTimeline(offset:flag:area:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Journey.TimelineViewController.getTimeline(offset: Swift.Int, flag: Swift.Int, area: Swift.String) -&gt; ()"
+                  moduleName = "Journey"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/satsuki/Documents/Swift-Beginners/Journey/Journey/TimelineViewController.swift"
+                  timestampString = "569473619.269843"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "475"
+                  endingLineNumber = "475"
+                  offsetFromSymbolStart = "49928">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Journey.TimelineViewController.getTimeline(offset: Swift.Int, flag: Swift.Int, area: Swift.String) -&gt; ()"
+                  moduleName = "Journey"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/satsuki/Documents/Swift-Beginners/Journey/Journey/TimelineViewController.swift"
+                  timestampString = "569473619.271644"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "475"
+                  endingLineNumber = "475"
+                  offsetFromSymbolStart = "57964">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Journey/TimelineViewController.swift"
+            timestampString = "569474331.23428"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "476"
+            endingLineNumber = "476"
+            landmarkName = "getTimeline(offset:flag:area:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,14 +73,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Journey/HomeViewController.swift"
-            timestampString = "569469880.2460541"
+            filePath = "Journey/TimelineViewController.swift"
+            timestampString = "569474331.234527"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "478"
+            endingLineNumber = "478"
+            landmarkName = "getTimeline(offset:flag:area:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Journey.TimelineViewController.getTimeline(offset: Swift.Int, flag: Swift.Int, area: Swift.String) -&gt; ()"
+                  moduleName = "Journey"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/satsuki/Documents/Swift-Beginners/Journey/Journey/TimelineViewController.swift"
+                  timestampString = "569473619.400615"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "478"
+                  endingLineNumber = "478"
+                  offsetFromSymbolStart = "51216">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Journey.TimelineViewController.getTimeline(offset: Swift.Int, flag: Swift.Int, area: Swift.String) -&gt; ()"
+                  moduleName = "Journey"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/satsuki/Documents/Swift-Beginners/Journey/Journey/TimelineViewController.swift"
+                  timestampString = "569473619.402671"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "478"
+                  endingLineNumber = "478"
+                  offsetFromSymbolStart = "57972">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -41,13 +121,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Journey/HomeViewController.swift"
-            timestampString = "569469880.246312"
+            filePath = "Journey/TimelineViewController.swift"
+            timestampString = "569474331.234755"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "480"
+            endingLineNumber = "480"
+            landmarkName = "getTimeline(offset:flag:area:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

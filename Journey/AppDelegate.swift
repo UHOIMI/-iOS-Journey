@@ -338,7 +338,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.globalVar.newSpotNameListA.append((timelineData?.record![i].spots[f].spotTitle)!)
                 self.globalVar.newSpotNameListB?.append("")
               }else if(f == 1){
-                self.globalVar.newSpotNameListB?.insert((timelineData?.record![i].spots[f].spotTitle)!, at: f)
+                self.globalVar.newSpotNameListB?.insert((timelineData?.record![i].spots[f].spotTitle)!, at: i)
               }else if(f > 1){
                 count += 1
               }
@@ -413,7 +413,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.globalVar.searchSpotNameListA.append((searchData?.record![i].spots[f].spotTitle)!)
                 self.globalVar.searchSpotNameListB?.append("")
               }else if(f == 1){
-                self.globalVar.searchSpotNameListB?.insert((searchData?.record![i].spots[f].spotTitle)!, at: f)
+                self.globalVar.searchSpotNameListB?.insert((searchData?.record![i].spots[f].spotTitle)!, at: i)
               }else if(f > 1){
                 count += 1
               }
