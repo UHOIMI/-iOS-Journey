@@ -524,6 +524,7 @@ class GlobalVar{
   var postSpotImageSetFlag : Int = 0
   var postSpotNameA : String = ""
   var postSpotNameB : String = ""
+  var postSpotCount : Int = 0
   var postSpotImagePathList : [String]? = []
   var postTrueSpotImagePath : String = ""
   var postSpotImage : UIImage = UIImage(named: "no-image.png")!
@@ -641,13 +642,14 @@ class GlobalVar{
             self.postSpotImagePathList?.append((timelineData?.record![0].spots[i].spotImageC)!)
           }
           if(1 == 0){
-            self.postSpotNameA = (timelineData?.record![0].spots[i].spotTitle)!
+            self.postSpotNameA = timelineData!.record![0].spots[i].spotTitle
           }else if(i == 1){
             self.postSpotNameB = (timelineData?.record![0].spots[i].spotTitle)!
           }else if (i > 1){
-            
+            self.postSpotCount += 1
           }
         }
+        
         self.postSpotImagePathList?.append("")
         self.postTrueSpotImagePath = self.postSpotImagePathList![0]
         if(self.postTrueSpotImagePath != ""){

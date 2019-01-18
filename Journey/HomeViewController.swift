@@ -110,7 +110,12 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
         newPlanView.planNameLabel.text = globalVar.newPlanTitleList[i]
         newPlanView.planUserNameLabel.text = globalVar.newUserNameList[i]
         newPlanView.planSpotNameLabel1.text = globalVar.newSpotNameListA[i]
-        
+        newPlanView.planSpotNameLabel2.text = globalVar.newSpotNameListB![i]
+        if(globalVar.newSpotCountList[i] == 0){
+          newPlanView.otherSpotLabel.text = ""
+        }else{
+          newPlanView.otherSpotLabel.text = "他\(globalVar.newSpotCountList[i])件"
+        }
         newPlanView.planDateLabel.text = globalVar.newDateList[i]
         newPlanView.planImageView.image = globalVar.newSpotImageList![i]
         newPlanView.planUserIconImageView.image = globalVar.newUserImageList[i]
@@ -125,7 +130,12 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
         generationPlanView.planNameLabel.text = globalVar.searchPlanTitleList[i]
         generationPlanView.planUserNameLabel.text = globalVar.searchUserNameList[i]
         generationPlanView.planSpotNameLabel1.text = globalVar.searchSpotNameListA[i]
-    
+        generationPlanView.planSpotNameLabel2.text = globalVar.searchSpotNameListB![i]
+        if(globalVar.searchSpotCountList[i] == 0){
+          generationPlanView.otherSpotLabel.text = ""
+        }else{
+          generationPlanView.otherSpotLabel.text = "他\(globalVar.searchSpotCountList[i])件"
+        }
         generationPlanView.planDateLabel.text = globalVar.searchDateList[i]
         generationPlanView.planImageView.image = globalVar.searchSpotImageList![i]
         generationPlanView.planUserIconImageView.image = globalVar.searchUserImageList[i]
