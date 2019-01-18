@@ -35,6 +35,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   let tabImageWidth:CGFloat = 160
   var userEditFlag = true
   var homeFlag = false
+  var searchFlag = 0
   
   private let refreshControl = UIRefreshControl()
   private var pageControl: UIPageControl!
@@ -182,6 +183,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     }else if(segue.identifier == "toTimelineView"){
       let nextViewController = segue.destination as! TimelineViewController
       nextViewController.searchArea = searchArea
+      nextViewController.searchFlag = searchFlag
+      if(searchFlag == 1){
+        nextViewController.searchGeneration = globalVar.userGeneration
+      }
     }
   }
   
@@ -354,12 +359,13 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   
   
   @IBAction func tappedNewMoreButton(_ sender: Any) {
-    //新着のもっと見る
+    performSegue(withIdentifier: "toTimelineView", sender: nil)
   }
   
   
   @IBAction func tappedGemerationMoreButton(_ sender: Any) {
-    //年代のもっと見る
+    searchFlag = 1
+    performSegue(withIdentifier: "toTimelineView", sender: nil)
   }
   
   @IBAction func tappedPutSpot(_ sender: Any) {

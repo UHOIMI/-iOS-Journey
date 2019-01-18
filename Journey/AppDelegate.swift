@@ -248,7 +248,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let area : String
       let planDate : String
       let user : User
-      let spot : Spot
+      let spots : [Spots]
       let date : Date? = NSDate() as Date
       enum CodingKeys: String, CodingKey {
         case planId = "plan_id"
@@ -260,7 +260,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case area = "area"
         case planDate = "plan_date"
         case user = "user"
-        case spot = "spot"
+        case spots = "spots"
         case date
       }
       struct User : Codable{
@@ -271,7 +271,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           case userIcon = "user_icon"
         }
       }
-      struct Spot : Codable{
+      struct Spots : Codable{
         let spotId : Int
         let spotTitle : String
         let spotImageA : String?
@@ -301,6 +301,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(timelineData!.status == 200){
           for i in 0 ... 2{
+            var count = 0
             self.globalVar.newPlanIdList.append((timelineData?.record![i].planId)!)
             self.globalVar.newUserIdList.append((timelineData?.record![i].userId)!)
             self.globalVar.newPlanTitleList.append((timelineData?.record![i].planTitle)!)
@@ -325,14 +326,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             self.globalVar.newDateList.append("\(date)日")
             
-            if((timelineData?.record![i].spot.spotImageA)! != ""){
-              self.globalVar.newSpotImagePathList?.append((timelineData?.record![i].spot.spotImageA)!)
-            }else if((timelineData?.record![i].spot.spotImageB)! != ""){
-              self.globalVar.newSpotImagePathList?.append((timelineData?.record![i].spot.spotImageB)!)
-            }else if((timelineData?.record![i].spot.spotImageC)! != ""){
-              self.globalVar.newSpotImagePathList?.append((timelineData?.record![i].spot.spotImageC)!)
+            for f in 0 ... (timelineData?.record![i].spots.count)! - 1{
+              if((timelineData?.record![i].spots[f].spotImageA)! != ""){
+                self.globalVar.newSpotImagePathList?.append((timelineData?.record![i].spots[f].spotImageA)!)
+              }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
+                self.globalVar.newSpotImagePathList?.append((timelineData?.record![i].spots[f].spotImageB)!)
+              }else if((timelineData?.record![i].spots[f].spotImageC)! != ""){
+                self.globalVar.newSpotImagePathList?.append((timelineData?.record![i].spots[f].spotImageC)!)
+              }
+              if(f == 0){
+                self.globalVar.newSpotNameListA.append((timelineData?.record![i].spots[f].spotTitle)!)
+                self.globalVar.newSpotNameListB?.append("")
+              }else if(f == 1){
+                self.globalVar.newSpotNameListB?.insert((timelineData?.record![i].spots[f].spotTitle)!, at: f)
+              }else if(f > 1){
+                count += 1
+              }
             }
-            self.globalVar.newSpotNameListA.append((timelineData?.record![i].spot.spotTitle)!)
+            self.globalVar.newSpotCountList.append(count)
             self.globalVar.newSpotImagePathList?.append("")
             self.globalVar.newTrueSpotImagePathList?.append(self.globalVar.newSpotImagePathList![0])
             if(self.globalVar.newTrueSpotImagePathList![i] != ""){
@@ -351,64 +362,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
     }.resume()
   }
-  struct SearchData : Codable{
-    let status : Int
-    let record : [Record]?
-    let message : String?
-    enum CodingKeys: String, CodingKey {
-      case status
-      case record
-      case message
-    }
-    struct Record : Codable{
-      let planId : Int
-      let userId : String
-      let planTitle : String
-      let planComment : String?
-      let transportation : String
-      let price : String
-      let area : String
-      let planDate : String
-      let user : User
-      let spot : Spot
-      let date : Date? = NSDate() as Date
-      enum CodingKeys: String, CodingKey {
-        case planId = "plan_id"
-        case userId = "user_id"
-        case planTitle = "plan_title"
-        case planComment = "plan_comment"
-        case transportation = "transportation"
-        case price = "price"
-        case area = "area"
-        case planDate = "plan_date"
-        case user = "user"
-        case spot = "spot"
-        case date
-      }
-      struct User : Codable{
-        let userName : String
-        let userIcon : String
-        enum CodingKeys: String, CodingKey {
-          case userName = "user_name"
-          case userIcon = "user_icon"
-        }
-      }
-      struct Spot : Codable{
-        let spotId : Int
-        let spotTitle : String
-        let spotImageA : String?
-        let spotImageB : String?
-        let spotImageC : String?
-        enum CodingKeys: String, CodingKey {
-          case spotId = "spot_id"
-          case spotTitle = "spot_title"
-          case spotImageA = "spot_image_a"
-          case spotImageB = "spot_image_b"
-          case spotImageC = "spot_image_c"
-        }
-      }
-    }
-  }
+  
   
   func searchTimeline(offset:Int,generation:Int){
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/search/find?generation=\(generation)")
@@ -421,9 +375,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
-        let searchData = try? JSONDecoder().decode(SearchData.self, from: data)
+        let searchData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(searchData!.status == 200){
           for i in 0 ... 2{
+            var count = 0
             self.globalVar.searchPlanIdList.append((searchData?.record![i].planId)!)
             self.globalVar.searchUserIdList.append((searchData?.record![i].userId)!)
             self.globalVar.searchPlanTitleList.append((searchData?.record![i].planTitle)!)
@@ -446,14 +401,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               date.replaceSubrange(range, with: "月")
             }
             self.globalVar.searchDateList.append("\(date)日")
-            if((searchData?.record![i].spot.spotImageA)! != ""){
-              self.globalVar.searchSpotImagePathList?.append((searchData?.record![i].spot.spotImageA)!)
-            }else if((searchData?.record![i].spot.spotImageB)! != ""){
-              self.globalVar.searchSpotImagePathList?.append((searchData?.record![i].spot.spotImageB)!)
-            }else if((searchData?.record![i].spot.spotImageC)! != ""){
-              self.globalVar.searchSpotImagePathList?.append((searchData?.record![i].spot.spotImageC)!)
+            for f in 0 ... (searchData?.record![i].spots.count)! - 1{
+              if((searchData?.record![i].spots[f].spotImageA)! != ""){
+                self.globalVar.searchSpotImagePathList?.append((searchData?.record![i].spots[f].spotImageA)!)
+              }else if((searchData?.record![i].spots[f].spotImageB)! != ""){
+                self.globalVar.searchSpotImagePathList?.append((searchData?.record![i].spots[f].spotImageB)!)
+              }else if((searchData?.record![i].spots[f].spotImageC)! != ""){
+                self.globalVar.searchSpotImagePathList?.append((searchData?.record![i].spots[f].spotImageC)!)
+              }
+              if(f == 0){
+                self.globalVar.searchSpotNameListA.append((searchData?.record![i].spots[f].spotTitle)!)
+                self.globalVar.searchSpotNameListB?.append("")
+              }else if(f == 1){
+                self.globalVar.searchSpotNameListB?.insert((searchData?.record![i].spots[f].spotTitle)!, at: f)
+              }else if(f > 1){
+                count += 1
+              }
             }
-            self.globalVar.searchSpotNameListA.append((searchData?.record![i].spot.spotTitle)!)
+            self.globalVar.searchSpotCountList.append(count)
             self.globalVar.searchSpotImagePathList?.append("")
             self.globalVar.searchTrueSpotImagePathList?.append(self.globalVar.searchSpotImagePathList![0])
             if(self.globalVar.searchTrueSpotImagePathList![i] != ""){
@@ -501,7 +466,7 @@ class GlobalVar{
   var userIconPath : String = ""
   var userIcon:UIImage?
 //  let ipAddress = "api.mino.asia:3001"
-  let ipAddress = "192.168.100.161:3000"
+  let ipAddress = "172.20.10.9:3000"
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()
@@ -557,7 +522,8 @@ class GlobalVar{
   var postUserImagePath : String = ""
   var postDate : String = ""
   var postSpotImageSetFlag : Int = 0
-  var postSpotName : String = ""
+  var postSpotNameA : String = ""
+  var postSpotNameB : String = ""
   var postSpotImagePathList : [String]? = []
   var postTrueSpotImagePath : String = ""
   var postSpotImage : UIImage = UIImage(named: "no-image.png")!
@@ -591,7 +557,7 @@ class GlobalVar{
       let area : String
       let planDate : String
       let user : User
-      let spot : Spot
+      let spots : [Spots]
       let date : Date? = NSDate() as Date
       enum CodingKeys: String, CodingKey {
         case planId = "plan_id"
@@ -603,18 +569,18 @@ class GlobalVar{
         case area = "area"
         case planDate = "plan_date"
         case user = "user"
-        case spot = "spot"
+        case spots = "spots"
         case date
       }
       struct User : Codable{
         let userName : String
-        let userIcon : String
+        let userIcon : String?
         enum CodingKeys: String, CodingKey {
           case userName = "user_name"
           case userIcon = "user_icon"
         }
       }
-      struct Spot : Codable{
+      struct Spots : Codable{
         let spotId : Int
         let spotTitle : String
         let spotImageA : String?
@@ -666,15 +632,22 @@ class GlobalVar{
           date.replaceSubrange(range, with: "月")
         }
         self.postDate = "\(date)日"
-        
-        if((timelineData?.record![0].spot.spotImageA)! != ""){
-          self.postSpotImagePathList?.append((timelineData?.record![0].spot.spotImageA)!)
-        }else if((timelineData?.record![0].spot.spotImageB)! != ""){
-          self.postSpotImagePathList?.append((timelineData?.record![0].spot.spotImageB)!)
-        }else if((timelineData?.record![0].spot.spotImageC)! != ""){
-          self.postSpotImagePathList?.append((timelineData?.record![0].spot.spotImageC)!)
+        for i in 0 ... (timelineData?.record![0].spots.count)! - 1{
+          if((timelineData?.record![0].spots[i].spotImageA)! != ""){
+            self.postSpotImagePathList?.append((timelineData?.record![0].spots[i].spotImageA)!)
+          }else if((timelineData?.record![0].spots[i].spotImageB)! != ""){
+            self.postSpotImagePathList?.append((timelineData?.record![0].spots[i].spotImageB)!)
+          }else if((timelineData?.record![0].spots[i].spotImageC)! != ""){
+            self.postSpotImagePathList?.append((timelineData?.record![0].spots[i].spotImageC)!)
+          }
+          if(1 == 0){
+            self.postSpotNameA = (timelineData?.record![0].spots[i].spotTitle)!
+          }else if(i == 1){
+            self.postSpotNameB = (timelineData?.record![0].spots[i].spotTitle)!
+          }else if (i > 1){
+            
+          }
         }
-        self.postSpotName = (timelineData?.record![0].spot.spotTitle)!
         self.postSpotImagePathList?.append("")
         self.postTrueSpotImagePath = self.postSpotImagePathList![0]
         if(self.postTrueSpotImagePath != ""){
@@ -704,6 +677,7 @@ class GlobalVar{
         let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(timelineData!.status == 200){
           for i in 0 ... 2{
+            var count = 0
             self.newPlanIdList.insert((timelineData?.record![i].planId)!, at: i)
             self.newUserIdList.insert((timelineData?.record![i].userId)!, at: i)
             self.newPlanTitleList.insert((timelineData?.record![i].planTitle)!, at: i)
@@ -726,14 +700,23 @@ class GlobalVar{
               date.replaceSubrange(range, with: "月")
             }
             self.newDateList.append("\(date)日")
-            if((timelineData?.record![i].spot.spotImageA)! != ""){
-              self.newSpotImagePathList?.insert((timelineData?.record![i].spot.spotImageA)!, at: i)
-            }else if((timelineData?.record![i].spot.spotImageB)! != ""){
-              self.newSpotImagePathList?.insert((timelineData?.record![i].spot.spotImageB)!, at: i)
-            }else if((timelineData?.record![i].spot.spotImageC)! != ""){
-              self.newSpotImagePathList?.insert((timelineData?.record![i].spot.spotImageC)!, at: i)
+            for f in 0 ... (timelineData?.record![0].spots.count)! - 1{
+              if((timelineData?.record![i].spots[f].spotImageA)! != ""){
+                self.newSpotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageA)!, at: i)
+              }else if((timelineData?.record![i].spots[f].spotImageB)! != ""){
+                self.newSpotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageB)!, at: i)
+              }else if((timelineData?.record![i].spots[f].spotImageC)! != ""){
+                self.newSpotImagePathList?.insert((timelineData?.record![i].spots[f].spotImageC)!, at: i)
+              }
+              if(f == 0){
+                self.newSpotNameListA.insert((timelineData?.record![i].spots[f].spotTitle)!, at: i)
+              }else if(f == 1){
+                self.newSpotNameListB?.insert((timelineData?.record![i].spots[f].spotTitle)!, at: i)
+              }else if(f > 1){
+                count += 1
+              }
             }
-            self.newSpotNameListA.insert((timelineData?.record![i].spot.spotTitle)!, at: i)
+            self.newSpotCountList.insert(count, at: i)
             self.newSpotImagePathList?.append("")
             self.newTrueSpotImagePathList?.append(self.newSpotImagePathList![0])
             if(self.newTrueSpotImagePathList![i] != ""){
@@ -752,65 +735,6 @@ class GlobalVar{
       }
     }.resume()
   }
-  
-  struct SearchData : Codable{
-    let status : Int
-    let record : [Record]?
-    let message : String?
-    enum CodingKeys: String, CodingKey {
-      case status
-      case record
-      case message
-    }
-    struct Record : Codable{
-      let planId : Int
-      let userId : String
-      let planTitle : String
-      let planComment : String?
-      let transportation : String
-      let price : String
-      let area : String
-      let planDate : String
-      let user : User
-      let spot : Spot
-      let date : Date? = NSDate() as Date
-      enum CodingKeys: String, CodingKey {
-        case planId = "plan_id"
-        case userId = "user_id"
-        case planTitle = "plan_title"
-        case planComment = "plan_comment"
-        case transportation = "transportation"
-        case price = "price"
-        case area = "area"
-        case planDate = "plan_date"
-        case user = "user"
-        case spot = "spot"
-        case date
-      }
-      struct User : Codable{
-        let userName : String
-        let userIcon : String
-        enum CodingKeys: String, CodingKey {
-          case userName = "user_name"
-          case userIcon = "user_icon"
-        }
-      }
-      struct Spot : Codable{
-        let spotId : Int
-        let spotTitle : String
-        let spotImageA : String?
-        let spotImageB : String?
-        let spotImageC : String?
-        enum CodingKeys: String, CodingKey {
-          case spotId = "spot_id"
-          case spotTitle = "spot_title"
-          case spotImageA = "spot_image_a"
-          case spotImageB = "spot_image_b"
-          case spotImageC = "spot_image_c"
-        }
-      }
-    }
-  }
   func searchTimeline(offset:Int,generation:Int){
     let url = URL(string: "http://\(ipAddress)/api/v1/search/find?generation=\(generation)")
     let request = URLRequest(url: url!)
@@ -822,9 +746,10 @@ class GlobalVar{
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
-        let searchData = try? JSONDecoder().decode(SearchData.self, from: data)
+        let searchData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(searchData!.status == 200){
           for i in 0 ... 2{
+            var count = 0
             self.searchPlanIdList.insert((searchData?.record![i].planId)!, at: i)
             self.searchUserIdList.insert((searchData?.record![i].userId)!, at: i)
             self.searchPlanTitleList.insert((searchData?.record![i].planTitle)!, at: i)
@@ -847,14 +772,23 @@ class GlobalVar{
               date.replaceSubrange(range, with: "月")
             }
             self.searchDateList.append("\(date)日")
-            if((searchData?.record![i].spot.spotImageA)! != ""){
-              self.searchSpotImagePathList?.insert((searchData?.record![i].spot.spotImageA)!, at: i)
-            }else if((searchData?.record![i].spot.spotImageB)! != ""){
-              self.searchSpotImagePathList?.insert((searchData?.record![i].spot.spotImageB)!, at: i)
-            }else if((searchData?.record![i].spot.spotImageC)! != ""){
-              self.searchSpotImagePathList?.insert((searchData?.record![i].spot.spotImageC)!, at: i)
+            for f in 0 ... (searchData?.record![0].spots.count)! - 1{
+              if((searchData?.record![i].spots[f].spotImageA)! != ""){
+                self.searchSpotImagePathList?.insert((searchData?.record![i].spots[f].spotImageA)!, at: i)
+              }else if((searchData?.record![i].spots[f].spotImageB)! != ""){
+                self.searchSpotImagePathList?.insert((searchData?.record![i].spots[f].spotImageB)!, at: i)
+              }else if((searchData?.record![i].spots[f].spotImageC)! != ""){
+                self.searchSpotImagePathList?.insert((searchData?.record![i].spots[f].spotImageC)!, at: i)
+              }
+              if(f == 0){
+                self.searchSpotNameListA.insert((searchData?.record![i].spots[f].spotTitle)!, at: i)
+              }else if(f == 1){
+                self.searchSpotNameListB?.insert((searchData?.record![i].spots[f].spotTitle)!, at: i)
+              }else if(f > 1){
+                count += 1
+              }
             }
-            self.searchSpotNameListA.insert((searchData?.record![i].spot.spotTitle)!, at: i)
+            self.searchSpotCountList.insert(count, at: i)
             self.searchSpotImagePathList?.append("")
             self.searchTrueSpotImagePathList?.append(self.searchSpotImagePathList![0])
             if(self.searchTrueSpotImagePathList![i] != ""){
