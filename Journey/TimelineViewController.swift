@@ -49,6 +49,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var planCount = 0
   var reloadFlag = 0
   var area : String = ""
+  var nextDetailUserId = ""
   var userEditFlag = false
   
   //受け渡し用
@@ -251,6 +252,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         nextViewController.editFlag = true
       }else{
         nextViewController.editFlag = userEditFlag
+        nextViewController.userId = nextDetailUserId
       }
     }
   }
@@ -1013,6 +1015,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     let tappedLocation = sender.location(in: tableView)
     let tappedIndexPath = tableView.indexPathForRow(at: tappedLocation)
     let tappedRow = tappedIndexPath?.row
+    self.nextDetailUserId = self.userIdList[tappedRow!]
     if(self.userIdList[tappedRow!] == globalVar.userId){
       self.userEditFlag = true
     }

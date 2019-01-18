@@ -1584,13 +1584,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="年代" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H1t-59-7Kn">
-                                                <rect key="frame" x="16" y="281" width="41" height="24"/>
+                                                <rect key="frame" x="16" y="273" width="41" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" horizontalCompressionResistancePriority="749" text="過去の投稿" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7Y-6s-AiW">
-                                                <rect key="frame" x="16" y="369" width="120" height="24"/>
+                                                <rect key="frame" x="16" y="337" width="120" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="c67-1z-MzW"/>
                                                 </constraints>
@@ -1599,13 +1599,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98c-iN-EzL">
-                                                <rect key="frame" x="16" y="321" width="343" height="16"/>
+                                                <rect key="frame" x="16" y="305" width="343" height="16"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TK3-8T-BbU">
-                                                <rect key="frame" x="284" y="369" width="75" height="27"/>
+                                                <rect key="frame" x="284" y="334" width="75" height="27"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="ssL-lh-qRa"/>
                                                 </constraints>
@@ -1641,22 +1641,22 @@
                                             <constraint firstItem="QjP-ki-pag" firstAttribute="top" secondItem="rAD-hQ-2ef" secondAttribute="bottom" constant="64" id="HBm-lw-cz5"/>
                                             <constraint firstItem="AoB-jw-zFK" firstAttribute="top" secondItem="QjP-ki-pag" secondAttribute="bottom" constant="16" id="HFA-o7-0nc"/>
                                             <constraint firstAttribute="height" constant="647" id="LZF-kv-fK4"/>
-                                            <constraint firstItem="TK3-8T-BbU" firstAttribute="top" secondItem="98c-iN-EzL" secondAttribute="bottom" constant="32" id="LZN-Gq-R5R"/>
                                             <constraint firstItem="H1t-59-7Kn" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="Mue-x9-6vw"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="H1t-59-7Kn" secondAttribute="trailing" constant="20" symbolic="YES" id="Ss7-0f-hPm"/>
                                             <constraint firstAttribute="trailing" secondItem="98c-iN-EzL" secondAttribute="trailing" constant="16" id="UfY-YE-MFM"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AoB-jw-zFK" secondAttribute="trailing" constant="20" symbolic="YES" id="Ur0-mP-zwv"/>
                                             <constraint firstAttribute="trailing" secondItem="Nzn-9b-suM" secondAttribute="trailing" constant="16" id="YDb-Dc-zHl"/>
-                                            <constraint firstItem="98c-iN-EzL" firstAttribute="top" secondItem="H1t-59-7Kn" secondAttribute="bottom" constant="16" id="YnS-QF-vyd"/>
+                                            <constraint firstItem="TK3-8T-BbU" firstAttribute="bottom" secondItem="D7Y-6s-AiW" secondAttribute="bottom" id="YRH-tZ-ETa"/>
+                                            <constraint firstItem="98c-iN-EzL" firstAttribute="top" secondItem="H1t-59-7Kn" secondAttribute="bottom" constant="8" id="YnS-QF-vyd"/>
                                             <constraint firstItem="tmS-S4-Y0A" firstAttribute="top" secondItem="rAD-hQ-2ef" secondAttribute="bottom" constant="8" id="bk9-cS-Ie2"/>
                                             <constraint firstItem="TK3-8T-BbU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7Y-6s-AiW" secondAttribute="trailing" constant="8" symbolic="YES" id="c7C-vw-aHd"/>
-                                            <constraint firstItem="D7Y-6s-AiW" firstAttribute="top" secondItem="98c-iN-EzL" secondAttribute="bottom" constant="32" id="cub-RR-yR9"/>
+                                            <constraint firstItem="D7Y-6s-AiW" firstAttribute="top" secondItem="98c-iN-EzL" secondAttribute="bottom" constant="16" id="cub-RR-yR9"/>
                                             <constraint firstAttribute="trailing" secondItem="TK3-8T-BbU" secondAttribute="trailing" constant="16" id="dvG-hs-pCO"/>
                                             <constraint firstItem="AoB-jw-zFK" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="f9h-tk-hyA"/>
                                             <constraint firstItem="D7Y-6s-AiW" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="gFs-zX-Rfe"/>
                                             <constraint firstItem="Nzn-9b-suM" firstAttribute="top" secondItem="tmS-S4-Y0A" secondAttribute="bottom" constant="8" id="gMA-42-jTn"/>
                                             <constraint firstItem="rAD-hQ-2ef" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" id="jMf-Ld-7gI"/>
-                                            <constraint firstItem="H1t-59-7Kn" firstAttribute="top" secondItem="AoB-jw-zFK" secondAttribute="bottom" constant="16" id="jNE-KW-NSo"/>
+                                            <constraint firstItem="H1t-59-7Kn" firstAttribute="top" secondItem="AoB-jw-zFK" secondAttribute="bottom" constant="8" id="jNE-KW-NSo"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QjP-ki-pag" secondAttribute="trailing" constant="20" symbolic="YES" id="jP9-aJ-6L1"/>
                                             <constraint firstItem="Nzn-9b-suM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QjP-ki-pag" secondAttribute="trailing" constant="8" symbolic="YES" id="mLi-CU-QcV"/>
                                             <constraint firstItem="98c-iN-EzL" firstAttribute="leading" secondItem="lkc-eX-UHd" secondAttribute="leading" constant="16" id="ucl-PN-yCY"/>
@@ -2562,7 +2562,7 @@
         <image name="journey.png" width="200" height="88"/>
         <image name="no-image.png" width="62" height="62"/>
         <image name="offstar" width="256" height="256"/>
-        <image name="plus" width="192" height="192"/>
+        <image name="plus" width="256" height="256"/>
         <image name="s_airplane.png" width="44" height="44"/>
         <image name="s_bicycle.png" width="44" height="44"/>
         <image name="s_boat.png" width="44" height="44"/>
@@ -2577,10 +2577,10 @@
         <segue reference="vDx-IZ-clZ"/>
         <segue reference="Zge-aV-3pR"/>
         <segue reference="0Ny-WU-Sio"/>
-        <segue reference="lAe-ZU-lsv"/>
+        <segue reference="gCs-Ba-VyA"/>
         <segue reference="Y1p-dC-o0y"/>
         <segue reference="SAI-tm-OCo"/>
-        <segue reference="w35-bH-KHu"/>
+        <segue reference="V3j-Fe-9bE"/>
         <segue reference="ScF-Q7-9Tm"/>
         <segue reference="Mcq-lN-1b2"/>
         <segue reference="F4q-09-NOQ"/>
