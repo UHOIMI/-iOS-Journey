@@ -85,7 +85,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       userPlanView.planImageView.image = globalVar.postSpotImage
       userPlanView.planNameLabel.text = globalVar.postPlanTitle
       userPlanView.planUserNameLabel.text = globalVar.postUserName
-      userPlanView.planSpotNameLabel1.text = globalVar.postSpotName
+      userPlanView.planSpotNameLabel1.text = globalVar.postSpotNameA
       userPlanView.planDateLabel.text = globalVar.postDate
       userPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
       userPlanView.planUserIconImageView.clipsToBounds = true
