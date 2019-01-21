@@ -20,7 +20,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   @IBOutlet weak var subView: UIView!
   @IBOutlet weak var subViewHeight: NSLayoutConstraint!
-  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
+//  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
   @IBOutlet weak var userIconImageView: UIImageView!
   @IBOutlet weak var userNameLabel: UILabel!
   @IBOutlet weak var planNameLabel: UILabel!
@@ -83,12 +83,13 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.navigationItem.hidesBackButton = true
+//    self.navigationItem.hidesBackButton = true
     viewHeight = Int(spotTableView.frame.origin.y) + 100
     getSpot()
-//    for i in 0 ... spotIdList.count {
+//    for i in 0 ... spotLatList.count {
 //      makerList.insert(GMSMarker(), at: i)
 //      spotImageNum.insert(-1, at: i)
+//      makerList[i].position = CLLocationCoordinate2D(latitude: spotLatList[i], longitude: spotLngList[i])
 //    }
     getFavorite()
     var arr:[String] = planTransportationString.components(separatedBy: ",")
@@ -145,15 +146,15 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     tableViewHeight.constant = 128 + 100 * 9
     superViewHeight.constant = 1280 + 100 * 9
     
-    let leftButton: UIButton = UIButton()
-    leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-    leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
-    leftButton.imageView?.layer.cornerRadius = 40 * 0.5
-    leftButton.imageView?.clipsToBounds = true
-    leftButton.addTarget(self, action: #selector(DatailPlanViewController.userIconTapped(sender:)), for: .touchUpInside)
-    userBarButtonItem.customView = leftButton
-    userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
-    userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+//    let leftButton: UIButton = UIButton()
+//    leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+//    leftButton.setImage(globalVar.userIcon, for: UIControl.State.normal)
+//    leftButton.imageView?.layer.cornerRadius = 40 * 0.5
+//    leftButton.imageView?.clipsToBounds = true
+//    leftButton.addTarget(self, action: #selector(DatailPlanViewController.userIconTapped(sender:)), for: .touchUpInside)
+//    userBarButtonItem.customView = leftButton
+//    userBarButtonItem.customView?.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+//    userBarButtonItem.customView?.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
     
     createTabBar()
     // Do any additional setup after loading the view.
@@ -338,11 +339,11 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
             //self.makerList.insert(GMSMarker(), at: i)
             //let test = (spotData?.record![i].spotAddress.lat)!
             //let test2 = (spotData?.record![i].spotAddress.lat)!
-            self.makerList.insert(GMSMarker(), at: i)
+            //self.makerList.insert(GMSMarker(), at: i)
             self.spotImageNum.insert(-1, at: i)
             self.spotLatList.insert((spotData?.record![i].spotAddress.lat)!, at: i)
             self.spotLngList.insert((spotData?.record![i].spotAddress.lng)!, at: i)
-            self.makerList[i].position = CLLocationCoordinate2D(latitude: (spotData?.record![i].spotAddress.lat)!, longitude: (spotData?.record![i].spotAddress.lng)!)
+//            self.makerList[i].position = CLLocationCoordinate2D(latitude: (spotData?.record![i].spotAddress.lat)!, longitude: (spotData?.record![i].spotAddress.lng)!)
             self.spotIdList.insert((spotData?.record![i].spotId)!, at: i)
             self.planIdList.insert((spotData?.record![i].planId)!, at: i)
             self.spotTitleList.insert((spotData?.record![i].spotTitle)!, at: i)
@@ -395,6 +396,12 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
           }
           
           DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            
+            for i in 0 ... self.spotLatList.count - 1 {
+              self.makerList.insert(GMSMarker(), at: i)
+              //      spotImageNum.insert(-1, at: i)
+              self.makerList[i].position = CLLocationCoordinate2D(latitude: self.spotLatList[i], longitude: self.spotLngList[i])
+            }
             print("リロードテーブル")
             self.viewHeight += 100 * self.spotImageCList.count
             self.subViewHeight.constant = CGFloat(self.viewHeight)
