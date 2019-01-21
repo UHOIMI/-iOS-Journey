@@ -72,7 +72,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         headerImageView.image = globalVar.userHeader
         subView.addSubview(self.imgView)
         userGenderTextView.text = globalVar.userGender
-        userGenerationTextView.text = "\(globalVar.userGeneration)歳"
+        userGenerationTextView.text = "\(globalVar.userGeneration)"
         userNameTextView.text = globalVar.userName
         userCommentTextView.text = globalVar.userComment
         userCommentTextView.numberOfLines = 0
@@ -188,7 +188,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
             self.userNameTextView.text = self.userName
             self.userGenderTextView.text = self.userGender
             self.userCommentTextView.text = self.userComment
-            self.userGenerationTextView.text = "\(self.userGeneration)歳"
+            self.userGenerationTextView.text = "\(self.userGeneration)代"
             self.imgView.image = self.userIcon
             self.headerImageView.image = self.userHeader
           }
