@@ -45,6 +45,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    generationLabel.text = "\(globalVar.userGeneration)の新着3件"
     scrollView.refreshControl = refreshControl
     refreshControl.addTarget(self, action: #selector(HomeViewController.refresh(sender:)), for: .valueChanged)
     
