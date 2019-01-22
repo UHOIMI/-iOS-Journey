@@ -27,7 +27,8 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   @IBOutlet weak var PrefecturesLabel: UILabel!
   @IBOutlet weak var trafficLabel: UILabel!
   @IBOutlet weak var moneyLabel: UILabel!
-  @IBOutlet weak var commentTextView: UITextView!
+//  @IBOutlet weak var commentTextView: UITextView!
+  @IBOutlet weak var commentLabel: UILabel!
   @IBOutlet weak var spotTableView: UITableView!
   @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
   @IBOutlet weak var superViewHeight: NSLayoutConstraint!
@@ -38,7 +39,8 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   @IBOutlet weak var trainImageView: UIImageView!
   @IBOutlet weak var boatImageView: UIImageView!
   @IBOutlet weak var airplaneImageView: UIImageView!
-  @IBOutlet weak var favoriteButton: UIButton!
+  @IBOutlet weak var favoriteButton: UIButton!  
+  @IBOutlet weak var planDeleteButton: UIBarButtonItem!
   
   var spotIdList : [Int] = []
   var planIdList : [Int] = []
@@ -84,6 +86,10 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   override func viewDidLoad() {
     super.viewDidLoad()
 //    self.navigationItem.hidesBackButton = true
+    if(globalVar.userId != userId){
+      planDeleteButton.title = ""
+      planDeleteButton.isEnabled = false
+    }
     viewHeight = Int(spotTableView.frame.origin.y) + 100
     getSpot()
 //    for i in 0 ... spotLatList.count {
@@ -126,18 +132,22 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       airplaneImageView.image = UIImage(named: "s_airplane_on.png")
     }
     
-    commentTextView.text = planComment
+    commentLabel.text = planComment
     PrefecturesLabel.text = planArea
     moneyLabel.text = planPrice
     userIconImageView.image = userImage
     userNameLabel.text = userName
     planNameLabel.text = planTitle
     
-    commentTextView.layer.borderColor = UIColor.gray.cgColor
-    commentTextView.layer.borderWidth = 0.5
-    commentTextView.layer.cornerRadius = 10.0
-    commentTextView.layer.masksToBounds = true
+    commentLabel.numberOfLines = 0 //折り返し
+    commentLabel.sizeToFit() //サイズを文字列に合わせる
+    commentLabel.lineBreakMode = NSLineBreakMode.byCharWrapping
     
+//    commentTextView.layer.borderColor = UIColor.gray.cgColor
+//    commentTextView.layer.borderWidth = 0.5
+//    commentTextView.layer.cornerRadius = 10.0
+//    commentTextView.layer.masksToBounds = true
+
 //    let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:commentTextView.frame.origin.y + commentTextView.frame.size.height + 16,width:myFrameSize.width,height:300),camera:camera)
 //    for i in 0 ..< self.spotIdList.count - 1{
 //      self.makerList[i].map = mapView
@@ -408,8 +418,8 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
             self.subView.frame = CGRect(x:0, y: 0, width:375, height:self.viewHeight)
             self.spotTableView.reloadData()
             self.camera = GMSCameraPosition.camera(withLatitude: self.makerList[0].position.latitude,longitude:self.makerList[0].position.longitude, zoom:15)
-            let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:self.commentTextView.frame.origin.y + self.commentTextView.frame.size.height + 16,width:self.myFrameSize.width,height:300),camera:self.camera)
-            print("commentTextView.frame.origin.yはああ", self.commentTextView.frame.origin.y)
+            let mapView = GMSMapView.map(withFrame: CGRect(x:0,y:self.commentLabel.frame.origin.y + self.commentLabel.frame.size.height + 16,width:self.myFrameSize.width,height:300),camera:self.camera)
+            print("commentTextView.frame.origin.yはああ", self.commentLabel.frame.origin.y)
             print("spotisカウント", self.spotTitleList.count)
             for i in 0 ... (self.spotTitleList.count - 1){
               print("spotidは", self.spotTitleList[i])
