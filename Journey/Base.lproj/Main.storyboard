@@ -1149,62 +1149,50 @@
                                     <action selector="tappedSearchButton:" destination="IlB-DN-gnh" eventType="touchUpInside" id="ano-P8-n0B"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="いいね" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BmT-sL-maX">
-                                <rect key="frame" x="8" y="114" width="52" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KNy-nt-zdH" customClass="Keyboard" customModule="Journey" customModuleProvider="target">
-                                <rect key="frame" x="76" y="114" width="291" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="交通手段" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KUf-ac-I8p">
-                                <rect key="frame" x="8" y="168" width="69.5" height="20.5"/>
+                                <rect key="frame" x="8" y="114" width="69.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="金額" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="njt-v8-Vlr">
-                                <rect key="frame" x="8" y="265.5" width="35" height="20.5"/>
+                                <rect key="frame" x="8" y="211.5" width="35" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地方" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GOu-Sl-Tn4">
-                                <rect key="frame" x="8" y="319.5" width="35" height="20.5"/>
+                                <rect key="frame" x="8" y="265.5" width="35" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="年代" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5KP-4W-FKD">
-                                <rect key="frame" x="8" y="373.5" width="35" height="20.5"/>
+                                <rect key="frame" x="8" y="319.5" width="35" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eop-Ms-xNU" customClass="Keyboard" customModule="Journey" customModuleProvider="target">
-                                <rect key="frame" x="51" y="265.5" width="316" height="30"/>
+                                <rect key="frame" x="51" y="211.5" width="316" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yfn-yw-oZp" customClass="Keyboard" customModule="Journey" customModuleProvider="target">
-                                <rect key="frame" x="51" y="319.5" width="316" height="30"/>
+                                <rect key="frame" x="51" y="265.5" width="316" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dnl-LH-l3e" customClass="Keyboard" customModule="Journey" customModuleProvider="target">
-                                <rect key="frame" x="51" y="373.5" width="316" height="30"/>
+                                <rect key="frame" x="51" y="319.5" width="316" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="u4a-PN-cWL">
-                                <rect key="frame" x="8" y="204.5" width="359" height="37"/>
+                                <rect key="frame" x="8" y="150.5" width="359" height="37"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ob6-4y-XU8">
                                         <rect key="frame" x="0.0" y="0.0" width="51.5" height="37"/>
@@ -1290,33 +1278,28 @@
                         <constraints>
                             <constraint firstItem="5KP-4W-FKD" firstAttribute="leading" secondItem="pwj-dR-Sve" secondAttribute="leading" constant="8" id="3se-Yk-O6e"/>
                             <constraint firstItem="yfn-yw-oZp" firstAttribute="top" secondItem="eop-Ms-xNU" secondAttribute="bottom" constant="24" id="3ue-eN-zrK"/>
-                            <constraint firstItem="BmT-sL-maX" firstAttribute="top" secondItem="SHg-Yt-rUV" secondAttribute="bottom" constant="32" id="5Il-Vi-5Gm"/>
                             <constraint firstItem="pwj-dR-Sve" firstAttribute="trailing" secondItem="yfn-yw-oZp" secondAttribute="trailing" constant="8" id="5bV-wU-y3q"/>
                             <constraint firstItem="u4a-PN-cWL" firstAttribute="top" secondItem="KUf-ac-I8p" secondAttribute="bottom" constant="16" id="7BF-2O-6Oc"/>
-                            <constraint firstItem="BmT-sL-maX" firstAttribute="leading" secondItem="pwj-dR-Sve" secondAttribute="leading" constant="8" id="8B5-eM-AD8"/>
                             <constraint firstItem="pwj-dR-Sve" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KUf-ac-I8p" secondAttribute="trailing" symbolic="YES" id="EPv-bK-frp"/>
                             <constraint firstItem="pwj-dR-Sve" firstAttribute="trailing" secondItem="Dnl-LH-l3e" secondAttribute="trailing" constant="8" id="HRa-LF-jMq"/>
                             <constraint firstAttribute="trailing" secondItem="u4a-PN-cWL" secondAttribute="trailing" constant="8" id="KaX-Kb-fSY"/>
                             <constraint firstItem="u4a-PN-cWL" firstAttribute="leading" secondItem="CUd-y1-3PQ" secondAttribute="leading" constant="8" id="Mv9-Ne-eqC"/>
                             <constraint firstItem="EWX-Js-vpw" firstAttribute="leading" secondItem="SHg-Yt-rUV" secondAttribute="trailing" constant="16" id="T8i-D4-8eN"/>
                             <constraint firstItem="SHg-Yt-rUV" firstAttribute="leading" secondItem="pwj-dR-Sve" secondAttribute="leading" constant="8" id="UOm-59-9s2"/>
+                            <constraint firstItem="KUf-ac-I8p" firstAttribute="top" secondItem="SHg-Yt-rUV" secondAttribute="bottom" constant="32" id="VeU-XW-yu0"/>
                             <constraint firstItem="njt-v8-Vlr" firstAttribute="leading" secondItem="pwj-dR-Sve" secondAttribute="leading" constant="8" id="YrJ-Yy-t5S"/>
                             <constraint firstItem="EWX-Js-vpw" firstAttribute="top" secondItem="pwj-dR-Sve" secondAttribute="top" constant="32" id="aA7-pm-h6U"/>
                             <constraint firstItem="pwj-dR-Sve" firstAttribute="trailing" secondItem="EWX-Js-vpw" secondAttribute="trailing" constant="8" id="aLo-as-UOh"/>
                             <constraint firstItem="GOu-Sl-Tn4" firstAttribute="leading" secondItem="pwj-dR-Sve" secondAttribute="leading" constant="8" id="d3t-q8-36a"/>
-                            <constraint firstItem="KUf-ac-I8p" firstAttribute="top" secondItem="KNy-nt-zdH" secondAttribute="bottom" constant="24" id="erE-nO-18T"/>
                             <constraint firstItem="SHg-Yt-rUV" firstAttribute="top" secondItem="pwj-dR-Sve" secondAttribute="top" constant="32" id="fSQ-pV-0Ot"/>
-                            <constraint firstItem="pwj-dR-Sve" firstAttribute="trailing" secondItem="KNy-nt-zdH" secondAttribute="trailing" constant="8" id="jdN-8Q-XDb"/>
                             <constraint firstItem="njt-v8-Vlr" firstAttribute="top" secondItem="u4a-PN-cWL" secondAttribute="bottom" constant="24" id="jf3-5i-Kv0"/>
                             <constraint firstItem="Dnl-LH-l3e" firstAttribute="top" secondItem="yfn-yw-oZp" secondAttribute="bottom" constant="24" id="lg6-OO-rjb"/>
                             <constraint firstItem="eop-Ms-xNU" firstAttribute="leading" secondItem="njt-v8-Vlr" secondAttribute="trailing" constant="8" id="mDb-PJ-vZ6"/>
                             <constraint firstItem="KUf-ac-I8p" firstAttribute="leading" secondItem="pwj-dR-Sve" secondAttribute="leading" constant="8" id="na5-pO-EhD"/>
                             <constraint firstItem="yfn-yw-oZp" firstAttribute="leading" secondItem="GOu-Sl-Tn4" secondAttribute="trailing" constant="8" id="nwL-iK-EMg"/>
                             <constraint firstItem="pwj-dR-Sve" firstAttribute="trailing" secondItem="eop-Ms-xNU" secondAttribute="trailing" constant="8" id="pUY-Sv-KQ5"/>
-                            <constraint firstItem="KNy-nt-zdH" firstAttribute="top" secondItem="SHg-Yt-rUV" secondAttribute="bottom" constant="32" id="q5m-zz-BUd"/>
                             <constraint firstItem="5KP-4W-FKD" firstAttribute="top" secondItem="yfn-yw-oZp" secondAttribute="bottom" constant="24" id="v6l-jb-fXD"/>
                             <constraint firstItem="Dnl-LH-l3e" firstAttribute="leading" secondItem="5KP-4W-FKD" secondAttribute="trailing" constant="8" id="vje-p5-aXr"/>
-                            <constraint firstItem="KNy-nt-zdH" firstAttribute="leading" secondItem="BmT-sL-maX" secondAttribute="trailing" constant="16" id="w3t-Gh-lmA"/>
                             <constraint firstItem="GOu-Sl-Tn4" firstAttribute="top" secondItem="eop-Ms-xNU" secondAttribute="bottom" constant="24" id="y87-pO-g5v"/>
                             <constraint firstItem="eop-Ms-xNU" firstAttribute="top" secondItem="u4a-PN-cWL" secondAttribute="bottom" constant="24" id="zQv-WU-PqP"/>
                         </constraints>
@@ -1327,7 +1310,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="generationTextField" destination="Dnl-LH-l3e" id="Oms-S2-YVA"/>
-                        <outlet property="goodTextField" destination="KNy-nt-zdH" id="X8A-Wi-HqO"/>
                         <outlet property="moneyTextField" destination="eop-Ms-xNU" id="ddj-Y8-l5o"/>
                         <outlet property="regionTextField" destination="yfn-yw-oZp" id="v4Y-Yl-bqx"/>
                         <outlet property="searchBarTextField" destination="SHg-Yt-rUV" id="u5f-hA-1K2"/>
@@ -2515,7 +2497,11 @@
                         <viewLayoutGuide key="safeArea" id="HbH-YE-X2B"/>
                     </view>
                     <navigationItem key="navigationItem" title="プラン詳細" id="Qsy-bp-QtS">
-                        <barButtonItem key="rightBarButtonItem" title="削除" id="3pZ-yi-0t5"/>
+                        <barButtonItem key="rightBarButtonItem" title="削除" id="3pZ-yi-0t5">
+                            <connections>
+                                <action selector="tappedDeleteButton:" destination="Lfq-nI-jcD" id="z41-i3-SoD"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
@@ -2569,13 +2555,13 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Orn-8k-3es"/>
-        <segue reference="7IB-86-I3D"/>
-        <segue reference="HL7-as-HMM"/>
+        <segue reference="b7P-YX-H0q"/>
+        <segue reference="jcv-3u-Qe9"/>
         <segue reference="0Ny-WU-Sio"/>
-        <segue reference="0fD-WQ-n3v"/>
-        <segue reference="TeA-Xz-GIE"/>
+        <segue reference="efM-dk-zhE"/>
+        <segue reference="Y1p-dC-o0y"/>
         <segue reference="PgR-1F-fd2"/>
-        <segue reference="YOr-31-rlW"/>
+        <segue reference="8B5-Mb-NoT"/>
         <segue reference="ScF-Q7-9Tm"/>
         <segue reference="Mcq-lN-1b2"/>
         <segue reference="XJN-4F-Krb"/>

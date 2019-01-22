@@ -597,6 +597,11 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   @objc func userIconTapped(sender : AnyObject) {
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
+  
+  @IBAction func tappedDeleteButton(_ sender: Any) {
+    //削除ボタンタップ
+  }
+  
 //  @IBAction func pushButton(_ sender: Any) {
 //    if let button = sender as? UIButton {
 //      if let tag = actionTag(rawValue: button.tag) {
