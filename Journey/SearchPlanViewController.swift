@@ -16,7 +16,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   }
   
   @IBOutlet weak var searchBarTextField: UITextField!
-  @IBOutlet weak var goodTextField: UITextField!
+//  @IBOutlet weak var goodTextField: UITextField!
   @IBOutlet weak var moneyTextField: UITextField!
   @IBOutlet weak var regionTextField: UITextField!
   @IBOutlet weak var generationTextField: UITextField!
@@ -59,7 +59,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     let goodPickerView = UIPickerView()
     goodPickerView.tag = 1
     goodPickerView.delegate = self
-    goodTextField.inputView = goodPickerView
+//    goodTextField.inputView = goodPickerView
     
     let moneyPickerView = UIPickerView()
     moneyPickerView.tag = 2
@@ -76,7 +76,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     generationPickerView.delegate = self
     generationTextField.inputView = generationPickerView
     
-    goodTextField.placeholder = "いいね数を選択してください"
+//    goodTextField.placeholder = "いいね数を選択してください"
     moneyTextField.placeholder = "金額を選択してください"
     regionTextField.placeholder = "地方を選択してください"
     generationTextField.placeholder = "年代を選択してください"
@@ -143,7 +143,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   }
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
     if pickerView.tag == 1{
-      goodTextField.text = goodList[row]
+//      goodTextField.text = goodList[row]
     }else if pickerView.tag == 2{
       moneyTextField.text = moneyList[row]
     }else if pickerView.tag == 3{
