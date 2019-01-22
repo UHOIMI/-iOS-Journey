@@ -51,6 +51,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var area : String = ""
   var nextDetailUserId = ""
   var userEditFlag = false
+  var firstSearchFlag = true
   
   //受け渡し用
   var planId = 0
@@ -281,7 +282,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height > self.tableView.contentSize.height && self.tableView.isDragging && isaddload == true){
-      self.isaddload = false
+          self.isaddload = false
       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
         if(self.detailUserFlag == 1){
           self.getUserTimeline(offset: self.planCount, flag: 0, userId: self.detailUserId)
@@ -382,6 +383,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(timelineData!.status == 200){
+          self.firstSearchFlag = false
           if(flag == 1){
             let planId = self.planIdList[0]
             for_plan: for i in 0 ... (timelineData?.record?.count)! - 1{
@@ -524,6 +526,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(timelineData!.status == 200){
+          self.firstSearchFlag = false
           if(flag == 1){
             let planId = self.planIdList[0]
             for_plan: for i in 0 ... (timelineData?.record?.count)! - 1{
@@ -640,7 +643,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
           }
         }else{
-          self.showAlert(title: "該当する結果がありません", message: "検索をやり直してください")
+          if(!self.firstSearchFlag){
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+              self.tableView.tableFooterView?.isHidden = true
+              self.tableView.tableFooterView = nil
+            }
+          }else{
+            self.showAlert(title: "該当する結果がありません", message: "検索をやり直してください")
+          }
         }
       }
       }.resume()
@@ -662,6 +672,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(timelineData!.status == 200){
+          self.firstSearchFlag = false
           if(flag == 1){
             let planId = self.planIdList[0]
             for_plan: for i in 0 ... (timelineData?.record?.count)! - 1{
@@ -778,7 +789,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
           }
         }else{
-          self.showAlert(title: "該当する結果がありません", message: "検索をやり直してください")
+          if(!self.firstSearchFlag){
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+              self.tableView.tableFooterView?.isHidden = true
+              self.tableView.tableFooterView = nil
+            }
+          }else{
+            self.showAlert(title: "該当する結果がありません", message: "検索をやり直してください")
+          }
         }
       }
       }.resume()
@@ -799,6 +817,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         print(String(data: data, encoding: String.Encoding.utf8) ?? "")
         let timelineData = try? JSONDecoder().decode(TimelineData.self, from: data)
         if(timelineData!.status == 200){
+          self.firstSearchFlag = false
           if(flag == 1){
             let planId = self.planIdList[0]
             for_plan: for i in 0 ... (timelineData?.record?.count)! - 1{

@@ -99,7 +99,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iFt-RN-kfR">
-                                <rect key="frame" x="0.0" y="20" width="375" height="792"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="748"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gky-eb-NaJ" userLabel="SubView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
@@ -1101,7 +1101,6 @@
                         <viewLayoutGuide key="safeArea" id="Awo-n5-tIM"/>
                     </view>
                     <navigationItem key="navigationItem" title="スポット詳細" id="hDZ-2s-aTN">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="dgZ-us-tGG"/>
                         <barButtonItem key="rightBarButtonItem" title="編集" id="Z7Q-sM-qCP">
                             <connections>
                                 <action selector="putEditButton:" destination="cMD-wf-H1X" id="GN7-OS-7N4"/>
@@ -1115,7 +1114,6 @@
                         <outlet property="spotImageView2" destination="DCd-S6-b6Q" id="vYU-M6-dyj"/>
                         <outlet property="spotImageView3" destination="Ryt-wy-s7d" id="1wl-hA-npZ"/>
                         <outlet property="spotNameLabel" destination="LO6-iP-sLS" id="j6r-rS-f4e"/>
-                        <outlet property="userBarButtonItem" destination="dgZ-us-tGG" id="eUY-Uh-sZP"/>
                         <segue destination="dYc-gx-w37" kind="show" identifier="changePutSpotView" id="PgR-1F-fd2"/>
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="mge-75-edV"/>
                         <segue destination="Qxu-g9-ag6" kind="show" identifier="toStartView" id="aY0-xu-7qc"/>
@@ -1722,7 +1720,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="wtz-ch-ohP">
-                                <rect key="frame" x="0.0" y="36" width="375" height="520"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="476"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Xo-Sp-8Qb">
                                         <rect key="frame" x="137.5" y="0.0" width="100" height="100"/>
@@ -1732,7 +1730,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="24B-Cm-M7h">
-                                        <rect key="frame" x="16" y="149" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="138" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザーID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zw-bI-wdq">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1759,7 +1757,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ANS-Rx-aUn">
-                                        <rect key="frame" x="16" y="254" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="232" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ユーザー名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlz-9P-Frs">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1786,7 +1784,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pJz-98-06r">
-                                        <rect key="frame" x="16" y="359" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="326" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの年代" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKL-Bj-6zp">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -1813,7 +1811,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dpR-59-I7w">
-                                        <rect key="frame" x="16" y="464" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="420" width="343" height="56"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの性別" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHR-hj-mW6">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="24"/>
@@ -2519,9 +2517,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HbH-YE-X2B"/>
                     </view>
-                    <navigationItem key="navigationItem" title="プラン詳細" id="Qsy-bp-QtS">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="AWQ-Aa-Blp"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="プラン詳細" id="Qsy-bp-QtS"/>
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
                         <outlet property="PrefecturesLabel" destination="rdu-Fn-LHc" id="zls-Bt-9ed"/>
@@ -2541,7 +2537,6 @@
                         <outlet property="tableViewHeight" destination="BdV-zL-PeY" id="Se1-wF-ydf"/>
                         <outlet property="trafficLabel" destination="uf3-z5-RYJ" id="Wp9-ik-Hv3"/>
                         <outlet property="trainImageView" destination="XNg-81-mls" id="0Uz-vf-lzm"/>
-                        <outlet property="userBarButtonItem" destination="AWQ-Aa-Blp" id="MCD-TZ-kkH"/>
                         <outlet property="userIconImageView" destination="Alc-6n-P7A" id="mAA-XB-A6W"/>
                         <outlet property="userNameLabel" destination="DWh-2N-Ir2" id="isW-iQ-bnn"/>
                         <outlet property="walkImageView" destination="wOG-8z-rk1" id="rAV-hD-KmU"/>
@@ -2574,15 +2569,15 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Orn-8k-3es"/>
-        <segue reference="vDx-IZ-clZ"/>
-        <segue reference="Zge-aV-3pR"/>
+        <segue reference="lnQ-hM-pXv"/>
+        <segue reference="mge-75-edV"/>
         <segue reference="0Ny-WU-Sio"/>
-        <segue reference="gCs-Ba-VyA"/>
+        <segue reference="hBe-Qm-rhI"/>
         <segue reference="Y1p-dC-o0y"/>
-        <segue reference="SAI-tm-OCo"/>
-        <segue reference="V3j-Fe-9bE"/>
+        <segue reference="PgR-1F-fd2"/>
+        <segue reference="aY0-xu-7qc"/>
         <segue reference="ScF-Q7-9Tm"/>
         <segue reference="Mcq-lN-1b2"/>
-        <segue reference="F4q-09-NOQ"/>
+        <segue reference="XJN-4F-Krb"/>
     </inferredMetricsTieBreakers>
 </document>
