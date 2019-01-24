@@ -45,6 +45,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   var imageFlag7 = 0
   
   var transportationString = ""
+  var timelineFlag = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -375,6 +376,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     case 2:
       print("２")
     case 3:
+      timelineFlag = true
       performSegue(withIdentifier: "toTimelineView", sender: nil)
     case 4:
       performSegue(withIdentifier: "toDetailUserView", sender: nil)
@@ -390,7 +392,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   }
   
    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if(segue.identifier == "toTimelineView"){
+    if(segue.identifier == "toTimelineView" && timelineFlag == false){
       if((sender as! Int ) == 1){
         let nextViewController = segue.destination as! TimelineViewController
         nextViewController.searchText = searchBarTextField.text!

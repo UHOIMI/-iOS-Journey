@@ -17,7 +17,7 @@ class SplashViewController: UIViewController {
     }
   
   func toHome(){
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() +  2.0) {
       self.performSegue(withIdentifier: "toHomeView", sender: nil)
     }
   }

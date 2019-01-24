@@ -77,6 +77,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   var viewHeight = 1000
   var spotNum = 0
   var favoriteFlag = false
+  var detailePlanFlag = false
   var camera = GMSCameraPosition.camera(withLatitude: 35.710063,longitude:139.8107, zoom:15)
   var makerList : [GMSMarker] = []
   let myFrameSize:CGSize = UIScreen.main.bounds.size
@@ -258,7 +259,9 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       
     }else if(segue.identifier == "toDetailUserView"){
       let nextViewController = segue.destination as! DetailUserViewController
-      nextViewController.editFlag = false
+      if(userId != globalVar.userId && detailePlanFlag == false){
+        nextViewController.editFlag = false
+      }
     }
   }
   
@@ -481,7 +484,6 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       request.httpMethod = "POST"
       // POSTするデータをBodyとして設定
       request.httpBody = str.data(using: .utf8)
-      print("ヘッダー", request.allHTTPHeaderFields)
       let session = URLSession.shared
       session.dataTask(with: request) { (data, response, error) in
         if error == nil, let data = data, let response = response as? HTTPURLResponse {
@@ -578,7 +580,8 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     case 3:
       performSegue(withIdentifier: "toTimelineView", sender: nil)
     case 4:
-      performSegue(withIdentifier: "backDetailUserView", sender: nil)
+      detailePlanFlag = true
+      performSegue(withIdentifier: "toDetailUserView", sender: nil)
     default : return
       
     }
@@ -596,11 +599,52 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   
   @objc func userIconTapped(sender : AnyObject) {
+    deleteSpot(planId: planId)
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
   
   @IBAction func tappedDeleteButton(_ sender: Any) {
-    //削除ボタンタップ
+    performSegue(withIdentifier: "toDetailUserView", sender: nil)
+  }
+  
+  func deleteSpot(planId:Int){
+    let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/delete")
+    var request = URLRequest(url: url!)
+    // DELETEを指定
+    request.httpMethod = "DELETE"
+    // DELETEするデータをBodyとして設定
+    request.httpBody = str.data(using: .utf8)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: .utf8) ?? "")
+        self.deletePlan(planId: planId)
+      }
+    }.resume()
+  }
+  func deletePlan(planId:Int){
+    let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/plan/delete")
+    var request = URLRequest(url: url!)
+    // DELETEを指定
+    request.httpMethod = "DELETE"
+    // DELETEするデータをBodyとして設定
+    request.httpBody = str.data(using: .utf8)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: .utf8) ?? "")
+      }
+      }.resume()
   }
   
 //  @IBAction func pushButton(_ sender: Any) {

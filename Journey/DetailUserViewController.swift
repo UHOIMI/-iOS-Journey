@@ -37,6 +37,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   var userIcon = UIImage()
   var userHeader = UIImage()
   
+  
   var imgView:UIImageView!
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   
