@@ -55,6 +55,7 @@
 		9151DB6E211D65E600B8753B /* SelectSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */; };
 		9155367F2191596300581837 /* DetailUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9155367E2191596300581837 /* DetailUserViewController.swift */; };
 		9162FA97211C0AED00C20C94 /* PutSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */; };
+		918A515721F9780F0087412A /* back.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 918A515621F9780E0087412A /* back.jpg */; };
 		9197627D21B8D9AC00F0890C /* DatailPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197627C21B8D9AC00F0890C /* DatailPlanViewController.swift */; };
 		919DE75121BDFB80001C863A /* SpotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919DE75021BDFB80001C863A /* SpotTableViewCell.swift */; };
 		919DE75321BF85AC001C863A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919DE75221BF85AC001C863A /* HomeViewController.swift */; };
@@ -119,6 +120,7 @@
 		9151DB6D211D65E600B8753B /* SelectSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpotViewController.swift; sourceTree = "<group>"; };
 		9155367E2191596300581837 /* DetailUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUserViewController.swift; sourceTree = "<group>"; };
 		9162FA96211C0AED00C20C94 /* PutSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutSpotViewController.swift; sourceTree = "<group>"; };
+		918A515621F9780E0087412A /* back.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = back.jpg; path = ../../../back.jpg; sourceTree = "<group>"; };
 		9197627C21B8D9AC00F0890C /* DatailPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatailPlanViewController.swift; sourceTree = "<group>"; };
 		919DE75021BDFB80001C863A /* SpotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotTableViewCell.swift; sourceTree = "<group>"; };
 		919DE75221BF85AC001C863A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 		0028241020FD8FFD0082EC7E /*  Transportation_Icon */ = {
 			isa = PBXGroup;
 			children = (
+				918A515621F9780E0087412A /* back.jpg */,
 				00C412A7217DB2D7006B5ABC /* no-image.png */,
 				00C4129B21784FBB006B5ABC /* journey.png */,
 				00D7D4382128249400C507B7 /* s_gradation.png */,
@@ -317,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0021CDC720F3416000224865 /* LaunchScreen.storyboard in Resources */,
+				918A515721F9780F0087412A /* back.jpg in Resources */,
 				0021CDC420F3416000224865 /* Assets.xcassets in Resources */,
 				0028242A20FD90410082EC7E /* s_airplane.png in Resources */,
 				00C4129C21784FBC006B5ABC /* journey.png in Resources */,

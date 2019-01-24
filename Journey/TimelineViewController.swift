@@ -243,6 +243,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       nextViewController.userImage = userImage
       nextViewController.planTitle = planTitle
       nextViewController.planArea = planArea
+      print("交通手段", planTransportation)
+      print("交通手段2", planTransportationList)
       nextViewController.planTransportationString = planTransportation
       nextViewController.planComment = planComment
       nextViewController.planPrice = planPrice

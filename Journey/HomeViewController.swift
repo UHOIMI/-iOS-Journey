@@ -24,6 +24,17 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   var generationScroll = UIScrollView()
   var newScroll = UIScrollView()
   
+  //受け渡し用
+  var planId = 0
+  var planTitle = ""
+  var userId = ""
+  var userImage = UIImage()
+  var userName = ""
+  var planArea = ""
+  var planTransportation = ""
+  var planPrice = ""
+  var planComment = ""
+  
   var searchArea = ""
   var globalVar = GlobalVar.shared
   
@@ -238,7 +249,17 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if(segue.identifier == "toDetailPlanView"){
       let nextViewController = segue.destination as! DatailPlanViewController
-      nextViewController.planId = sender as! Int
+      nextViewController.planId = planId
+      nextViewController.userId = userId
+      nextViewController.userName = userName
+      nextViewController.userImage = userImage
+      nextViewController.planTitle = planTitle
+      nextViewController.planArea = planArea
+      print("交通手段", planTransportation)
+      print("交通手段2", globalVar.newPlanTransportationList)
+      nextViewController.planTransportationString = planTransportation
+      nextViewController.planComment = planComment
+      nextViewController.planPrice = planPrice
     }else if(segue.identifier == "toDetailUserView"){
       let nextViewController = segue.destination as! DetailUserViewController
       if(!userEditFlag){
@@ -380,10 +401,31 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   }
   
   @objc func newPlanTapped(_ sender: UITapGestureRecognizer) {
+    let currentPage = pageControl.currentPage
+    planId = globalVar.newPlanIdList[currentPage]
+    planTitle = globalVar.newPlanTitleList[currentPage]
+    planArea = globalVar.newPlanAreaList[currentPage]
+    planComment = globalVar.newPlanCommentList[currentPage]
+    planTransportation = globalVar.newPlanTransportationList[currentPage]
+    print("交通手段3", globalVar.newPlanTransportationList[currentPage])
+    planPrice = globalVar.newPlanPriceList[currentPage]
+    userId = globalVar.newUserIdList[currentPage]
+    userImage = globalVar.newUserImageList[currentPage]
+    userName = globalVar.newUserNameList[currentPage]
     performSegue(withIdentifier: "toDetailPlanView", sender: 0)
   }
   
   @objc func generationPlanTapped(_ sender: UITapGestureRecognizer) {
+    let currentPage = pageControl.currentPage
+    planId = globalVar.searchPlanIdList[currentPage]
+    planTitle = globalVar.searchPlanTitleList[currentPage]
+    planArea = globalVar.searchPlanAreaList[currentPage]
+    planComment = globalVar.searchPlanCommentList[currentPage]
+    planTransportation = globalVar.searchPlanTransportationList[currentPage]
+    planPrice = globalVar.searchPlanPriceList[currentPage]
+    userId = globalVar.searchUserIdList[currentPage]
+    userImage = globalVar.searchUserImageList[currentPage]
+    userName = globalVar.searchUserNameList[currentPage]
     performSegue(withIdentifier: "toDetailPlanView", sender: 0)
   }
   
