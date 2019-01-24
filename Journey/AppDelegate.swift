@@ -466,7 +466,7 @@ class GlobalVar{
   var userIconPath : String = ""
   var userIcon:UIImage?
 //  let ipAddress = "api.mino.asia:3001"
-  let ipAddress = "192.168.43.85:3000"
+  let ipAddress = "192.168.100.161:3000"
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()
