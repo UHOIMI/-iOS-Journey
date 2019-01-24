@@ -102,6 +102,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
     print(arr)
     for i in 0...6{
       if(i != 6){
+        print("トランスポーテーション", arr)
         let str = arr[i] + ","
         print(str)
         transportation[i] = str
