@@ -36,6 +36,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   var userEditFlag = true
   var homeFlag = false
   var searchFlag = 0
+  var timer = Timer()
   
   private let refreshControl = UIRefreshControl()
   private var pageControl: UIPageControl!
@@ -178,6 +179,59 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
 
     createTabBar()
     subView.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
+    
+    timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+      if(self.globalVar.firstLoadFlag[0] && self.globalVar.firstLoadFlag[1]){
+        for i in 0 ..< page {
+          if(self.globalVar.newSpotNameListA.count >= page && self.globalVar.searchSpotNameListA.count >= page){
+            let newPlanView = TopView(frame: CGRect(x: CGFloat(i) * (width - 16), y: 0, width: width - 16, height: height))
+            if(self.globalVar.newPlanTitleList[i] != ""){
+              self.homeFlag = true
+            }
+            newPlanView.planNameLabel.text = self.globalVar.newPlanTitleList[i]
+            newPlanView.planUserNameLabel.text = self.globalVar.newUserNameList[i]
+            newPlanView.planSpotNameLabel1.text = self.globalVar.newSpotNameListA[i]
+            newPlanView.planSpotNameLabel2.text = self.globalVar.newSpotNameListB![i]
+            if(self.globalVar.newSpotCountList[i] == 0){
+              newPlanView.otherSpotLabel.text = ""
+            }else{
+              newPlanView.otherSpotLabel.text = "他\(self.globalVar.newSpotCountList[i])件"
+            }
+            newPlanView.planDateLabel.text = self.globalVar.newDateList[i]
+            newPlanView.planImageView.image = self.globalVar.newSpotImageList![i]
+            newPlanView.planUserIconImageView.image = self.globalVar.newUserImageList[i]
+            newPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
+            newPlanView.planUserIconImageView.clipsToBounds = true
+            newPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
+            newPlanView.planUserIconImageView.isUserInteractionEnabled = true
+            newPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.newPlanTapped(_ :))))
+            self.newScroll.addSubview(newPlanView)
+            
+            let generationPlanView = TopView(frame: CGRect(x: CGFloat(i) * (width - 16), y: 0, width: width - 16, height: height))
+            generationPlanView.planNameLabel.text = self.globalVar.searchPlanTitleList[i]
+            generationPlanView.planUserNameLabel.text = self.globalVar.searchUserNameList[i]
+            generationPlanView.planSpotNameLabel1.text = self.globalVar.searchSpotNameListA[i]
+            generationPlanView.planSpotNameLabel2.text = self.globalVar.searchSpotNameListB![i]
+            if(self.globalVar.searchSpotCountList[i] == 0){
+              generationPlanView.otherSpotLabel.text = ""
+            }else{
+              generationPlanView.otherSpotLabel.text = "他\(self.globalVar.searchSpotCountList[i])件"
+            }
+            generationPlanView.planDateLabel.text = self.globalVar.searchDateList[i]
+            generationPlanView.planImageView.image = self.globalVar.searchSpotImageList![i]
+            generationPlanView.planUserIconImageView.image = self.globalVar.searchUserImageList[i]
+            generationPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
+            generationPlanView.planUserIconImageView.clipsToBounds = true
+            generationPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
+            generationPlanView.planUserIconImageView.isUserInteractionEnabled = true
+            generationPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.generationPlanTapped(_ :))))
+            self.generationScroll.addSubview(generationPlanView)
+            
+          }
+        }
+        timer.invalidate()
+      }
+    })
 
   }
   

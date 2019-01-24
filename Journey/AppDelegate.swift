@@ -357,6 +357,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.globalVar.newSpotImagePathList?.removeAll()
             self.globalVar.newPlanCount += 1
           }
+          self.globalVar.firstLoadFlag[0] = true
         }
       }else{
       }
@@ -432,6 +433,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.globalVar.searchSpotImagePathList?.removeAll()
             self.globalVar.searchPlanCount += 1
           }
+          self.globalVar.firstLoadFlag[1] = true
         }
       }else{
       }
@@ -513,6 +515,8 @@ class GlobalVar{
   var searchPlanPriceList : [String] = []
   var searchPlanCommentList : [String] = []
   var searchPlanCount = 0
+  
+  var firstLoadFlag = [false, false]
   
   //投稿した1件のプラン
   var postPlanId : Int = 0
