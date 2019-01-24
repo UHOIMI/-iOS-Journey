@@ -392,8 +392,8 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
   }
   
    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if(segue.identifier == "toTimelineView"){
-      if((sender as! Int ) == 1 && timelineFlag == false){
+    if(segue.identifier == "toTimelineView" && timelineFlag == false){
+      if((sender as! Int ) == 1){
         let nextViewController = segue.destination as! TimelineViewController
         nextViewController.searchText = searchBarTextField.text!
         nextViewController.searchArea = regionTextField.text!
