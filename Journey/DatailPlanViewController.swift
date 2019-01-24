@@ -598,12 +598,14 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   
   @objc func userIconTapped(sender : AnyObject) {
+    deleteSpot(planId: planId)
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
   
   @IBAction func tappedDeleteButton(_ sender: Any) {
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
+  
   func deleteSpot(planId:Int){
     let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
     let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/delete")
