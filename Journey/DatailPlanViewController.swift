@@ -53,6 +53,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   var spotImageBList : [UIImage] = []
   var spotImageCList : [UIImage] = []
   var spotImageNum : [Int] = []
+  var spotImagePathList : [String] = []
   
   var planId = 0
   var userId = ""
@@ -85,6 +86,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   
   override func viewDidLoad() {
+    
     super.viewDidLoad()
 //    self.navigationItem.hidesBackButton = true
     if(globalVar.userId != userId){
@@ -362,6 +364,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
             self.spotTitleList.insert((spotData?.record![i].spotTitle)!, at: i)
             self.spotCommentList.insert((spotData?.record![i].spotComment)!, at: i)
             if((spotData?.record![i].spotImageA)! != ""){
+              self.spotImagePathList.append((spotData?.record![i].spotImageA)!)
               let url = URL(string: (spotData?.record![i].spotImageA)!)!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
@@ -373,6 +376,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
               self.spotImageAList.append(UIImage(named:"no-image.png")!)
             }
             if((spotData?.record![i].spotImageB)! != ""){
+              self.spotImagePathList.append((spotData?.record![i].spotImageB)!)
               let url = URL(string: (spotData?.record![i].spotImageB)!)!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
@@ -384,6 +388,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
               self.spotImageBList.append(UIImage(named:"no-image.png")!)
             }
             if((spotData?.record![i].spotImageC)! != ""){
+              self.spotImagePathList.append((spotData?.record![i].spotImageC)!)
               let url = URL(string: (spotData?.record![i].spotImageC)!)!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
@@ -434,6 +439,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
         }else{
           print("status",spotData!.status)
         }
+        print(self.spotIdList)
       }
       }.resume()
   }
@@ -603,12 +609,17 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   
   @IBAction func tappedDeleteButton(_ sender: Any) {
+    for _image in spotImagePathList{
+      let imageName = _image.components(separatedBy: "/")
+      deleteImage(imageName: imageName[2])
+    }
+    deleteSpot(planId: planId)
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
   
-  func deleteSpot(planId:Int){
-    let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/delete")
+  func deleteImage(imageName:String){
+    let str : String = "token=\(globalVar.token)&image_name=\(imageName)"
+    let url = URL(string: "http://api.mino.asia:3001/api/v1/image/delete")
     var request = URLRequest(url: url!)
     // DELETEを指定
     request.httpMethod = "DELETE"
@@ -622,13 +633,35 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
+      }
+      }.resume()
+  }
+  
+  func deleteSpot(planId:Int){
+    let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/delete")
+    var request = URLRequest(url: url!)
+    // DELETEを指定
+    request.httpMethod = "DELETE"
+    // DELETEするデータをBodyとして設定
+    guard let unwrapped = str.data(using: .utf8) else { return }
+    print (unwrapped)
+    request.httpBody = unwrapped
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: .utf8) ?? "")
         self.deletePlan(planId: planId)
       }
     }.resume()
   }
   func deletePlan(planId:Int){
-    let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/plan/delete")
+    let str : String = "plan_id=\(planId)"
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/plan/delete?token=\(globalVar.token)")
     var request = URLRequest(url: url!)
     // DELETEを指定
     request.httpMethod = "DELETE"
