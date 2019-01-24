@@ -615,12 +615,11 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       deleteImage(imageName: imageName[2])
     }
     deleteSpot(planId: planId)
-    performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
   
   func deleteImage(imageName:String){
     let str : String = "token=\(globalVar.token)&image_name=\(imageName)"
-    let url = URL(string: "http://api.mino.asia:3001/api/v1/image/delete")
+    let url = URL(string: "http://api.mino.asia:3001/api/v1/image/delete?token=\(globalVar.token)&image_name=\(imageName)")
     var request = URLRequest(url: url!)
     // DELETEを指定
     request.httpMethod = "DELETE"
@@ -640,7 +639,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   
   func deleteSpot(planId:Int){
     let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/delete")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/spot/delete?token=\(globalVar.token)&plan_id=\(planId)")
     var request = URLRequest(url: url!)
     // DELETEを指定
     request.httpMethod = "DELETE"
@@ -662,7 +661,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   func deletePlan(planId:Int){
     let str : String = "plan_id=\(planId)"
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/plan/delete?token=\(globalVar.token)")
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/plan/delete?token=\(globalVar.token)&plan_id=\(planId)")
     var request = URLRequest(url: url!)
     // DELETEを指定
     request.httpMethod = "DELETE"
@@ -676,6 +675,10 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
         // HTTPステータスコード
         print("statusCode: \(response.statusCode)")
         print(String(data: data, encoding: .utf8) ?? "")
+        self.globalVar.userPostPlan(userId: self.globalVar.userId)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() +  1.0) {
+          self.performSegue(withIdentifier: "toDetailUserView", sender: nil)
+        }
       }
       }.resume()
   }
