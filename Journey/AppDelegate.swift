@@ -310,7 +310,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.globalVar.newPlanTransportationList.append((timelineData?.record![i].transportation)!)
             self.globalVar.newPlanPriceList.append((timelineData?.record![i].price)!)
             self.globalVar.newPlanCommentList.append((timelineData?.record![i].planComment)!)
-            
+            self.globalVar.getFavoriteCount(planId: self.globalVar.newPlanIdList[i], flag: 0, updateFlag: 0, number: 0)
             if(timelineData?.record![i].user.userIcon != ""){
               let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
               let imageData = try? Data(contentsOf: url)
@@ -388,6 +388,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.globalVar.searchPlanTransportationList.append((searchData?.record![i].transportation)!)
             self.globalVar.searchPlanPriceList.append((searchData?.record![i].price)!)
             self.globalVar.searchPlanCommentList.append((searchData?.record![i].planComment)!)
+            self.globalVar.getFavoriteCount(planId: self.globalVar.searchPlanIdList[i], flag: 1, updateFlag: 0, number: 0)
             if(searchData?.record![i].user.userIcon != ""){
               let url = URL(string: (searchData?.record![i].user.userIcon)!)!
               let imageData = try? Data(contentsOf: url)
@@ -438,7 +439,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }else{
       }
       }.resume()
-    
   }
 
 }
@@ -468,7 +468,7 @@ class GlobalVar{
   var userIconPath : String = ""
   var userIcon:UIImage?
 //  let ipAddress = "api.mino.asia:3001"
-  let ipAddress = "192.168.43.221:3000"
+  let ipAddress = "192.168.100.161:3000"
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()
@@ -494,6 +494,7 @@ class GlobalVar{
   var newPlanPriceList : [String] = []
   var newPlanCommentList : [String] = []
   var newPlanCount = 0
+  var newFavoriteCountList : [Int] = []
   
   //年代別新着3件用
   var searchPlanIdList : [Int] = []
@@ -515,6 +516,7 @@ class GlobalVar{
   var searchPlanPriceList : [String] = []
   var searchPlanCommentList : [String] = []
   var searchPlanCount = 0
+  var searchFavoriteCountList : [Int] = []
   
   var firstLoadFlag = [false, false]
   
@@ -537,6 +539,7 @@ class GlobalVar{
   var postPlanTransportation : String = ""
   var postPlanPrice : String = ""
   var postPlanComment : String = ""
+  var postFavoriteCount : Int = 0
   
   
   
@@ -622,7 +625,7 @@ class GlobalVar{
         self.postPlanTransportation = (timelineData?.record![0].transportation)!
         self.postPlanPrice = (timelineData?.record![0].price)!
         self.postPlanComment = (timelineData?.record![0].planComment)!
-        
+        self.getFavoriteCount(planId: self.postPlanId, flag: 2, updateFlag: 0, number: 0)
         if(timelineData?.record![0].user.userIcon != ""){
           let url = URL(string: (timelineData?.record![0].user.userIcon)!)!
           let imageData = try? Data(contentsOf: url)
@@ -692,6 +695,7 @@ class GlobalVar{
             self.newPlanTransportationList.insert((timelineData?.record![i].transportation)!, at: i)
             self.newPlanPriceList.insert((timelineData?.record![i].price)!, at: i)
             self.newPlanCommentList.insert((timelineData?.record![i].planComment)!, at: i)
+            self.getFavoriteCount(planId: (timelineData?.record![i].planId)!, flag: 0, updateFlag: 1, number: i)
             if(timelineData?.record![i].user.userIcon != ""){
               let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
               let imageData = try? Data(contentsOf: url)
@@ -764,6 +768,7 @@ class GlobalVar{
             self.searchPlanTransportationList.insert((searchData?.record![i].transportation)!, at: i)
             self.searchPlanPriceList.insert((searchData?.record![i].price)!, at: i)
             self.searchPlanCommentList.insert((searchData?.record![i].planComment)!, at: i)
+            self.getFavoriteCount(planId: (searchData?.record![i].planId)!, flag: 1, updateFlag: 1, number: i)
             if(searchData?.record![i].user.userIcon != ""){
               let url = URL(string: (searchData?.record![i].user.userIcon)!)!
               let imageData = try? Data(contentsOf: url)
@@ -812,6 +817,86 @@ class GlobalVar{
       }else{
       }
     }.resume()
+  }
+  struct FavoriteData : Codable{
+    let status : Int?
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+//      let count : Int?
+      let rows : [Rows]?
+//      let date : Date? = NSDate() as Date
+      enum CodingKeys: String, CodingKey {
+//        case count = "count"
+        case rows = "rows"
+//        case date = "date"
+      }
+      struct Rows : Codable{
+        let favoriteDate : String?
+        let planId : Int?
+        let userId : String?
+        enum CodingKeys: String, CodingKey {
+          case favoriteDate = "fav_date"
+          case planId = "plan_id"
+          case userId = "user_id"
+        }
+      }
+    }
+  }
+  func getFavoriteCount(planId:Int, flag:Int, updateFlag:Int, number:Int){
+    let url = URL(string: "http://\(ipAddress)/api/v1/favorite/find?plan_id=\(planId)")
+    let request = URLRequest(url: url!)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let favoriteData = try! JSONDecoder().decode(FavoriteData.self, from: data)
+        if(favoriteData.status == 200){
+          if(flag == 0){
+            if(updateFlag == 0){
+              self.newFavoriteCountList.append(favoriteData.record!.count)
+            }else if(updateFlag == 1){
+              self.newFavoriteCountList.insert(favoriteData.record!.count, at: number)
+            }
+          }else if(flag == 1){
+            if(updateFlag == 0){
+              self.searchFavoriteCountList.append(favoriteData.record!.count)
+            }else if(updateFlag == 1){
+              self.searchFavoriteCountList.insert(favoriteData.record!.count, at: number)
+            }
+          }else if(flag == 2){
+            self.postFavoriteCount = favoriteData.record!.count
+          }
+        }else{
+          if(flag == 0){
+            if(updateFlag == 0){
+              self.newFavoriteCountList.append(0)
+            }else if(updateFlag == 1){
+              self.newFavoriteCountList.insert(0, at: number)
+            }
+          }else if(flag == 1){
+            if(updateFlag == 0){
+              self.searchFavoriteCountList.append(0)
+            }else if(updateFlag == 1){
+              self.searchFavoriteCountList.insert(0, at: number)
+            }
+          }else if(flag == 2){
+              self.postFavoriteCount = 0
+          }
+        }
+        print("お気に入り数",self.newFavoriteCountList)
+        print("検索お気に入り",self.searchFavoriteCountList)
+      }
+      }.resume()
   }
 }
 
