@@ -561,6 +561,13 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
   @objc func userIconTapped(sender : AnyObject) {
     performSegue(withIdentifier: "toDetailUserView", sender: nil)
   }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if(segue.identifier == "toTimelineView"){
+      let nextView = segue.destination as! TimelineViewController
+      nextView.favoriteFlag = 1
+    }
+  }
 
 }
 

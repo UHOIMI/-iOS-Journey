@@ -133,6 +133,15 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     if(segue.identifier == "toDetailSpotView"){
       let nextView = segue.destination as! DetailSpotViewController
       nextView.spotData = sender as! ListSpotModel
+    }else if(segue.identifier == "toStartView"){
+      globalVar.searchTimeline(offset: 0, generation: globalVar.userGenerationInt)
+      globalVar.getTimeline(offset: 0)
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
+        print("toHome")
+      }
+    }else if(segue.identifier == "toTimelineView"){
+      let nextView = segue.destination as! TimelineViewController
+      nextView.favoriteFlag = 1
     }
   }
   
@@ -694,9 +703,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
     switch item.tag{
     case 1:
-      globalVar.searchTimeline(offset: 0, generation: globalVar.userGenerationInt)
-      globalVar.getTimeline(offset: 0)
-      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
         self.performSegue(withIdentifier: "toStartView", sender: nil)
       }
     case 2:

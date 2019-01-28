@@ -107,6 +107,9 @@ class SpotListViewController: UIViewController, UITableViewDelegate, UITableView
       if(segue.identifier == "toDetailSpotView"){
         let nextViewController = segue.destination as! DetailSpotViewController
         nextViewController.spotData = sender as! ListSpotModel
+      }else if(segue.identifier == "toTimelineView"){
+        let nextView = segue.destination as! TimelineViewController
+        nextView.favoriteFlag = 1
       }
     }
     

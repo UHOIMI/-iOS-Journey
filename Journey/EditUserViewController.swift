@@ -280,7 +280,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if(editFlag == 1 && segue.identifier=="backDetailUserView"){
+    if(editFlag == 1 && segue.identifier == "backDetailUserView"){
       globalVar.userHeader = headerImageView.image!
       globalVar.userIcon = imgView.image!
       if(iconFlag == 0 && headerFlag == 0){
@@ -292,6 +292,9 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
       if(headerFlag == 1){
         postImage(setImage: headerImageView.image!)
       }
+    }else if(segue.identifier == "toTimelineView"){
+      let nextView = segue.destination as! TimelineViewController
+      nextView.favoriteFlag = 1
     }
   }
   

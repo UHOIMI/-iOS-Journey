@@ -47,6 +47,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
   var userEditFlag = true
   var homeFlag = false
   var searchFlag = 0
+  var favoriteFlag = 0
   var timer = Timer()
   
   private let refreshControl = UIRefreshControl()
@@ -272,6 +273,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
       nextViewController.searchFlag = searchFlag
       if(searchFlag == 1){
         nextViewController.searchGeneration = globalVar.userGeneration
+      }else if(favoriteFlag == 1){
+        nextViewController.favoriteFlag = favoriteFlag
       }
     }
   }
@@ -385,6 +388,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
     case 2:
       performSegue(withIdentifier: "toSearchView", sender: nil)
     case 3:
+      favoriteFlag = 1
       performSegue(withIdentifier: "toTimelineView", sender: nil)
     case 4:
       performSegue(withIdentifier: "toDetailUserView", sender: nil)

@@ -408,6 +408,9 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
         nextViewController.searchTransportationString = transportationString
         nextViewController.searchFlag = 1
       }
+    }else if(segue.identifier == "toTimelineView" && timelineFlag == true){
+      let nextView = segue.destination as! TimelineViewController
+      nextView.favoriteFlag = 1
     }
   }
   
