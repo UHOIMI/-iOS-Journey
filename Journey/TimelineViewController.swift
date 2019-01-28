@@ -46,6 +46,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
   var planTransportationList : [String] = []
   var planPriceList : [String] = []
   var planCommentList : [String] = []
+  var planFavoriteCountList : [Int] = []
   var planCount = 0
   var reloadFlag = 0
   var area : String = ""
@@ -205,7 +206,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
       }else{
         cell.otherSpotLabel.text = "他\(spotCountList[indexPath.row])件"
       }
-      cell.planFavoriteLabel.text = 99999.description
+      cell.planFavoriteLabel.text = "\(planFavoriteCountList[indexPath.row])"
+      print("画像パス",indexPath.row)
       cell.planImageView.image = spotImageList![indexPath.row]
       cell.planDateLabel.text = dateList[indexPath.row]
       cell.planUserIconImageView.image = userImageList[indexPath.row]
@@ -407,6 +409,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 self.planTransportationList.insert((timelineData?.record![i].transportation)!, at: i)
                 self.planPriceList.insert((timelineData?.record![i].price)!, at: i)
                 self.planCommentList.insert((timelineData?.record![i].planComment)!, at: i)
+                self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 1, number: i)
                 let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
                 let imageData = try? Data(contentsOf: url)
                 let image = UIImage(data:imageData!)
@@ -462,6 +465,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.planTransportationList.append((timelineData?.record![i].transportation)!)
               self.planPriceList.append((timelineData?.record![i].price)!)
               self.planCommentList.append((timelineData?.record![i].planComment)!)
+              self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 0, number: i)
               if(timelineData?.record![i].user.userIcon != ""){
                 let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
                 let imageData = try? Data(contentsOf: url)
@@ -497,13 +501,24 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.spotCountList.append(count)
               self.spotImagePathList?.append("")
               self.trueSpotImagePathList?.append(self.spotImagePathList![0])
-              if(self.trueSpotImagePathList![i] != ""){
-                let url = URL(string: self.trueSpotImagePathList![i])!
-                let imageData = try? Data(contentsOf: url)
-                let image = UIImage(data:imageData!)
-                self.spotImageList?.append(image!)
+              if(offset == 0){
+                if(self.trueSpotImagePathList![i] != ""){
+                  let url = URL(string: self.trueSpotImagePathList![i])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }else{
-                self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                if(self.trueSpotImagePathList![i + offset - 1] != ""){
+                  let url = URL(string: self.trueSpotImagePathList![i + offset - 1])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }
               self.spotImagePathList?.removeAll()
               self.planCount += 1
@@ -550,6 +565,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 self.planTransportationList.insert((timelineData?.record![i].transportation)!, at: i)
                 self.planPriceList.insert((timelineData?.record![i].price)!, at: i)
                 self.planCommentList.insert((timelineData?.record![i].planComment)!, at: i)
+                self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 1, number: i)
                 let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
                 let imageData = try? Data(contentsOf: url)
                 let image = UIImage(data:imageData!)
@@ -604,6 +620,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.planTransportationList.append((timelineData?.record![i].transportation)!)
               self.planPriceList.append((timelineData?.record![i].price)!)
               self.planCommentList.append((timelineData?.record![i].planComment)!)
+              self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 0, number: i)
               let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
@@ -635,13 +652,24 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.spotCountList.append(count)
               self.spotImagePathList?.append("")
               self.trueSpotImagePathList?.append(self.spotImagePathList![0])
-              if(self.trueSpotImagePathList![i] != ""){
-                let url = URL(string: self.trueSpotImagePathList![i])!
-                let imageData = try? Data(contentsOf: url)
-                let image = UIImage(data:imageData!)
-                self.spotImageList?.append(image!)
+              if(offset == 0){
+                if(self.trueSpotImagePathList![i] != ""){
+                  let url = URL(string: self.trueSpotImagePathList![i])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }else{
-                self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                if(self.trueSpotImagePathList![i + offset - 1] != ""){
+                  let url = URL(string: self.trueSpotImagePathList![i + offset - 1])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }
               self.spotImagePathList?.removeAll()
               self.planCount += 1
@@ -696,6 +724,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 self.planTransportationList.insert((timelineData?.record![i].transportation)!, at: i)
                 self.planPriceList.insert((timelineData?.record![i].price)!, at: i)
                 self.planCommentList.insert((timelineData?.record![i].planComment)!, at: i)
+                self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 1, number: i)
                 let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
                 let imageData = try? Data(contentsOf: url)
                 let image = UIImage(data:imageData!)
@@ -750,6 +779,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.planTransportationList.append((timelineData?.record![i].transportation)!)
               self.planPriceList.append((timelineData?.record![i].price)!)
               self.planCommentList.append((timelineData?.record![i].planComment)!)
+              self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 0, number: i)
               let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
               let imageData = try? Data(contentsOf: url)
               let image = UIImage(data:imageData!)
@@ -781,13 +811,24 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.spotCountList.append(count)
               self.spotImagePathList?.append("")
               self.trueSpotImagePathList?.append(self.spotImagePathList![0])
-              if(self.trueSpotImagePathList![i] != ""){
-                let url = URL(string: self.trueSpotImagePathList![i])!
-                let imageData = try? Data(contentsOf: url)
-                let image = UIImage(data:imageData!)
-                self.spotImageList?.append(image!)
+              if(offset == 0){
+                if(self.trueSpotImagePathList![i] != ""){
+                  let url = URL(string: self.trueSpotImagePathList![i])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }else{
-                self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                if(self.trueSpotImagePathList![i + offset - 1] != ""){
+                  let url = URL(string: self.trueSpotImagePathList![i + offset - 1])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }
               self.spotImagePathList?.removeAll()
               self.planCount += 1
@@ -841,6 +882,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 self.planTransportationList.insert((timelineData?.record![i].transportation)!, at: i)
                 self.planPriceList.insert((timelineData?.record![i].price)!, at: i)
                 self.planCommentList.insert((timelineData?.record![i].planComment)!, at: i)
+                self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 1, number: i)
                 let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
                 let imageData = try? Data(contentsOf: url)
                 let image = UIImage(data:imageData!)
@@ -895,6 +937,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.planTransportationList.append((timelineData?.record![i].transportation)!)
               self.planPriceList.append((timelineData?.record![i].price)!)
               self.planCommentList.append((timelineData?.record![i].planComment)!)
+              self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 0, number: i)
               if(timelineData?.record![i].user.userIcon != ""){
                 let url = URL(string: (timelineData?.record![i].user.userIcon)!)!
                 let imageData = try? Data(contentsOf: url)
@@ -930,13 +973,24 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.spotCountList.append(count)
               self.spotImagePathList?.append("")
               self.trueSpotImagePathList?.append(self.spotImagePathList![0])
-              if(self.trueSpotImagePathList![i] != ""){
-                let url = URL(string: self.trueSpotImagePathList![i])!
-                let imageData = try? Data(contentsOf: url)
-                let image = UIImage(data:imageData!)
-                self.spotImageList?.append(image!)
+              if(offset == 0){
+                if(self.trueSpotImagePathList![i] != ""){
+                  let url = URL(string: self.trueSpotImagePathList![i])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }else{
-                self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                if(self.trueSpotImagePathList![i + offset - 1] != ""){
+                  let url = URL(string: self.trueSpotImagePathList![i + offset - 1])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }
               self.spotImagePathList?.removeAll()
               self.planCount += 1
@@ -1046,6 +1100,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 self.planTransportationList.insert((timelineData?.record![i].plan.transportation)!, at: i)
                 self.planPriceList.insert((timelineData?.record![i].plan.price)!, at: i)
                 self.planCommentList.insert((timelineData?.record![i].plan.planComment)!, at: i)
+                self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 1, number: i)
                 let planDate = (timelineData?.record![i].plan.planDate)!.prefix(10)
                 var date = planDate.suffix(5)
                 if let range = date.range(of: "-"){
@@ -1100,6 +1155,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.planTransportationList.append((timelineData?.record![i].plan.transportation)!)
               self.planPriceList.append((timelineData?.record![i].plan.price)!)
               self.planCommentList.append((timelineData?.record![i].plan.planComment)!)
+              self.getFavoriteCount(planId: self.planIdList[i], updateFlag: 0, number: i)
               let planDate = (timelineData?.record![i].plan.planDate)!.prefix(10)
               var date = planDate.suffix(5)
               if let range = date.range(of: "-"){
@@ -1127,13 +1183,26 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
               self.spotCountList.append(count)
               self.spotImagePathList?.append("")
               self.trueSpotImagePathList?.append(self.spotImagePathList![0])
-              if(self.trueSpotImagePathList![i] != ""){
-                let url = URL(string: self.trueSpotImagePathList![i])!
-                let imageData = try? Data(contentsOf: url)
-                let image = UIImage(data:imageData!)
-                self.spotImageList?.append(image!)
+              if(offset == 0){
+                if(self.trueSpotImagePathList![i] != ""){
+                  print("真のパス",self.trueSpotImagePathList)
+                  let url = URL(string: self.trueSpotImagePathList![i])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }else{
-                self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                if(self.trueSpotImagePathList![i + offset - 1] != ""){
+                  print("真のパス",self.trueSpotImagePathList)
+                  let url = URL(string: self.trueSpotImagePathList![i + offset - 1])!
+                  let imageData = try? Data(contentsOf: url)
+                  let image = UIImage(data:imageData!)
+                  self.spotImageList?.append(image!)
+                }else{
+                  self.spotImageList?.append(UIImage(named: "no-image.png")!)
+                }
               }
               self.spotImagePathList?.removeAll()
               self.planCount += 1
@@ -1215,6 +1284,62 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             }
           }
         }else if(userData?.status == 404){
+        }
+      }
+      }.resume()
+  }
+  
+  struct FavoriteDataCount : Codable{
+    let status : Int?
+    let record : [Record]?
+    let message : String?
+    enum CodingKeys: String, CodingKey {
+      case status
+      case record
+      case message
+    }
+    struct Record : Codable{
+      let rows : [Rows]?
+      enum CodingKeys: String, CodingKey {
+        case rows = "rows"
+      }
+      struct Rows : Codable{
+        let favoriteDate : String?
+        let planId : Int?
+        let userId : String?
+        enum CodingKeys: String, CodingKey {
+          case favoriteDate = "fav_date"
+          case planId = "plan_id"
+          case userId = "user_id"
+        }
+      }
+    }
+  }
+  
+  func getFavoriteCount(planId:Int, updateFlag:Int, number:Int){
+    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/find?plan_id=\(planId)")
+    let request = URLRequest(url: url!)
+    let session = URLSession.shared
+    session.dataTask(with: request) { (data, response, error) in
+      if error == nil, let data = data, let response = response as? HTTPURLResponse {
+        // HTTPヘッダの取得
+        print("Content-Type: \(response.allHeaderFields["Content-Type"] ?? "")")
+        // HTTPステータスコード
+        print("statusCode: \(response.statusCode)")
+        print(String(data: data, encoding: String.Encoding.utf8) ?? "")
+        let favoriteData = try! JSONDecoder().decode(FavoriteDataCount.self, from: data)
+        if(favoriteData.status == 200){
+          if(updateFlag == 0){
+            self.planFavoriteCountList.append((favoriteData.record?.count)!)
+          }else if(updateFlag == 1){
+            self.planFavoriteCountList.insert((favoriteData.record?.count)!, at: number)
+          }
+        }else{
+          if(updateFlag == 0){
+            self.planFavoriteCountList.append(0)
+          }else if(updateFlag == 1){
+            self.planFavoriteCountList.insert(0, at: number)
+          }
         }
       }
       }.resume()

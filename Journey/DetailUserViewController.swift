@@ -89,6 +89,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       userPlanView.planUserNameLabel.text = globalVar.postUserName
       userPlanView.planSpotNameLabel1.text = globalVar.postSpotNameA
       userPlanView.planDateLabel.text = globalVar.postDate
+      userPlanView.planFavoriteLabel.text = "\(globalVar.postFavoriteCount)"
       userPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
       userPlanView.planUserIconImageView.clipsToBounds = true
       userPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))

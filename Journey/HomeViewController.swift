@@ -133,6 +133,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
         newPlanView.planDateLabel.text = globalVar.newDateList[i]
         newPlanView.planImageView.image = globalVar.newSpotImageList![i]
         newPlanView.planUserIconImageView.image = globalVar.newUserImageList[i]
+        newPlanView.planFavoriteLabel.text = "\(globalVar.newFavoriteCountList[i])"
         newPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
         newPlanView.planUserIconImageView.clipsToBounds = true
         newPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
@@ -153,6 +154,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
         generationPlanView.planDateLabel.text = globalVar.searchDateList[i]
         generationPlanView.planImageView.image = globalVar.searchSpotImageList![i]
         generationPlanView.planUserIconImageView.image = globalVar.searchUserImageList[i]
+        generationPlanView.planFavoriteLabel.text = "\(globalVar.searchFavoriteCountList[i])"
         generationPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
         generationPlanView.planUserIconImageView.clipsToBounds = true
         generationPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
@@ -212,6 +214,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
             newPlanView.planDateLabel.text = self.globalVar.newDateList[i]
             newPlanView.planImageView.image = self.globalVar.newSpotImageList![i]
             newPlanView.planUserIconImageView.image = self.globalVar.newUserImageList[i]
+            newPlanView.planFavoriteLabel.text = "\(self.globalVar.newFavoriteCountList[i])"
             newPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
             newPlanView.planUserIconImageView.clipsToBounds = true
             newPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
@@ -232,6 +235,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
             generationPlanView.planDateLabel.text = self.globalVar.searchDateList[i]
             generationPlanView.planImageView.image = self.globalVar.searchSpotImageList![i]
             generationPlanView.planUserIconImageView.image = self.globalVar.searchUserImageList[i]
+            generationPlanView.planFavoriteLabel.text = "\(self.globalVar.searchFavoriteCountList[i])"
             generationPlanView.planUserIconImageView.layer.cornerRadius = 40 * 0.5
             generationPlanView.planUserIconImageView.clipsToBounds = true
             generationPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))

@@ -291,7 +291,9 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       globalVar.planText = textView.text!
       globalVar.selectCount = 0
       settingImage()
-      self.performSegue(withIdentifier: "toStartView", sender: nil)
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+        self.performSegue(withIdentifier: "toStartView", sender: nil)
+      }
     }
   }
   
