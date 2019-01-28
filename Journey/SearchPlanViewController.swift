@@ -341,7 +341,7 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
       }
     }
     //バーの色
-    tabBar.barTintColor = UIColor.lightGray
+    tabBar.barTintColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
     //選択されていないボタンの色
     tabBar.unselectedItemTintColor = UIColor.black
     //ボタンを押した時の色
@@ -355,6 +355,12 @@ class SearchPlanViewController: UIViewController, UITextFieldDelegate, UITableVi
     tabBar.items = [home,search,favorites,setting]
     //デリゲートを設定する
     tabBar.delegate = self
+    
+    print("高さ", tabBar.frame.height)
+    let bottomView = UIView.init(frame: CGRect.init(x: 0, y: tabBar.frame.height + tabBar.frame.origin.y, width: width, height: 100))
+    let bgColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
+    bottomView.backgroundColor = bgColor
+    self.view.addSubview(bottomView)
     
     self.view.addSubview(tabBar)
   }

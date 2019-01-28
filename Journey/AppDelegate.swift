@@ -113,10 +113,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func settingData(gender:String,generation:Int){
     switch gender {
-    case "男":
+    case "男性":
       globalVar.userGender = "男性"
       break
-    case "女":
+    case "女性":
       globalVar.userGender = "女性"
       break
     default:
@@ -468,7 +468,7 @@ class GlobalVar{
   var userIconPath : String = ""
   var userIcon:UIImage?
 //  let ipAddress = "api.mino.asia:3001"
-  let ipAddress = "192.168.100.161:3000"
+  let ipAddress = "192.168.43.221:3000"
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()

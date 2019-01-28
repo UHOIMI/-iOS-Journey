@@ -106,7 +106,8 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
 
       keyboardSettings()
       createTabBar()
-    
+      
+      subView.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
         // Do any additional setup after loading the view.
     }
 
@@ -454,7 +455,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
       }
     }
     //バーの色
-    tabBar.barTintColor = UIColor.lightGray
+    tabBar.barTintColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
     //選択されていないボタンの色
     tabBar.unselectedItemTintColor = UIColor.black
     //ボタンを押した時の色
