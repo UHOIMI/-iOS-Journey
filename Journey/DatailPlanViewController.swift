@@ -155,8 +155,8 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
 //      self.makerList[i].map = mapView
 //    }
 //    subView.addSubview(mapView)
-    tableViewHeight.constant = 128 + 100 * 9
-    superViewHeight.constant = 1280 + 100 * 9
+    tableViewHeight.constant = CGFloat(100 * spotIdList.count)
+    superViewHeight.constant = CGFloat(1280 + 100 * spotIdList.count)
     
 //    let leftButton: UIButton = UIButton()
 //    leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
@@ -553,7 +553,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       }
     }
     //バーの色
-    tabBar.barTintColor = UIColor.lightGray
+    tabBar.barTintColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
     //選択されていないボタンの色
     tabBar.unselectedItemTintColor = UIColor.black
     //ボタンを押した時の色

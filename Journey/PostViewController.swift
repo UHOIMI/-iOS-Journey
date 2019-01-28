@@ -672,7 +672,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       }
     }
     //バーの色
-    tabBar.barTintColor = UIColor.lightGray
+    tabBar.barTintColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
     //選択されていないボタンの色
     tabBar.unselectedItemTintColor = UIColor.black
     //ボタンを押した時の色
