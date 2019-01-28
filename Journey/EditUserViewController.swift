@@ -193,7 +193,7 @@ class EditUserViewController: UIViewController ,UITabBarDelegate, UITextFieldDel
   func postImage(setImage:UIImage){
     let imageData = setImage.jpegData(compressionQuality: 1.0)
     let body = httpBody(imageData!, fileName: "\(globalVar.userId).jpg")
-    let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/image/upload")!
+    let url = URL(string: "http://api.mino.asia:3001/api/v1/image/upload")!
     fileUpload(url, data: body) {(data, response, error) in
       if let response = response as? HTTPURLResponse, let _: Data = data , error == nil {
         if response.statusCode == 200 {
