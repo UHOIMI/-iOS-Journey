@@ -264,6 +264,9 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       if(userId != globalVar.userId && detailePlanFlag == false){
         nextViewController.editFlag = false
       }
+    }else if(segue.identifier == "toTimelineView"){
+      let nextView = segue.destination as! TimelineViewController
+      nextView.favoriteFlag = 1
     }
   }
   

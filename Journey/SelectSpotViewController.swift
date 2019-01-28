@@ -344,7 +344,10 @@ class SelectSpotViewController: UIViewController , UITableViewDelegate, UITableV
                 postViewController.updateTableView(name: selectSpotNameList[i], list:selectSpotDataList[i])
             }
           }
-        }
+        }else if(segue.identifier == "toTimelineView"){
+          let nextView = segue.destination as! TimelineViewController
+          nextView.favoriteFlag = 1
+      }
     }
     
     func createTabBar(){

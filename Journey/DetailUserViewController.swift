@@ -26,6 +26,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   @IBOutlet weak var pastLabel: UILabel!
   
   var timelineFlag = 0
+  var favoriteFlag = 0
   
   let globalVar = GlobalVar.shared
   var editFlag = true
@@ -241,6 +242,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
     case 2:
       performSegue(withIdentifier: "toSearchView", sender: nil)
     case 3:
+      favoriteFlag = 1
       performSegue(withIdentifier: "toTimelineView", sender: nil)
     case 4:
       print("４")
@@ -275,6 +277,9 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       let nextViewController = segue.destination as! TimelineViewController
       nextViewController.detailUserFlag = timelineFlag
       nextViewController.detailUserId = globalVar.userId
+    }else if(segue.identifier == "toTimelineView" && favoriteFlag == 1){
+      let nextView = segue.destination as! TimelineViewController
+      nextView.favoriteFlag = 1
     }
   }
   
