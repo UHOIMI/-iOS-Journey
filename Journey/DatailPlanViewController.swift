@@ -506,7 +506,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
       let str : String = "token=\(globalVar.token)&plan_id=\(planId)"
       print("うらるstr:",str)
 //      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/delete")
-      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/delete")
+      let url = URL(string: "http://\(globalVar.ipAddress)/api/v1/favorite/delete?\(str)")
 
 //      print("デリートウラル：", url)
       var request = URLRequest(url: url!)
