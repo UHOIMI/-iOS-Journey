@@ -157,8 +157,8 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
 //      self.makerList[i].map = mapView
 //    }
 //    subView.addSubview(mapView)
-    tableViewHeight.constant = CGFloat(100 * spotIdList.count)
-    superViewHeight.constant = CGFloat(1280 + 100 * spotIdList.count)
+    tableViewHeight.constant = CGFloat(100 * (spotIdList.count + 1))
+    superViewHeight.constant = CGFloat(1280 + 100 * (spotIdList.count + 1))
     
 //    let leftButton: UIButton = UIButton()
 //    leftButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
@@ -188,6 +188,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    print("テーブルとおたよ")
     let cell: SpotTableViewCell = tableView.dequeueReusableCell(withIdentifier: "spotCell", for : indexPath) as! SpotTableViewCell
     cell.spotNameLabel.text =  spotTitleList[indexPath.row]
     switch spotImageNum[indexPath.row] {

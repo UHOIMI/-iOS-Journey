@@ -37,6 +37,8 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
     
     var spotDataList : [ListSpotModel] = []
     var spotData : ListSpotModel = ListSpotModel()
+    var postFlag : Bool = false
+    var tappedIndex = 0
     
     var locationManager: CLLocationManager!
     let motionManager = CMMotionManager()
@@ -232,6 +234,17 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             present(alert, animated: true, completion: nil)
             return
         }else{
+          var nextSegue = ""
+          
+          if(postFlag){
+            nextSegue = "toPostView"
+            globalVar.spotDataList[tappedIndex].spot_name = nameTextField.text!
+            globalVar.spotDataList[tappedIndex].comment = commentTextView.text!
+            globalVar.spotDataList[tappedIndex].image_A = image1Path
+            globalVar.spotDataList[tappedIndex].image_B = image2Path
+            globalVar.spotDataList[tappedIndex].image_C = image3Path
+            globalVar.selectSpot[tappedIndex + 1] = nameTextField.text!
+          }else{
             let realm = try! Realm()
             
             let date : Date = Date()
@@ -239,7 +252,6 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             format.dateFormat = "yyyyMMddHHmmssSSS"
             
             let spotModel = SpotModel()
-            var nextSegue = ""
 
             spotModel.spot_name = nameTextField.text!
             spotModel.comment = commentTextView.text!
@@ -266,6 +278,7 @@ class PutSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDeleg
             }
             
             print(realm.objects(SpotModel.self))
+          }
             
             performSegue(withIdentifier: nextSegue, sender: nil)
         }
