@@ -1020,6 +1020,7 @@
                         <segue destination="KJW-a3-dr8" kind="show" identifier="toDetailUserView" id="9Jy-Ob-wAd"/>
                         <segue destination="IlB-DN-gnh" kind="show" identifier="toSearchView" id="d7c-kW-kjd"/>
                         <segue destination="2Ny-Ye-ySz" kind="show" identifier="toTimelineView" id="oap-ER-Nw9"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="toPostView" id="wKs-nN-2Qh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gMl-9k-jnq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1072,7 +1073,7 @@
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aee-0a-sDo">
                                 <rect key="frame" x="8" y="20" width="359" height="233.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2624,14 +2625,14 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Orn-8k-3es"/>
-        <segue reference="b7P-YX-H0q"/>
-        <segue reference="jcv-3u-Qe9"/>
-        <segue reference="0Ny-WU-Sio"/>
-        <segue reference="efM-dk-zhE"/>
+        <segue reference="lnQ-hM-pXv"/>
+        <segue reference="mge-75-edV"/>
+        <segue reference="q0P-y1-Ch3"/>
+        <segue reference="hBe-Qm-rhI"/>
         <segue reference="Y1p-dC-o0y"/>
         <segue reference="PgR-1F-fd2"/>
-        <segue reference="8B5-Mb-NoT"/>
-        <segue reference="Ngc-W0-UHN"/>
+        <segue reference="aY0-xu-7qc"/>
+        <segue reference="wKs-nN-2Qh"/>
         <segue reference="Mcq-lN-1b2"/>
         <segue reference="XJN-4F-Krb"/>
     </inferredMetricsTieBreakers>

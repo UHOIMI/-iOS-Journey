@@ -45,6 +45,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
   let spotFlagList = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t"]
   var spotList : [Int] = []
   var postSpotCount = 0
+  var tappedIndex = 0
   
   let color = UIColor.blue
   
@@ -125,6 +126,7 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
       spotTable.reloadData()
     }else{
       let selectedModel = globalVar.spotDataList[indexPath.row - 1]
+      tappedIndex = indexPath.row - 1
       performSegue(withIdentifier: "toDetailSpotView", sender: selectedModel)
     }
   }
@@ -133,6 +135,8 @@ class PostViewController: UIViewController ,UITableViewDelegate, UITableViewData
     if(segue.identifier == "toDetailSpotView"){
       let nextView = segue.destination as! DetailSpotViewController
       nextView.spotData = sender as! ListSpotModel
+      nextView.tappedIndex = tappedIndex
+      nextView.postFlag = true
     }else if(segue.identifier == "toStartView"){
       globalVar.searchTimeline(offset: 0, generation: globalVar.userGenerationInt)
       globalVar.getTimeline(offset: 0)

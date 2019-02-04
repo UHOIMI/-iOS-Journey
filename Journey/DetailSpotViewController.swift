@@ -27,9 +27,11 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
     var locationManager: CLLocationManager!
     let motionManager = CMMotionManager()
   
+    var postFlag : Bool = false
     var editFlag : Bool = false
     var getImages : [UIImage] = []
     var spotData : ListSpotModel = ListSpotModel()
+    var tappedIndex = 0
     
     let myFrameSize:CGSize = UIScreen.main.bounds.size
     
@@ -160,6 +162,10 @@ class DetailSpotViewController: UIViewController, UITabBarDelegate, GMSMapViewDe
       if(segue.identifier == "changePutSpotView"){
         let nextViewController = segue.destination as! PutSpotViewController
         nextViewController.spotData = sender as! ListSpotModel
+        if(postFlag){
+          nextViewController.postFlag = true
+          nextViewController.tappedIndex = tappedIndex
+        }
       }
     }
     
