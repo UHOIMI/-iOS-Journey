@@ -675,7 +675,7 @@ class GlobalVar{
           }else if((timelineData?.record![0].spots[i].spotImageC)! != ""){
             self.postSpotImagePathList?.append((timelineData?.record![0].spots[i].spotImageC)!)
           }
-          if(1 == 0){
+          if(i == 0){
             self.postSpotNameA = timelineData!.record![0].spots[i].spotTitle
           }else if(i == 1){
             self.postSpotNameB = (timelineData?.record![0].spots[i].spotTitle)!
