@@ -165,7 +165,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITabBarDelega
       }
 
     }
-    var pageX : CGFloat = 0
+    let pageX : CGFloat = 0
 //    if(width == 320){
 //      pageX = 30
 //    }
