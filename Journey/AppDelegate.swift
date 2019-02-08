@@ -347,14 +347,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.globalVar.newSpotImagePathList?.append("")
             self.globalVar.newTrueSpotImagePathList?.append(self.globalVar.newSpotImagePathList![0])
             if(self.globalVar.newTrueSpotImagePathList![i] != ""){
-              self.imageUrl(imageURL: self.globalVar.newTrueSpotImagePathList![i],flag: 1)
-//              let url = URL(string: self.globalVar.newTrueSpotImagePathList![i])!
-//              let imageData = try? Data(contentsOf: url)
-//              DispatchQueue.main.async {
-//                let image = UIImage(data:imageData!)
-//                self.globalVar.newSpotImageList?.append(image!)
-//              }
-//
+              let url = URL(string: self.globalVar.newTrueSpotImagePathList![i])!
+              let imageData = try? Data(contentsOf: url)
+              DispatchQueue.main.async {
+                let image = UIImage(data:imageData!)
+                self.globalVar.newSpotImageList?.append(image!)
+              }
+              
             }else{
               self.globalVar.newSpotImageList?.append(UIImage(named: "no-image.png")!)
             }
@@ -366,26 +365,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }else{
       }
     }.resume()
-  }
-  
-  func imageUrl(imageURL:String, flag:Int){
-    let url = URL(string: imageURL)
-    URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
-      
-      if error != nil {
-        print(error!)
-        return
-      }
-      
-      DispatchQueue.main.async {
-        let image = UIImage(data: data!)!
-        if(flag == 1){
-          self.globalVar.newSpotImageList?.append(image)
-        }else if(flag == 2){
-          self.globalVar.searchSpotImageList?.append(image)
-        }
-      }
-    }).resume()
   }
   
   
@@ -448,13 +427,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.globalVar.searchSpotImagePathList?.append("")
             self.globalVar.searchTrueSpotImagePathList?.append(self.globalVar.searchSpotImagePathList![0])
             if(self.globalVar.searchTrueSpotImagePathList![i] != ""){
-              self.imageUrl(imageURL: self.globalVar.searchTrueSpotImagePathList![i],flag: 2)
-//              let url = URL(string: self.globalVar.searchTrueSpotImagePathList![i])!
-//              let imageData = try? Data(contentsOf: url)
-//              DispatchQueue.main.async {
-//                let image = UIImage(data:imageData!)
-//                self.globalVar.searchSpotImageList?.append(image!)
-//              }
+              let url = URL(string: self.globalVar.searchTrueSpotImagePathList![i])!
+              let imageData = try? Data(contentsOf: url)
+              DispatchQueue.main.async {
+                let image = UIImage(data:imageData!)
+                self.globalVar.searchSpotImageList?.append(image!)
+              }
             }else{
               self.globalVar.searchSpotImageList?.append(UIImage(named: "no-image.png")!)
             }
@@ -633,7 +611,8 @@ class GlobalVar{
   }
   
   func userPostPlan(userId : String){
-    let url = URL(string: "http://\(ipAddress)/api/v1/search/find?user_id=\(userId)&limit=1")
+    print(userId)
+    let url = URL(string: "http://\(ipAddress)/api/v1/timeline/find?user_id=\(userId)&limit=1")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -686,14 +665,13 @@ class GlobalVar{
         
         self.postSpotImagePathList?.append("")
         self.postTrueSpotImagePath = self.postSpotImagePathList![0]
-        if(self.postTrueSpotImagePath == ""){
-          self.imageUrl(imageURL: self.postTrueSpotImagePath)
-//          let url = URL(string: self.postTrueSpotImagePath)!
-//          let imageData = try? Data(contentsOf: url)
-//          DispatchQueue.main.async {
-//            let image = UIImage(data:imageData!)
-//            self.postSpotImage = image!
-//          }
+        if(self.postTrueSpotImagePath != ""){
+          let url = URL(string: self.postTrueSpotImagePath)!
+          let imageData = try? Data(contentsOf: url)
+          DispatchQueue.main.async {
+            let image = UIImage(data:imageData!)
+            self.postSpotImage = image!
+          }
         }else{
           self.postSpotImage = UIImage(named: "no-image.png")!
         }
@@ -927,20 +905,6 @@ class GlobalVar{
         print("検索お気に入り",self.searchFavoriteCountList)
       }
       }.resume()
-  }
-  func imageUrl(imageURL:String){
-    let url = URL(string: imageURL)
-    URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
-      
-      if error != nil {
-        print(error!)
-        return
-      }
-      
-      DispatchQueue.main.async {
-        self.postSpotImage = UIImage(data: data!)!
-      }
-    }).resume()
   }
 }
 
