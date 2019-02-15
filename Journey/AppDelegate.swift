@@ -349,8 +349,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if(self.globalVar.newTrueSpotImagePathList![i] != ""){
               let url = URL(string: self.globalVar.newTrueSpotImagePathList![i])!
               let imageData = try? Data(contentsOf: url)
-              let image = UIImage(data:imageData!)
-              self.globalVar.newSpotImageList?.append(image!)
+              DispatchQueue.main.async {
+                let image = UIImage(data:imageData!)
+                self.globalVar.newSpotImageList?.append(image!)
+              }
+              
             }else{
               self.globalVar.newSpotImageList?.append(UIImage(named: "no-image.png")!)
             }
@@ -426,8 +429,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if(self.globalVar.searchTrueSpotImagePathList![i] != ""){
               let url = URL(string: self.globalVar.searchTrueSpotImagePathList![i])!
               let imageData = try? Data(contentsOf: url)
-              let image = UIImage(data:imageData!)
-              self.globalVar.searchSpotImageList?.append(image!)
+              DispatchQueue.main.async {
+                let image = UIImage(data:imageData!)
+                self.globalVar.searchSpotImageList?.append(image!)
+              }
             }else{
               self.globalVar.searchSpotImageList?.append(UIImage(named: "no-image.png")!)
             }
@@ -469,7 +474,7 @@ class GlobalVar{
   var userIcon:UIImage?
 //  let ipAddress = "35.200.30.182:8080"
   let ipAddress = "api.mino.asia:3001"
-//  let ipAddress = "192.168.43.221:3000"
+//  let ipAddress = "192.168.100.161:3000"
   var userComment = ""
   var userHeaderPath = ""
   var userHeader = UIImage()
@@ -607,7 +612,8 @@ class GlobalVar{
   }
   
   func userPostPlan(userId : String){
-    let url = URL(string: "http://\(ipAddress)/api/v1/search/find?user_id=\(userId)&limit=1")
+    print(userId)
+    let url = URL(string: "http://\(ipAddress)/api/v1/timeline/find?user_id=\(userId)&limit=1")
     let request = URLRequest(url: url!)
     let session = URLSession.shared
     session.dataTask(with: request) { (data, response, error) in
@@ -649,7 +655,7 @@ class GlobalVar{
           }else if((timelineData?.record![0].spots[i].spotImageC)! != ""){
             self.postSpotImagePathList?.append((timelineData?.record![0].spots[i].spotImageC)!)
           }
-          if(1 == 0){
+          if(i == 0){
             self.postSpotNameA = timelineData!.record![0].spots[i].spotTitle
           }else if(i == 1){
             self.postSpotNameB = (timelineData?.record![0].spots[i].spotTitle)!
@@ -663,8 +669,10 @@ class GlobalVar{
         if(self.postTrueSpotImagePath != ""){
           let url = URL(string: self.postTrueSpotImagePath)!
           let imageData = try? Data(contentsOf: url)
-          let image = UIImage(data:imageData!)
-          self.postSpotImage = image!
+          DispatchQueue.main.async {
+            let image = UIImage(data:imageData!)
+            self.postSpotImage = image!
+          }
         }else{
           self.postSpotImage = UIImage(named: "no-image.png")!
         }
