@@ -38,13 +38,14 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
   var userIcon = UIImage()
   var userHeader = UIImage()
   
-  
+  var userPlanView = TopView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   var imgView:UIImageView!
   let myFrameSize:CGSize = UIScreen.main.bounds.size
   
     override func viewDidLoad() {
       self.navigationItem.hidesBackButton = true
-        super.viewDidLoad()
+      super.viewDidLoad()
+      //userId = globalVar.userId
 
       if (myFrameSize.height >= 667){
         //scrollViewsetScrollEnabled
@@ -81,7 +82,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
         userCommentTextView.sizeToFit()
       }
       
-      let userPlanView = TopView(frame: CGRect(x: 16, y: pastLabel.frame.origin.y + pastLabel.frame.size.height + 8, width: UIScreen.main.bounds.size.width - 32, height: 150))
+      userPlanView = TopView(frame: CGRect(x: 16, y: pastLabel.frame.origin.y + pastLabel.frame.size.height + 8, width: UIScreen.main.bounds.size.width - 32, height: 150))
       userPlanView.backgroundColor = UIColor.red
       userPlanView.planUserIconImageView.image = globalVar.postUserImage
       userPlanView.planImageView.image = globalVar.postSpotImage
@@ -94,7 +95,7 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
       userPlanView.planUserIconImageView.clipsToBounds = true
       userPlanView.planUserIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.planUserImageViewTapped(_:))))
       userPlanView.planUserIconImageView.isUserInteractionEnabled = true
-      userPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.generationPlanTapped(_ :))))
+//      userPlanView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(DetailUserViewController.userPlanTapped(_ :))))
       userPlanView.layer.cornerRadius = 5
       userPlanView.layer.masksToBounds = true
       subView.addSubview(userPlanView)
@@ -281,7 +282,32 @@ class DetailUserViewController: UIViewController, UITabBarDelegate {
     }else if(segue.identifier == "toTimelineView" && favoriteFlag == 1){
       let nextView = segue.destination as! TimelineViewController
       nextView.favoriteFlag = 1
+//    }else if(segue.identifier == "toDetailPlanView"){
+//      let nextView = segue.destination as! DatailPlanViewController
+//      nextView.planId = self.globalVar.postPlanId
+//      nextView.userId = userId
+//      nextView.userName = userName
+//      nextView.userImage = self.imgView.image!
+//      nextView.planTitle = self.userPlanView.planNameLabel.text!
+//      nextView.planArea = self.globalVar.postPlanArea
+//      nextView.planTransportationString = self.globalVar.plan
+//      nextView.planComment = planComment
+//      nextView.planPrice = planPrice
     }
   }
   
+//  @objc func userPlanTapped(_ sender: UITapGestureRecognizer) {
+//    let currentPage = pageControl.currentPage
+//    planId = globalVar.searchPlanIdList[currentPage]
+//    planTitle = globalVar.searchPlanTitleList[currentPage]
+//    planArea = globalVar.searchPlanAreaList[currentPage]
+//    planComment = globalVar.searchPlanCommentList[currentPage]
+//    planTransportation = globalVar.searchPlanTransportationList[currentPage]
+//    planPrice = globalVar.searchPlanPriceList[currentPage]
+//    userId = globalVar.searchUserIdList[currentPage]
+//    userImage = globalVar.searchUserImageList[currentPage]
+//    userName = globalVar.searchUserNameList[currentPage]
+//    performSegue(withIdentifier: "toDetailPlanView", sender: 0)
+//  }
+//
 }

@@ -467,6 +467,7 @@ class GlobalVar{
   var userGeneration : String = ""
   var userIconPath : String = ""
   var userIcon:UIImage?
+//  let ipAddress = "35.200.30.182:8080"
   let ipAddress = "api.mino.asia:3001"
 //  let ipAddress = "192.168.43.221:3000"
   var userComment = ""

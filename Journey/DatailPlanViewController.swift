@@ -157,6 +157,7 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
 //      self.makerList[i].map = mapView
 //    }
 //    subView.addSubview(mapView)
+    print("テーブルの大きさ", spotIdList.count + 1)
     tableViewHeight.constant = CGFloat(100 * (spotIdList.count + 1))
     superViewHeight.constant = CGFloat(1280 + 100 * (spotIdList.count + 1))
     
@@ -419,6 +420,10 @@ class DatailPlanViewController: UIViewController ,UIPickerViewDataSource, UIPick
           }
           
           DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            
+            print("テーブルの大きさ", self.spotIdList.count + 1)
+            self.tableViewHeight.constant = CGFloat(100 * (self.spotIdList.count))
+            self.superViewHeight.constant = CGFloat(1280 + 100 * (self.spotIdList.count + 1))
             
             for i in 0 ... self.spotLatList.count - 1 {
               self.makerList.insert(GMSMarker(), at: i)
